@@ -33,7 +33,7 @@
 			</view>
 		</view>
 		<uni-load-more :status="loadingType"></uni-load-more>
-		
+
 	</view>
 </template>
 

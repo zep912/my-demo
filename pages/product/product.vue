@@ -12,7 +12,7 @@
 					</view>
 				</swiper-item>
 			</swiper>
-			
+
 		</view>
 		
 		<view class="introduce-section">
@@ -430,7 +430,7 @@
 				}
 			}
 		}
-		
+
 		.red{
 			color: $uni-color-primary;
 		}

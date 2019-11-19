@@ -1,0 +1,124 @@
+@charset "UTF-8";
+/* 页面左右间距 */
+/* 文字尺寸 */
+/*文字颜色*/
+/* 边框颜色 */
+/* 图片加载中颜色 */
+/* 行为相关颜色 */
+.customClss {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #b5b5b8;
+}
+.delivery {
+  height: 400rpx;
+  background-size: 100% 100%;
+  position: relative;
+}
+.uni-page-head__title {
+  opacity: 1;
+}
+.de-logo {
+  width: 240rpx;
+  height: 240rpx;
+  background: white;
+  -webkit-box-shadow: 0px 4px 30px 0px rgba(108, 108, 108, 0.1);
+          box-shadow: 0px 4px 30px 0px rgba(108, 108, 108, 0.1);
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  top: 107%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+}
+.de-logo ._img {
+    width: 115rpx;
+    height: 137rpx;
+}
+.de-login {
+  width: 92%;
+  margin: 0 auto;
+  margin-top: 200rpx;
+}
+.de-login .de-login-phone {
+    border-bottom: 1px solid #ECEFF1;
+    height: 120rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
+.de-login .de-login-phone image {
+      width: 32rpx;
+      height: 40rpx;
+      float: left;
+      margin-right: 30rpx;
+}
+.de-login .de-login-code {
+    border-bottom: 1px solid #ECEFF1;
+    height: 120rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+    position: relative;
+}
+.de-login .de-login-code image {
+      width: 34rpx;
+      height: 24rpx;
+      float: left;
+      margin-right: 30rpx;
+}
+.de-login .de-login-code .postCode {
+      position: absolute;
+      right: 2%;
+      font-size: 26rpx;
+      font-weight: bold;
+      color: #f7b52c;
+      border: 0;
+}
+.btn {
+  width: 92%;
+  margin: 0 auto;
+  margin-top: 150rpx;
+  height: 88rpx;
+  background: #f7b52c;
+  border-radius: 44rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 34rpx;
+  font-weight: 500;
+  color: white;
+}
+

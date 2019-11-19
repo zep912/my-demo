@@ -451,4 +451,8 @@
 	.placeholder {
 		color: #999999;
 	}
+	
+	.uni-page-head__title{
+		opacity: 1;
+	}
 </style>

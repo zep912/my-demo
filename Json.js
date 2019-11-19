@@ -33,7 +33,7 @@ const goodsList = [{
 		image: "/static/index/mm.png",
 		title: "福尔佳透明质酸钠修复面膜99盒",
 		price: 1.00
-	}, 
+	},
 	{
 		image: "/static/index/mgg.png",
 		title: "味道一般般蛋芒果干10kg",
@@ -387,7 +387,46 @@ const orderList = [{
 				attr: '规格 10*200g'
 			}
 		]
-	}
+	},
+	{
+		time: '2019-04-06 11:37',
+		shopName: '麦田圈官网旗舰店',
+		state: 6,
+		goodsList: [{
+				title: '香辣牛肉干',
+				price: 88.88,
+				image: '/static/goods.png',
+				number: 1,
+				attr: '规格 10*200g'
+			}
+		]
+	},
+	{
+		time: '2019-04-06 11:37',
+		shopName: '麦田圈官网旗舰店',
+		state: 7,
+		goodsList: [{
+				title: '香辣牛肉干',
+				price: 88.88,
+				image: '/static/goods.png',
+				number: 1,
+				attr: '规格 10*200g'
+			}
+		]
+	},
+	{
+		time: '2019-04-06 11:37',
+		shopName: '麦田圈官网旗舰店',
+		state: 9,
+		goodsList: [{
+				title: '香辣牛肉干',
+				price: 88.88,
+				image: '/static/goods.png',
+				number: 1,
+				attr: '规格 10*200g'
+			}
+		]
+	},
 ]
 const collect =[
 	{

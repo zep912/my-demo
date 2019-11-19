@@ -174,6 +174,9 @@
 			},
 			// 再次购买
 			againBuy(item) {
+				uni.navigateTo({
+					url:'refund'
+				})
 				console.log(item)
 			},
 			//取消订单

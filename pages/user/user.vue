@@ -54,7 +54,7 @@
 					<text class="my-foot-num">1</text>
 					<text class="my-foot-title">商品收藏</text>
 				</view>
-				<view class="">
+				<view class="" @click="navTo('/pages/user/footmark')">
 					<text class="my-foot-num">100</text>
 					<text class="my-foot-title">我的足迹</text>
 				</view>
@@ -62,11 +62,11 @@
 		</view>
 		<!-- 钱包 -->
 		<view class="wallet">
-			<view class="wallet-cell">
+			<view class="wallet-cell" @click="navTo('/pages/user/wallet')" >
 				<img src="../../static/my-03.png" class="wallet-img"></image>
 				<text>钱包</text>
 			</view>
-			<view class="wallet-cell">
+			<view class="wallet-cell" @click="navTo('/pages/delivery/delivery')">
 				<img src="../../static/my-04.png" class="wallet-img"></image>
 				<text>麦吉配送</text>
 			</view>

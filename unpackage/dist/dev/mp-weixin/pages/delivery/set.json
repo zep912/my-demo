@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "接单设置",
+  "usingComponents": {
+    "van-switch": "/wxcomponents/vant/dist/switch/index"
+  }
+}

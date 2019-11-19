@@ -1,20 +1,22 @@
 <template>
 	<view class="collect">
+		<empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty>
+		<view  v-if='collectGoods.length!=0'>
+		
+		<!-- 没有收藏 -->
 		<view class="collect-wrap">
 			<text>您收藏了<text class="collect-num">10</text>件商品</text>
-			<text @click="edit()">{{edit}}</text>
+			<text @click="editClick">{{edit}}</text>
 		</view>
 		<view class="collect-goods">
 			<view class="collect-goods-list" v-for="(item,index) in collectGoods">
-				<view class="collect-vanCheck">
-					<van-checkbox :value="checked" @change="onChange" checked-color="#F7B52C" :name='index'></van-checkbox>
+				<view class="collect-vanCheck" v-if='isShow'>
+					<van-checkbox :value="checked" @change="onChange" checked-color="#F7B52C" :name='index' ></van-checkbox>
 				</view>
-				
 				<img :src="item.img" alt="">
 				<view class="collectGoodsContent">
 					<view class="collect-attr">
 						<text class="ziyin">自营</text>
-						<!-- <van-tag round type="danger">自营</van-tag> -->
 						<text class="title">{{item.title}}</text>
 						<text class="attr">{{item.attr}}</text>
 					</view>
@@ -28,16 +30,28 @@
 				</view>
 			</view>
 		</view>
+		<!-- 底部信息 -->
+		<view class="foot" v-if='isShow'>
+			<van-checkbox :value="checked" @change="allOnChange" checked-color="#F7B52C" icon-size='26' label-class='labelClass'>全选</van-checkbox>
+			<view @click="dele" class="dele-collect">删除收藏</view>
+		</view>
+		</view>
 	</view>
 </template>
 
 <script>
+	import empty from "@/components/empty";
 	export default {
+		components:{
+			empty
+		},
 		data(){
 			return{
+				src:'../../static/nocollet.png',
+				msg:'您还没有任何收藏，去看看其他的吧',
 				checked:false,
 				edit:'编辑',
-				isShow:true,
+				isShow:false,
 				collectGoods:[
 					{
 						title:'香辣牛肉干',
@@ -64,13 +78,25 @@
 			}
 		},
 		onLoad(){
-			if(this.edit == '编辑'){
-				this.isShow = true
-			}
 		},
 		methods:{
 			onChange(e){
 				this.checked = e.detail;
+			},
+			editClick(){
+				if(this.edit=='编辑'){
+					this.edit ='完成';
+					this.isShow = true;
+				}else{
+					this.edit = '编辑';
+					this.isShow = false;
+				}
+			},
+			dele(){
+				
+			},
+			allOnChange(){
+				
 			}
 		}
 	}
@@ -115,11 +141,11 @@
 				height: 240rpx;
 				margin-right: 20rpx;
 				border-radius:20rpx;
-				margin-left: 20rpx;
 			}
 			.collect-vanCheck{
 				display: flex;
 				align-items: center;
+				margin-right: 20rpx;
 			}
 			.icon{
 				position: absolute;
@@ -175,5 +201,59 @@
 			}
 		}
 		
+	}
+	.foot{
+		width: 100%;
+		height: 120rpx;
+		background: #fff;
+		position: fixed;
+		bottom: 0;
+		box-sizing: border-box;
+		padding-left: 20rpx;
+		padding-right: 15rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.dele-collect{
+			width:211rpx;
+			height:74rpx;
+			border:1px solid rgba(141,141,141,1);
+			border-radius:37rpx;
+			font-size:28rpx;
+			font-weight:500;
+			color:rgba(88,88,88,1);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.labelClass{
+			font-size:28rpx;
+			font-weight:500;
+			color:rgba(88,88,88,1);
+		}
+	}
+	.noCollect{
+		padding-top: 139rpx;
+		text-align: center;
+		img{
+			width: 168rpx;
+			height: 200rpx;
+			margin-bottom: 73rpx;
+		}
+		.noCollect-word{
+			font-size:30rpx;
+			font-weight:500;
+			color:rgba(51,51,51,1);
+			line-height:60px;
+			opacity:0.5;
+			margin-bottom: 143rpx;
+		}
+		button{
+			width:326rpx;
+			height:90rpx;
+			background:rgba(247,181,44,1);
+			border-radius:45px;
+			margin: 0 auto;
+		}
 	}
 </style>

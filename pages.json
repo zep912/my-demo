@@ -40,6 +40,54 @@
 			}
 		},
 		{
+			"path": "pages/delivery/delivery",
+			"style": {
+				"navigationBarTitleText": "麦吉专送",
+				"app-plus": {
+					"titleNView": {
+						"type": "transparent",
+						"titleColor":"#000",
+						"opacity":"1"
+					}
+				},
+				"usingComponents": {
+				  "van-field": "/wxcomponents/vant/dist/field/index",
+				  "van-cell-group": "/wxcomponents/vant/dist/cell-group/index"
+				}
+			}
+		},
+		{
+			"path": "pages/delivery/set",
+			"style": {
+				"navigationBarTitleText": "接单设置",
+				"usingComponents": {
+				  "van-switch": "/wxcomponents/vant/dist/switch/index"
+				}
+			}
+		},
+		{
+			"path": "pages/delivery/statistics",
+			"style": {
+				"navigationBarTitleText": "送单统计",
+				"usingComponents": {
+				  "van-switch": "/wxcomponents/vant/dist/switch/index",
+				   "van-icon": "/wxcomponents/vant/dist/icon/index"
+				}
+			}
+		},
+		{
+			"path": "pages/delivery/myprofit",
+			"style": {
+				"navigationBarTitleText": "我的收益"
+			}
+		},
+		{
+			"path": "pages/delivery/billstatistics",
+			"style": {
+				"navigationBarTitleText": "账单统计"
+			}
+		},
+		{
 			"path": "pages/product/product",
 			"style": {
 				"navigationBarTitleText": "详情展示",
@@ -94,6 +142,15 @@
 			"path": "pages/user/collect",
 			"style": {
 				"navigationBarTitleText": "商品收藏",
+				"usingComponents": {
+				  "van-icon": "/wxcomponents/vant/dist/icon/index",
+				  "van-checkbox": "/wxcomponents/vant/dist/checkbox/index"
+				}
+			}
+		},{
+			"path": "pages/user/footmark",
+			"style": {
+				"navigationBarTitleText": "我的足迹",
 				"usingComponents": {
 				  "van-icon": "/wxcomponents/vant/dist/icon/index",
 				  "van-checkbox": "/wxcomponents/vant/dist/checkbox/index"
@@ -166,7 +223,27 @@
 					"bounce": "none"
 				}
 			}
-		}, {
+		}, 
+		{
+			"path": "pages/user/wallet",
+			"style": {
+				"navigationBarTitleText": "钱包",
+				"usingComponents": {
+				  "van-cell": "/wxcomponents/vant/dist/cell/index",
+				  "van-cell-group": "/wxcomponents/vant/dist/cell-group/index"
+				}
+			}
+		},{
+			"path": "pages/user/coupon",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"usingComponents": {
+				  "van-tab": "/wxcomponents/vant/dist/tab/index",
+				  "van-tabs": "/wxcomponents/vant/dist/tabs/index"
+				}
+			}
+		},
+		{
 			"path": "pages/money/money",
 			"style": {}
 		}, {
@@ -179,7 +256,50 @@
 			"style": {
 				"navigationBarTitleText": "退款售后"
 			}
+		},{
+			"path": "pages/order/cancelOrder",
+			"style": {
+				"navigationBarTitleText": "取消订单",
+				"usingComponents": {
+				  "van-radio": "/wxcomponents/vant/dist/radio/index",
+				  "van-radio-group": "/wxcomponents/vant/dist/radio-group/index",
+				  "van-icon": "/wxcomponents/vant/dist/icon/index"
+				}
+			}
 		}, {
+			"path": "pages/order/logistics",
+			"style": {
+				"navigationBarTitleText": "物流信息",
+				"usingComponents": {
+				  "van-steps": "/wxcomponents/vant/dist/steps/index"
+				}
+			}
+		},
+		{
+			"path": "pages/order/consult",
+			"style": {
+				"navigationBarTitleText": "协商历史"
+			}
+		}, {
+			"path": "pages/order/refund",
+			"style": {
+				"navigationBarTitleText": "申请退款",
+				"usingComponents": {
+				  "van-cell": "/wxcomponents/vant/dist/cell/index",
+				  "van-uploader": "/wxcomponents/vant/dist/uploader/index",
+				  "van-popup": "/wxcomponents/vant/dist/popup/index",
+				   "van-picker": "/wxcomponents/vant/dist/picker/index"
+				}
+			}
+		}, {
+			"path": "pages/order/orderDetails",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"usingComponents": {
+				  "van-steps": "/wxcomponents/vant/dist/steps/index"
+				}
+			}
+		},{
 			"path": "pages/address/address",
 			"style": {
 				"navigationBarTitleText": "我的收货地址"
@@ -263,16 +383,6 @@
 				"iconPath": "static/tab-my.png",
 				"selectedIconPath": "static/tab-my-current.png",
 				"text": "我的"
-			}
-		]
-	},
-	"condition" : { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
-		"list": [
-			{
-				"name": "", //模式名称
-				"path": "", //启动页面，必选
-				"query": "" //启动参数，在页面的onLoad函数里面得到
 			}
 		]
 	}

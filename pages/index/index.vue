@@ -128,7 +128,7 @@
 				</view>
 			</view>
 			<view class="guess-section good-sku">
-				<view 
+				<view
 					v-for="(item, index) in goodsList" :key="index"
 					class="guess-item" v-if="index <= 2"
 					@click="navToDetailPage(item)"
@@ -529,7 +529,7 @@
 					height: 100%;
 				}
 			}
-			
+
 			.box-text {
 				margin-left: 20upx;
 				width: 150upx;

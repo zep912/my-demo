@@ -11,16 +11,16 @@
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
 				<scroll-view class="list-scroll-content" scroll-y>
 					<!-- 空白页 -->
-					<view v-if="tabItem.orderList.length === 0" class="nogoods">
+				<!-- 	<view v-if="tabItem.orderList.length === 0" class="nogoods">
 						<img src="../../static/nogoods.png" alt="">
 						<view>你还没有任何订单，看看其他的吧</view>
 						<button type="primary">去逛逛</button>
-					</view>
+					</view> -->
 
-					<!-- <empty v-if="tabItem.loaded === true && tabItem.orderList.length === 0"></empty> -->
+					<empty v-if="tabItem.orderList.length === 0" :src='src' :msg='msg'></empty>
 
 					<!-- 订单列表 -->
-					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
+					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item" @click="orderDetails(item)">
 						<view class="i-top b-b">
 							<img src="../../static/shop.png" alt="" class='shopLogo'>
 							<text class="time">{{item.shopName}}</text>
@@ -76,6 +76,8 @@
 		},
 		data() {
 			return {
+				src:'../../static/nogoods.png',
+				msg:'你还没有任何订单，看看其他的吧',
 				tabCurrentIndex: 0,
 				navList: [{
 						state: 0,
@@ -235,6 +237,12 @@
 					case 5:
 						stateTip = '';
 						break;
+					case 6:
+						stateTip = '交易成功';
+						break;
+					case 7:
+						stateTip = '已完成';
+						break;
 					case 9:
 						stateTip = '订单已关闭';
 						stateTipColor = '#909399';
@@ -244,6 +252,11 @@
 					stateTip,
 					stateTipColor
 				};
+			},
+			orderDetails(item) {
+				uni.navigateTo({
+					url: 'orderDetails?status=' + item.state
+				})
 			}
 		},
 	}
@@ -399,25 +412,25 @@
 			}
 		}
 
-		/* 多条商品 */
-		.goods-box {
-			height: 160upx;
-			padding: 20upx 0;
-			white-space: nowrap;
+		// /* 多条商品 */
+		// .goods-box {
+		// 	height: 160upx;
+		// 	padding: 20upx 0;
+		// 	white-space: nowrap;
 
-			.goods-item {
-				width: 120upx;
-				height: 120upx;
-				display: inline-block;
-				margin-right: 24upx;
-			}
+		// 	.goods-item {
+		// 		width: 120upx;
+		// 		height: 120upx;
+		// 		display: inline-block;
+		// 		margin-right: 24upx;
+		// 	}
 
-			.goods-img {
-				display: block;
-				width: 100%;
-				height: 100%;
-			}
-		}
+		// 	.goods-img {
+		// 		display: block;
+		// 		width: 100%;
+		// 		height: 100%;
+		// 	}
+		// }
 
 		/* 单条商品 */
 		.goods-box-single {

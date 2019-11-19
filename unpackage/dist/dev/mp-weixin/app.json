@@ -1,6 +1,11 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/delivery/delivery",
+    "pages/delivery/set",
+    "pages/delivery/statistics",
+    "pages/delivery/myprofit",
+    "pages/delivery/billstatistics",
     "pages/product/product",
     "pages/set/set",
     "pages/person/person",
@@ -10,14 +15,22 @@
     "pages/userinfo/userinfo",
     "pages/user/feedback",
     "pages/user/collect",
+    "pages/user/footmark",
     "pages/cart/cart",
     "pages/public/login",
     "pages/user/user",
     "pages/detail/detail",
     "pages/order/order",
+    "pages/user/wallet",
+    "pages/user/coupon",
     "pages/money/money",
     "pages/order/createOrder",
     "pages/order/aftersale",
+    "pages/order/cancelOrder",
+    "pages/order/logistics",
+    "pages/order/consult",
+    "pages/order/refund",
+    "pages/order/orderDetails",
     "pages/address/address",
     "pages/address/addressManage",
     "pages/money/pay",
@@ -66,6 +79,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap31.json"
+  "usingComponents": {}
 }
