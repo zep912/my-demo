@@ -1,5 +1,6 @@
 <template>
 	<view class="feedback content">
+		<view style="width: 100%;height: 10rpx;background: #f4f4f4;"></view>
 		<view class="cate">
 			<h3>分类标签</h3>
 			<view class="cate-first">
@@ -9,6 +10,7 @@
 				<text @click="choose1(item.value,index)" :class="activeClass==index ? 'active' : '' " v-for='(item,index) in list1'>{{item.value}}</text>
 			</view>
 		</view>
+		<view style="width: 100%;height: 10rpx;background: #f4f4f4;"></view>
 		<view class="question">
 			<h3>问题和建议</h3>
 			<textarea :value="value" placeholder="请输入您的意见,您的意见是我们进步的动力!" maxlength='-1' placeholder-class='placeholderClass' />
@@ -66,7 +68,7 @@
 
 <style lang="scss">
 	page{
-		background: #E3E3E3;
+		background: #fff;
 	}
 	h3{
 			font-size:30rpx;

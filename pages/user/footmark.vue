@@ -133,6 +133,7 @@
 		padding-right: 40rpx;
 		margin: 0 auto;
 		background: #fff;
+		padding-bottom: 10rpx;
 		.collect-goods-list{
 			display: flex;
 			justify-content: flex-start;

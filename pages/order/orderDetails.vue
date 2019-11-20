@@ -109,8 +109,8 @@
 		</view>
 		<!-- 尾部 -->
 		<view class="foot" v-if='show'>
-			<button type="primary" class="btn1">{{order.wuliu}}</button>
-			<button type="primary" class="btn2" v-if='order.status!=9'>{{order.pay}}</button>
+			<button class="btn1" @click="logisticsTap">{{order.wuliu}}</button>
+			<button class="btn2" v-if='order.status!=9'>{{order.pay}}</button>
 		</view>
 	</view>
 </template>
@@ -263,6 +263,12 @@
 			consult(){
 				uni.navigateTo({
 					url:'consult'
+				})
+			},
+			// 查看物流
+			logisticsTap(){
+				uni.navigateTo({
+					url:'logistics'
 				})
 			}
 		}
@@ -637,6 +643,7 @@
 	background:rgba(255,255,255,1);
 	display: flex;
 	align-items: center;
+	justify-content: flex-end;
 	box-sizing: border-box;
 	padding-right: 15rpx;
 	position: fixed;
@@ -646,6 +653,8 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		margin-left: 0;
+		margin-right: 0;
 	}
 	.btn1{
 		width:211rpx;
@@ -656,6 +665,7 @@
 		font-weight:400;
 		color:rgba(88,88,88,1);
 		background: #fff;
+		margin-right: 20rpx;
 	}
 	.btn2{
 		width:211rpx;

@@ -437,6 +437,10 @@ page {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   padding-right: 15rpx;
@@ -457,6 +461,8 @@ page {
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
+    margin-left: 0;
+    margin-right: 0;
 }
 .foot .btn1 {
     width: 211rpx;
@@ -467,6 +473,7 @@ page {
     font-weight: 400;
     color: #585858;
     background: #fff;
+    margin-right: 20rpx;
 }
 .foot .btn2 {
     width: 211rpx;

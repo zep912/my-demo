@@ -74,7 +74,10 @@
 				if(e==1){
 					this.songdan = '../../static/delivery/songdan.png';
 					this.jiedan = '../../static/delivery/jiedanset1.png';
-					this.daliveryData = 1
+					this.daliveryData = 1;
+					uni.navigateTo({
+						url:'deliverylist'
+					})
 				}else if(e==2){
 					this.songdan = '../../static/delivery/songdan2.png';
 					this.jiedan = '../../static/delivery/jiedanset.png';

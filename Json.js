@@ -428,19 +428,25 @@ const orderList = [{
 		]
 	},
 ]
-const collect =[
+const deliverylist =[
 	{
-		time: '2019-04-06 11:37',
+		state:1,
+		time: '15:12',
+		countDown:'00:12:30',
 		shopName: '麦田圈官网旗舰店',
 		state: 5,
-		goodsList: [{
-				title: '香辣牛肉干',
-				price: 88.88,
-				image: '/static/goods.png',
-				number: 1,
-				attr: '规格 10*200g'
+		steps:[
+			{
+				text:'步骤一',
+				desc:'描述'
 			}
-		]
+		],
+		info:{
+			a:20,
+			b:'麦田圈预单',
+			c:'预'
+		},
+		msg:''
 	}
 ]
 const cateList = [{

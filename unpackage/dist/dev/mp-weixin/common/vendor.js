@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2452,9 +2452,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 172:
-/*!**************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/my-03.png ***!
-  \**************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/my-03.png ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2463,9 +2463,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAIAAAC1
 /***/ }),
 
 /***/ 173:
-/*!**************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/my-04.png ***!
-  \**************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/my-04.png ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2474,9 +2474,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAiCAIAAAC1
 /***/ }),
 
 /***/ 174:
-/*!**************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/my-05.png ***!
-  \**************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/my-05.png ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2485,9 +2485,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAkCAIAAABj
 /***/ }),
 
 /***/ 175:
-/*!*****************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/title_01.png ***!
-  \*****************************************************/
+/*!******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/title_01.png ***!
+  \******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2603,14 +2603,14 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 19:
-/*!*****************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/Json.js ***!
-  \*****************************************/
+/*!******************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/Json.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; /* 用户 */
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _ref;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /* 用户 */
 var userInfo = {
   status: 1,
   data: {
@@ -3040,19 +3040,25 @@ var orderList = [{
 
 
 
-var collect = [
+var deliverylist = [(_ref = {
+
+  state: 1,
+  time: '15:12',
+  countDown: '00:12:30',
+  shopName: '麦田圈官网旗舰店' }, _defineProperty(_ref, "state",
+5), _defineProperty(_ref, "steps",
+[
 {
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 5,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] }];
+  text: '步骤一',
+  desc: '描述' }]), _defineProperty(_ref, "info",
 
 
+{
+  a: 20,
+  b: '麦田圈预单',
+  c: '预' }), _defineProperty(_ref, "msg",
+
+''), _ref)];
 
 
 var cateList = [{
@@ -3305,9 +3311,9 @@ var cateList = [{
 /***/ }),
 
 /***/ 192:
-/*!*************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/shop.png ***!
-  \*************************************************/
+/*!**************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/shop.png ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8797,7 +8803,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8818,14 +8824,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8901,7 +8907,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9279,9 +9285,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 209:
-/*!********************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/couponPrice.png ***!
-  \********************************************************/
+/*!*********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/couponPrice.png ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9290,9 +9296,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAVCAYAAABG
 /***/ }),
 
 /***/ 210:
-/*!****************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/beuesed.png ***!
-  \****************************************************/
+/*!*****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/beuesed.png ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9301,9 +9307,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAAVCAYAAACk
 /***/ }),
 
 /***/ 211:
-/*!*************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/used.png ***!
-  \*************************************************/
+/*!**************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/used.png ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9312,9 +9318,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/
 /***/ }),
 
 /***/ 212:
-/*!******************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/Beoverdue.png ***!
-  \******************************************************/
+/*!*******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/Beoverdue.png ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9323,9 +9329,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/
 /***/ }),
 
 /***/ 235:
-/*!****************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/nogoods.png ***!
-  \****************************************************/
+/*!*****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/nogoods.png ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9334,9 +9340,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAACzCAIAAACh
 /***/ }),
 
 /***/ 244:
-/*!**************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/icon5.png ***!
-  \**************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/icon5.png ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9357,9 +9363,9 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ 27);
 /***/ }),
 
 /***/ 261:
-/*!****************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/userImg.png ***!
-  \****************************************************/
+/*!*****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/userImg.png ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9416,9 +9422,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 270:
-/*!**************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/dizhi.png ***!
-  \**************************************************/
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/dizhi.png ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9427,9 +9433,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAqCAIAAADE
 /***/ }),
 
 /***/ 271:
-/*!***************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/upload.png ***!
-  \***************************************************/
+/*!****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/upload.png ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10201,9 +10207,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 35:
-/*!**********************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/logo.png ***!
-  \**********************************************************/
+/*!***********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/logo.png ***!
+  \***********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10212,14 +10218,25 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAf
 /***/ }),
 
 /***/ 4:
-/*!********************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/pages.json ***!
-  \********************************************/
+/*!*********************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/pages.json ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+/***/ }),
+
+/***/ 423:
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/emptybg.png ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/img/emptybg.ccdbb797.png";
 
 /***/ }),
 
@@ -11122,21 +11139,21 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ }),
 
 /***/ 7:
-/*!*************************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"style"} ***!
-  \*************************************************************/
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"style"} ***!
+  \**************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈" }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送" }, "pages/delivery/set": { "navigationBarTitleText": "接单设置" }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计" }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益" }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计" }, "pages/product/product": { "navigationBarTitleText": "详情展示" }, "pages/set/set": { "navigationBarTitleText": "账号管理" }, "pages/person/person": { "navigationBarTitleText": "个人资料" }, "pages/mobile/mobile": { "navigationBarTitleText": "修改手机号" }, "pages/bindmobile/bindmobile": { "navigationBarTitleText": "绑定手机号" }, "pages/aboutus/aboutus": { "navigationBarTitleText": "关于我们" }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料" }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈" }, "pages/user/collect": { "navigationBarTitleText": "商品收藏" }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹" }, "pages/cart/cart": { "navigationBarTitleText": "购物车" }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom" }, "pages/user/user": { "navigationBarTitleText": "我的", "navigationStyle": "custom" }, "pages/detail/detail": { "navigationBarTitleText": "" }, "pages/order/order": { "navigationBarTitleText": "我的订单" }, "pages/user/wallet": { "navigationBarTitleText": "钱包" }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券" }, "pages/money/money": {}, "pages/order/createOrder": { "navigationBarTitleText": "创建订单" }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后" }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单" }, "pages/order/logistics": { "navigationBarTitleText": "物流信息" }, "pages/order/consult": { "navigationBarTitleText": "协商历史" }, "pages/order/refund": { "navigationBarTitleText": "申请退款" }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情" }, "pages/address/address": { "navigationBarTitleText": "我的收货地址" }, "pages/address/addressManage": { "navigationBarTitleText": "" }, "pages/money/pay": { "navigationBarTitleText": "支付" }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功" }, "pages/notice/notice": { "navigationBarTitleText": "通知" }, "pages/category/category": { "navigationBarTitleText": "分类" }, "pages/product/list": { "navigationBarTitleText": "商品列表" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈", "usingComponents": {} }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送", "usingComponents": {} }, "pages/delivery/set": { "navigationBarTitleText": "接单设置", "usingComponents": {} }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计", "usingComponents": {} }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益", "usingComponents": {} }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计", "usingComponents": {} }, "pages/product/product": { "navigationBarTitleText": "详情展示", "usingComponents": { "share": "/components/share" } }, "pages/set/set": { "navigationBarTitleText": "账号管理", "usingComponents": {} }, "pages/person/person": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/mobile/mobile": { "navigationBarTitleText": "修改手机号", "usingComponents": {} }, "pages/bindmobile/bindmobile": { "navigationBarTitleText": "绑定手机号", "usingComponents": {} }, "pages/aboutus/aboutus": { "navigationBarTitleText": "关于我们", "usingComponents": {} }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料", "usingComponents": {} }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈", "usingComponents": {} }, "pages/user/collect": { "navigationBarTitleText": "商品收藏", "usingComponents": { "empty": "/components/empty" } }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹", "usingComponents": { "empty": "/components/empty" } }, "pages/cart/cart": { "navigationBarTitleText": "购物车", "usingComponents": { "uni-number-box": "/components/uni-number-box" } }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "我的", "navigationStyle": "custom", "usingComponents": {} }, "pages/detail/detail": { "navigationBarTitleText": "", "usingComponents": { "share": "/components/share" } }, "pages/order/order": { "navigationBarTitleText": "我的订单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/user/wallet": { "navigationBarTitleText": "钱包", "usingComponents": {} }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券", "usingComponents": { "empty": "/components/empty" } }, "pages/money/money": { "usingComponents": {} }, "pages/order/createOrder": { "navigationBarTitleText": "创建订单", "usingComponents": {} }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单", "usingComponents": {} }, "pages/order/logistics": { "navigationBarTitleText": "物流信息", "usingComponents": {} }, "pages/order/consult": { "navigationBarTitleText": "协商历史", "usingComponents": {} }, "pages/order/refund": { "navigationBarTitleText": "申请退款", "usingComponents": {} }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情", "usingComponents": {} }, "pages/address/address": { "navigationBarTitleText": "我的收货地址", "usingComponents": {} }, "pages/address/addressManage": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/money/pay": { "navigationBarTitleText": "支付", "usingComponents": {} }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功", "usingComponents": {} }, "pages/notice/notice": { "navigationBarTitleText": "通知", "usingComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": {} }, "pages/product/list": { "navigationBarTitleText": "商品列表", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "uni-app", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
 
 /***/ }),
 
 /***/ 8:
-/*!************************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"stat"} ***!
-  \************************************************************/
+/*!*************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"stat"} ***!
+  \*************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11146,9 +11163,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 9:
-/*!************************************************!*\
-  !*** /Users/xuyi/dev/sh/m-demo/store/index.js ***!
-  \************************************************/
+/*!*************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/store/index.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

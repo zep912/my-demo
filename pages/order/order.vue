@@ -11,20 +11,13 @@
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
 				<scroll-view class="list-scroll-content" scroll-y>
 					<!-- 空白页 -->
-				<!-- 	<view v-if="tabItem.orderList.length === 0" class="nogoods">
-						<img src="../../static/nogoods.png" alt="">
-						<view>你还没有任何订单，看看其他的吧</view>
-						<button type="primary">去逛逛</button>
-					</view> -->
-
 					<empty v-if="tabItem.orderList.length === 0" :src='src' :msg='msg'></empty>
-
 					<!-- 订单列表 -->
-					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item" @click="orderDetails(item)">
+					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
 						<view class="i-top b-b">
 							<img src="../../static/shop.png" alt="" class='shopLogo'>
 							<text class="time">{{item.shopName}}</text>
-							<text class="state">{{item.stateTip}}</text>
+							<text class="state"  @click="orderDetails(item)">{{item.stateTip}}</text>
 						</view>
 
 						<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
@@ -53,7 +46,7 @@
 								<button class="action-btn" @click="againBuy(item)" v-show='item.state==3'>再次购买</button>
 								<button class="action-btn" @click="cancelOrder(item)" v-show='item.state==1'>取消订单</button>
 								<button class="action-btn recom" v-show='item.state==1'>立即支付</button>
-								<button class="action-btn recom" v-show='item.state==2'>查看物流</button>
+								<button class="action-btn recom" v-show='item.state==2' @click="logisticsTap">查看物流</button>
 							</view>
 						</view>
 					</view>
@@ -253,9 +246,19 @@
 					stateTipColor
 				};
 			},
+			//订单详情
 			orderDetails(item) {
+				if(item.state!=3){
+					uni.navigateTo({
+						url: 'orderDetails?status=' + item.state
+					})
+				}
+				
+			},
+			// 物流信息
+			logisticsTap(){
 				uni.navigateTo({
-					url: 'orderDetails?status=' + item.state
+					url:'logistics'
 				})
 			}
 		},
@@ -265,7 +268,6 @@
 <style lang="scss">
 	page,
 	.content {
-		// background: $page-color-base;
 		background: #F2F2F2;
 		height: 100%;
 		padding-top: 20px;
@@ -336,7 +338,6 @@
 			&.current {
 				// color: $base-color;
 				color: #F7B52C;
-
 				&:after {
 					content: '';
 					position: absolute;

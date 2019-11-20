@@ -1,8 +1,10 @@
 {
   "pages": [
+    "pages/delivery/deliverylist",
     "pages/index/index",
     "pages/delivery/delivery",
     "pages/delivery/set",
+    
     "pages/delivery/statistics",
     "pages/delivery/myprofit",
     "pages/delivery/billstatistics",

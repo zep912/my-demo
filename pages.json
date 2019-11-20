@@ -66,6 +66,18 @@
 			}
 		},
 		{
+			"path": "pages/delivery/deliverylist",
+			"style": {
+				"navigationBarTitleText": "全部送单",
+				"usingComponents": {
+				  "van-count-down": "/wxcomponents/vant/dist/count-down/index",
+				  "van-steps": "/wxcomponents/vant/dist/steps/index",
+				  "van-icon": "/wxcomponents/vant/dist/icon/index",
+				  "van-transition": "/wxcomponents/vant/dist/transition/index"
+				}
+			}
+		},
+		{
 			"path": "pages/delivery/statistics",
 			"style": {
 				"navigationBarTitleText": "送单统计",
