@@ -97,7 +97,7 @@
 			};
 		},
 		onLoad(){
-			this.loadData();
+			// this.loadData();
 		},
 		watch:{
 			//显示空白页

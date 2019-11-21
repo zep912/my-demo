@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/delivery/deliverylist",
+    "pages/shopcar/shopcar",
     "pages/index/index",
     "pages/delivery/delivery",
     "pages/delivery/set",
-    
+    "pages/delivery/deliverylist",
     "pages/delivery/statistics",
     "pages/delivery/myprofit",
     "pages/delivery/billstatistics",
@@ -18,7 +18,7 @@
     "pages/user/feedback",
     "pages/user/collect",
     "pages/user/footmark",
-    "pages/cart/cart",
+   
     "pages/public/login",
     "pages/user/user",
     "pages/detail/detail",
@@ -67,7 +67,7 @@
         "text": "分类"
       },
       {
-        "pagePath": "pages/cart/cart",
+        "pagePath": "pages/shopcar/shopcar",
         "iconPath": "static/tab-cart.png",
         "selectedIconPath": "static/tab-cart-current.png",
         "text": "购物车"

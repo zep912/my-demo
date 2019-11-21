@@ -169,9 +169,15 @@
 				}
 			}
 		},{
-			"path": "pages/cart/cart",
+			"path": "pages/shopcar/shopcar",
 			"style": {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "购物车",
+				"usingComponents": {
+				  "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
+				  "van-checkbox-group": "/wxcomponents/vant/dist/checkbox-group/index",
+				   "van-stepper": "/wxcomponents/vant/dist/stepper/index",
+				   "van-icon": "/wxcomponents/vant/dist/icon/index"
+				}
 			}
 		}, {
 			"path": "pages/public/login",
@@ -385,7 +391,7 @@
 				"text": "分类"
 			},
 			{
-				"pagePath": "pages/cart/cart",
+				"pagePath": "pages/shopcar/shopcar",
 				"iconPath": "static/tab-cart.png",
 				"selectedIconPath": "static/tab-cart-current.png",
 				"text": "购物车"
