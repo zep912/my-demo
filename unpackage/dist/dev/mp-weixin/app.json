@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/shopcar/shopcar",
     "pages/index/index",
     "pages/delivery/delivery",
     "pages/delivery/set",
@@ -10,15 +9,15 @@
     "pages/delivery/billstatistics",
     "pages/product/product",
     "pages/set/set",
-    "pages/person/person",
-    "pages/mobile/mobile",
-    "pages/bindmobile/bindmobile",
-    "pages/aboutus/aboutus",
+    "pages/set/person",
+    "pages/set/mobile",
+    "pages/set/bindmobile",
+    "pages/set/aboutus",
     "pages/userinfo/userinfo",
     "pages/user/feedback",
     "pages/user/collect",
     "pages/user/footmark",
-   
+    "pages/shopcar/shopcar",
     "pages/public/login",
     "pages/user/user",
     "pages/detail/detail",
@@ -33,8 +32,8 @@
     "pages/order/consult",
     "pages/order/refund",
     "pages/order/orderDetails",
-    "pages/address/address",
-    "pages/address/addressManage",
+    "pages/set/address",
+    "pages/set/addressManage",
     "pages/money/pay",
     "pages/money/paySuccess",
     "pages/notice/notice",
@@ -44,15 +43,16 @@
   "subPackages": [],
   "window": {
     "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "uni-app",
+    "navigationBarTitleText": "麦田圈",
     "navigationBarBackgroundColor": "#FFFFFF",
     "backgroundColor": "#f8f8f8"
   },
   "tabBar": {
-    "color": "#C0C4CC",
-    "selectedColor": "#fa436a",
+    "color": "#C2C2C2",
+    "selectedColor": "#FCAA00",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
+    "iconWidth": "20px",
     "list": [
       {
         "pagePath": "pages/index/index",

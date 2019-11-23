@@ -10,12 +10,9 @@
 					<text class="username-info">用户名:111212</text>
 				</text>
 			</view>
-	
-				<text class='login-now'>
-					<text>当前登录</text>
-				</text>
-		
-			
+			<text class='login-now'>
+				<text>当前登录</text>
+			</text>
 		</view>
 		<view class="list-cell b-b m-t" @click="navTo('person')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">个人资料</text>
@@ -41,6 +38,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js';
 	import {
 		mapMutations
 	} from 'vuex';
@@ -50,6 +48,9 @@
 				img: '/static/missing-face.png',
 			};
 		},
+		onLoad() {
+			this.getData()
+		},
 		methods: {
 			...mapMutations(['logout']),
 			// 跳转路由
@@ -57,6 +58,32 @@
 				uni.navigateTo({
 					url: `../set/${url}`
 				});
+			},
+			// 初始化
+			getData(){
+				// axios.get('http://39.98.122.62:8085/sso/user/1')
+				// axios.get('/sso/user/16').then(res=>{
+				// 	console.log(res)
+				// })
+				// let obj = {
+				// 	param:747653
+				// }
+				// axios.post('http://39.98.122.62:8085/sso/user/login',obj).then(res=>{
+				// 	console.log(res)
+				// })
+				// uni.request({
+				//     url: 'http://39.98.122.62:8085/sso/user/sendCode', //仅为示例，并非真实接口地址。
+				// 	method:'GET',
+				//     data: {
+				//         telephone: 13667138671
+				//     },
+				//     header: {
+				        
+				//     },
+				//     success: (res) => {
+				//         console.log(res.data);
+				//     }
+				// });
 			}
 		}
 	}
@@ -107,6 +134,7 @@
 		background: #fff;
 		z-index: 1;
 		padding-left: 30rpx;
+
 		.portrait {
 			width: 130upx;
 			height: 130upx;

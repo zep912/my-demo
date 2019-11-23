@@ -134,7 +134,7 @@ page {
     line-height: 40rpx;
     position: absolute;
     right: -26rpx;
-    top: 130rpx;
+    top: 26rpx;
     z-index: 900;
 }
 .user-info-box {

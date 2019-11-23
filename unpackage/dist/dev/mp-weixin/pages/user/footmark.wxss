@@ -5,8 +5,12 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.collect /deep/ .empty .noCollect ._img {
+  width: 114rpx;
+  height: 114rpx;
+}
 page {
-  background: #F5F5F5;
+  background: #fff;
 }
 .collect-wrap {
   width: 90%;

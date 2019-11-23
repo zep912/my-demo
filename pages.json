@@ -203,7 +203,7 @@
 					"van-icon": "/wxcomponents/vant/dist/icon/index"
 				},
 				// #ifdef MP
-				"navigationStyle": "custom",
+				// "navigationStyle": "custom",
 				// #endif
 				"app-plus": {
 					"bounce": "none"

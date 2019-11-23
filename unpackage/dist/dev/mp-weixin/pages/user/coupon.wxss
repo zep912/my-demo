@@ -5,6 +5,10 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.couponbox /deep/ .noCollect ._img {
+  width: 176rpx;
+  height: 118rpx;
+}
 .couponbox .tabactive {
   color: #F7B52C;
 }

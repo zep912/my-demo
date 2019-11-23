@@ -478,4 +478,8 @@ page {
   width: 100%;
   height: 210rpx;
 }
+uni-tabbar .uni-tabbar__icon {
+  width: 40rpx;
+  height: 40rpx;
+}
 
