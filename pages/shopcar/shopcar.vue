@@ -1,0 +1,379 @@
+<template>
+	<view class="shopCar">
+		<empty :src='src' :msg='msg' v-if='list.length!=0'></empty>
+		<!-- 商品 -->
+		<view class="shopcar-goods" v-if='list.length==0'>
+			<view class="shopcar-title">
+				<view class="shopcar-title-text">你购物车共<text class="shopcar-titleTxt-color">10</text>件商品</view>
+				<view class="edit" @click="edit">{{update}}</view>
+			</view>
+			<!-- 商品 -->
+			<view class="shopcar-wares">
+				<view class="shopcar-check">
+					<van-checkbox :value="checked" @change="onChange" custom-class='checkbox' checked-color="#F7B62C"></van-checkbox>
+					<view class="shopcar-shopTitle">
+						<view class="shopcar-check-shops">
+							<img src="../../static/shop.png" alt="" class='shopLogo'>
+							<text class="title">麦田</text>
+						</view>
+						<view class="shopCar-icon">
+							<van-icon name="arrow" />
+						</view>
+					</view>
+				</view>
+				<view class="shopcar-sp">
+					<view style="display: flex;align-items: center;">
+						<van-checkbox :value="checked" @change="onChange" custom-class='checkbox-sp' checked-color="#F7B62C"></van-checkbox>
+					</view>
+					
+					<view class="shopcar-sp-titles">
+						<view class="shopcar-sp-mj">
+							<!-- 满减 -->
+							<view class="mj">
+								<text class="mj-text"><text class="shopcar-sp-titleColor">满减</text>够满99.00元可减20元</text>
+								<view class="mj-right">
+									<text>凑单</text>
+									<van-icon name="arrow" color='#F7B62C' size='12'/>
+								</view>
+							</view>
+							
+							<!-- 商品信息 -->
+							<view class="shopcar-goods-info">
+								<image src="../../static/goods.png" mode=""></image>
+								<view class="shopcar-goods-infoes">
+									<view class="shopcar-goodsinfo_one">香辣牛肉干</view>
+									<view class="shopcar-goodsinfo_two">规格：10*200g</view>
+									<view class="shopcar-goodsinfo_three">
+										<text>998.9</text>
+										<text>999</text>
+									</view>
+									
+									<!-- 加减 -->
+									<view class="shopcar-add">
+										<text>仅剩1件</text>
+										<view class="add">
+											<text class="add-radius minus" @click="minus">-</text>
+											<text>{{num}}</text>
+											<text class="add-radius plus" @click="add">+</text>
+										</view>
+										<!-- <van-stepper :value="stepValue" @change="stepperChange" minus-class='minusClass' plus-class='plusClass' input-class='inputClass' integer /> -->
+									</view>
+								</view>
+								
+							</view>
+							<!-- 赠品 -->
+							<view class="shopcar-gift">
+								<text>[赠品]直升飞机一台</text>
+								<van-icon name="arrow" />
+							</view>
+							<!-- 修改优惠 -->
+							<view class="shopcar-discount">
+								修改优惠
+							</view>
+						</view>
+						
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	import empty from '@/components/empty.vue'
+	export default {
+		components: {
+			empty
+		},
+		data() {
+			return {
+				src: '../../static/shopcarempty.png',
+				msg: '购物车没有商品，你还可以',
+				list: [],
+				update: '编辑',
+				checked:true,
+				stepValue:1,
+				num:1
+			}
+		},
+		methods: {
+			edit() {
+				if (this.update == '编辑') {
+					this.update = '完成';
+				} else {
+					this.update = '编辑';
+				}
+			},
+			onChange(){
+				
+			},
+			stepperChange(){
+				
+			},
+			// 增加
+			minus(){
+				if(this.num==1){
+					this.num=1
+				}else{
+					this.num--
+				}
+			},
+			add(){
+				this.num++;
+			}
+		}
+	}
+</script>
+
+<style lang="scss">
+	// 购物车
+	.shopcar-wares{
+		background: #fff;
+		margin-top: 10rpx;
+		.shopcar-check{
+			box-sizing: border-box;
+			padding-left:20rpx;
+			padding-top: 30rpx;
+			// display: flex;
+			// justify-content: space-between;
+			// align-items: center;
+			overflow: hidden;
+			.checkbox{
+				float: left;
+			}
+			.shopcar-shopTitle{
+				width: 90%;
+				margin-left: 22rpx;
+				float: left;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				border-bottom: 1px solid #E3E3E3;
+				padding-bottom: 30rpx;
+				padding-right: 30rpx;
+				box-sizing: border-box;
+				.shopcar-check-shops{
+					.shopLogo{
+						width:34rpx;
+						height:32rpx;
+						margin-right: 15rpx;
+					}
+					
+					.title{
+						font-size:28rpx;
+						font-weight:600;
+						color:rgba(69,69,69,1);
+					}
+				}
+			}
+		}
+		.shopcar-sp{
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			margin-left: 20rpx;
+			box-sizing: border-box;
+			.checkbox-sp{
+				float: left;
+			}
+			.shopcar-sp-titles{
+				// float: left;
+				width: 90%;
+				margin-left:36px;
+				box-sizing: border-box;
+				.shopcar-sp-mj{
+					margin-top: 20rpx;
+					.shopcar-discount{
+						font-size:24rpx;
+						font-weight:400;
+						color:rgba(245,86,65,1);
+						line-height:37px;
+						text-align: right;	
+						box-sizing: border-box;
+						padding-right: 30rpx;
+					}
+					.mj-text{
+						font-size:24rpx;
+						font-weight:400;
+						color:rgba(81,81,81,1);
+					}
+					.mj{
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						padding-right: 30rpx;
+						
+						.mj-right{
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+							text{
+								font-size:24rpx;
+								font-weight:400;
+								color:rgba(245,86,65,1);
+								margin-right: 20rpx;
+							}
+						}
+					}
+					.shopcar-sp-titleColor{
+						width:90rpx;
+						height:28rpx;
+						border:1px solid rgba(255,50,50,1);
+						border-radius:14rpx;
+						font-size:18rpx;
+						font-weight:400;
+						color:rgba(255,50,50,1);
+						margin-right: 20rpx;
+					}
+					.shopcar-goods-info{
+						margin-top: 20rpx;
+						overflow: hidden;
+						position: relative;
+						image{
+							width: 200rpx;
+							height: 200rpx;
+							float: left;
+							margin-right: 20rpx;
+						}
+						.shopcar-goods-infoes{
+							
+							.shopcar-goodsinfo_one{
+								font-size:30rpx;
+								font-weight:400;
+								color:rgba(31,31,31,1);
+							}
+							.shopcar-goodsinfo_two{
+								font-size:24rpx;
+								font-weight:400;
+								color:rgba(158,158,158,1);
+								margin-top: 15rpx;
+								margin-bottom: 64rpx;
+							}
+							.shopcar-goodsinfo_three{
+								font-size:24rpx;
+								font-weight:500;
+								color:rgba(245,86,65,1);
+								text{
+									display: block;
+								}
+								text:nth-of-type(1){
+									font-size:32rpx;
+									font-weight:500;
+									color:rgba(245,86,65,1);
+								}
+								text:nth-of-type(2){
+									text-decoration: line-through;
+								}
+							}
+						}
+						.shopcar-add{
+							position: absolute;
+							right: 30rpx;
+							bottom: 0;
+							font-size: 24rpx;
+							color: #9E9E9E;
+							text-align: center;
+							.minusClass,.plusClass{
+								width:28rpx;
+								height:28rpx;
+								color: #F7B52C;
+								border-radius: 50%;
+								background: #F7B52C;
+							}
+							.add{
+								font-size: 28rpx;
+								.add-radius{
+									display: inline-block;
+									width: 28rpx;
+									height: 28rpx;
+									border-radius: 50%;
+									border: 1px solid #F7B52C;
+									line-height: 22rpx;
+									text-align: center;
+								}
+								.minus{
+									color: #F7B52C;
+								}
+								.plus{
+									background: #F7B52C;
+									color: #fff;
+								}
+								text:nth-of-type(2){
+									margin-right: 34rpx;
+									margin-left: 34rpx;
+									font-size:28rpx;
+									font-weight:600;
+									color:rgba(42,42,42,1)
+								}
+							}
+						}
+					}
+				}
+			}
+		
+		}
+	}
+	.shopcar-gift{
+		width: 96%;
+		height: 40rpx;
+		margin-top: 20rpx;
+		box-sizing: border-box;
+		padding-left: 20rpx;
+		padding-right: 20rpx;
+		background:rgba(250,250,250,1);
+		border-radius:18rpx;
+		font-size:24rpx;
+		font-weight:400;
+		color:rgba(245,86,65,1);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+	// .van-stepper__minus: after,.van-stepper__minus: before,.van-stepper__plus: after,.van-stepper__plus: before{
+	// 	background-color:#F7B52C
+	// }
+	page {
+		background: #F2F2F2;
+	}
+
+	.shopCar .noCollect img {
+		width: 100rpx;
+		height: 100rpx;
+	}
+
+	.shopcar-goods {
+		width: 100%;
+		height: 90rpx;
+		background: #fff;
+		border-top: 1px solid #E3E3E3;
+		.shopcar-title {
+			width: 100%;
+			height: 100%;
+			box-sizing: border-box;
+			padding-right: 20rpx;
+			padding-left: 20rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			.edit {
+				font-size: 28rpx;
+				font-weight: 500;
+				color: rgba(88, 88, 88, 1);
+			}
+		}
+
+		.shopcar-title-text {
+			font-size: 24rpx;
+			font-weight: 500;
+			color: #585858;
+
+			.shopcar-titleTxt-color {
+				font-size: 32rpx;
+				color: #F7B62C;
+				margin-right: 8rpx;
+				margin-left: 8rpx;
+			}
+		}
+	}
+</style>
