@@ -1,7 +1,7 @@
 <template>
 	<view class="cancelOrder">
 		<view class="cancelBox">
-			<img src="../../static/icon5.png" alt="">
+			<img src="../../static/order/guanbi.png" alt="">
 			<text class="cancel-success">取消订单成功</text>
 			<text class="cancel-than">订单已取消，请告诉我们取消的原因，帮助我们改进，我们想做的更好，谢谢</text>
 		</view>

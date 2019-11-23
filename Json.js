@@ -5,7 +5,7 @@ const userInfo = {
 		id: 1,
 		mobile: 18888888888,
 		nickname: 'Leo yo',
-		portrait: '/static/missing-face.png'
+		portrait: '/static/my/missing-face.png'
 	},
 	msg: '提示'
 }

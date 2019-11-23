@@ -108,7 +108,7 @@
 						"type": "transparent"
 					}
 				}
-			}
+			}	
 		}, {
 			"path": "pages/set/set",
 			"style": {
@@ -116,25 +116,31 @@
 			}
 		},
 		{
-			"path": "pages/person/person",
+			"path": "pages/set/person",
 			"style": {
 				"navigationBarTitleText": "个人资料"
 			}
 		},
 		{
-			"path": "pages/mobile/mobile",
+			"path": "pages/set/mobile",
 			"style": {
-				"navigationBarTitleText": "修改手机号"
+				"navigationBarTitleText": "修改手机号",
+				"usingComponents": {
+				  "van-toast": "/wxcomponents/vant/dist/toast/index"
+				}
 			}
 		},
 		{
-			"path": "pages/bindmobile/bindmobile",
+			"path": "pages/set/bindmobile",
 			"style": {
-				"navigationBarTitleText": "绑定手机号"
+				"navigationBarTitleText": "绑定手机号",
+				"usingComponents": {
+				  "van-toast": "/wxcomponents/vant/dist/toast/index"
+				}
 			}
 		},
 		{
-			"path": "pages/aboutus/aboutus",
+			"path": "pages/set/aboutus",
 			"style": {
 				"navigationBarTitleText": "关于我们"
 			}
@@ -318,12 +324,12 @@
 				}
 			}
 		},{
-			"path": "pages/address/address",
+			"path": "pages/set/address",
 			"style": {
 				"navigationBarTitleText": "我的收货地址"
 			}
 		}, {
-			"path": "pages/address/addressManage",
+			"path": "pages/set/addressManage",
 			"style": {
 				"navigationBarTitleText": "",
 				"usingComponents":{
@@ -369,15 +375,16 @@
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
+		"navigationBarTitleText": "麦田圈",
 		"navigationBarBackgroundColor": "#FFFFFF",
 		"backgroundColor": "#f8f8f8"
 	},
 	"tabBar": {
-		"color": "#C0C4CC",
-		"selectedColor": "#fa436a",
+		"color": "#C2C2C2",
+		"selectedColor": "#FCAA00",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
+		"iconWidth":"20px",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"iconPath": "static/tab-home.png",

@@ -2,10 +2,10 @@
 	<view class="container">
 
 		<view class="user-section">
-			<image class="bg" src="/static/user-bg.jpg"></image>
+			<image class="bg" src="../../static/my/user-bg.png"></image>
 			<view class="user-info-box">
 				<view class="portrait-box">
-					<image class="portrait" :src="userInfo.portrait || '/static/missing-face.png'"></image>
+					<image class="portrait" :src="userInfo.portrait || '../../static/my/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
 					<text class="username">{{userInfo.nickname || '游客'}}</text>
@@ -13,7 +13,7 @@
 				</view>
 
 			</view>
-			<view class='login-now' @click="navTo('/pages/set/set')">
+			<view class='login-now' @click="navTo('/pages/set/set')">	
 				<text>账号管理</text>
 			</view>
 		</view>
@@ -29,19 +29,23 @@
 				<view class="order-section">
 
 					<view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="yticon icon-shouye"></text>
+					
+						<img src="../../static/my/my-pending.png" alt="" style='width:64rpx;height:54rpx;margin-bottom: 18rpx;'>
 						<text>待付款</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="yticon icon-daifukuan"></text>
+					
+						<img src="../../static/my/my-received.png" alt="" style='width:62rpx;height:54rpx;margin-bottom: 18rpx;'>
 						<text>待收货</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/order?state=3')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="yticon icon-yishouhuo"></text>
+			
+						<img src="../../static/my/my-evaluated.png" alt="" style='width:66rpx;height:54rpx;margin-bottom: 18rpx;'>
 						<text>待评价</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/aftersale?state=5')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="yticon icon-shouhoutuikuan"></text>
+					
+						<img src="../../static/my/my-refund.png" alt="" style='width:58rpx;height:60rpx;margin-bottom: 18rpx;'>
 						<text>退款/售后</text>
 					</view>
 				</view>
@@ -51,11 +55,11 @@
 		<view class="my-footprint">
 			<view class="my-footprint-box">
 				<view class=""  @click="navTo('/pages/user/collect')">
-					<text class="my-foot-num">1</text>
+					<text class="my-foot-num">{{shoucang?shoucang:0}}</text>
 					<text class="my-foot-title">商品收藏</text>
 				</view>
 				<view class="" @click="navTo('/pages/user/footmark')">
-					<text class="my-foot-num">100</text>
+					<text class="my-foot-num">{{zuji?zuji:0}}</text>
 					<text class="my-foot-title">我的足迹</text>
 				</view>
 			</view>
@@ -63,15 +67,15 @@
 		<!-- 钱包 -->
 		<view class="wallet">
 			<view class="wallet-cell" @click="navTo('/pages/user/wallet')" >
-				<img src="../../static/my-03.png" class="wallet-img"></image>
+				<img src="../../static/my/my-wallet.png" class="wallet-img"></image>
 				<text>钱包</text>
 			</view>
 			<view class="wallet-cell" @click="navTo('/pages/delivery/delivery')">
-				<img src="../../static/my-04.png" class="wallet-img"></image>
+				<img src="../../static/my/my-delivery.png" class="wallet-img"></image>
 				<text>麦吉配送</text>
 			</view>
 			<view class="wallet-cell"  @click="navTo('/pages/user/feedback')">
-				<img src="../../static/my-05.png" class="wallet-img"></image>
+				<img src="../../static/my/my-feedback.png" class="wallet-img"></image>
 				<text>意见反馈</text>
 			</view>
 		</view>
@@ -122,6 +126,8 @@
 		},
 		data() {
 			return {
+				shoucang:1,
+				zuji:0,
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
@@ -350,7 +356,7 @@
 			line-height: 40rpx;
 			position: absolute;
 			right: -26rpx;
-			top: 130rpx;
+			top: 26rpx;
 			z-index: 900;
 		}
 	}

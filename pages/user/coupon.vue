@@ -7,7 +7,7 @@
 					<view class="coupon">
 						<view class="coupon-left">
 							<view class="coupon-left-box">
-								<img src="../../static/couponPrice.png" alt="">
+								<img src="../../static/my/couponPrice.png" alt="">
 								<text class="coupon-left-boxPrice">30</text>
 								<text class="coupon-left-boxman">满100元可用</text>
 							</view>
@@ -33,7 +33,7 @@
 					<view class="coupon">
 						<view class="coupon-left">
 							<view class="coupon-left-box">
-								<img src="../../static/beuesed.png" alt="">
+								<img src="../../static/my/beuesed.png" alt="">
 								<text class="coupon-left-boxPrice">30</text>
 								<text class="coupon-left-boxman">满100元可用</text>
 							</view>
@@ -47,7 +47,7 @@
 								<text class="coupon-con-time">09月1日-09月30日</text>
 							</view>
 							<!-- <button class="coupon-btn">立即使用</button> -->
-							<img src="../../static/used.png" alt="" class='couponImg'>
+							<img src="../../static/my/used.png" alt="" class='couponImg'>
 						</view>
 					</view>
 				</view>
@@ -59,7 +59,7 @@
 					<view class="coupon">
 						<view class="coupon-left">
 							<view class="coupon-left-box">
-								<img src="../../static/beuesed.png" alt="">
+								<img src="../../static/my/beuesed.png" alt="">
 								<text class="coupon-left-boxPrice">30</text>
 								<text class="coupon-left-boxman">满100元可用</text>
 							</view>
@@ -73,7 +73,7 @@
 								<text class="coupon-con-time">09月1日-09月30日</text>
 							</view>
 							<!-- <button class="coupon-btn">立即使用</button> -->
-							<img src="../../static/Beoverdue.png" alt="" class='couponImg'>
+							<img src="../../static/my/Beoverdue.png" alt="" class='couponImg'>
 						</view>
 					</view>
 				</view>
@@ -93,7 +93,7 @@
 			return {
 				active: 0,
 				arr:[1],
-				src:'../../static/nocoupon.png',
+				src:'../../static/my/nocoupon.png',
 				msg:'您还没有任何优惠券，去看看其他的吧'
 			}
 		},
@@ -110,6 +110,10 @@
 </script>
 
 <style lang="scss">
+	.couponbox /deep/ .noCollect img{
+		width: 176rpx;
+		height: 118rpx;
+	}
 	.couponbox .tabactive {
 		color: #F7B52C;
 	}

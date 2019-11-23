@@ -1,6 +1,8 @@
 <template>
-	<view class="content b-t">
-		<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)">
+	<view class="content b-t adress">
+		<!-- 缺省 -->
+		<empty :src='src' :msg='msg' v-if='addressList.length==0'></empty>
+		<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)"  v-if='addressList.length!=0'>
 			<view class="wrapper">
 				<view class="u-box">
 					<text class="name">{{item.name}}</text>
@@ -9,36 +11,44 @@
 				</view>
 				<view class="address-box">
 					<text class="address">{{item.addressName}} {{item.area}}</text>
-					
 				</view>
-
 			</view>
-			<text class="yticon icon-bianji" @click.stop="addAddress('edit', item)"></text>
+			<text  @click.stop="addAddress('edit', item)">
+				<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'>
+			</text>
 		</view>
 		<button class="add-btn" @click="addAddress('add')">添加新地址</button>
 	</view>
 </template>
 
 <script>
+	import empty from '@/components/empty.vue'
 	export default {
+		components:{
+			empty
+		},
 		data() {
 			return {
+				src:'../../static/my/my-address.png',
+				msg:'你还没有任何地址，赶紧添加吧',
 				source: 0,
-				addressList: [{
-					name: '刘晓晓',
-					mobile: '18666666666',
-					addressName: '贵族皇仕牛排(东城店)',
-					address: '北京市东城区',
-					area: 'B区',
-					default: true
-				}, {
-					name: '刘大大',
-					mobile: '18667766666',
-					addressName: '龙回1区12号楼',
-					address: '山东省济南市历城区',
-					area: '西单元302',
-					default: false,
-				}]
+				addressList: [
+						{
+						name: '刘晓晓',
+						mobile: '18666666666',
+						addressName: '贵族皇仕牛排(东城店)',
+						address: '北京市东城区',
+						area: 'B区',
+						default: true
+					}, {
+						name: '刘大大',
+						mobile: '18667766666',
+						addressName: '龙回1区12号楼',
+						address: '山东省济南市历城区',
+						area: '西单元302',
+						default: false,
+					},
+				]
 			}
 		},
 		onLoad(option) {
@@ -56,7 +66,7 @@
 			},
 			addAddress(type, item) {
 				uni.navigateTo({
-					url: `/pages/address/addressManage?type=${type}&data=${JSON.stringify(item)}`
+					url: `/pages/set/addressManage?type=${type}&data=${JSON.stringify(item)}`
 				})
 			},
 			//添加或修改成功之后回调
@@ -71,6 +81,18 @@
 </script>
 
 <style lang='scss'>
+	.adress /deep/ .noCollect img{
+		width: 116rpx;
+		height: 154rpx;
+	}
+	.adress /deep/ .noCollect  uni-button{
+		display: none;
+	}
+	.adress /deep/ .noCollect .noCollect-word{
+		font-size:30rpx;
+		font-weight:600;
+		color:#1F1F1F;
+	}
 	page {
 		padding-bottom: 120upx;
 	}

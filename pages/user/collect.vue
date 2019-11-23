@@ -47,33 +47,33 @@
 		},
 		data(){
 			return{
-				src:'../../static/nocollet.png',
+				src:'../../static/my/nocollet.png',
 				msg:'您还没有任何收藏，去看看其他的吧',
 				checked:false,
 				edit:'编辑',
 				isShow:false,
 				collectGoods:[
-					{
-						title:'香辣牛肉干',
-						img:'/static/goods.png',
-						attr:'规格 10*200g',
-						price:'999.99',
-						name:'麦田圈官网旗舰店'
-					},
-					{
-						title:'香辣牛肉干',
-						img:'/static/goods.png',
-						attr:'规格 10*200g',
-						price:'999.99',
-						name:'麦田圈官网旗舰店'
-					},
-					{
-						title:'香辣牛肉干',
-						img:'/static/goods.png',
-						attr:'规格 10*200g',
-						price:'999.99',
-						name:'麦田圈官网旗舰店'
-					}
+					// {
+					// 	title:'香辣牛肉干',
+					// 	img:'/static/goods.png',
+					// 	attr:'规格 10*200g',
+					// 	price:'999.99',
+					// 	name:'麦田圈官网旗舰店'
+					// },
+					// {
+					// 	title:'香辣牛肉干',
+					// 	img:'/static/goods.png',
+					// 	attr:'规格 10*200g',
+					// 	price:'999.99',
+					// 	name:'麦田圈官网旗舰店'
+					// },
+					// {
+					// 	title:'香辣牛肉干',
+					// 	img:'/static/goods.png',
+					// 	attr:'规格 10*200g',
+					// 	price:'999.99',
+					// 	name:'麦田圈官网旗舰店'
+					// }
 				]
 			}
 		},
@@ -103,8 +103,12 @@
 </script>
 
 <style lang="scss">
+	.collect /deep/ .noCollect img{
+		width: 168rpx;
+		height: 200rpx;
+	}
 	page{
-		background: #F5F5F5;
+		background: #fff;
 	}
 	.collect-wrap{
 		width: 90%;

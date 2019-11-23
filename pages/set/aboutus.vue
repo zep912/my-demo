@@ -2,7 +2,7 @@
 	<div>
 		<view class="aboutus">
 			<view class="about-logo">
-				<img src="/static/aboutus.png" alt="">
+				<img src="/static/my/aboutus.png" alt="">
 			</view>
 			<view class="about-edition">
 				V3.0

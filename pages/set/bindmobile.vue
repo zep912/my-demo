@@ -2,8 +2,8 @@
 	<div>
 		<view class="bindmobile container">
 			<view class="mobile-code">
-				<input type="text" placeholder="请输入新手机号" class="mobile-input" placeholder-class="input-placeholder" maxlength='11' v-model="newMobile"/>
-				<button type="primary" @click="getCode" class="getCode">获取验证码</button>
+				<input type="text" placeholder="请输入新手机号" class="mobile-input" placeholder-class="input-placeholder" maxlength='11' v-model="newMobile" />
+				<button type="primary" @click="getCode" class="getCode" :disabled="disabled">{{code}}</button>
 			</view>
 			<view class="new-mobile">
 				<input type="text"  placeholder="请输入新手机号码验证" class="new-mobile-input mobile-input" placeholder-class="input-placeholder" maxlength='11' v-model="newCode"/>
@@ -18,7 +18,11 @@
 		data() {
 			return {
 				newMobile:'',
-				newCode:''
+				newCode:'',
+				code:'获取验证码',
+				disabled:false,
+				msgCode:'',
+				num:60,
 			}
 		},
 		onLoad() {
@@ -26,7 +30,22 @@
 		},
 		methods: {
 			getCode(){
-				console.log(this.newMobile)
+				if (this.newMobile!='') {
+					this.disabled = true;
+					this.code = this.num + 's';
+					var timer = setInterval(() => {
+						this.num--;
+						this.code = this.num + 's';
+						if (this.num == 0) {
+							clearInterval(timer);
+							this.code = '重新发送';
+							this.num = 60;
+							this.disabled = false;
+						}
+					}, 1000)
+				}else{
+					Toast.fail('请输入手机号码');
+				}
 			},
 			save(){
 				console.log(this.newCode)

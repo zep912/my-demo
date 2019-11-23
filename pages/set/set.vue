@@ -55,7 +55,7 @@
 			// 跳转路由
 			navTo(url) {
 				uni.navigateTo({
-					url: `../${url}/${url}`
+					url: `../set/${url}`
 				});
 			}
 		}

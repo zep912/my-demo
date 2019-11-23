@@ -149,12 +149,12 @@
 					}
 				},
 				img:[
-					'../../static/icon1.png',
-					'../../static/icon2.png',
-					'../../static/icon3.png',
-					'../../static/icon4.png',
-					'../../static/icon5.png',
-					'../../static/icon6.png',
+					'../../static/order/fahuo.png',
+					'../../static/order/fukuan.png',
+					'../../static/order/shouhuo.png',
+					'../../static/order/chenggong.png',
+					'../../static/order/guanbi.png',
+					'../../static/order/wancheng.png',
 				],
 				order:{
 					status:'',

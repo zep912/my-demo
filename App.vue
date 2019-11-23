@@ -30,11 +30,12 @@
 		},
 	}
 </script>
-<style>
-	@import "/wxcomponents/vant/dist/common/index.wxss";
-</style>
-<style lang='scss'>
 
+<style lang='scss'>
+uni-tabbar .uni-tabbar__icon{
+	width: 40rpx;
+	height: 40rpx;
+}
 	/*
 		全局公共样式和字体图标
 	*/

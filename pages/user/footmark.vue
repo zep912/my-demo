@@ -1,9 +1,8 @@
 <template>
 	<view class="collect">
+		<!-- 没有收藏 -->
 		<empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty>
 		<view  v-if='collectGoods.length!=0'>
-		
-		<!-- 没有收藏 -->
 		<view class="collect-wrap">
 			<text>共<text class="collect-num">10</text>条,<text>最多为您保存<text>40</text>条</text></text>
 			<text @click="editClick">{{edit}}</text>
@@ -44,33 +43,33 @@
 		},
 		data(){
 			return{
-				src:'../../static/footmark.png',
+				src:'../../static/my/footmark.png',
 				msg:'您还没有任何足迹，看看其他的吧',
 				checked:false,
 				edit:'编辑',
 				isShow:false,
 				collectGoods:[
-					{
-						title:'香辣牛肉干',
-						img:'/static/goods.png',
-						attr:'规格 10*200g',
-						price:'999.99',
-						name:'麦田圈官网旗舰店'
-					},
-					{
-						title:'香辣牛肉干',
-						img:'/static/goods.png',
-						attr:'规格 10*200g',
-						price:'999.99',
-						name:'麦田圈官网旗舰店'
-					},
-					{
-						title:'香辣牛肉干',
-						img:'/static/goods.png',
-						attr:'规格 10*200g',
-						price:'999.99',
-						name:'麦田圈官网旗舰店'
-					}
+					// {
+					// 	title:'香辣牛肉干',
+					// 	img:'/static/goods.png',
+					// 	attr:'规格 10*200g',
+					// 	price:'999.99',
+					// 	name:'麦田圈官网旗舰店'
+					// },
+					// {
+					// 	title:'香辣牛肉干',
+					// 	img:'/static/goods.png',
+					// 	attr:'规格 10*200g',
+					// 	price:'999.99',
+					// 	name:'麦田圈官网旗舰店'
+					// },
+					// {
+					// 	title:'香辣牛肉干',
+					// 	img:'/static/goods.png',
+					// 	attr:'规格 10*200g',
+					// 	price:'999.99',
+					// 	name:'麦田圈官网旗舰店'
+					// }
 				]
 			}
 		},
@@ -105,8 +104,12 @@
 </script>
 
 <style lang="scss">
+	.collect /deep/ .empty .noCollect img{
+		width: 114rpx;
+		height: 114rpx;
+	}
 	page{
-		background: #F5F5F5;
+		background: #fff;
 	}
 	.collect-wrap{
 		width: 90%;

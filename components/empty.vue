@@ -34,18 +34,17 @@
 
 <style lang="scss">
 .noCollect{
-		padding-top: 139rpx;
+		padding-top: 200rpx;
 		text-align: center;
+		border-top: 1px solid #f2f2f2;
 		img{
-			width: 168rpx;
-			height: 130rpx;
-			margin-bottom: 73rpx;
+			
+			margin-bottom: 98rpx;
 		}
 		.noCollect-word{
 			font-size:30rpx;
 			font-weight:500;
 			color:rgba(51,51,51,1);
-			line-height:60px;
 			opacity:0.5;
 			margin-bottom: 143rpx;
 		}

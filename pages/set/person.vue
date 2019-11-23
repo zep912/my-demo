@@ -10,17 +10,17 @@
 			<text class="cell-tip">{{person.userName}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell" @click="navTo('性别')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="navTo('性别')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">性别</text>
 			<text class="cell-tip">{{person.sex}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell" @click="navTo('生日')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="navTo('生日')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">生日</text>
 			<text class="cell-tip">{{person.birthday}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell" @click="navTo('体重')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="navTo('体重')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">体重</text>
 			<text class="cell-tip">{{person.weight}}</text>
 			<text class="cell-more yticon icon-you"></text>
@@ -73,7 +73,7 @@
 
 <style lang='scss'>
 	page{
-		background: $page-color-base;
+		background: #f2f2f2;
 		padding-top: 16rpx;
 	}
 	.container .log-save{
