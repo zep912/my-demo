@@ -511,4 +511,9 @@ page {
         font-weight: 500;
         color: #f55641;
 }
+.info-box .authorize {
+  position: absolute;
+  right: 50%;
+  top: 38%;
+}
 

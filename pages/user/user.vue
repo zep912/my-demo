@@ -8,8 +8,11 @@
 					<image class="portrait" :src="userInfo.portrait || '../../static/my/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username">{{userInfo.nickname || '游客'}}</text>
+					<text class="username">{{userInfo.nickname}}</text>
 					<text class="info-mobile">{{userInfo.mobile}}</text>
+					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-show='!userInfo.nickname'>
+						<text>点击授权登录</text>
+					</view>
 				</view>
 
 			</view>
@@ -157,7 +160,9 @@
 				]
 			}
 		},
-		onLoad() {},
+		onLoad(option) {
+			
+		},
 		// // #ifndef MP
 		// onNavigationBarButtonTap(e) {
 		// 	const index = e.index;
@@ -249,6 +254,7 @@
 	}
 </script>
 <style lang='scss'>
+	
 	%flex-center {
 		display: flex;
 		flex-direction: column;
@@ -713,5 +719,10 @@
 			}
 		}
 		
+	}
+	.info-box .authorize{
+		position: absolute;
+		right: 50%;
+		top: 38%;
 	}
 </style>

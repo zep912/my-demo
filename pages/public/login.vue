@@ -1,245 +1,217 @@
 <template>
-	<view class="container">
-		<view class="left-bottom-sign"></view>
-		<view class="back-btn yticon icon-zuojiantou-up" @click="navBack"></view>
-		<view class="right-top-sign"></view>
-		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
-		<view class="wrapper">
-			<view class="left-top-sign">LOGIN</view>
-			<view class="welcome">
-				欢迎回来！
+	<view class="delivery">
+		<!-- 头部 -->
+		<image src="../../static/delivery/peisongbg.png" mode="" style="width: 100%;height: 400rpx;"></image>
+		<view class="de-logo">
+			<img src="../../static/delivery/logo.png" alt="">
+		</view>
+		<!-- 登陆 -->
+		<view class="de-login">
+			<view class="de-login-phone">
+				<image src="../../static/delivery/phone.png" mode=""></image>
+				<input type="text" value="" placeholder="请输入手机号码" placeholder-class='customClss' v-model="phone" maxlength="11"/>
 			</view>
-			<view class="input-content">
-				<view class="input-item">
-					<text class="tit">手机号码</text>
-					<input 
-						type="number" 
-						:value="mobile" 
-						placeholder="请输入手机号码"
-						maxlength="11"
-						data-key="mobile"
-						@input="inputChange"
-					/>
-				</view>
-				<view class="input-item">
-					<text class="tit">密码</text>
-					<input 
-						type="mobile" 
-						value="" 
-						placeholder="8-18位不含特殊字符的数字、字母组合"
-						placeholder-class="input-empty"
-						maxlength="20"
-						password 
-						data-key="password"
-						@input="inputChange"
-						@confirm="toLogin"
-					/>
-				</view>
-			</view>
-			<button class="confirm-btn" @click="toLogin" :disabled="logining">登录</button>
-			<view class="forget-section">
-				忘记密码?
+			<view class="de-login-code">
+				<image src="../../static/delivery/code.png" mode=""></image>
+				<input type="text" value="" placeholder="请输入验证码" placeholder-class='customClss' v-model="authCode" />
+				<button class="postCode" plain='true' @click="postCode" :disabled="disabled">{{code}}</button>
+				<!-- <text class="postCode"></text> -->
 			</view>
 		</view>
-		<view class="register-section">
-			还没有账号?
-			<text @click="toRegist">马上注册</text>
-		</view>
+		<!-- 按钮 -->
+		<button class="btn" @click="login">登录</button>
 	</view>
 </template>
 
 <script>
-	import {  
-        mapMutations  
-    } from 'vuex';
-	
-	export default{
-		data(){
+	import axios from '@/utils/uniAxios.js'
+	export default {
+		data() {
 			return {
-				mobile: '',
-				password: '',
-				logining: false
+				username: '',
+				leftIcon: '../../static/delivery/phone.png',
+				code: '发送验证码',
+				disabled: false,
+				num: 60,
+				phone: '',
+				authCode: ''
 			}
 		},
-		onLoad(){
-			
+		mounted() {
+
 		},
 		methods: {
-			...mapMutations(['login']),
-			inputChange(e){
-				const key = e.currentTarget.dataset.key;
-				this[key] = e.detail.value;
-			},
-			navBack(){
-				uni.navigateBack();
-			},
-			toRegist(){
-				this.$api.msg('去注册');
-			},
-			async toLogin(){
-				this.logining = true;
-				const {mobile, password} = this;
-				/* 数据验证模块
-				if(!this.$api.match({
-					mobile,
-					password
-				})){
-					this.logining = false;
-					return;
-				}
-				*/
-				const sendData = {
-					mobile,
-					password
-				};
-				const result = await this.$api.json('userInfo');
-				if(result.status === 1){
-					this.login(result.data);
-                    uni.navigateBack();  
-				}else{
-					this.$api.msg(result.msg);
-					this.logining = false;
-				}
-			}
-		},
+			login() {
+				var _this = this;
+				uni.request({
+					method: 'POST',
+					url: 'http://39.98.122.62:8085/sso/user/login',
+					data: {
+						phone: _this.phone,
+						authCode: _this.authCode
+					},
+					header: {
+						'content-type': 'application/json'
+					},
+					success(res) {
+						if(res.data.code==200){
+							console.log(res.data.data)
+							var token = res.data.data.token;
+							uni.setStorage('gt',token);
+							uni.switchTab({ 
+								url:'../user/user?phone='+_this.phone,
+								success:(res)=> { 
+									 let page = getCurrentPages().pop();  //跳转页面成功之后
+									 if (!page) return;   
+									 page.loadData(); //如果页面存在，则重新刷新页面
+								  }
+							});
+						}
+						
+					}
+				})
 
+			},
+			// 发送验证码
+			postCode() {
+				if (this.phone == '') {
+					this.$api.msg('请输入手机号码')
+				} else {
+					var _this = this;
+					uni.request({
+						method: 'POST',
+						url: 'http://39.98.122.62:8085/sso/user/sendCode',
+						data: {
+							telephone: _this.phone
+						},
+						header: {
+							'content-type': 'application/json'
+						},
+						success(res) {
+							_this.$api.msg('发送成功')
+							if(res.data.code==200){
+								_this.disabled = true;
+								_this.code = _this.num + 's';
+								var timer=setInterval(() => {
+									_this.num--;
+									_this.code = _this.num + 's';
+									if (_this.num == 0) {
+										clearInterval(timer)
+										_this.code = '重新发送';
+										_this.num = 60;
+									}
+								}, 1000)
+							}
+							
+						}
+					})
+				}
+
+			}
+
+		}
 	}
 </script>
 
-<style lang='scss'>
-	page{
-		background: #fff;
-	}
-	.container{
-		padding-top: 115px;
-		position:relative;
-		width: 100vw;
-		height: 100vh;
-		overflow: hidden;
-		background: #fff;
-	}
-	.wrapper{
-		position:relative;
-		z-index: 90;
-		background: #fff;
-		padding-bottom: 40upx;
-	}
-	.back-btn{
-		position:absolute;
-		left: 40upx;
-		z-index: 9999;
-		padding-top: var(--status-bar-height);
-		top: 40upx;
-		font-size: 40upx;
-		color: $font-color-dark;
-	}
-	.left-top-sign{
-		font-size: 120upx;
-		color: $page-color-base;
-		position:relative;
-		left: -16upx;
-	}
-	.right-top-sign{
-		position:absolute;
-		top: 80upx;
-		right: -30upx;
-		z-index: 95;
-		&:before, &:after{
-			display:block;
-			content:"";
-			width: 400upx;
-			height: 80upx;
-			background: #b4f3e2;
-		}
-		&:before{
-			transform: rotate(50deg);
-			border-radius: 0 50px 0 0;
-		}
-		&:after{
-			position: absolute;
-			right: -198upx;
-			top: 0;
-			transform: rotate(-50deg);
-			border-radius: 50px 0 0 0;
-			/* background: pink; */
-		}
-	}
-	.left-bottom-sign{
-		position:absolute;
-		left: -270upx;
-		bottom: -320upx;
-		border: 100upx solid #d0d1fd;
-		border-radius: 50%;
-		padding: 180upx;
-	}
-	.welcome{
-		position:relative;
-		left: 50upx;
-		top: -90upx;
-		font-size: 46upx;
-		color: #555;
-		text-shadow: 1px 0px 1px rgba(0,0,0,.3);
-	}
-	.input-content{
-		padding: 0 60upx;
-	}
-	.input-item{
-		display:flex;
-		flex-direction: column;
-		align-items:flex-start;
-		justify-content: center;
-		padding: 0 30upx;
-		background:$page-color-light;
-		height: 120upx;
-		border-radius: 4px;
-		margin-bottom: 50upx;
-		&:last-child{
-			margin-bottom: 0;
-		}
-		.tit{
-			height: 50upx;
-			line-height: 56upx;
-			font-size: $font-sm+2upx;
-			color: $font-color-base;
-		}
-		input{
-			height: 60upx;
-			font-size: $font-base + 2upx;
-			color: $font-color-dark;
-			width: 100%;
-		}	
+<style lang="scss">
+	.customClss {
+		font-size: 26rpx;
+		font-weight: 500;
+		color: rgba(181, 181, 184, 1);
 	}
 
-	.confirm-btn{
-		width: 630upx;
-		height: 76upx;
-		line-height: 76upx;
-		border-radius: 50px;
-		margin-top: 70upx;
-		background: $uni-color-primary;
-		color: #fff;
-		font-size: $font-lg;
-		&:after{
-			border-radius: 100px;
-		}
+	.delivery {
+		height: 400rpx;
+		background-size: 100% 100%;
+		position: relative;
 	}
-	.forget-section{
-		font-size: $font-sm+2upx;
-		color: $font-color-spec;
-		text-align: center;
-		margin-top: 40upx;
+
+	.uni-page-head__title {
+		opacity: 1
 	}
-	.register-section{
-		position:absolute;
+
+	.de-logo {
+		width: 240rpx;
+		height: 240rpx;
+		background: rgba(255, 255, 255, 1);
+		box-shadow: 0px 4px 30px 0px rgba(108, 108, 108, 0.1);
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		top: 107%;
 		left: 0;
-		bottom: 50upx;
-		width: 100%;
-		font-size: $font-sm+2upx;
-		color: $font-color-base;
-		text-align: center;
-		text{
-			color: $font-color-spec;
-			margin-left: 10upx;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+
+		img {
+			width: 115rpx;
+			height: 137rpx;
 		}
+	}
+
+	.de-login {
+		width: 92%;
+		margin: 0 auto;
+		margin-top: 200rpx;
+
+		.de-login-phone {
+			border-bottom: 1px solid #ECEFF1;
+			// padding-bottom: 40rpx;
+			height: 120rpx;
+			display: flex;
+			align-items: center;
+
+			image {
+				width: 32rpx;
+				height: 40rpx;
+				float: left;
+				margin-right: 30rpx;
+			}
+		}
+
+		.de-login-code {
+			border-bottom: 1px solid #ECEFF1;
+			// padding-bottom: 40rpx;
+			height: 120rpx;
+			display: flex;
+			align-items: center;
+			position: relative;
+
+			image {
+				width: 34rpx;
+				height: 24rpx;
+				float: left;
+				margin-right: 30rpx;
+			}
+
+			.postCode {
+				position: absolute;
+				right: 2%;
+				// float: right;
+				font-size: 26rpx;
+				font-weight: bold;
+				color: rgba(247, 181, 44, 1);
+				border: 0;
+			}
+		}
+	}
+
+	.btn {
+		width: 92%;
+		margin: 0 auto;
+		margin-top: 150rpx;
+		height: 88rpx;
+		background: rgba(247, 181, 44, 1);
+		border-radius: 44rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 34rpx;
+		;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 1);
 	}
 </style>

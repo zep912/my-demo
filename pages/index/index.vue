@@ -6,7 +6,7 @@
 			<input class="ser-input" type="text" value="输入关键字搜索" />
 		</view>
 		<!-- #endif -->
-		
+
 		<!-- 头部轮播 -->
 		<view class="carousel-section">
 			<!-- 标题栏和状态栏占位符 -->
@@ -36,7 +36,7 @@
 				<image src="/static/index/mw.png"></image>
 			</view>
 		</view>
-		
+
 		<!-- 限时抢购 -->
 		<view class="seckill-section m-t">
 			<view class="s-header">
@@ -51,11 +51,7 @@
 			</view>
 			<scroll-view class="floor-list" scroll-x>
 				<view class="scoll-wrapper">
-					<view 
-						v-for="(item, index) in goodsList" :key="index"
-						class="floor-item"
-						@click="navToDetailPage(item)"
-					>
+					<view v-for="(item, index) in goodsList" :key="index" class="floor-item" @click="navToDetailPage(item)">
 						<image :src="item.image" mode="aspectFill"></image>
 						<text class="title clamp">{{item.title}}</text>
 						<text class="price">￥{{item.price}}</text>
@@ -63,7 +59,7 @@
 				</view>
 			</scroll-view>
 		</view>
-		
+
 		<!-- 限量秒杀新品，比手快 -->
 		<view class="ui-poster">
 			限量秒杀新品，比手快
@@ -128,11 +124,7 @@
 				</view>
 			</view>
 			<view class="guess-section good-sku">
-				<view
-					v-for="(item, index) in goodsList" :key="index"
-					class="guess-item" v-if="index <= 2"
-					@click="navToDetailPage(item)"
-				>
+				<view v-for="(item, index) in goodsList" :key="index" class="guess-item" v-if="index <= 2" @click="navToDetailPage(item)">
 					<view class="image-wrapper">
 						<image :src="item.image" mode="aspectFill"></image>
 					</view>
@@ -147,13 +139,9 @@
 				<text class="tit">好货推荐</text>
 			</view>
 		</view>
-		
+
 		<view class="guess-section">
-			<view 
-				v-for="(item, index) in goodsList" :key="index"
-				class="guess-item"
-				@click="navToDetailPage(item)"
-			>
+			<view v-for="(item, index) in goodsList" :key="index" class="guess-item" @click="navToDetailPage(item)">
 				<view class="image-wrapper">
 					<image :src="item.image" mode="aspectFill"></image>
 				</view>
@@ -161,12 +149,17 @@
 				<text class="price">￥{{item.price}}</text>
 			</view>
 		</view>
-
+		<!-- 微信登录  自动弹窗-->
+		<view class="weixinLogin" v-if="isCanUse">
+			<image src="../../static/delivery/logo.png" mode=""></image>
+			<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN"
+			 @getuserinfo="wxGetUserInfo">微信一键登录</button>
+			<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
+		</view>
 	</view>
 </template>
 
 <script>
-
 	export default {
 
 		data() {
@@ -175,45 +168,128 @@
 				swiperCurrent: 0,
 				swiperLength: 0,
 				carouselList: [],
-				goodsList: []
+				goodsList: [],
+				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 			};
 		},
 
 		onLoad() {
 			this.loadData();
+			this.login();
 		},
 		methods: {
-			/**
-			 * 请求静态数据只是为了代码不那么乱
-			 * 分次请求未作整合
-			 */
-			async loadData() {
-				let carouselList = await this.$api.json('carouselList');
-				this.titleNViewBackground = carouselList[0].background;
-				this.swiperLength = carouselList.length;
-				this.carouselList = carouselList;
-				
-				let goodsList = await this.$api.json('goodsList');
-				this.goodsList = goodsList || [];
-			},
-			//轮播图切换修改背景色
-			swiperChange(e) {
-				const index = e.detail.current;
-				this.swiperCurrent = index;
-				this.titleNViewBackground = this.carouselList[index].background;
-			},
-			//详情页
-			navToDetailPage(item) {
-				//测试数据没有写id，用title代替
-				let id = item.title;
-				uni.navigateTo({
-					url: `/pages/product/product?id=${id}`
+			// 授权用户信息
+			wxGetUserInfo() {
+				let _this = this;
+				uni.getUserInfo({
+					provider: 'weixin',
+					success: function(infoRes) {
+						let nickName = infoRes.userInfo.nickName; //昵称
+						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+						try {
+							uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
+							_this.updateUserInfo();
+						} catch (e) {}
+					},
+					fail(res) {}
 				})
 			},
+			login() {
+				let _this = this;
+				// 1.wx获取登录用户code
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						let code = loginRes.code;
+						if (!_this.isCanUse) {
+							//非第一次授权获取用户信息
+							uni.getUserInfo({
+								provider: 'weixin',
+								success: function(infoRes) {
+									//获取用户信息后向调用信息更新方法
+									let nickName = infoRes.userInfo.nickName; //昵称
+									let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+									_this.updateUserInfo(); //调用更新信息方法
+								}
+							});
+						}
+						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+						uni.request({
+							url: '服务器地址',
+							data: {
+								code: code,
+							},
+							method: 'GET',
+							header: {
+								'content-type': 'application/json'
+							},
+							success: (res) => {
+								//openId、或SessionKdy存储//隐藏loading
+								uni.hideLoading();
+							}
+						})
+					}
+				})
+			},
+			// //向后台更新信息
+			// updateUserInfo() {
+			// 	let _this = this;
+			// 	uni.request({
+			// 		url: 'url', //服务器端地址
+			// 		data: {
+			// 			appKey: this.$store.state.appKey,
+			// 			customerId: _this.customerId,
+			// 			nickName: _this.nickName,
+			// 			headUrl: _this.avatarUrl
+			// 		},
+			// 		method: 'POST',
+			// 		header: {
+			// 			'content-type': 'application/json'
+			// 		},
+			// 		success: (res) => {
+			// 			if (res.data.state == "success") {
+			// 				uni.reLaunch({ //信息更新成功后跳转到小程序首页
+			// 					url: '/pages/index/index'
+			// 				});
+			// 			}
+			// 		}
+			// 	})
+			// }
+		// 手机号登录
+		toPhone() {
+
 		},
-		// #ifndef MP
-		// 标题栏input搜索框点击
-		onNavigationBarSearchInputClicked: async function(e) {
+		/**
+		 * 请求静态数据只是为了代码不那么乱
+		 * 分次请求未作整合
+		 */
+		async loadData() {
+			let carouselList = await this.$api.json('carouselList');
+			this.titleNViewBackground = carouselList[0].background;
+			this.swiperLength = carouselList.length;
+			this.carouselList = carouselList;
+
+			let goodsList = await this.$api.json('goodsList');
+			this.goodsList = goodsList || [];
+		},
+		//轮播图切换修改背景色
+		swiperChange(e) {
+			const index = e.detail.current;
+			this.swiperCurrent = index;
+			this.titleNViewBackground = this.carouselList[index].background;
+		},
+		//详情页
+		navToDetailPage(item) {
+			//测试数据没有写id，用title代替
+			let id = item.title;
+			uni.navigateTo({
+				url: `/pages/product/product?id=${id}`
+			})
+		},
+	},
+	// #ifndef MP
+	// 标题栏input搜索框点击
+	onNavigationBarSearchInputClicked: async function(e) {
 			this.$api.msg('点击了搜索框');
 		},
 		//点击导航栏 buttons 时触发
@@ -235,64 +311,113 @@
 				})
 			}
 		}
-		// #endif
+	// #endif
 	}
 </script>
 
 <style lang="scss">
+	// 微信自动登录
+	.weixinLogin {
+		width: 550rpx;
+		height: 530rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 30rpx;
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		box-sizing: border-box;
+		padding-top: 46rpx;
+		padding-left: 30rpx;
+		padding-right: 30rpx;
+		text-align: center;
+
+		image {
+			width: 118rpx;
+			height: 140rpx;
+			margin-bottom: 67rpx;
+		}
+
+		button {
+			width: 490rpx;
+			height: 80rpx;
+			background: rgba(75, 194, 102, 1);
+			border-radius: 40rpx;
+			font-size: 28rpx;
+			color: rgba(255, 255, 255, 1);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.weixin {
+			margin-bottom: 40rpx;
+		}
+
+	}
+
 	/* #ifdef MP */
-	.mp-search-box{
-		position:absolute;
+	.mp-search-box {
+		position: absolute;
 		left: 0;
 		top: 30upx;
 		z-index: 9999;
 		width: 100%;
 		padding: 0 80upx;
-		.ser-input{
-			flex:1;
+
+		.ser-input {
+			flex: 1;
 			height: 56upx;
 			line-height: 56upx;
 			text-align: center;
 			font-size: 28upx;
-			color:$font-color-base;
+			color: $font-color-base;
 			border-radius: 20px;
-			background: rgba(255,255,255,.6);
+			background: rgba(255, 255, 255, .6);
 		}
 	}
-	page{
-		.cate-section{
-			position:relative;
-			z-index:5;
+
+	page {
+		.cate-section {
+			position: relative;
+			z-index: 5;
 			border-radius: 20upx;
 			margin: 20upx;
 			margin-top: -10upx;
 		}
-		.carousel-section{
+
+		.carousel-section {
 			padding: 0;
+
 			.titleNview-placing {
 				padding-top: 0;
 				height: 0;
 			}
-			.carousel{
-				.carousel-item{
+
+			.carousel {
+				.carousel-item {
 					padding: 0;
 				}
 			}
-			.swiper-dots{
-				left:45upx;
-				bottom:40upx;
+
+			.swiper-dots {
+				left: 45upx;
+				bottom: 40upx;
 			}
 		}
 	}
+
 	/* #endif */
-	
-	
+
+
 	page {
 		background: #f5f5f5;
 	}
-	.m-t{
+
+	.m-t {
 		margin-top: 16upx;
 	}
+
 	/* 头部 轮播图 */
 	.carousel-section {
 		position: relative;
@@ -313,6 +438,7 @@
 			transition: .4s;
 		}
 	}
+
 	.carousel {
 		width: 100%;
 		height: 350upx;
@@ -330,6 +456,7 @@
 			border-radius: 0upx;
 		}
 	}
+
 	.swiper-dots {
 		display: flex;
 		position: absolute;
@@ -360,14 +487,16 @@
 			transform: translateX(-50%);
 		}
 	}
+
 	/* 分类 */
 	.cate-section {
 		display: flex;
 		justify-content: space-around;
 		align-items: center;
-		flex-wrap:wrap;
-		padding: 30upx 22upx; 
+		flex-wrap: wrap;
+		padding: 30upx 22upx;
 		background: #fff;
+
 		.cate-item {
 			width: 20%;
 			display: flex;
@@ -376,6 +505,7 @@
 			font-size: $font-sm + 2upx;
 			color: $font-color-dark;
 		}
+
 		/* 原图标颜色太深,不想改图了,所以加了透明度 */
 		image {
 			width: 88upx;
@@ -384,61 +514,71 @@
 			opacity: .7;
 		}
 	}
-	.ad-1{
+
+	.ad-1 {
 		width: 100%;
 		height: 210upx;
 		padding: 10upx 0;
 		background: #fff;
-		image{
-			width:100%;
-			height: 100%; 
+
+		image {
+			width: 100%;
+			height: 100%;
 		}
 	}
+
 	/* 限时抢购 */
-	.seckill-section{
+	.seckill-section {
 		margin: 20upx;
 		border-radius: 20upx;
 		background: #fff;
-		.s-header{
-			display:flex;
-			align-items:center;
+
+		.s-header {
+			display: flex;
+			align-items: center;
 			height: 92upx;
 			line-height: 1;
 			background: url(../../static/index/xsqg.png) 100% no-repeat;
 			border-radius: 20upx 20upx 0 0;
 			color: #fff;
 			font-size: $font-base;
+
 			.tip-title {
 				margin-left: 20upx;
 			}
+
 			.tip-timer {
 				border-radius: 24upx;
 				border: 1upx solid #fff;
 				margin: 0 20upx;
 			}
-			.tip{
+
+			.tip {
 				background-color: #fff;
 				font-size: $font-sm+2upx;
 				color: red;
 				border-radius: 18upx;
 				padding: 0 6upx;
 			}
-			.timer{
-				display:inline-block;
+
+			.timer {
+				display: inline-block;
 				height: 36upx;
-				text-align:center;
+				text-align: center;
 				line-height: 36upx;
 				font-size: $font-sm+2upx;
 				color: #fff;
 				border-radius: 2px;
 				margin: 0 20upx;
 			}
+
 			.yticon {
 				flex: 1;
 				text-align: right;
 				font-size: $font-sm+2upx;
 			}
-			.icon-you{
+
+			.icon-you {
 				font-size: $font-lg;
 				color: $font-color-light;
 				flex: 1;
@@ -446,32 +586,37 @@
 				color: #fff;
 			}
 		}
-		.floor-list{
+
+		.floor-list {
 			white-space: nowrap;
 			padding: 20upx;
 		}
-		.scoll-wrapper{
-			display:flex;
+
+		.scoll-wrapper {
+			display: flex;
 			align-items: flex-start;
 		}
-		.floor-item{
+
+		.floor-item {
 			width: 180upx;
 			margin-right: 20upx;
 			font-size: $font-sm+2upx;
 			color: $font-color-dark;
 			line-height: 1.8;
-			image{
+
+			image {
 				width: 150upx;
 				height: 150upx;
 				border-radius: 6upx;
 			}
-			.price{
+
+			.price {
 				color: $uni-color-primary;
 			}
 		}
 	}
-	
-	.ui-poster{
+
+	.ui-poster {
 		width: 100%;
 		height: 40upx;
 		line-height: 40upx;
@@ -479,51 +624,64 @@
 		text-align: center;
 		background: url(../../static/index/btbg.png) 100% no-reapat;
 	}
+
 	.poster-content {
 		display: flex;
 		margin: 20upx;
+
 		.content-item {
 			width: 49%;
 			margin-right: 1%;
+
 			&:last-of-type {
 				margin-right: 0;
 			}
+
 			image {
 				width: 100%;
 				height: 250upx;
 			}
+
 			.img-50 {
 				height: 120upx;
 			}
 		}
 	}
+
 	.box-grid {
 		margin: 20upx 20upx 0 20upx;
+
 		image {
 			width: 33.33%;
 			height: 210upx;
 		}
 	}
+
 	.box-100 {
 		margin: 0 20upx;
+
 		image {
 			width: 100%;
 			height: 210upx;
 		}
 	}
+
 	.brand-section {
 		background: #fff;
 		margin: 20upx;
 		padding: 20upx;
 		border-radius: 20upx;
+
 		.s-header {
 			display: flex;
+
 			.box-img {
 				width: 80upx;
 				height: 80upx;
 				padding: 12upx;
 				border-radius: 50%;
 				border: 1upx solid #ccc;
+
 				image {
 					width: 100%;
 					height: 100%;
@@ -534,26 +692,31 @@
 				margin-left: 20upx;
 				width: 150upx;
 				font-size: $font-sm;
+
 				.tip-title {
 					font-size: $font-sm+4upx;
 				}
+
 				.tip {
-					color:#999999;
+					color: #999999;
 				}
 			}
+
 			.btn {
 				flex: 1;
 				text-align: right;
 				color: #fff;
 				margin-top: 20upx;
 			}
+
 			.yticon {
 				height: 40upx;
 				border-radius: 40upx;
 				line-height: 40upx;
 				padding: 0 5upx 0 15upx;
 			}
-			.icon-you{
+
+			.icon-you {
 				font-size: $font-lg;
 				color: #fff;
 				flex: 1;
@@ -561,41 +724,48 @@
 			}
 		}
 	}
-	.f-header{
+
+	.f-header {
 		margin: 20upx 20upx 0 20upx;
-		display:flex;
-		align-items:center;
+		display: flex;
+		align-items: center;
 		padding: 10upx 20upx;
+
 		// background: #fff;
-		.tit-box{
+		.tit-box {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
 		}
-		.tit{
+
+		.tit {
 			font-size: $font-lg +2upx;
 			color: #font-color-dark;
 			line-height: 1.3;
 		}
-		.icon-you{
+
+		.icon-you {
 			font-size: $font-lg +2upx;
 			color: $font-color-light;
 		}
 	}
+
 	/* 团购楼层 */
-	.group-section{
+	.group-section {
 		background: #fff;
 	}
+
 	/* 猜你喜欢 */
-	.guess-section{
+	.guess-section {
 		margin: 0 20upx 20upx;
-		display:flex;
-		flex-wrap:wrap;
+		display: flex;
+		flex-wrap: wrap;
 		padding: 0;
 		// background: #fff;
 		border-radius: 20upx;
-		.guess-item{
-			display:flex;
+
+		.guess-item {
+			display: flex;
 			flex-direction: column;
 			width: 49%;
 			padding: 10upx;
@@ -605,49 +775,57 @@
 			box-sizing: border-box;
 			padding-bottom: 40upx;
 			background: #fff;
-			&:nth-child(2n+1){
+
+			&:nth-child(2n+1) {
 				margin-right: 2%;
 			}
 		}
-		.image-wrapper{
+
+		.image-wrapper {
 			width: 100%;
 			height: 330upx;
 			border-radius: 3px;
 			overflow: hidden;
-			image{
+
+			image {
 				width: 100%;
 				height: 100%;
 				opacity: 1;
 			}
 		}
-		.title{
+
+		.title {
 			font-size: $font-lg;
 			color: $font-color-dark;
 			line-height: 80upx;
 		}
-		.price{
+
+		.price {
 			font-size: $font-lg;
 			color: $uni-color-primary;
 			line-height: 1;
 		}
 	}
-	
+
 	/* 好物推荐 */
 	.good-sku {
 		.guess-item {
 			width: 32%;
 			margin-right: 2%;
-			&:nth-child(3n){
+
+			&:nth-child(3n) {
 				margin-right: 0;
 			}
 		}
-		.image-wrapper{
+
+		.image-wrapper {
 			width: 100%;
 			height: 210upx;
 		}
 	}
-uni-tabbar .uni-tabbar__icon{
-	width: 40rpx;
-	height: 40rpx;
-}
+
+	uni-tabbar .uni-tabbar__icon {
+		width: 40rpx;
+		height: 40rpx;
+	}
 </style>

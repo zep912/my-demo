@@ -1,13 +1,13 @@
 /* 用户 */
 const userInfo = {
-	status: 1,
-	data: {
-		id: 1,
-		mobile: 18888888888,
-		nickname: 'Leo yo',
-		portrait: '/static/my/missing-face.png'
-	},
-	msg: '提示'
+	// status: 1,
+	// data: {
+	// 	id: 1,
+	// 	mobile: 18888888888,
+	// 	nickname: 'Leo yo',
+	// 	portrait: '/static/my/missing-face.png'
+	// },
+	// msg: '提示'
 }
 /* 首页轮播图 */
 const carouselList = [{

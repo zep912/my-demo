@@ -149,11 +149,13 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _objectSpread(target) {
 
   onLaunch: function onLaunch() {var _this = this;
     var userInfo = uni.getStorageSync('userInfo') || '';
+    console.log(userInfo);
     if (userInfo.id) {
       //更新登陆状态
       uni.getStorage({
         key: 'userInfo',
         success: function success(res) {
+          console.log(res, 77);
           _this.login(res.data);
         } });
 
@@ -161,10 +163,10 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _objectSpread(target) {
 
   },
   onShow: function onShow() {
-    console.log('App Show');
+    // console.log('App Show')
   },
   onHide: function onHide() {
-    console.log('App Hide');
+    // console.log('App Hide')
   } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

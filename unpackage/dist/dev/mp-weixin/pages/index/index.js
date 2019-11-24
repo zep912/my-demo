@@ -283,14 +283,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 var _default =
-
 {
 
   data: function data() {
@@ -299,18 +292,101 @@ var _default =
       swiperCurrent: 0,
       swiperLength: 0,
       carouselList: [],
-      goodsList: [] };
-
+      goodsList: [],
+      isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
+    };
   },
 
   onLoad: function onLoad() {
     this.loadData();
+    this.login();
   },
   methods: {
+    // 授权用户信息
+    wxGetUserInfo: function wxGetUserInfo() {
+      var _this = this;
+      uni.getUserInfo({
+        provider: 'weixin',
+        success: function success(infoRes) {
+          var nickName = infoRes.userInfo.nickName; //昵称
+          var avatarUrl = infoRes.userInfo.avatarUrl; //头像
+          try {
+            uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
+            _this.updateUserInfo();
+          } catch (e) {}
+        },
+        fail: function fail(res) {} });
+
+    },
+    login: function login() {
+      var _this = this;
+      // 1.wx获取登录用户code
+      uni.login({
+        provider: 'weixin',
+        success: function success(loginRes) {
+          var code = loginRes.code;
+          if (!_this.isCanUse) {
+            //非第一次授权获取用户信息
+            uni.getUserInfo({
+              provider: 'weixin',
+              success: function success(infoRes) {
+                //获取用户信息后向调用信息更新方法
+                var nickName = infoRes.userInfo.nickName; //昵称
+                var avatarUrl = infoRes.userInfo.avatarUrl; //头像
+                _this.updateUserInfo(); //调用更新信息方法
+              } });
+
+          }
+          //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+          uni.request({
+            url: '服务器地址',
+            data: {
+              code: code },
+
+            method: 'GET',
+            header: {
+              'content-type': 'application/json' },
+
+            success: function success(res) {
+              //openId、或SessionKdy存储//隐藏loading
+              uni.hideLoading();
+            } });
+
+        } });
+
+    },
+    // //向后台更新信息
+    // updateUserInfo() {
+    // 	let _this = this;
+    // 	uni.request({
+    // 		url: 'url', //服务器端地址
+    // 		data: {
+    // 			appKey: this.$store.state.appKey,
+    // 			customerId: _this.customerId,
+    // 			nickName: _this.nickName,
+    // 			headUrl: _this.avatarUrl
+    // 		},
+    // 		method: 'POST',
+    // 		header: {
+    // 			'content-type': 'application/json'
+    // 		},
+    // 		success: (res) => {
+    // 			if (res.data.state == "success") {
+    // 				uni.reLaunch({ //信息更新成功后跳转到小程序首页
+    // 					url: '/pages/index/index'
+    // 				});
+    // 			}
+    // 		}
+    // 	})
+    // }
+    // 手机号登录
+    toPhone: function toPhone() {
+
+    },
     /**
-              * 请求静态数据只是为了代码不那么乱
-              * 分次请求未作整合
-              */
+        * 请求静态数据只是为了代码不那么乱
+        * 分次请求未作整合
+        */
     loadData: function () {var _loadData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var carouselList, goodsList;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
                   this.$api.json('carouselList'));case 2:carouselList = _context.sent;
                 this.titleNViewBackground = carouselList[0].background;

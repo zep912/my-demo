@@ -11,11 +11,13 @@
 		},
 		onLaunch: function() {
 			let userInfo = uni.getStorageSync('userInfo') || '';
+			console.log(userInfo)
 			if(userInfo.id){
 				//更新登陆状态
 				uni.getStorage({
 					key: 'userInfo',
 					success: (res) => {
+						console.log(res,77)
 						this.login(res.data);
 					}
 				});
@@ -23,10 +25,10 @@
 			
 		},
 		onShow: function() {
-			console.log('App Show')
+			// console.log('App Show')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			// console.log('App Hide')
 		},
 	}
 </script>
