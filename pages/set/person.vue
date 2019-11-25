@@ -43,13 +43,25 @@
 					userName:'涂志奇',
 					sex:'男',
 					birthday:'1994-04-21',
-					weight:'74KG'
-				}	
+					weight:'74KG',
+				},
+				id:''
 			};
+		},
+		onLoad(option){
+			this.id = option.id;
 		},
 		methods:{
 			...mapMutations(['logout']),
-
+			// 数据初始化
+			getData(){
+				let obj ={
+					id:this.id
+				}
+				axios.post('/sso/user/id',obj).then(res=>{
+					this.person = res.data.data;
+				})
+			},
 			navTo(url){
 				// this.$api.msg(`跳转到${url}`);
 			},

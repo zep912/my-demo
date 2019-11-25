@@ -27,7 +27,7 @@
 
 		<view class="list-cell" @click="navTo('mobile')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">修改手机号</text>
-			<text class="cell-tip">13000000000</text>
+			<text class="cell-tip">{{phone}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell" @click="navTo('aboutus')" hover-class="cell-hover" :hover-stay-time="50">
@@ -46,9 +46,12 @@
 		data() {
 			return {
 				img: '/static/missing-face.png',
+				phone:'',
+				id:''
 			};
 		},
-		onLoad() {
+		onLoad(option) {
+			this.id = option.id;
 			this.getData()
 		},
 		methods: {
@@ -56,34 +59,15 @@
 			// 跳转路由
 			navTo(url) {
 				uni.navigateTo({
-					url: `../set/${url}`
+					url: `../set/${url}`+'?id='+this.id
 				});
 			},
 			// 初始化
 			getData(){
-				// axios.get('http://39.98.122.62:8085/sso/user/1')
-				// axios.get('/sso/user/16').then(res=>{
-				// 	console.log(res)
-				// })
-				// let obj = {
-				// 	param:747653
-				// }
-				// axios.post('http://39.98.122.62:8085/sso/user/login',obj).then(res=>{
-				// 	console.log(res)
-				// })
-				// uni.request({
-				//     url: 'http://39.98.122.62:8085/sso/user/sendCode', //仅为示例，并非真实接口地址。
-				// 	method:'GET',
-				//     data: {
-				//         telephone: 13667138671
-				//     },
-				//     header: {
-				        
-				//     },
-				//     success: (res) => {
-				//         console.log(res.data);
-				//     }
-				// });
+				axios.post('/sso/user/id',{id:this.id}).then(res=>{
+					console.log(res)
+					this.phone = res.data.data.phone
+				})
 			}
 		}
 	}

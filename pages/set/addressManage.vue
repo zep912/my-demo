@@ -6,23 +6,23 @@
 		</view>
 		<view class="row b-b">
 			<text class="tit">手机号码</text>
-			<input class="input" type="number" v-model="addressData.mobile" placeholder="请填写收货人手机号" placeholder-class="placeholder" />
+			<input class="input" type="number" v-model="addressData.phoneNumber" placeholder="请填写收货人手机号" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">所在地址</text>
 			<text class="input">
-				{{addressData.addressName}}
+				{{address}}
 			</text>
 			<text class="yticon icon-shouhuodizhi" @click="chooseLocation"></text>
 		</view>
 		<view class="row b-b"> 
 			<text class="tit">详细地址</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="道路,门牌号,小区,楼栋号,单元室等" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="addressData.detailAddress " placeholder="道路,门牌号,小区,楼栋号,单元室等" placeholder-class="placeholder" />
 		</view>
 		
 		<view class="row default-row b-b">
-			<text class="tit default">地址标签</text>
-			<view class="address-label">
+			<text class="tit default" >地址标签</text>
+			<view class="address-label" v-model="addressData.addressLabel">
 				<text class="default-label">家庭</text>
 				<text class="default-label default-label-mid">公司</text>
 				<text class="default-label">学校</text>
@@ -33,26 +33,33 @@
 		
 		<view class="row default-checkbox">
 			<text class="tit default">设置为默认地址</text>
-			 <van-checkbox :value="addressData.default" @change="switchChange" checked-color="#F7B52C"></van-checkbox>
+			 <van-checkbox :value="addressData.defaultStatus" @change="switchChange" checked-color="#F7B52C"></van-checkbox>
 		</view>
 		<button class="add-btn" @click="confirm">保存地址</button>
 	</view>
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js';
 	export default {
 		components:{
 		},
 		data() {
 			return {
 				addressData: {
-					name: '',
-					mobile: '',
-					addressName: '',
-					address: '',
-					area: '',
-					default: true,
-				}
+				 "addressLabel": "",//地址标签
+				  "city": "",//城市
+				  "defaultStatus": 0,//是否默认
+				  "detailAddress": "",//详细地址
+				  "id": 0,
+				  "memberId": 0,//会员ID
+				  "name": "",//收货人姓名
+				  "phoneNumber": "",//电话
+				  "postCode": "",//邮编
+				  "province": "",//省份
+				  "region": ""//区
+				},
+				address:''
 			}
 		},
 		onLoad(option){
@@ -109,7 +116,22 @@
 					this.$api.msg('请填写门牌号信息');
 					return;
 				}
-				
+				let obj = {
+					 "addressLabel": "string",
+					  "city": "string",
+					  "defaultStatus": 0,
+					  "detailAddress": "string",
+					  "id": 0,
+					  "memberId": 0,
+					  "name": "string",
+					  "phoneNumber": "string",
+					  "postCode": "string",
+					  "province": "string",
+					  "region": "string"
+				}
+				axios.post('/member/address/add',this.addressData).then(res=>{
+					console.log(res)
+				})
 				//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
 				this.$api.prePage().refreshList(data, this.manageType);
 				this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);

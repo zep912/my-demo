@@ -515,5 +515,7 @@ page {
   position: absolute;
   right: 50%;
   top: 38%;
+  text-align: center;
+  padding-left: 0;
 }
 

@@ -9,7 +9,7 @@
 		<view class="de-login">
 			<view class="de-login-phone">
 				<image src="../../static/delivery/phone.png" mode=""></image>
-				<input type="text" value="" placeholder="请输入手机号码" placeholder-class='customClss' v-model="phone" maxlength="11"/>
+				<input type="text" value="" placeholder="请输入手机号码" placeholder-class='customClss' v-model="phone" maxlength="11" />
 			</view>
 			<view class="de-login-code">
 				<image src="../../static/delivery/code.png" mode=""></image>
@@ -43,73 +43,78 @@
 		methods: {
 			login() {
 				var _this = this;
+				let obj = {
+					phone: _this.phone,
+					authCode: _this.authCode
+				};
+				axios.post('/sso/user/login',obj).then(res=>{
+					console.log(res)
+					if(res.data.code=='200'){
+						var token = res.data.data.token;
+						uni.setStorageSync('gt',token);
+						uni.setStorageSync('setPhone',_this.phone);
+						uni.switchTab({
+							url:'../user/user?phone='+_this.phone,
+							success:(res)=> { 
+								 let page = getCurrentPages();  //跳转页面成功之后
+								 console.log(page)
+								 if (!page){
+									 return
+								 }else{
+									 page[page.length-1].data.loadData()
+									 // var beforePage = page[0].data;
+									 //  page.loadData(); //如果页面存在，则重新刷新页面
+								 };   
+							  }
+						});
+					}
+				})
+		},
+		// 发送验证码
+		postCode() {
+			if (this.phone == '') {
+				this.$api.msg('请输入手机号码')
+			} else {
+				var _this = this;
+				let obj = {
+					telephone: _this.phone
+				}
+				
+				// axios.post('/sso/user/sendCod',obj,{header:{'content-type': 'application/json'}}).then(res=>{
+				// 	console.log(res)
+				// })
 				uni.request({
 					method: 'POST',
-					url: 'http://39.98.122.62:8085/sso/user/login',
+					url: 'http://39.98.122.62:8085/sso/user/sendCode',
 					data: {
-						phone: _this.phone,
-						authCode: _this.authCode
+						telephone: _this.phone
 					},
 					header: {
 						'content-type': 'application/json'
 					},
 					success(res) {
+						_this.$api.msg('发送成功')
 						if(res.data.code==200){
-							console.log(res.data.data)
-							var token = res.data.data.token;
-							uni.setStorageSync('gt',token);
-							uni.switchTab({ 
-								url:'../user/user?phone='+_this.phone,
-								success:(res)=> { 
-									 let page = getCurrentPages().pop();  //跳转页面成功之后
-									 if (!page) return;   
-									 page.loadData(); //如果页面存在，则重新刷新页面
-								  }
-							});
+							_this.disabled = true;
+							_this.code = _this.num + 's';
+							var timer=setInterval(() => {
+								_this.num--;
+								_this.code = _this.num + 's';
+								if (_this.num == 0) {
+									clearInterval(timer)
+									_this.code = '重新发送';
+									_this.num = 60;
+								}
+							}, 1000)
 						}
-						
+
 					}
 				})
-
-			},
-			// 发送验证码
-			postCode() {
-				if (this.phone == '') {
-					this.$api.msg('请输入手机号码')
-				} else {
-					var _this = this;
-					uni.request({
-						method: 'POST',
-						url: 'http://39.98.122.62:8085/sso/user/sendCode',
-						data: {
-							telephone: _this.phone
-						},
-						header: {
-							'content-type': 'application/json'
-						},
-						success(res) {
-							_this.$api.msg('发送成功')
-							if(res.data.code==200){
-								_this.disabled = true;
-								_this.code = _this.num + 's';
-								var timer=setInterval(() => {
-									_this.num--;
-									_this.code = _this.num + 's';
-									if (_this.num == 0) {
-										clearInterval(timer)
-										_this.code = '重新发送';
-										_this.num = 60;
-									}
-								}, 1000)
-							}
-							
-						}
-					})
-				}
-
 			}
 
 		}
+
+	}
 	}
 </script>
 

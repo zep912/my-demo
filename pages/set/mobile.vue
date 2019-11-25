@@ -1,7 +1,7 @@
 <template>
 	<view class="mobile container">
 		<view class="mobile-box">
-			<text>请输入{{mobile}}收到的短信验证码</text>
+			<text>请输入{{oldMobile}}收到的短信验证码</text>
 		</view>
 		<view class="mobile-code">
 			<input type="text" placeholder="请输入短信验证码" class="mobile-input" placeholder-class="input-placeholder"
@@ -19,18 +19,27 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
-				mobile: '132****0986',
+				oldMobile: '',
 				code: '获取验证码',
 				disabled: false,
-				msgCode: '',
-				num: 60
+				msgCode: '',//短信验证码
+				num: 60,
+				id:'',
+				phone:''
 			}
 		},
-		onLoad() {
-
+		onLoad(option) {
+			this.id = option.id;
+			axios.post('/sso/user/id',{id:this.id}).then(res=>{
+				console.log(res)
+				 this.phone = res.data.data.phone;
+				this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(8);
+				
+			})
 		},
 		methods: {
 			// 下一步input
@@ -38,28 +47,46 @@
 				if (this.msgCode == '') {
 					Toast.fail('请输入验证码');
 				} else {
-					uni.navigateTo({
-						url: '../set/bindmobile',
-					});
+					let obj ={
+						authCode:this.msgCode ,
+						phone: this.phone
+					}
+					axios.post('/sso/user/validCode',obj).then(res=>{
+						if(res.data.code==200){
+							uni.navigateTo({
+								url: '../set/bindmobile?oldMobile='+this.oldMobile+'?id='+this.id,
+							});
+						}
+					})
+					
 				}
 
 			},
 			// 获取验证码
 			getCode() {
-				if (this.code == '获取验证码' || this.code == '重新发送') {
-					this.disabled = true;
-					this.code = this.num + 's';
-					var timer = setInterval(() => {
-						this.num--;
-						this.code = this.num + 's';
-						if (this.num == 0) {
-							clearInterval(timer);
-							this.code = '重新发送';
-							this.num = 60;
-							this.disabled = false;
-						}
-					}, 1000)
+				let obj = {
+					telephone:this.phone
 				}
+				axios.post('/sso/user/sendCode',obj).then(res=>{
+					if(res.data.code=='200'){
+						this.$api.msg('发送成功')
+						if (this.code == '获取验证码' || this.code == '重新发送') {
+							this.disabled = true;
+							this.code = this.num + 's';
+							var timer = setInterval(() => {
+								this.num--;
+								this.code = this.num + 's';
+								if (this.num == 0) {
+									clearInterval(timer);
+									this.code = '重新发送';
+									this.num = 60;
+									this.disabled = false;
+								}
+							}, 1000)
+						}
+					}
+				})
+				
 			}
 		},
 	}

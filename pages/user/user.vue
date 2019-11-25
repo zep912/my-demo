@@ -16,7 +16,7 @@
 				</view>
 
 			</view>
-			<view class='login-now' @click="navTo('/pages/set/set')">	
+			<view class='login-now' @click="accountManage">	
 				<text>账号管理</text>
 			</view>
 		</view>
@@ -117,6 +117,7 @@
 	</view>
 </template>
 <script>
+	import axios from '@/utils/uniAxios.js'
 	import {
 		mapState
 	} from 'vuex';
@@ -161,7 +162,12 @@
 			}
 		},
 		onLoad(option) {
-			
+			console.log(option)
+			// 获取用户信息
+			axios.get('/sso/user/userInfo').then(res=>{
+				console.log(res)
+			})
+			this.loadData()
 		},
 		// // #ifndef MP
 		// onNavigationBarButtonTap(e) {
@@ -187,6 +193,25 @@
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
+			// 个人资料
+			accountManage(){
+				if(uni.getStorageSync('setPhone')){
+					uni.navigateTo({
+						url:'../set/set?id='+'16'
+					})
+				}else{
+					uni.navigateTo({
+						url:'../public/login'
+					})
+				}
+			},
+			// 刷新页面,获取用户信息
+			loadData(){
+				axios.get('/sso/user/userInfo').then(res=>{
+					
+				})
+			},
+				
 			// 查看更多订单
 			lookOrder() {
 				uni.navigateTo({
@@ -724,5 +749,7 @@
 		position: absolute;
 		right: 50%;
 		top: 38%;
+		text-align: center;
+		padding-left: 0;
 	}
 </style>

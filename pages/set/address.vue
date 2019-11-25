@@ -22,7 +22,8 @@
 </template>
 
 <script>
-	import empty from '@/components/empty.vue'
+	import empty from '@/components/empty.vue';
+	import axios from '@/utils/uniAxios.js';
 	export default {
 		components:{
 			empty
@@ -48,14 +49,25 @@
 						area: '西单元302',
 						default: false,
 					},
-				]
+				],
+				id:''
 			}
 		},
 		onLoad(option) {
+			this.id = option.id;
 			console.log(option.source);
 			this.source = option.source;
 		},
 		methods: {
+			// 获取所有地址列表
+			getAddress(){
+				let obj = {
+					id:this.id
+				}
+				axios.post('/member/address/list').then(res=>{
+					console.log(res)
+				})
+			},
 			//选择地址
 			checkAddress(item) {
 				if (this.source == 1) {
@@ -64,6 +76,7 @@
 					uni.navigateBack()
 				}
 			},
+			// 添加收货地址
 			addAddress(type, item) {
 				uni.navigateTo({
 					url: `/pages/set/addressManage?type=${type}&data=${JSON.stringify(item)}`
@@ -72,9 +85,10 @@
 			//添加或修改成功之后回调
 			refreshList(data, type) {
 				//添加或修改后事件，这里直接在最前面添加了一条数据，实际应用中直接刷新地址列表即可
-				this.addressList.unshift(data);
+				this.getAddress()
+				// this.addressList.unshift(data);
 
-				console.log(data, type);
+				// console.log(data, type);
 			}
 		}
 	}

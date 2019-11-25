@@ -3,11 +3,11 @@
 		<view class="bindmobile container">
 			<view class="mobile-code">
 				<input type="text" placeholder="请输入新手机号" class="mobile-input" placeholder-class="input-placeholder" maxlength='11'
-				 v-model="newMobile" @input='newPhone' />
+				 v-model="newMobile" />
 				<button type="primary" @click="getCode" class="getCode" :disabled="disabled">{{code}}</button>
 			</view>
 			<view class="new-mobile">
-				<input type="text" placeholder="请输入新手机号码验证" class="new-mobile-input mobile-input" placeholder-class="input-placeholder"
+				<input type="text" placeholder="请输入新手机号码验证码" class="new-mobile-input mobile-input" placeholder-class="input-placeholder"
 				 maxlength='11' v-model="newCode" />
 			</view>
 			<button type="primary" class="mobile-btn" @click="save">保存</button>
@@ -25,43 +25,76 @@
 				disabled: false,
 				msgCode: '',
 				num: 60,
+				oldMobile:'',
+				id:''
 			}
 		},
-		onLoad() {
-
+		onLoad(option) {
+			this.oldMobile = option.oldMobile;
+			this.id=option.id
 		},
 		methods: {
-			// 校验
-			newPhone(e) {
-				console.log(e.detail.value)
-
-			},
 			// 获取验证码
 			getCode() {
 				if (this.newMobile != '') {
 					var reg = /^(1[0-9])\d{9}$/;
 					if (!reg.test(this.newMobile)) {
-						Toast.fail('请输入正确的手机号码');
+						this.$api.msg('请输入正确的手机号码');
 					} else {
-						this.disabled = true;
-						this.code = this.num + 's';
-						var timer = setInterval(() => {
-							this.num--;
-							this.code = this.num + 's';
-							if (this.num == 0) {
-								clearInterval(timer);
-								this.code = '重新发送';
-								this.num = 60;
-								this.disabled = false;
+						let obj = {
+							telephone: this.newMobile
+						}
+						axios.post('/sso/user/sendCode', obj).then(res => {
+							if (res.data.code = '200') {
+								this.$api.msg('发送成功');
+								this.disabled = true;
+								this.code = this.num + 's';
+								var timer = setInterval(() => {
+									this.num--;
+									this.code = this.num + 's';
+									if (this.num == 0) {
+										clearInterval(timer);
+										this.code = '重新发送';
+										this.num = 60;
+										this.disabled = false;
+									}
+								}, 1000)
 							}
-						}, 1000)
+						})
 					}
 				} else {
-					Toast.fail('请输入手机号码');
+					this.$api.msg('请输入手机号')
 				}
 			},
+			// 修改手机号
 			save() {
-				console.log(this.newCode)
+				var reg = /^(1[0-9])\d{9}$/;
+				if(this.newMobile==''){
+					this.$api.msg('请输入手机号')
+				}else{
+					if(!reg.test(this.newMobile)){
+						this.$api.msg('请输入正确的手机号码');
+						return;
+					}else if(this.newCode==''){
+						this.$api.msg('请输入验证码');
+					}else{
+						let obj ={
+							  authCode: this.newCode,
+							  oldPhone: this.oldMobile,
+							  phone: this.newMobile
+						}
+						axios.post('/sso/user/bindNewPhone',obj).then(res=>{
+							if(res.data.code==200){
+								this.$api.msg('修改成功');
+								uni.navigateTo({
+									url:'set?id='+this.id
+								})
+							}else{
+								this.$api.msg(res.data.data);
+							}
+						})
+					}
+				};
 			}
 		}
 	}
