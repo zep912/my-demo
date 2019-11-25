@@ -8,9 +8,9 @@
 		"es6": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.2",
+	"libVersion": "2.7.0",
 	"appid": "touristappid",
-	"projectname": "麦田圈",
+	"projectname": "%E9%BA%A6%E7%94%B0%E5%9C%88",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

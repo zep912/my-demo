@@ -57,7 +57,7 @@
 						if(res.data.code==200){
 							console.log(res.data.data)
 							var token = res.data.data.token;
-							uni.setStorage('gt',token);
+							uni.setStorageSync('gt',token);
 							uni.switchTab({ 
 								url:'../user/user?phone='+_this.phone,
 								success:(res)=> { 

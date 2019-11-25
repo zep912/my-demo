@@ -380,7 +380,7 @@
 	page {
 		.cate-section {
 			position: relative;
-			z-index: 5;
+			z-index: 0;
 			border-radius: 20upx;
 			margin: 20upx;
 			margin-top: -10upx;

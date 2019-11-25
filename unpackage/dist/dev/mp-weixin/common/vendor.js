@@ -255,7 +255,7 @@ function isSyncApi(name) {
 }
 
 function isCallbackApi(name) {
-  return CALLBACK_API_RE.test(name) && name !== 'onPush';
+  return CALLBACK_API_RE.test(name);
 }
 
 function handlePromise(promise) {
@@ -1285,20 +1285,11 @@ function parseBaseComponent(vueComponentOptions)
 {var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage = _ref5.isPage,initRelation = _ref5.initRelation;var _initVueComponent =
   initVueComponent(_vue.default, vueComponentOptions),_initVueComponent2 = _slicedToArray(_initVueComponent, 2),VueComponent = _initVueComponent2[0],vueOptions = _initVueComponent2[1];
 
-  var options = {
-    multipleSlots: true,
-    addGlobalClass: true };
-
-
-  {
-    // 微信multipleSlots  部分情况有 bug，导致内容顺序错乱 如 u-list，提供覆盖选项
-    if (vueOptions['mp-weixin'] && vueOptions['mp-weixin']['options']) {
-      Object.assign(options, vueOptions['mp-weixin']['options']);
-    }
-  }
-
   var componentOptions = {
-    options: options,
+    options: {
+      multipleSlots: true,
+      addGlobalClass: true },
+
     data: initData(vueOptions, _vue.default.prototype),
     behaviors: initBehaviors(vueOptions, initBehavior),
     properties: initProperties(vueOptions.props, false, vueOptions.__file),
@@ -2568,9 +2559,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 167:
-/*!**************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/shop.png ***!
-  \**************************************************************/
+/*!*************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/shop.png ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2579,9 +2570,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAgCAIAAAD4
 /***/ }),
 
 /***/ 17:
-/*!******************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/Json.js ***!
-  \******************************************************/
+/*!*****************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/Json.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3287,9 +3278,9 @@ var cateList = [{
 /***/ }),
 
 /***/ 184:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-pending.png ***!
-  \***********************************************************************/
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-pending.png ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3298,9 +3289,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD8AAAA2CAYAAABw
 /***/ }),
 
 /***/ 185:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-received.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-received.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3309,9 +3300,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA2CAYAAACf
 /***/ }),
 
 /***/ 186:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-evaluated.png ***!
-  \*************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-evaluated.png ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3320,9 +3311,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAAA2CAYAAACc
 /***/ }),
 
 /***/ 187:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-refund.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-refund.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3331,9 +3322,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA8CAYAAAA3
 /***/ }),
 
 /***/ 188:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-wallet.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-wallet.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3342,9 +3333,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADR
 /***/ }),
 
 /***/ 189:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-delivery.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-delivery.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3353,9 +3344,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAgCAYAAACY
 /***/ }),
 
 /***/ 190:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-feedback.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-feedback.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3364,9 +3355,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAkCAYAAAAD
 /***/ }),
 
 /***/ 191:
-/*!******************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/title_01.png ***!
-  \******************************************************************/
+/*!*****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/title_01.png ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9338,9 +9329,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 224:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/couponPrice.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/couponPrice.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9349,9 +9340,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 /***/ }),
 
 /***/ 225:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/beuesed.png ***!
-  \********************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/beuesed.png ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9360,9 +9351,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 /***/ }),
 
 /***/ 226:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/used.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/used.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9371,9 +9362,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw
 /***/ }),
 
 /***/ 227:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/Beoverdue.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/Beoverdue.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9442,9 +9433,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 250:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/nogoods.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/nogoods.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9453,9 +9444,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAACzCAIAAACh
 /***/ }),
 
 /***/ 259:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/order/guanbi.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/order/guanbi.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10196,9 +10187,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4
 /***/ }),
 
 /***/ 276:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/userImg.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/userImg.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10207,9 +10198,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACR
 /***/ }),
 
 /***/ 285:
-/*!***************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/dizhi.png ***!
-  \***************************************************************/
+/*!**************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/dizhi.png ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10218,9 +10209,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAqCAIAAADE
 /***/ }),
 
 /***/ 286:
-/*!****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/upload.png ***!
-  \****************************************************************/
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/upload.png ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10260,9 +10251,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 303:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/toAddress.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/toAddress.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10271,9 +10262,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAe
 /***/ }),
 
 /***/ 33:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/logo.png ***!
-  \***********************************************************************/
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/logo.png ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10282,9 +10273,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAf
 /***/ }),
 
 /***/ 4:
-/*!*********************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json ***!
-  \*********************************************************/
+/*!********************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11181,9 +11172,9 @@ main();
 /***/ }),
 
 /***/ 50:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/emptybg.png ***!
-  \**************************************************************************/
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/emptybg.png ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11198,26 +11189,26 @@ module.exports = __webpack_require__.p + "static/img/emptybg.ccdbb797.png";
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-24220191115004","_inBundle":false,"_integrity":"sha512-UKnpiHSP7h9c5IFpJFkWkpm1KyWz9iHj1hchrQSUxPhChx+KPOmunnQcKGiQvvBz9CeSi7Se/eauJYha5ch0kw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-24220191115004.tgz","_shasum":"5848f2204f37daaf8c340fb27d9f76b16fcbfdeb","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"bcf65737c5111d47398695d3db8ed87305df346e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-24220191115004"};
+module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-23720191024001","_inBundle":false,"_integrity":"sha512-vJEk493Vdb8KueNzR2otzDi23rfyRcQBo/t1R41MwNGPk+AUB94gh10+HVLo98DRcvMzkuVofz3KXTAfEx24iw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-23720191024001.tgz","_shasum":"18272814446a9bc6053bc92666ec7064a1767588","_spec":"@dcloudio/uni-stat@next","_where":"/Users/fxy/Documents/DCloud/HbuilderX-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"a725c04ef762e5df78a9a69d140c2666e0de05fc","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-23720191024001"};
 
 /***/ }),
 
 /***/ 7:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"style"} ***!
-  \**************************************************************************/
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"style"} ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈", "usingComponents": {} }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送", "usingComponents": {} }, "pages/delivery/set": { "navigationBarTitleText": "接单设置", "usingComponents": {} }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计", "usingComponents": {} }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益", "usingComponents": {} }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计", "usingComponents": {} }, "pages/product/product": { "navigationBarTitleText": "详情展示", "usingComponents": { "share": "/components/share" } }, "pages/set/set": { "navigationBarTitleText": "账号管理", "usingComponents": {} }, "pages/set/person": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/set/mobile": { "navigationBarTitleText": "修改手机号", "usingComponents": {} }, "pages/set/bindmobile": { "navigationBarTitleText": "绑定手机号", "usingComponents": {} }, "pages/set/aboutus": { "navigationBarTitleText": "关于我们", "usingComponents": {} }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料", "usingComponents": {} }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈", "usingComponents": {} }, "pages/user/collect": { "navigationBarTitleText": "商品收藏", "usingComponents": { "empty": "/components/empty" } }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹", "usingComponents": { "empty": "/components/empty" } }, "pages/shopcar/shopcar": { "navigationBarTitleText": "购物车", "usingComponents": { "empty": "/components/empty" } }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "我的", "usingComponents": {} }, "pages/detail/detail": { "navigationBarTitleText": "", "usingComponents": { "share": "/components/share" } }, "pages/order/order": { "navigationBarTitleText": "我的订单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/user/wallet": { "navigationBarTitleText": "钱包", "usingComponents": {} }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券", "usingComponents": { "empty": "/components/empty" } }, "pages/money/money": { "usingComponents": {} }, "pages/order/createOrder": { "navigationBarTitleText": "创建订单", "usingComponents": {} }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单", "usingComponents": {} }, "pages/order/logistics": { "navigationBarTitleText": "物流信息", "usingComponents": {} }, "pages/order/consult": { "navigationBarTitleText": "协商历史", "usingComponents": {} }, "pages/order/refund": { "navigationBarTitleText": "申请退款", "usingComponents": {} }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情", "usingComponents": {} }, "pages/set/address": { "navigationBarTitleText": "我的收货地址", "usingComponents": { "empty": "/components/empty" } }, "pages/set/addressManage": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/money/pay": { "navigationBarTitleText": "支付", "usingComponents": {} }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功", "usingComponents": {} }, "pages/notice/notice": { "navigationBarTitleText": "通知", "usingComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": {} }, "pages/product/list": { "navigationBarTitleText": "商品列表", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "麦田圈", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈" }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送" }, "pages/delivery/set": { "navigationBarTitleText": "接单设置" }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单" }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计" }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益" }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计" }, "pages/product/product": { "navigationBarTitleText": "详情展示" }, "pages/set/set": { "navigationBarTitleText": "账号管理" }, "pages/set/person": { "navigationBarTitleText": "个人资料" }, "pages/set/mobile": { "navigationBarTitleText": "修改手机号" }, "pages/set/bindmobile": { "navigationBarTitleText": "绑定手机号" }, "pages/set/aboutus": { "navigationBarTitleText": "关于我们" }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料" }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈" }, "pages/user/collect": { "navigationBarTitleText": "商品收藏" }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹" }, "pages/shopcar/shopcar": { "navigationBarTitleText": "购物车" }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom" }, "pages/user/user": { "navigationBarTitleText": "我的" }, "pages/detail/detail": { "navigationBarTitleText": "" }, "pages/order/order": { "navigationBarTitleText": "我的订单" }, "pages/user/wallet": { "navigationBarTitleText": "钱包" }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券" }, "pages/money/money": {}, "pages/order/createOrder": { "navigationBarTitleText": "创建订单" }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后" }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单" }, "pages/order/logistics": { "navigationBarTitleText": "物流信息" }, "pages/order/consult": { "navigationBarTitleText": "协商历史" }, "pages/order/refund": { "navigationBarTitleText": "申请退款" }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情" }, "pages/set/address": { "navigationBarTitleText": "我的收货地址" }, "pages/set/addressManage": { "navigationBarTitleText": "" }, "pages/money/pay": { "navigationBarTitleText": "支付" }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功" }, "pages/notice/notice": { "navigationBarTitleText": "通知" }, "pages/category/category": { "navigationBarTitleText": "分类" }, "pages/product/list": { "navigationBarTitleText": "商品列表" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "麦田圈", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
 
 /***/ }),
 
 /***/ 8:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"stat"} ***!
-  \*************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"stat"} ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11227,9 +11218,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 9:
-/*!*************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/store/index.js ***!
-  \*************************************************************/
+/*!************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/store/index.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11274,24 +11265,19 @@ store;exports.default = _default;
 /***/ }),
 
 /***/ 93:
-/*!****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/utils/uniAxios.js ***!
-  \****************************************************************/
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/utils/uniAxios.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {var _uniAxiosMin = _interopRequireDefault(__webpack_require__(/*! ./../dist/uni-axios.min.js */ 94));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-// import uniAxios from './../index.js';
+
 _uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
 _uniAxiosMin.default.interceptors.first.use(function (config) {
-  uni.getStorage({
-    key: 'gt',
-    success: function success(res) {
-      console.log(res.data);
-      config.header.Authorization = res.data;
-    } });
-
+  var token = uni.getStorageSync('gt');
+  if (token) config.header.Authorization = token;
   console.log(config);
   var showLoading = config.showLoading;
   if (showLoading) {
@@ -11323,626 +11309,21 @@ module.exports = _uniAxiosMin.default;
 /***/ }),
 
 /***/ 94:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/dist/uni-axios.min.js ***!
-  \********************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/dist/uni-axios.min.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) {
-   true ? module.exports = t() : undefined;
-}(void 0, function () {
-  return function (e) {
-    function t(n) {
-      if (r[n]) return r[n].exports;
-      var o = r[n] = {
-        exports: {},
-        id: n,
-        loaded: !1 };
-
-      return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;
-    }
-    var r = {};
-    return t.m = e, t.c = r, t.p = "", t(0);
-  }([function (e, t, r) {
-    e.exports = r(1);
-  }, function (e, t, r) {
-    function n(e) {
-      var t = new c(e),
-      r = i(c.prototype.request, t);
-      return s.extend(r, c.prototype, t), s.extend(r, t), r;
-    }
-    var o = r(2),
-    s = o.utils,
-    i = o.bind,
-    a = o.mergeConfig,
-    u = r(24),
-    c = r(26),
-    f = n(u);
-    f.Axios = c, f.create = function (e) {
-      return n(a(f.defaults, e));
-    }, e.exports = f, e.exports.default = f;
-  }, function (e, t, r) {
-    e.exports = {
-      utils: r(3),
-      bind: r(4),
-      Axios: r(6),
-      mergeConfig: r(23),
-      dispatchRequest: r(9),
-      buildURL: r(7),
-      settle: r(15),
-      InterceptorManager: r(8) };
-
-  }, function (e, t, r) {
-    "use strict";
-
-    function n(e) {
-      return "[object Array]" === j.call(e);
-    }
-
-    function o(e) {
-      return "[object ArrayBuffer]" === j.call(e);
-    }
-
-    function s(e) {
-      return "undefined" != typeof FormData && e instanceof FormData;
-    }
-
-    function i(e) {
-      var t;
-      return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;
-    }
-
-    function a(e) {
-      return "string" == typeof e;
-    }
-
-    function u(e) {
-      return "number" == typeof e;
-    }
-
-    function c(e) {
-      return "undefined" == typeof e;
-    }
-
-    function f(e) {
-      return null !== e && "object" == typeof e;
-    }
-
-    function p(e) {
-      return "[object Date]" === j.call(e);
-    }
-
-    function d(e) {
-      return "[object File]" === j.call(e);
-    }
-
-    function l(e) {
-      return "[object Blob]" === j.call(e);
-    }
-
-    function h(e) {
-      return "[object Function]" === j.call(e);
-    }
-
-    function m(e) {
-      return f(e) && h(e.pipe);
-    }
-
-    function y(e) {
-      return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;
-    }
-
-    function g(e) {
-      return e.replace(/^\s*/, "").replace(/\s*$/, "");
-    }
-
-    function x() {
-      return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;
-    }
-
-    function v(e, t) {
-      if (null !== e && "undefined" != typeof e)
-      if ("object" != typeof e && (e = [e]), n(e))
-      for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else
-
-      for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}
-    }
-
-    function b() {
-      function e(e, r) {
-        "object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;
-      }
-      for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}
-      return t;
-    }
-
-    function w() {
-      function e(e, r) {
-        "object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;
-      }
-      for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}
-      return t;
-    }
-
-    function E(e, t, r) {
-      return v(t, function (t, n) {
-        r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;
-      }), e;
-    }
-    var R = r(4),
-    S = r(5),
-    j = Object.prototype.toString;
-    e.exports = {
-      isArray: n,
-      isArrayBuffer: o,
-      isBuffer: S,
-      isFormData: s,
-      isArrayBufferView: i,
-      isString: a,
-      isNumber: u,
-      isObject: f,
-      isUndefined: c,
-      isDate: p,
-      isFile: d,
-      isBlob: l,
-      isFunction: h,
-      isStream: m,
-      isURLSearchParams: y,
-      isStandardBrowserEnv: x,
-      forEach: v,
-      merge: b,
-      deepMerge: w,
-      extend: E,
-      trim: g };
-
-  }, function (e, t) {
-    "use strict";
-    e.exports = function (e, t) {
-      return function () {
-        for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}
-        return e.apply(t, r);
-      };
-    };
-  }, function (e, t) {
-    /*!
-                       * Determine if an object is a Buffer
-                       *
-                       * @author   Feross Aboukhadijeh <https://feross.org>
-                       * @license  MIT
-                       */
-    e.exports = function (e) {
-      return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);
-    };
-  }, function (e, t, r) {
-    "use strict";
-
-    function n(e) {
-      this.defaults = e, this.interceptors = {
-        request: new i(),
-        response: new i() };
-
-    }
-    var o = r(3),
-    s = r(7),
-    i = r(8),
-    a = r(9),
-    u = r(23);
-    n.prototype.request = function (e) {
-      "string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";
-      var t = [a, void 0],
-      r = Promise.resolve(e);
-      for (this.interceptors.request.forEach(function (e) {
-        t.unshift(e.fulfilled, e.rejected);
-      }), this.interceptors.response.forEach(function (e) {
-        t.push(e.fulfilled, e.rejected);
-      }); t.length;) {r = r.then(t.shift(), t.shift());}
-      return r;
-    }, n.prototype.getUri = function (e) {
-      return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");
-    }, o.forEach(["delete", "get", "head", "options"], function (e) {
-      n.prototype[e] = function (t, r) {
-        return this.request(o.merge(r || {}, {
-          method: e,
-          url: t }));
-
-      };
-    }), o.forEach(["post", "put", "patch"], function (e) {
-      n.prototype[e] = function (t, r, n) {
-        return this.request(o.merge(n || {}, {
-          method: e,
-          url: t,
-          data: r }));
-
-      };
-    }), e.exports = n;
-  }, function (e, t, r) {
-    "use strict";
-
-    function n(e) {
-      return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
-    }
-    var o = r(3);
-    e.exports = function (e, t, r) {
-      if (!t) return e;
-      var s;
-      if (r) s = r(t);else
-      if (o.isURLSearchParams(t)) s = t.toString();else
-      {
-        var i = [];
-        o.forEach(t, function (e, t) {
-          null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {
-            o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));
-          }));
-        }), s = i.join("&");
-      }
-      if (s) {
-        var a = e.indexOf("#");
-        a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;
-      }
-      return e;
-    };
-  }, function (e, t, r) {
-    "use strict";
-
-    function n() {
-      this.handlers = [];
-    }
-    var o = r(3);
-    n.prototype.use = function (e, t) {
-      return this.handlers.push({
-        fulfilled: e,
-        rejected: t }),
-      this.handlers.length - 1;
-    }, n.prototype.eject = function (e) {
-      this.handlers[e] && (this.handlers[e] = null);
-    }, n.prototype.forEach = function (e) {
-      o.forEach(this.handlers, function (t) {
-        null !== t && e(t);
-      });
-    }, e.exports = n;
-  }, function (e, t, r) {
-    "use strict";
-
-    function n(e) {
-      e.cancelToken && e.cancelToken.throwIfRequested();
-    }
-    var o = r(3),
-    s = r(10),
-    i = r(11),
-    a = r(12),
-    u = r(21),
-    c = r(22);
-    e.exports = function (e) {
-      n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {
-        delete e.headers[t];
-      });
-      var t = e.adapter || a.adapter;
-      return t(e).then(function (t) {
-        return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;
-      }, function (t) {
-        return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);
-      });
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3);
-    e.exports = function (e, t, r) {
-      return n.forEach(r, function (r) {
-        e = r(e, t);
-      }), e;
-    };
-  }, function (e, t) {
-    "use strict";
-    e.exports = function (e) {
-      return !(!e || !e.__CANCEL__);
-    };
-  }, function (e, t, r) {
-    "use strict";
-
-    function n(e, t) {
-      !s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);
-    }
-
-    function o() {
-      var e;
-      return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;
-    }
-    var s = r(3),
-    i = r(13),
-    a = {
-      "Content-Type": "application/x-www-form-urlencoded" },
-
-    u = {
-      adapter: o(),
-      transformRequest: [function (e, t) {
-        return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;
-      }],
-      transformResponse: [function (e) {
-        if ("string" == typeof e) try {
-          e = JSON.parse(e);
-        } catch (e) {}
-        return e;
-      }],
-      timeout: 0,
-      xsrfCookieName: "XSRF-TOKEN",
-      xsrfHeaderName: "X-XSRF-TOKEN",
-      maxContentLength: -1,
-      validateStatus: function validateStatus(e) {
-        return e >= 200 && e < 300;
-      } };
-
-    u.headers = {
-      common: {
-        Accept: "application/json, text/plain, */*" } },
-
-    s.forEach(["delete", "get", "head"], function (e) {
-      u.headers[e] = {};
-    }), s.forEach(["post", "put", "patch"], function (e) {
-      u.headers[e] = s.merge(a);
-    }), e.exports = u;
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3);
-    e.exports = function (e, t) {
-      n.forEach(e, function (r, n) {
-        n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);
-      });
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3),
-    o = r(15),
-    s = r(7),
-    i = r(18),
-    a = r(19),
-    u = r(16);
-    e.exports = function (e) {
-      return new Promise(function (t, c) {
-        var f = e.data,
-        p = e.headers;
-        n.isFormData(f) && delete p["Content-Type"];
-        var d = new XMLHttpRequest();
-        if (e.auth) {
-          var l = e.auth.username || "",
-          h = e.auth.password || "";
-          p.Authorization = "Basic " + btoa(l + ":" + h);
-        }
-        if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {
-          if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {
-            var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,
-            n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,
-            s = {
-              data: n,
-              status: d.status,
-              statusText: d.statusText,
-              headers: r,
-              config: e,
-              request: d };
-
-            o(t, c, s), d = null;
-          }
-        }, d.onabort = function () {
-          d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);
-        }, d.onerror = function () {
-          c(u("Network Error", e, null, d)), d = null;
-        }, d.ontimeout = function () {
-          c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;
-        }, n.isStandardBrowserEnv()) {
-          var m = r(20),
-          y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;
-          y && (p[e.xsrfHeaderName] = y);
-        }
-        if ("setRequestHeader" in d && n.forEach(p, function (e, t) {
-          "undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);
-        }), e.withCredentials && (d.withCredentials = !0), e.responseType) try {
-          d.responseType = e.responseType;
-        } catch (t) {
-          if ("json" !== e.responseType) throw t;
-        }
-        "function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {
-          d && (d.abort(), c(e), d = null);
-        }), void 0 === f && (f = null), d.send(f);
-      });
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(16);
-    e.exports = function (e, t, r) {
-      var o = r.config.validateStatus;
-      !o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(17);
-    e.exports = function (e, t, r, o, s) {
-      var i = new Error(e);
-      return n(i, t, r, o, s);
-    };
-  }, function (e, t) {
-    "use strict";
-    e.exports = function (e, t, r, n, o) {
-      return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {
-        return {
-          message: this.message,
-          name: this.name,
-          description: this.description,
-          number: this.number,
-          fileName: this.fileName,
-          lineNumber: this.lineNumber,
-          columnNumber: this.columnNumber,
-          stack: this.stack,
-          config: this.config,
-          code: this.code };
-
-      }, e;
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3),
-    o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];
-    e.exports = function (e) {
-      var t,r,s,i = {};
-      return e ? (n.forEach(e.split("\n"), function (e) {
-        if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {
-          if (i[t] && o.indexOf(t) >= 0) return;
-          "set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;
-        }
-      }), i) : i;
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3);
-    e.exports = n.isStandardBrowserEnv() ? function () {
-      function e(e) {
-        var t = e;
-        return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), {
-          href: o.href,
-          protocol: o.protocol ? o.protocol.replace(/:$/, "") : "",
-          host: o.host,
-          search: o.search ? o.search.replace(/^\?/, "") : "",
-          hash: o.hash ? o.hash.replace(/^#/, "") : "",
-          hostname: o.hostname,
-          port: o.port,
-          pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };
-
-      }
-      var t,r = /(msie|trident)/i.test(navigator.userAgent),
-      o = document.createElement("a");
-      return t = e(window.location.href),
-      function (r) {
-        var o = n.isString(r) ? e(r) : r;
-        return o.protocol === t.protocol && o.host === t.host;
-      };
-    }() : function () {
-      return function () {
-        return !0;
-      };
-    }();
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3);
-    e.exports = n.isStandardBrowserEnv() ? function () {
-      return {
-        write: function write(e, t, r, o, s, i) {
-          var a = [];
-          a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");
-        },
-        read: function read(e) {
-          var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));
-          return t ? decodeURIComponent(t[3]) : null;
-        },
-        remove: function remove(e) {
-          this.write(e, "", Date.now() - 864e5);
-        } };
-
-    }() : function () {
-      return {
-        write: function write() {},
-        read: function read() {
-          return null;
-        },
-        remove: function remove() {} };
-
-    }();
-  }, function (e, t) {
-    "use strict";
-    e.exports = function (e) {
-      return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);
-    };
-  }, function (e, t) {
-    "use strict";
-    e.exports = function (e, t) {
-      return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;
-    };
-  }, function (e, t, r) {
-    "use strict";
-    var n = r(3);
-    e.exports = function (e, t) {
-      t = t || {};
-      var r = {};
-      return n.forEach(["url", "method", "params", "data"], function (e) {
-        "undefined" != typeof t[e] && (r[e] = t[e]);
-      }), n.forEach(["headers", "auth", "proxy"], function (o) {
-        n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);
-      }), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {
-        "undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);
-      }), r;
-    };
-  }, function (e, t, r) {
-    var n = {
-      adapter: r(25),
-      validateStatus: function validateStatus(e) {
-        return e >= 200 && e < 300;
-      },
-      dataType: "json",
-      responseType: "text",
-      sslVerify: !0 };
-
-    e.exports = n;
-  }, function (e, t, r) {
-    var n = r(2),
-    o = n.buildURL,
-    s = n.settle;
-    e.exports = function (e) {
-      return new Promise(function (t, r) {
-        uni.request({
-          method: e.method.toUpperCase(),
-          url: o(e.url, e.params, e.paramsSerializer),
-          header: e.headers,
-          data: e.data,
-          dataType: e.dataType,
-          responseType: e.responseType,
-          sslVerify: e.sslVerify,
-          complete: function complete(n) {
-            n = {
-              data: n.data,
-              status: n.statusCode,
-              errMsg: n.errMsg,
-              header: n.header,
-              config: e },
-            s(t, r, n);
-          } });
-
-      });
-    };
-  }, function (e, t, r) {
-    function n(e) {
-      s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();
-    }
-    var o = r(2),
-    s = o.Axios,
-    i = o.utils,
-    a = o.InterceptorManager;
-    n.prototype.request = function (e) {
-      "string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};
-      var t = Promise.resolve(e);
-      this.interceptors.first.forEach(function (e) {
-        t = t.then(e.fulfilled, e.rejected);
-      });
-      var r = this,
-      t = t.then(function (e) {
-        return s.prototype.request.call(r, e);
-      });
-      return this.interceptors.last.forEach(function (r) {
-        t = t.then(function (t) {
-          return r.fulfilled(e), t;
-        }, function (t) {
-          return r.fulfilled(e), Promise.reject(t);
-        });
-      }), t;
-    }, i.forEach(["get", "post", "put", "delete", "connect", "head", "options", "trace"], function (e) {
-      n.prototype[e] = function (t, r) {
-        return this.request(i.merge(r || {}, {
-          method: e,
-          url: t }));
-
-      };
-    }), e.exports = n;
-  }]);
-});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 95), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) { true ? module.exports = t() : undefined;}(void 0, function () {return function (e) {function t(n) {if (r[n]) return r[n].exports;var o = r[n] = { exports: {}, id: n, loaded: !1 };return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;}var r = {};return t.m = e, t.c = r, t.p = "", t(0);}([function (e, t, r) {e.exports = r(1);}, function (e, t, r) {function n(e) {var t = new c(e),r = i(c.prototype.request, t);return s.extend(r, c.prototype, t), s.extend(r, t), r;}var o = r(2),s = o.utils,i = o.bind,a = o.mergeConfig,u = r(24),c = r(26),f = n(u);f.Axios = c, f.create = function (e) {return n(a(f.defaults, e));}, e.exports = f, e.exports.default = f;}, function (e, t, r) {e.exports = { utils: r(3), bind: r(4), Axios: r(6), mergeConfig: r(23), dispatchRequest: r(9), buildURL: r(7), settle: r(15), InterceptorManager: r(8) };}, function (e, t, r) {"use strict";function n(e) {return "[object Array]" === j.call(e);}function o(e) {return "[object ArrayBuffer]" === j.call(e);}function s(e) {return "undefined" != typeof FormData && e instanceof FormData;}function i(e) {var t;return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;}function a(e) {return "string" == typeof e;}function u(e) {return "number" == typeof e;}function c(e) {return "undefined" == typeof e;}function f(e) {return null !== e && "object" == typeof e;}function p(e) {return "[object Date]" === j.call(e);}function d(e) {return "[object File]" === j.call(e);}function l(e) {return "[object Blob]" === j.call(e);}function h(e) {return "[object Function]" === j.call(e);}function m(e) {return f(e) && h(e.pipe);}function y(e) {return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;}function g(e) {return e.replace(/^\s*/, "").replace(/\s*$/, "");}function x() {return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;}function v(e, t) {if (null !== e && "undefined" != typeof e) if ("object" != typeof e && (e = [e]), n(e)) for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}}function b() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function w() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function E(e, t, r) {return v(t, function (t, n) {r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;}), e;}var R = r(4),S = r(5),j = Object.prototype.toString;e.exports = { isArray: n, isArrayBuffer: o, isBuffer: S, isFormData: s, isArrayBufferView: i, isString: a, isNumber: u, isObject: f, isUndefined: c, isDate: p, isFile: d, isBlob: l, isFunction: h, isStream: m, isURLSearchParams: y, isStandardBrowserEnv: x, forEach: v, merge: b, deepMerge: w, extend: E, trim: g };}, function (e, t) {"use strict";e.exports = function (e, t) {return function () {for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}return e.apply(t, r);};};}, function (e, t) {/*!
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Determine if an object is a Buffer
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author   Feross Aboukhadijeh <https://feross.org>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license  MIT
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+    e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 95), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
