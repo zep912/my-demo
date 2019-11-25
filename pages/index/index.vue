@@ -257,7 +257,7 @@
 			// }
 		// 手机号登录
 		toPhone() {
-
+			uni.navigateTo({url: '/pages/public/login'})
 		},
 		/**
 		 * 请求静态数据只是为了代码不那么乱

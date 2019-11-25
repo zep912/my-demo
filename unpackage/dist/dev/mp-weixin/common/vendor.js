@@ -255,7 +255,7 @@ function isSyncApi(name) {
 }
 
 function isCallbackApi(name) {
-  return CALLBACK_API_RE.test(name) && name !== 'onPush';
+  return CALLBACK_API_RE.test(name);
 }
 
 function handlePromise(promise) {
@@ -734,7 +734,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -1285,20 +1285,11 @@ function parseBaseComponent(vueComponentOptions)
 {var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage = _ref5.isPage,initRelation = _ref5.initRelation;var _initVueComponent =
   initVueComponent(_vue.default, vueComponentOptions),_initVueComponent2 = _slicedToArray(_initVueComponent, 2),VueComponent = _initVueComponent2[0],vueOptions = _initVueComponent2[1];
 
-  var options = {
-    multipleSlots: true,
-    addGlobalClass: true };
-
-
-  {
-    // 微信multipleSlots  部分情况有 bug，导致内容顺序错乱 如 u-list，提供覆盖选项
-    if (vueOptions['mp-weixin'] && vueOptions['mp-weixin']['options']) {
-      Object.assign(options, vueOptions['mp-weixin']['options']);
-    }
-  }
-
   var componentOptions = {
-    options: options,
+    options: {
+      multipleSlots: true,
+      addGlobalClass: true },
+
     data: initData(vueOptions, _vue.default.prototype),
     behaviors: initBehaviors(vueOptions, initBehavior),
     properties: initProperties(vueOptions.props, false, vueOptions.__file),
@@ -2568,9 +2559,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 167:
-/*!**************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/shop.png ***!
-  \**************************************************************/
+/*!*************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/shop.png ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2579,9 +2570,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAgCAIAAAD4
 /***/ }),
 
 /***/ 17:
-/*!******************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/Json.js ***!
-  \******************************************************/
+/*!*****************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/Json.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3287,9 +3278,9 @@ var cateList = [{
 /***/ }),
 
 /***/ 184:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-pending.png ***!
-  \***********************************************************************/
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-pending.png ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3298,9 +3289,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD8AAAA2CAYAAABw
 /***/ }),
 
 /***/ 185:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-received.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-received.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3309,9 +3300,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA2CAYAAACf
 /***/ }),
 
 /***/ 186:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-evaluated.png ***!
-  \*************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-evaluated.png ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3320,9 +3311,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAAA2CAYAAACc
 /***/ }),
 
 /***/ 187:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-refund.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-refund.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3331,9 +3322,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA8CAYAAAA3
 /***/ }),
 
 /***/ 188:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-wallet.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-wallet.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3342,9 +3333,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADR
 /***/ }),
 
 /***/ 189:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-delivery.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-delivery.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3353,9 +3344,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAgCAYAAACY
 /***/ }),
 
 /***/ 190:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/my-feedback.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-feedback.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3364,9 +3355,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAkCAYAAAAD
 /***/ }),
 
 /***/ 191:
-/*!******************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/title_01.png ***!
-  \******************************************************************/
+/*!*****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/title_01.png ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -8856,7 +8847,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8877,14 +8868,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8960,7 +8951,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9338,9 +9329,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 224:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/couponPrice.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/couponPrice.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9349,9 +9340,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 /***/ }),
 
 /***/ 225:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/beuesed.png ***!
-  \********************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/beuesed.png ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9360,9 +9351,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 /***/ }),
 
 /***/ 226:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/used.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/used.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9371,9 +9362,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw
 /***/ }),
 
 /***/ 227:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/Beoverdue.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/Beoverdue.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9442,9 +9433,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 250:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/nogoods.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/nogoods.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9453,9 +9444,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAACzCAIAAACh
 /***/ }),
 
 /***/ 259:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/order/guanbi.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/order/guanbi.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10196,9 +10187,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4
 /***/ }),
 
 /***/ 276:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/userImg.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/userImg.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10207,9 +10198,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACR
 /***/ }),
 
 /***/ 285:
-/*!***************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/dizhi.png ***!
-  \***************************************************************/
+/*!**************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/dizhi.png ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10218,9 +10209,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAqCAIAAADE
 /***/ }),
 
 /***/ 286:
-/*!****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/upload.png ***!
-  \****************************************************************/
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/upload.png ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10260,9 +10251,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 303:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/toAddress.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/toAddress.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10271,9 +10262,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAe
 /***/ }),
 
 /***/ 33:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/logo.png ***!
-  \***********************************************************************/
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/logo.png ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10282,9 +10273,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAf
 /***/ }),
 
 /***/ 4:
-/*!*********************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json ***!
-  \*********************************************************/
+/*!********************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11181,9 +11172,9 @@ main();
 /***/ }),
 
 /***/ 50:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/emptybg.png ***!
-  \**************************************************************************/
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/emptybg.png ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11198,14 +11189,14 @@ module.exports = __webpack_require__.p + "static/img/emptybg.ccdbb797.png";
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-24220191115004","_inBundle":false,"_integrity":"sha512-UKnpiHSP7h9c5IFpJFkWkpm1KyWz9iHj1hchrQSUxPhChx+KPOmunnQcKGiQvvBz9CeSi7Se/eauJYha5ch0kw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-24220191115004.tgz","_shasum":"5848f2204f37daaf8c340fb27d9f76b16fcbfdeb","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"bcf65737c5111d47398695d3db8ed87305df346e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-24220191115004"};
+module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-23720191024001","_inBundle":false,"_integrity":"sha512-vJEk493Vdb8KueNzR2otzDi23rfyRcQBo/t1R41MwNGPk+AUB94gh10+HVLo98DRcvMzkuVofz3KXTAfEx24iw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-23720191024001.tgz","_shasum":"18272814446a9bc6053bc92666ec7064a1767588","_spec":"@dcloudio/uni-stat@next","_where":"/Users/fxy/Documents/DCloud/HbuilderX-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"a725c04ef762e5df78a9a69d140c2666e0de05fc","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-23720191024001"};
 
 /***/ }),
 
 /***/ 7:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"style"} ***!
-  \**************************************************************************/
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"style"} ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11215,9 +11206,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 8:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"stat"} ***!
-  \*************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"stat"} ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11227,9 +11218,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 9:
-/*!*************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/store/index.js ***!
-  \*************************************************************/
+/*!************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/store/index.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11274,9 +11265,9 @@ store;exports.default = _default;
 /***/ }),
 
 /***/ 93:
-/*!****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/utils/uniAxios.js ***!
-  \****************************************************************/
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/utils/uniAxios.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11286,8 +11277,11 @@ store;exports.default = _default;
 _uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
 _uniAxiosMin.default.interceptors.first.use(function (config) {
   var token = uni.getStorageSync('gt');
-  if (token) config.header.Authorization = token;
-  console.log(config);
+  console.log(token, 'Ftoken', config);
+  if (token) {
+    config.headers = { Authorization: token, ContentType: "application/json;charset=UTF-8" };
+  }
+  console.log(config, 'configF');
   var showLoading = config.showLoading;
   if (showLoading) {
     uni.showLoading({
@@ -11306,7 +11300,7 @@ _uniAxiosMin.default.interceptors.response.use(function (response) {
   return Promise.reject(err);
 });
 _uniAxiosMin.default.interceptors.last.use(function (config) {
-  console.log(config);
+  console.log(config, 'last');
   if (config.showLoading) {
     uni.hideLoading();
   }
@@ -11318,9 +11312,9 @@ module.exports = _uniAxiosMin.default;
 /***/ }),
 
 /***/ 94:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/dist/uni-axios.min.js ***!
-  \********************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/dist/uni-axios.min.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11332,7 +11326,7 @@ module.exports = _uniAxiosMin.default;
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       * @license  MIT
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       */
     e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 95), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 95), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
