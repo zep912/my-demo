@@ -319,7 +319,7 @@ pageAtTop = true;var _default =
   onLoad: function onLoad(option) {
     console.log(option);
     // 获取用户信息
-    _uniAxios.default.get('/sso/user/userInfo').then(function (res) {
+    _uniAxios.default.post('/sso/user/userInfo').then(function (res) {
       console.log(res);
     });
     this.loadData();
@@ -362,7 +362,7 @@ pageAtTop = true;var _default =
     },
     // 刷新页面,获取用户信息
     loadData: function loadData() {
-      _uniAxios.default.get('/sso/user/userInfo').then(function (res) {
+      _uniAxios.default.post('/sso/user/userInfo').then(function (res) {
 
       });
     },
