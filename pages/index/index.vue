@@ -214,20 +214,20 @@
 							});
 						}
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-						uni.request({
-							url: '服务器地址',
-							data: {
-								code: code,
-							},
-							method: 'GET',
-							header: {
-								'content-type': 'application/json'
-							},
-							success: (res) => {
-								//openId、或SessionKdy存储//隐藏loading
-								uni.hideLoading();
-							}
-						})
+						// uni.request({
+						// 	url: '服务器地址',
+						// 	data: {
+						// 		code: code,
+						// 	},
+						// 	method: 'GET',
+						// 	header: {
+						// 		'content-type': 'application/json'
+						// 	},
+						// 	success: (res) => {
+						// 		//openId、或SessionKdy存储//隐藏loading
+						// 		uni.hideLoading();
+						// 	}
+						// })
 					}
 				})
 			},

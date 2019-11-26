@@ -164,7 +164,7 @@
 		onLoad(option) {
 			console.log(option)
 			// 获取用户信息
-			axios.get('/sso/user/userInfo').then(res=>{
+			axios.post('/sso/user/userInfo').then(res=>{
 				console.log(res)
 			})
 			this.loadData()
@@ -207,7 +207,7 @@
 			},
 			// 刷新页面,获取用户信息
 			loadData(){
-				axios.get('/sso/user/userInfo').then(res=>{
+				axios.post('/sso/user/userInfo').then(res=>{
 					
 				})
 			},
