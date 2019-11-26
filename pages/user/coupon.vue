@@ -84,7 +84,8 @@
 </template>
 
 <script>
-	import empty from '@/components/empty.vue'
+	import empty from '@/components/empty.vue';
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components:{
 			empty
@@ -92,17 +93,30 @@
 		data() {
 			return {
 				active: 0,
-				arr:[1],
-				src:'../../static/my/nocoupon.png',
+				arr:[],
+				src:'../static/my/nocoupon.png',
 				msg:'您还没有任何优惠券，去看看其他的吧'
 			}
 		},
+		onLoad() {
+			this.getCoupon(0)
+		},
 		methods: {
+			// 获取用户的优惠券列表
+			getCoupon(n){
+				axios.post('/member/coupon/list',{useStatus:n}).then(res=>{
+					if(res.data.code==200){
+						
+					}
+				})
+			},
 			onChange(event) {
-				wx.showToast({
-					title: `切换到标签 ${event.detail.name}`,
-					icon: 'none'
-				});
+				console.log(event)
+				this.getCoupon(event.detail.name)
+				// wx.showToast({
+				// 	title: `切换到标签 ${event.detail.name}`,
+				// 	icon: 'none'
+				// });
 			}
 		}
 
@@ -110,7 +124,7 @@
 </script>
 
 <style lang="scss">
-	.couponbox /deep/ .noCollect img{
+	.couponbox .noCollect img{
 		width: 176rpx;
 		height: 118rpx;
 	}

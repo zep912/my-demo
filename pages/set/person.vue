@@ -32,6 +32,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js';
 	import {  
 	    mapMutations  
 	} from 'vuex';
@@ -50,6 +51,7 @@
 		},
 		onLoad(option){
 			this.id = option.id;
+			this.getData()
 		},
 		methods:{
 			...mapMutations(['logout']),
@@ -58,26 +60,27 @@
 				let obj ={
 					id:this.id
 				}
-				axios.post('/sso/user/id',obj).then(res=>{
-					this.person = res.data.data;
-				})
+				// 如果是手机号码直接登录，不填
+				if(uni.getStorageSync('setPhone')){
+					axios.post('/sso/user/id',obj).then(res=>{
+						// this.person = res.data.data;
+						this.person = {
+							avartar:'',
+							userName:'',
+							sex:'',
+							birthday:'',
+							weight:'',
+						}
+					})
+				}
 			},
 			navTo(url){
 				// this.$api.msg(`跳转到${url}`);
 			},
 			//保存
 			save(){
-				// uni.showModal({
-				//     content: '确定要退出登录么',
-				//     success: (e)=>{
-				//     	if(e.confirm){
-				//     		this.logout();
-				//     		setTimeout(()=>{
-				//     			uni.navigateBack();
-				//     		}, 200)
-				//     	}
-				//     }
-				// });
+				// 返回上一页
+				uni.navigateBack()
 			},
 		}
 	}

@@ -23,17 +23,15 @@
 		<view class="row default-row b-b">
 			<text class="tit default" >地址标签</text>
 			<view class="address-label" v-model="addressData.addressLabel">
-				<text class="default-label">家庭</text>
-				<text class="default-label default-label-mid">公司</text>
-				<text class="default-label">学校</text>
+				<ul>
+					<li v-for="(item,index) in addressLabels" :class="{checkAddress:index==n}" class="default-label" @click="changeList(item,index)">{{item}}</li>
+				</ul>
 			</view>
-			
-			<!-- <input class="input" type="text" v-model="addressData.area" placeholder="楼号、门牌" placeholder-class="placeholder" /> -->
 		</view>
 		
 		<view class="row default-checkbox">
 			<text class="tit default">设置为默认地址</text>
-			 <van-checkbox :value="addressData.defaultStatus" @change="switchChange" checked-color="#F7B52C"></van-checkbox>
+			 <van-checkbox :value="defaultStatus" @change="switchChange" checked-color="#F7B52C"></van-checkbox>
 		</view>
 		<button class="add-btn" @click="confirm">保存地址</button>
 	</view>
@@ -47,11 +45,11 @@
 		data() {
 			return {
 				addressData: {
-				 "addressLabel": "",//地址标签
+				 "addressLabel": "家庭",//地址标签，默认家庭
 				  "city": "",//城市
-				  "defaultStatus": 0,//是否默认
+				  "defaultStatus": 1,//是否默认,0否，1是
 				  "detailAddress": "",//详细地址
-				  "id": 0,
+				  "id": '',
 				  "memberId": 0,//会员ID
 				  "name": "",//收货人姓名
 				  "phoneNumber": "",//电话
@@ -59,7 +57,10 @@
 				  "province": "",//省份
 				  "region": ""//区
 				},
-				address:''
+				address:'',
+				addressLabels:['家庭','公司','学校'],
+				n:0,
+				defaultStatus:true
 			}
 		},
 		onLoad(option){
@@ -75,24 +76,38 @@
 			})
 		},
 		methods: {
+			// 地址标签
+			changeList(item,index){
+				this.n = index;//this指向app
+				this.addressData.addressLabel = item;
+			},
+			// 切换默认
 			switchChange(e){
-				this.addressData.default = e.detail;
+				this.defaultStatus = e.detail;
+				if(this.defaultStatus){
+					this.addressData.defaultStatus = 1
+				}else{
+					this.addressData.defaultStatus = 0
+				}
 			},
 			
 			//地图选择地址
 			chooseLocation(){
 				uni.getLocation({
 				    type: 'wgs84',
+					geocode:true,
 				    success: function (res) {
-				        // console.log('当前位置的经度：' + res.longitude);
-				        // console.log('当前位置的纬度：' + res.latitude);
+						console.log(res)
+						// 在小程序中不能获取到address的详细信息。需要根据经纬度逆地理编码
+						//https://ask.dcloud.net.cn/article/35070
+						// https://lbs.qq.com/qqmap_wx_jssdk/
+						
 				    }
 				});
 				
 				uni.chooseLocation({
 					success: (data)=> {
-						this.addressData.addressName = data.name;
-						this.addressData.address = data.name;
+						this.address = data.name;
 					}
 				})
 			},
@@ -104,40 +119,31 @@
 					this.$api.msg('请填写收货人姓名');
 					return;
 				}
-				if(!/(^1[3|4|5|7|8][0-9]{9}$)/.test(data.mobile)){
+				if(!/^(1[0-9])\d{9}$/.test(data.phoneNumber)){
 					this.$api.msg('请输入正确的手机号码');
 					return;
 				}
-				if(!data.address){
+				if(!this.address){
 					this.$api.msg('请在地图选择所在位置');
 					return;
 				}
-				if(!data.area){
+				if(!data.detailAddress){
 					this.$api.msg('请填写门牌号信息');
 					return;
 				}
-				let obj = {
-					 "addressLabel": "string",
-					  "city": "string",
-					  "defaultStatus": 0,
-					  "detailAddress": "string",
-					  "id": 0,
-					  "memberId": 0,
-					  "name": "string",
-					  "phoneNumber": "string",
-					  "postCode": "string",
-					  "province": "string",
-					  "region": "string"
-				}
+				console.log(this.addressData)
 				axios.post('/member/address/add',this.addressData).then(res=>{
-					console.log(res)
+					if(res.data.code==200){
+						//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
+						this.$api.prePage().refreshList(data, this.manageType);
+						this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);
+						setTimeout(()=>{
+							uni.navigateBack()
+						}, 800)
+					}
+					
 				})
-				//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
-				this.$api.prePage().refreshList(data, this.manageType);
-				this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);
-				setTimeout(()=>{
-					uni.navigateBack()
-				}, 800)
+				
 			},
 		}
 	}
@@ -192,7 +198,11 @@
 			text-align: center;
 			line-height: 54rpx;
 		}
-		.address-label .default-label-mid{
+		.address-label .checkAddress{
+			border:1px solid rgba(255,176,3,1);
+			color:rgba(255,176,3,1);
+		}
+		.address-label .default-label:nth-of-type(2){
 			margin-left: 20rpx;
 			margin-right: 20rpx;
 		}

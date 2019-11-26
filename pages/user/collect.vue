@@ -47,7 +47,7 @@
 		},
 		data(){
 			return{
-				src:'../../static/my/nocollet.png',
+				src:'../static/my/nocollet.png',
 				msg:'您还没有任何收藏，去看看其他的吧',
 				checked:false,
 				edit:'编辑',
@@ -103,7 +103,7 @@
 </script>
 
 <style lang="scss">
-	.collect /deep/ .noCollect img{
+	.collect .empty .noCollect img{
 		width: 168rpx;
 		height: 200rpx;
 	}

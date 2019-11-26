@@ -5,11 +5,13 @@
 	},
 	"setting": {
 		"urlCheck": true,
-		"es6": true
+		"es6": true,
+		"postcss": true,
+		"minified": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
-	"appid": "touristappid",
+	"libVersion": "2.9.2",
+	"appid": "wx4811f0fa8550da83",
 	"projectname": "麦田圈",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},

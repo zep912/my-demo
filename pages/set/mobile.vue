@@ -37,8 +37,7 @@
 			axios.post('/sso/user/id',{id:this.id}).then(res=>{
 				console.log(res)
 				 this.phone = res.data.data.phone;
-				this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(8);
-				
+				this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(7);
 			})
 		},
 		methods: {

@@ -13,9 +13,9 @@
 					<text class="address">{{item.addressName}} {{item.area}}</text>
 				</view>
 			</view>
-			<text  @click.stop="addAddress('edit', item)">
+			<view  @click.stop="addAddress('edit', item)">
 				<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'>
-			</text>
+			</view>
 		</view>
 		<button class="add-btn" @click="addAddress('add')">添加新地址</button>
 	</view>
@@ -30,33 +30,33 @@
 		},
 		data() {
 			return {
-				src:'../../static/my/my-address.png',
+				src:'../static/my/my-address.png',
 				msg:'你还没有任何地址，赶紧添加吧',
 				source: 0,
 				addressList: [
-						{
-						name: '刘晓晓',
-						mobile: '18666666666',
-						addressName: '贵族皇仕牛排(东城店)',
-						address: '北京市东城区',
-						area: 'B区',
-						default: true
-					}, {
-						name: '刘大大',
-						mobile: '18667766666',
-						addressName: '龙回1区12号楼',
-						address: '山东省济南市历城区',
-						area: '西单元302',
-						default: false,
-					},
+					// 	{
+					// 	name: '刘晓晓',
+					// 	mobile: '18666666666',
+					// 	addressName: '贵族皇仕牛排(东城店)',
+					// 	address: '北京市东城区',
+					// 	area: 'B区',
+					// 	default: true
+					// }, {
+					// 	name: '刘大大',
+					// 	mobile: '18667766666',
+					// 	addressName: '龙回1区12号楼',
+					// 	address: '山东省济南市历城区',
+					// 	area: '西单元302',
+					// 	default: false,
+					// },
 				],
 				id:''
 			}
 		},
 		onLoad(option) {
 			this.id = option.id;
-			console.log(option.source);
 			this.source = option.source;
+			this.getAddress()
 		},
 		methods: {
 			// 获取所有地址列表
@@ -66,6 +66,9 @@
 				}
 				axios.post('/member/address/list').then(res=>{
 					console.log(res)
+					if(res.data.code==200){
+						this.addressList = res.data.data;
+					}
 				})
 			},
 			//选择地址
@@ -95,14 +98,14 @@
 </script>
 
 <style lang='scss'>
-	.adress /deep/ .noCollect img{
+	.adress .noCollect img{
 		width: 116rpx;
 		height: 154rpx;
 	}
-	.adress /deep/ .noCollect  uni-button{
+	.adress .noCollect  button{
 		display: none;
 	}
-	.adress /deep/ .noCollect .noCollect-word{
+	.adress .noCollect .noCollect-word{
 		font-size:30rpx;
 		font-weight:600;
 		color:#1F1F1F;

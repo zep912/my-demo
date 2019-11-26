@@ -160,6 +160,9 @@
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex';
 	export default {
 
 		data() {
@@ -172,7 +175,9 @@
 				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 			};
 		},
-
+		computed: {
+					...mapState(['hasLogin', 'userInfo'])
+				},
 		onLoad() {
 			this.loadData();
 			this.login();
@@ -184,8 +189,12 @@
 				uni.getUserInfo({
 					provider: 'weixin',
 					success: function(infoRes) {
+						console.log(infoRes)
 						let nickName = infoRes.userInfo.nickName; //昵称
 						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+						_this.userInfo.nickName = nickName;
+						_this.userInfo.avatarUrl = avatarUrl;
+						_this.$store.commit('login',_this.userInfo)
 						try {
 							uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
 							_this.updateUserInfo();

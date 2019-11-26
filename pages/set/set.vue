@@ -6,8 +6,8 @@
 
 			<view class="info-box">
 				<text class="username">
-					<text class="name">Leo yo</text>
-					<text class="username-info">用户名:111212</text>
+					<text class="name">{{user.name}}</text>
+					<text class="username-info">{{user.nickName}}</text>
 				</text>
 			</view>
 			<text class='login-now'>
@@ -47,7 +47,11 @@
 			return {
 				img: '/static/missing-face.png',
 				phone:'',
-				id:''
+				id:'',
+				user:{
+					name:'',
+					nickName:''
+				}
 			};
 		},
 		onLoad(option) {
@@ -64,10 +68,14 @@
 			},
 			// 初始化
 			getData(){
-				axios.post('/sso/user/id',{id:this.id}).then(res=>{
-					console.log(res)
-					this.phone = res.data.data.phone
-				})
+				// 如果是手机登录
+				if(uni.getStorageSync('setPhone')){
+					axios.post('/sso/user/id',{id:this.id}).then(res=>{
+						this.phone = res.data.data.phone;
+						this.user.name = this.phone;
+					})
+				}
+				
 			}
 		}
 	}

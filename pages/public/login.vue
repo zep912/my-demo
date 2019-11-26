@@ -15,7 +15,6 @@
 				<image src="../../static/delivery/code.png" mode=""></image>
 				<input type="text" value="" placeholder="请输入验证码" placeholder-class='customClss' v-model="authCode" />
 				<button class="postCode" plain='true' @click="postCode" :disabled="disabled">{{code}}</button>
-				<!-- <text class="postCode"></text> -->
 			</view>
 		</view>
 		<!-- 按钮 -->
@@ -48,7 +47,6 @@
 					authCode: _this.authCode
 				};
 				axios.post('/sso/user/login',obj).then(res=>{
-					console.log(res)
 					if(res.data.code=='200'){
 						var token = res.data.data.token;
 						uni.setStorageSync('gt',token);
@@ -57,7 +55,6 @@
 							url:'../user/user?phone='+_this.phone,
 							success:(res)=> { 
 								 let page = getCurrentPages();  //跳转页面成功之后
-								 console.log(page)
 								 if (!page){
 									 return
 								 }else{
@@ -67,6 +64,8 @@
 								 };   
 							  }
 						});
+					}else{
+						this.$api.msg(res.data.message)
 					}
 				})
 		},
@@ -80,19 +79,9 @@
 					telephone: _this.phone
 				}
 				
-				// axios.post('/sso/user/sendCod',obj,{header:{'content-type': 'application/json'}}).then(res=>{
-				// 	console.log(res)
-				// })
-				uni.request({
-					method: 'POST',
-					url: 'http://39.98.122.62:8085/sso/user/sendCode',
-					data: {
-						telephone: _this.phone
-					},
-					header: {
-						'content-type': 'application/json'
-					},
-					success(res) {
+				axios.post('/sso/user/sendCod',obj).then(res=>{
+					console.log(res)
+					if(res.data.code=='200'){
 						_this.$api.msg('发送成功')
 						if(res.data.code==200){
 							_this.disabled = true;
@@ -107,13 +96,10 @@
 								}
 							}, 1000)
 						}
-
 					}
 				})
 			}
-
 		}
-
 	}
 	}
 </script>

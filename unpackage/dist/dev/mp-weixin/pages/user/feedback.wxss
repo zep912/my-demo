@@ -21,10 +21,9 @@ page {
           box-sizing: border-box;
   padding-left: 30rpx;
   padding-right: 30rpx;
-  padding-top: 36rpx;
+  padding-top: 10rpx;
   margin: 0 auto;
   margin-top: 10rpx;
-  padding-bottom: 40rpx;
 }
 .cate .cate-first {
     display: -webkit-box;
@@ -36,8 +35,11 @@ page {
         -ms-flex-pack: start;
             justify-content: flex-start;
     margin-bottom: 20rpx;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
 }
-.cate .cate-first text {
+.cate .cate-first .cate-view {
       width: 32%;
       height: 70rpx;
       border-radius: 35rpx;
@@ -58,8 +60,9 @@ page {
       font-size: 26rpx;
       font-weight: 500;
       color: #2a2a2a;
+      margin-bottom: 20rpx;
 }
-.cate .cate-first text:nth-of-type(2) {
+.cate .cate-first .cate-view:nth-of-type(3n-1) {
       margin-left: 2%;
       margin-right: 2%;
 }
@@ -100,5 +103,6 @@ page {
   text-align: center;
   line-height: 80rpx;
   margin-top: 80rpx;
+  color: #fff;
 }
 

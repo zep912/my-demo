@@ -8,9 +8,9 @@
 					<image class="portrait" :src="userInfo.portrait || '../../static/my/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username">{{userInfo.nickname}}</text>
-					<text class="info-mobile">{{userInfo.mobile}}</text>
-					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-show='!userInfo.nickname'>
+					<text class="username" v-show='!authShow'>{{userInfo.nickname?userInfo.nickname:''}}</text>
+					<text class="info-mobile" v-show='!authShow'>{{userInfo.mobile}}</text>
+					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-show='authShow'>
 						<text>点击授权登录</text>
 					</view>
 				</view>
@@ -158,46 +158,22 @@
 						jifen:'200',
 						price:999.90
 					}
-				]
+				],
+				authShow:true,
 			}
 		},
 		onLoad(option) {
-			console.log(option)
-			// 获取用户信息
-			axios.post('/sso/user/userInfo').then(res=>{
-				console.log(res)
-			})
-			this.loadData()
+			this.loadData();
 		},
-		// // #ifndef MP
-		// onNavigationBarButtonTap(e) {
-		// 	const index = e.index;
-		// 	if (index === 0) {
-		// 		this.navTo('/pages/set/set');
-		// 	} else if (index === 1) {
-		// 		// #ifdef APP-PLUS
-		// 		const pages = getCurrentPages();
-		// 		const page = pages[pages.length - 1];
-		// 		const currentWebview = page.$getAppWebview();
-		// 		currentWebview.hideTitleNViewButtonRedDot({
-		// 			index
-		// 		});
-		// 		// #endif
-		// 		uni.navigateTo({
-		// 			url: '/pages/notice/notice'
-		// 		})
-		// 	}
-		// },
-		// #endif
 		computed: {
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
 			// 个人资料
 			accountManage(){
-				if(uni.getStorageSync('setPhone')){
+				if(uni.getStorageSync('setPhone')||uni.getStorageSync('gt')){
 					uni.navigateTo({
-						url:'../set/set?id='+'16'
+						url:'../set/set?id='+this.userInfo.id 
 					})
 				}else{
 					uni.navigateTo({
@@ -205,11 +181,28 @@
 					})
 				}
 			},
-			// 刷新页面,获取用户信息
+			// 从登录页跳转过来，刷新页面,获取用户信息
 			loadData(){
-				axios.post('/sso/user/userInfo').then(res=>{
+				// 如果使用手机号登录
+				let userInfos = uni.getStorageSync('userInfo')
+				if(uni.getStorageSync('gt')&&uni.getStorageSync('setPhone')){
+					axios.post('/sso/user/userInfo').then(res=>{
+						if(res.data.code='200'){
+							this.authShow = false;
+							this.userInfo.mobile = res.data.data.phone;
+							this.userInfo.id = res.data.data.id;
+							
+							this.$store.commit('login',this.userInfo)
+						}
+					})
+				}else if(userInfos.nickName){
+					console.log(userInfos.nickName)
+					this.authShow = false;
+					this.userInfo.nickName = userInfos.nickName
 					
-				})
+				}
+				// 如果使用微信登录方式登录
+				
 			},
 				
 			// 查看更多订单
@@ -218,17 +211,12 @@
 					url: '../order/order?state=0'
 				});
 			},
-			account() {
-				console.log(1111)
-				uni.navigateTo({
-					url: '../set/set'
-				})
-			},
 			/**
 			 * 统一跳转接口,拦截未登录路由
 			 * navigator标签现在默认没有转场动画，所以用view
 			 */
 			navTo(url) {
+				console.log(this.hasLogin)
 				if (!this.hasLogin) {
 					url = '/pages/public/login';
 				}

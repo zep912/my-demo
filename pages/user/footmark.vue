@@ -43,7 +43,7 @@
 		},
 		data(){
 			return{
-				src:'../../static/my/footmark.png',
+				src:'../static/my/footmark.png',
 				msg:'您还没有任何足迹，看看其他的吧',
 				checked:false,
 				edit:'编辑',
@@ -104,7 +104,7 @@
 </script>
 
 <style lang="scss">
-	.collect /deep/ .empty .noCollect img{
+	.collect .empty .noCollect img{
 		width: 114rpx;
 		height: 114rpx;
 	}

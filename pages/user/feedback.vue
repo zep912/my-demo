@@ -4,27 +4,25 @@
 		<view class="cate">
 			<h3>分类标签</h3>
 			<view class="cate-first">
-				<text @click="choose(item.value,index)" :class="activeClass==index ? 'active' : '' " v-for='(item,index) in list'>{{item.value}}</text>
-			</view>
-			<view class="cate-first">
-				<text @click="choose1(item.value,index)" :class="activeClass==index ? 'active' : '' " v-for='(item,index) in list1'>{{item.value}}</text>
+				<view @click="choose(item.value,index)" :class="{active:arr.includes(item.value)} " v-for='(item,index) in list' class="cate-view">{{item.value}}</view>
 			</view>
 		</view>
 		<view style="width: 100%;height: 10rpx;background: #f4f4f4;"></view>
 		<view class="question">
 			<h3>问题和建议</h3>
-			<textarea :value="value" placeholder="请输入您的意见,您的意见是我们进步的动力!" maxlength='-1' placeholder-class='placeholderClass' />
-			<button type="primary" class="btn" @click="save">提交</button>
+			<textarea placeholder="请输入您的意见,您的意见是我们进步的动力!" maxlength='-1' placeholder-class='placeholderClass' v-model="content" />
+			<button class="btn" @click="save">提交</button>
 		</view>
 		
 	</view>
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default({
 		data(){
 			return{
-				value:'',
+				content:'',
 				list:[
 					{
 						value:'补货速度'
@@ -34,9 +32,7 @@
 					},
 					{
 						value:'配送速度'
-					}
-				],
-				list1:[
+					},
 					{
 						value:'账号问题'
 					},
@@ -44,6 +40,7 @@
 						value:'其他建议'
 					}
 				],
+				arr:[],
 				activeClass:-1
 			}
 		},
@@ -51,16 +48,45 @@
 			
 		},
 		methods:{
+			// 选择
 			choose(n,index){
-				this.activeClass = index;
-				this.value+=n+' '
-			},
-			choose1(n,index){
-				this.activeClass = index;
-				this.value+=n+' '
+				if(this.arr.includes(n)){
+					//includes()方法判断是否包含某一元素,返回true或false表示是否包含元素，对NaN一样有效
+					//filter()方法用于把Array的某些元素过滤掉，filter()把传入的函数依次作用于每个元素，然后根据返回值是true还是false决定保留还是丢弃该元素：生成新的数组
+					this.arr=this.arr.filter(function (ele){return ele != n;});
+					//this.arr=this.arr.filter((ele)=>ele!=i);
+					//filter()为假时删除
+				}else{
+					this.arr.push(n);
+				}
+				
 			},
 			save(){
-				console.log(this.value)
+				console.log(this.$store)
+				let obj = {
+					content:this.content,
+					label:this.arr.join(','),
+					memberId:this.$store.state.userInfo.id
+				};
+				
+				console.log(obj)
+				if(this.arr.length==0){
+					this.$api.msg('请选择标签');
+					return;
+				}else if(this.content==''){
+					this.$api.msg('请填写反馈内容');
+					return;
+				}else{
+					axios.post('/feedback/add',obj).then(res=>{
+						if(res.data.code==200){
+							this.$api.msg(res.data.message);
+							uni.navigateBack()
+						}
+					})
+				}
+				
+				
+				
 			}
 		}
 	})
@@ -82,15 +108,16 @@
 		box-sizing: border-box;
 		padding-left: 30rpx;
 		padding-right: 30rpx;
-		padding-top: 36rpx;
+		padding-top: 10rpx;
 		margin: 0 auto;
 		margin-top: 10rpx;
-		padding-bottom: 40rpx;
+		// padding-bottom: 40rpx;
 		.cate-first{
 			display: flex;
 			justify-content: flex-start;
 			margin-bottom: 20rpx;
-			text{
+			flex-wrap: wrap;
+			.cate-view{
 				width:32%;
 				height:70rpx;
 				border-radius:35rpx;
@@ -102,8 +129,9 @@
 				font-size:26rpx;
 				font-weight:500;
 				color:rgba(42,42,42,1);
+				margin-bottom: 20rpx;
 			}
-			text:nth-of-type(2){
+			.cate-view:nth-of-type(3n-1){
 				margin-left: 2%;
 				margin-right: 2%;
 			}
@@ -147,5 +175,7 @@
 		text-align: center;
 		line-height: 80rpx;
 		margin-top: 80rpx;
+		color: #fff;
+		// margin-bottom: 90rpx;
 	}
 </style>

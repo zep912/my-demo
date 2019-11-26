@@ -5,14 +5,14 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
-.adress /deep/ .noCollect ._img {
+.adress .noCollect ._img {
   width: 116rpx;
   height: 154rpx;
 }
-.adress /deep/ .noCollect uni-button {
+.adress .noCollect button {
   display: none;
 }
-.adress /deep/ .noCollect .noCollect-word {
+.adress .noCollect .noCollect-word {
   font-size: 30rpx;
   font-weight: 600;
   color: #1F1F1F;
