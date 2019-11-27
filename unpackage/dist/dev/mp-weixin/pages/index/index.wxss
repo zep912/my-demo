@@ -51,6 +51,13 @@
 .weixinLogin .weixin {
     margin-bottom: 40rpx;
 }
+.weixinLogin .weixinX {
+    position: absolute;
+    right: 5%;
+    top: 2%;
+    font-size: 14px;
+    color: #333;
+}
 .mp-search-box {
   position: absolute;
   left: 0;

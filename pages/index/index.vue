@@ -151,6 +151,7 @@
 		</view>
 		<!-- 微信登录  自动弹窗-->
 		<view class="weixinLogin" v-if="isCanUse">
+			<text class="weixinX" @click="close">X</text>
 			<image src="../../static/delivery/logo.png" mode=""></image>
 			<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN"
 			 @getuserinfo="wxGetUserInfo">微信一键登录</button>
@@ -268,6 +269,9 @@
 		toPhone() {
 			uni.navigateTo({url: '/pages/public/login'})
 		},
+		close(){
+			this.isCanUse=false
+		},
 		/**
 		 * 请求静态数据只是为了代码不那么乱
 		 * 分次请求未作整合
@@ -361,6 +365,13 @@
 
 		.weixin {
 			margin-bottom: 40rpx;
+		}
+		.weixinX{
+			position: absolute;
+			right: 5%;
+			top: 2%;
+			font-size: 14px;
+			color: #333;
 		}
 
 	}

@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/set/address",
+    "pages/set/addressManage",
+   
     "pages/delivery/delivery",
     "pages/delivery/set",
     "pages/delivery/deliverylist",
@@ -32,8 +35,8 @@
     "pages/order/consult",
     "pages/order/refund",
     "pages/order/orderDetails",
-    "pages/set/address",
-    "pages/set/addressManage",
+    
+   
     "pages/money/pay",
     "pages/money/paySuccess",
     "pages/notice/notice",
@@ -52,7 +55,6 @@
     "selectedColor": "#FCAA00",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
-    "iconWidth": "20px",
     "list": [
       {
         "pagePath": "pages/index/index",
@@ -82,5 +84,5 @@
   },
   "permission": {},
   "usingComponents": {},
-  "sitemapLocation": "sitemap91.json"
+  "sitemapLocation": "sitemap68.json"
 }

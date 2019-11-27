@@ -3,11 +3,11 @@ import axios from './../dist/uni-axios.min.js';
 axios.defaults.baseURL = 'http://39.98.122.62:8085';
 axios.interceptors.first.use((config) => {
 	const token = uni.getStorageSync('gt');
-	console.log(token, 'Ftoken', config);
+	// console.log(token, 'Ftoken', config);
 	if (token) {
 		config.headers = {Authorization: token, ContentType: "application/json;charset=UTF-8"}
 	}
-	console.log(config, 'configF');
+	// console.log(config, 'configF');
 	const showLoading = config.showLoading;
 	if (showLoading) {
 		uni.showLoading({
