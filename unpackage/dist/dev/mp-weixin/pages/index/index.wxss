@@ -51,13 +51,16 @@
 .weixinLogin .weixin {
     margin-bottom: 40rpx;
 }
+.uni-list-cell-db {
+  background: #fff;
+}
 .mp-search-box {
   position: absolute;
   left: 0;
   top: 30rpx;
   z-index: 9999;
   width: 100%;
-  padding: 0 80rpx;
+  padding: 0 20rpx;
 }
 .mp-search-box .ser-input {
     -webkit-box-flex: 1;
@@ -66,11 +69,18 @@
             flex: 1;
     height: 56rpx;
     line-height: 56rpx;
-    text-align: center;
     font-size: 28rpx;
     color: #606266;
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.6);
+}
+.mp-search-box .ser-input .uni-searchbar__box {
+      border: none;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
+      -webkit-box-pack: left;
+      -webkit-justify-content: left;
+          -ms-flex-pack: left;
+              justify-content: left;
+      padding: 0 10rpx;
 }
 page .cate-section {
   position: relative;
@@ -302,16 +312,21 @@ page {
             align-items: flex-start;
 }
 .seckill-section .floor-item {
-    width: 180rpx;
     margin-right: 20rpx;
     font-size: 26rpx;
     color: #303133;
     line-height: 1.8;
 }
 .seckill-section .floor-item image {
-      width: 150rpx;
-      height: 150rpx;
+      width: 180rpx;
+      height: 180rpx;
       border-radius: 6rpx;
+}
+.seckill-section .floor-item .pre-line {
+      white-space: pre-line;
+      display: block;
+      font-size: 18rpx;
+      height: 64rpx;
 }
 .seckill-section .floor-item .price {
       color: #fa436a;
@@ -523,6 +538,103 @@ page {
 .good-sku .image-wrapper {
   width: 100%;
   height: 210rpx;
+}
+/* 好货推荐 */
+.hot-goods {
+  margin-top: 28rpx;
+}
+.hot-goods .hot-title {
+    width: 60%;
+    height: 40rpx;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 28rpx;
+    position: relative;
+}
+.hot-goods .hot-title ._img {
+      width: 100%;
+      height: 20rpx;
+}
+.hot-goods .hot-title .title {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      -webkit-transform: translateX(-50%);
+          -ms-transform: translateX(-50%);
+              transform: translateX(-50%);
+      width: 100vw;
+}
+.hot-goods .goodsList {
+    width: 94%;
+    margin: 0 auto;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+}
+.hot-goods .goodsList .goodsList-list {
+      width: 49%;
+      background: #fff;
+      margin-bottom: 20rpx;
+      border-radius: 20rpx;
+      -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+      padding: 20rpx 20rpx 30rpx 20rpx;
+}
+.hot-goods .goodsList .goodsList-list ._img {
+        width: 80%;
+        height: 240rpx;
+        margin: 0 auto;
+        display: block;
+}
+.hot-goods .goodsList .goodsList-list .goods-title {
+        font-size: 22rpx;
+        font-weight: 500;
+        color: #454545;
+        margin-top: 20rpx;
+}
+.hot-goods .goodsList .goodsList-list .goods-subTitle {
+        font-size: 18rpx;
+        font-weight: 500;
+        color: #a9a8a8;
+        margin-top: 10rpx;
+}
+.hot-goods .goodsList .goodsList-list .goods-jifen {
+        width: 120rpx;
+        border: 1px solid #f55641;
+        border-radius: 14px;
+        text-align: center;
+        font-size: 26rpx;
+        font-weight: 500;
+        color: #f55641;
+        line-height: 36rpx;
+        margin-top: 16rpx;
+}
+.hot-goods .goodsList .goodsList-list .goods-price {
+        width: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -webkit-justify-content: space-between;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+        margin-top: 42rpx;
+        font-size: 20px;
+        font-weight: 500;
+        color: #f55641;
 }
 uni-tabbar .uni-tabbar__icon {
   width: 40rpx;

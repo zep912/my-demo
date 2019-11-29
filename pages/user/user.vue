@@ -5,10 +5,10 @@
 			<image class="bg" src="../../static/my/user-bg.png"></image>
 			<view class="user-info-box">
 				<view class="portrait-box">
-					<image class="portrait" :src="userInfo.portrait || '../../static/my/missing-face.png'"></image>
+					<image class="portrait" :src="userInfo.avatarUrl || '../../static/my/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username" v-show='!authShow'>{{userInfo.nickname?userInfo.nickname:''}}</text>
+					<text class="username" v-show='!authShow'>{{userInfo.nickName?userInfo.nickName:''}}</text>
 					<text class="info-mobile" v-show='!authShow'>{{userInfo.mobile}}</text>
 					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-show='authShow'>
 						<text>点击授权登录</text>

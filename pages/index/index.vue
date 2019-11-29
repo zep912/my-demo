@@ -3,10 +3,9 @@
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
 		<view class="mp-search-box">
-			<input class="ser-input" type="text" value="输入关键字搜索" />
+			<uni-search-bar :radius="100" class="ser-input" placeholder="牛轧糖"/>
 		</view>
 		<!-- #endif -->
-
 		<!-- 头部轮播 -->
 		<view class="carousel-section">
 			<!-- 标题栏和状态栏占位符 -->
@@ -53,100 +52,127 @@
 				<view class="scoll-wrapper">
 					<view v-for="(item, index) in goodsList" :key="index" class="floor-item" @click="navToDetailPage(item)">
 						<image :src="item.image" mode="aspectFill"></image>
-						<text class="title clamp">{{item.title}}</text>
-						<text class="price">￥{{item.price}}</text>
+						<text class="title pre-line">{{item.title}}</text>
+						<view>
+							<view class="price">¥{{item.price}}</view>
+							<view class="price-old">¥{{item.price}}</view>
+						</view>
 					</view>
 				</view>
 			</scroll-view>
 		</view>
 
 		<!-- 限量秒杀新品，比手快 -->
-		<view class="ui-poster">
-			限量秒杀新品，比手快
-		</view>
-		<view class="poster-content">
-			<view class="content-item">
-				<image src="/static/index/qjf.png"></image>
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">限量秒杀新品，比手快</view>
 			</view>
-			<view class="content-item">
-				<image src="/static/index/sg.png"></image>
+			<view class="poster-content">
+				<view class="content-item">
+					<image src="/static/index/qjf.png"></image>
+				</view>
+				<view class="content-item">
+					<image src="/static/index/sg.png"></image>
+				</view>
 			</view>
 		</view>
 		<!-- 精选美味，等你来吃 -->
-		<view class="ui-poster">
-			精选美味，等你来吃
-		</view>
-		<view class="poster-content">
-			<view class="content-item">
-				<image src="/static/index/box.png"></image>
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">精选美味，等你来吃</view>
 			</view>
-			<view class="content-item">
-				<image class="img-50" src="/static/index/three.png"></image>
-				<image class="img-50" src="/static/index/five.png"></image>
+			<view class="poster-content">
+				<view class="content-item">
+					<image src="/static/index/box.png"></image>
+				</view>
+				<view class="content-item">
+					<image class="img-50" src="/static/index/three.png"></image>
+					<image class="img-50" src="/static/index/five.png"></image>
+				</view>
 			</view>
 		</view>
 		<!-- 酸甜可口的酸奶盖，等你来舔 -->
-		<view class="ui-poster">
-			酸甜可口的酸奶盖，等你来舔
-		</view>
-		<view class="box-grid">
-			<image src="/static/index/cja.png"></image>
-			<image src="/static/index/lmja.png"></image>
-			<image src="/static/index/ja.png"></image>
-		</view>
-		<view class="box-100">
-			<image src="/static/index/xptj.png"></image>
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">酸甜可口的酸奶盖，等你来舔</view>
+			</view>
+			<view class="box-grid">
+				<image src="/static/index/cja.png"></image>
+				<image src="/static/index/lmja.png"></image>
+				<image src="/static/index/ja.png"></image>
+			</view>
+			<view class="box-100">
+				<image src="/static/index/xptj.png"></image>
+			</view>
 		</view>
 		<!-- 花里胡哨的包包，等你来剁手 -->
-		<view class="ui-poster">
-			花里胡哨的包包，等你来剁手
-		</view>
-		<view class="box-grid box-100">
-			<image src="/static/index/prxd.png"></image>
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">花里胡哨的包包，等你来剁手</view>
+			</view>
+			<view class="box-grid box-100">
+				<image src="/static/index/prxd.png"></image>
+			</view>
 		</view>
 		<!-- 品牌秒杀 -->
-		<view class="ui-poster">
-			品牌秒杀
-		</view>
-		<view class="brand-section">
-			<view class="s-header">
-				<view class="box-img">
-					<image src="/static/logo/lppz.png"></image>
-				</view>
-				<view class="box-text">
-					<view class="tip-title">良品铺子</view>
-					<view class="tip">让嘴巴去旅行</view>
-				</view>
-				<view class="btn">
-					<button type="warn" class="yticon" size="mini">查看更多
-						<text class="icon-you"></text>
-					</button>
-				</view>
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">品牌秒杀</view>
 			</view>
-			<view class="guess-section good-sku">
-				<view v-for="(item, index) in goodsList" :key="index" class="guess-item" v-if="index <= 2" @click="navToDetailPage(item)">
-					<view class="image-wrapper">
-						<image :src="item.image" mode="aspectFill"></image>
+			<view class="brand-section">
+				<view class="s-header">
+					<view class="box-img">
+						<image src="/static/logo/lppz.png"></image>
 					</view>
-					<text class="title clamp">{{item.title}}</text>
-					<text class="price">￥{{item.price}}</text>
+					<view class="box-text">
+						<view class="tip-title">良品铺子</view>
+						<view class="tip">让嘴巴去旅行</view>
+					</view>
+					<view class="btn">
+						<button type="warn" class="yticon" size="mini">查看更多
+							<text class="icon-you"></text>
+						</button>
+					</view>
+				</view>
+				<view class="guess-section good-sku">
+					<view v-for="(item, index) in goodsList" :key="index" class="guess-item" v-if="index <= 2" @click="navToDetailPage(item)">
+						<view class="image-wrapper">
+							<image :src="item.image" mode="aspectFill"></image>
+						</view>
+						<text class="title clamp">{{item.title}}</text>
+						<text class="price">￥{{item.price}}</text>
+					</view>
 				</view>
 			</view>
 		</view>
-		<!-- 好货推荐 -->
-		<view class="f-header m-t">
-			<view class="tit-box">
-				<text class="tit">好货推荐</text>
+		
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">好货推荐</view>
 			</view>
-		</view>
-
-		<view class="guess-section">
-			<view v-for="(item, index) in goodsList" :key="index" class="guess-item" @click="navToDetailPage(item)">
-				<view class="image-wrapper">
-					<image :src="item.image" mode="aspectFill"></image>
+			<view class="goodsList">
+				<view v-for='(item, index) in skuList' :key="index" class="goodsList-list">
+					<img :src="item.img" alt="">
+					<view class="goods-title">
+						<text>{{item.title}}</text>
+					</view>
+					<view class="goods-subTitle">
+						<text>{{item.subTitle}}</text>
+					</view>
+					<view class="goods-jifen">
+						<text>{{item.jifen+'积分'}}</text>
+					</view>
+					<view class="goods-price">
+						<text>{{'¥'+item.price}}</text>
+						<uni-icons type="plus-filled" color ='#F55641' size="30"></uni-icons>
+					</view>
 				</view>
-				<text class="title clamp">{{item.title}}</text>
-				<text class="price">￥{{item.price}}</text>
 			</view>
 		</view>
 		<!-- 微信登录  自动弹窗-->
@@ -163,8 +189,10 @@
 	import {
 		mapState
 	} from 'vuex';
+	import {uniSearchBar} from "@/components/uni-search-bar/uni-search-bar.vue";
+	import {uniIcons} from "@/components/uni-icons/uni-icons.vue";
 	export default {
-
+		components: {uniSearchBar, uniIcons},
 		data() {
 			return {
 				titleNViewBackground: '',
@@ -172,7 +200,30 @@
 				swiperLength: 0,
 				carouselList: [],
 				goodsList: [],
-				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
+				isCanUse: true, //默认为true
+				skuList:[
+					{
+						img:'../../static/egg_01.png',
+						title:'正宗农家散养谷饲土鸡蛋20枚',
+						subTitle:'宇宙无敌巨好吃的鸡蛋',
+						jifen:'200',
+						price:999.90
+					},
+					{
+						img:'../../static/egg_01.png',
+						title:'正宗农家散养谷饲土鸡蛋20枚',
+						subTitle:'宇宙无敌巨好吃的鸡蛋',
+						jifen:'200',
+						price:999.90
+					},
+					{
+						img:'../../static/egg_01.png',
+						title:'正宗农家散养谷饲土鸡蛋20枚',
+						subTitle:'宇宙无敌巨好吃的鸡蛋',
+						jifen:'200',
+						price:999.90
+					}
+				],
 			};
 		},
 		computed: {
@@ -185,40 +236,37 @@
 		methods: {
 			// 授权用户信息
 			wxGetUserInfo() {
-				let _this = this;
 				uni.getUserInfo({
 					provider: 'weixin',
-					success: function(infoRes) {
-						console.log(infoRes)
-						let nickName = infoRes.userInfo.nickName; //昵称
-						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-						_this.userInfo.nickName = nickName;
-						_this.userInfo.avatarUrl = avatarUrl;
-						_this.$store.commit('login',_this.userInfo)
-						try {
-							uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
-							_this.updateUserInfo();
-						} catch (e) {}
+					success: (infoRes) => {
+						this.$store.commit('login', infoRes.userInfo);
+						// try {
+						console.log(infoRes, 'wxGetUserInfo');
+						this.isCanUse = false;
+						// uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
+							// _this.updateUserInfo();
+						// } catch (e) {}
 					},
 					fail(res) {}
 				})
 			},
 			login() {
-				let _this = this;
 				// 1.wx获取登录用户code
 				uni.login({
 					provider: 'weixin',
-					success: function(loginRes) {
+					success: (loginRes) => {
 						let code = loginRes.code;
-						if (!_this.isCanUse) {
+						console.log(loginRes, 'loginRes');
+						if (!this.isCanUse) {
 							//非第一次授权获取用户信息
 							uni.getUserInfo({
 								provider: 'weixin',
-								success: function(infoRes) {
+								success: (infoRes) => {
+									console.log(infoRes, 'login');
 									//获取用户信息后向调用信息更新方法
-									let nickName = infoRes.userInfo.nickName; //昵称
-									let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-									_this.updateUserInfo(); //调用更新信息方法
+									this.$store.commit('login', infoRes.userInfo);
+									this.isCanUse = false;
+									// _this.updateUserInfo(); //调用更新信息方法
 								}
 							});
 						}
@@ -364,6 +412,10 @@
 		}
 
 	}
+	
+	.uni-list-cell-db {
+		background: #fff;
+	}
 
 	/* #ifdef MP */
 	.mp-search-box {
@@ -372,17 +424,21 @@
 		top: 30upx;
 		z-index: 9999;
 		width: 100%;
-		padding: 0 80upx;
+		padding: 0 20upx;
 
 		.ser-input {
 			flex: 1;
 			height: 56upx;
 			line-height: 56upx;
-			text-align: center;
 			font-size: 28upx;
 			color: $font-color-base;
-			border-radius: 20px;
-			background: rgba(255, 255, 255, .6);
+			.uni-searchbar__box {
+				border: none;
+				background: rgba(255, 255, 255, .6);
+				border-radius: 20px;
+				justify-content: left;
+				padding: 0 10upx;
+			}
 		}
 	}
 
@@ -607,16 +663,22 @@
 		}
 
 		.floor-item {
-			width: 180upx;
 			margin-right: 20upx;
 			font-size: $font-sm+2upx;
 			color: $font-color-dark;
 			line-height: 1.8;
 
 			image {
-				width: 150upx;
-				height: 150upx;
+				width: 180upx;
+				height: 180upx;
 				border-radius: 6upx;
+			}
+			
+			.pre-line {
+				white-space: pre-line;
+				display: block;
+				font-size: 18upx;
+				height: 64upx;
 			}
 
 			.price {
@@ -831,6 +893,86 @@
 			width: 100%;
 			height: 210upx;
 		}
+	}
+	
+	/* 好货推荐 */
+	.hot-goods{
+		margin-top: 28rpx;
+		.hot-title{
+			width: 60%;
+			height: 40rpx;
+			margin: 0 auto;
+			text-align: center;
+			margin-bottom: 28rpx;
+			position: relative;
+			img{
+				width: 100%;
+				height: 20upx;
+			}
+			.title {
+				position: absolute;
+				left: 50%;
+				top: 0;
+				transform: translateX(-50%);
+				width: 100vw;
+			}
+		}
+		.goodsList{
+			width: 94%;
+			margin: 0 auto;
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+		
+			.goodsList-list{
+				width: 49%;
+				background: #fff;
+				margin-bottom: 20rpx;
+				border-radius: 20rpx;
+				box-sizing: border-box;
+				padding: 20rpx 20rpx 30rpx 20rpx;
+				img{
+					width: 80%;
+					height: 240rpx;
+					margin: 0 auto;
+					display: block;
+				}
+				.goods-title{
+					font-size:22rpx;
+					font-weight:500;
+					color:rgba(69,69,69,1);
+					margin-top: 20rpx;
+				}
+				.goods-subTitle{
+					font-size:18rpx;
+					font-weight:500;
+					color:rgba(169,168,168,1);
+					margin-top: 10rpx;
+				}
+				.goods-jifen{
+					width:120rpx;
+					border:1px solid rgba(245,86,65,1);
+					border-radius:14px;
+					text-align: center;
+					font-size:26rpx;
+					font-weight:500;
+					color:rgba(245,86,65,1);
+					line-height:36rpx;
+					margin-top: 16rpx;
+				}
+				.goods-price{
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-top: 42rpx;
+					font-size:20px;
+					font-weight:500;
+					color:rgba(245,86,65,1);
+				}
+			}
+		}
+		
 	}
 
 	uni-tabbar .uni-tabbar__icon {
