@@ -5,6 +5,9 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.adress {
+  padding-bottom: 80rpx;
+}
 .adress .noCollect ._img {
   width: 116rpx;
   height: 154rpx;
@@ -105,11 +108,6 @@ page {
   padding-left: 30rpx;
 }
 .add-btn {
-  position: fixed;
-  left: 30rpx;
-  right: 30rpx;
-  bottom: 50rpx;
-  z-index: 95;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -128,5 +126,26 @@ page {
   color: #fff;
   background: #f7b52c;
   border-radius: 45rpx;
+}
+.footBtn {
+  width: 100%;
+  height: 160rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #fff;
+  z-index: 10000;
+  position: fixed;
+  left: 0;
+  bottom: 0;
 }
 

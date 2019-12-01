@@ -5,9 +5,16 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.popStyle {
+  height: 638rpx;
+}
 page {
   background: #f8f8f8;
   padding-top: 16rpx;
+}
+.address .row .inputAddress {
+  color: #959595;
+  font-size: 26rpx;
 }
 .row {
   display: -webkit-box;

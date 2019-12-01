@@ -121,7 +121,7 @@
     height: 20rpx;
 }
 .coupon-left-box .coupon-left-boxPrice {
-    font-size: 80rpx;
+    font-size: 60rpx;
     font-weight: 800;
     color: #b98d5d;
     display: block;
@@ -137,7 +137,7 @@
 .coupon-con-title {
   position: absolute;
 }
-.coupon-con-title text {
+.coupon-con-title .coupon-con-titles, .coupon-con-title .coupon-con-goods, .coupon-con-title .coupon-con-time {
     display: block;
     position: relative;
     z-index: 200;
@@ -146,7 +146,7 @@
     font-size: 26rpx;
     font-weight: bold;
     color: #b98d5d;
-    margin-bottom: 30rpx;
+    margin-bottom: 50rpx;
 }
 .coupon-con-title .coupon-con-goods {
     font-size: 22rpx;
@@ -182,6 +182,7 @@
       -ms-flex-align: center;
           align-items: center;
   z-index: 200;
+  border-radius: 40rpx;
 }
 .couponImg {
   width: 100rpx;

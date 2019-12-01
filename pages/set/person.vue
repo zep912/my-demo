@@ -2,12 +2,12 @@
 	<view class="container">
 		<view class="list-cell b-b m-t" @click="navTo('头像')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">头像</text>
-			<img :src="person.portrait||'../../static/my/missing-face.png'" class='cell-tip-img' />
+			<img :src="person.avatarUrl||'../../static/my/missing-face.png'" class='cell-tip-img' />
 			<text class="cell-more yticon icon-you cell-more-middle"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('用户名')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">用户名</text>
-			<text class="cell-tip">{{person.nickname}}</text>
+			<text class="cell-tip">{{person.nickName}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('性别')" hover-class="cell-hover" :hover-stay-time="50">
@@ -34,7 +34,7 @@
 <script>
 	import axios from '@/utils/uniAxios.js';
 	import {  
-	    mapMutations  
+	    mapMutations,mapState
 	} from 'vuex';
 	export default {
 		data() {
@@ -49,6 +49,9 @@
 				id:'',
 				gender:''
 			};
+		},
+		computed: {
+			...mapState(['hasLogin', 'userInfo'])
 		},
 		onLoad(option){
 			this.id = option.id;

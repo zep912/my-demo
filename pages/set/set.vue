@@ -2,13 +2,13 @@
 	<view class="container">
 		<view class="user-info-box">
 
-			<img :src="user.portrait || '../../static/my/missing-face.png'" class="portrait" />
+			<img :src="userInfo.avatarUrl || '../../static/my/missing-face.png'" class="portrait" />
 
 			<view class="info-box">
 				<text class="username">
-					<text class="name">{{user.name}}</text>
-					<!-- <text class="username-info">{{user.nickname}}</text> -->
-					<text class="username-info">{{user.mobile}}</text>
+					<text class="name">{{userInfo.nickName}}</text>
+					<!-- <text class="username-info">{{userInfo.nickname}}</text> -->
+					<text class="username-info">{{userInfo.mobile}}</text>
 				</text>
 			</view>
 			<text class='login-now'>
@@ -41,7 +41,7 @@
 <script>
 	import axios from '@/utils/uniAxios.js';
 	import {
-		mapMutations
+		mapMutations,mapState
 	} from 'vuex';
 	export default {
 		data() {
@@ -61,8 +61,8 @@
 			this.id = option.id;
 			this.getData();
 		},
-		computed:{
-			
+		computed: {
+			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
 			...mapMutations(['logout']),
@@ -85,13 +85,14 @@
 			// 初始化
 			getData(){
 				// 先判断是不是微信登录，优先使用微信登录
-				if(!uni.getStorageSync('isCanUse')){//已经授权登录
+				let hasLogin = this.$store.state.hasLogin;
+				if(hasLogin){//已经授权登录
 					let setUserInfo = this.$store.state.userInfo;
-					this.user ={
-						name:setUserInfo.nickname,
-						mobile:setUserInfo.mobile,
-						portrait:setUserInfo.portrait
-					};
+					// this.user ={
+					// 	name:setUserInfo.nickname,
+					// 	mobile:setUserInfo.mobile,
+					// 	portrait:setUserInfo.portrait
+					// };
 					this.phone = setUserInfo.mobile;
 					return
 				}else if(uni.getStorageSync('setPhone')){//判断是不是手机登录

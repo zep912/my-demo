@@ -20,13 +20,13 @@ axios.interceptors.first.use((config) => {
 	return Promise.reject(err);
 })
 axios.interceptors.response.use((response) => {
-	console.log(response)
+	// console.log(response)
 	return response;
 }, function (err) {
 	return Promise.reject(err);
 })
 axios.interceptors.last.use((config) => {
-	console.log(config, 'last');
+	// console.log(config, 'last');
 	if(config.showLoading){
 		uni.hideLoading();
 	}

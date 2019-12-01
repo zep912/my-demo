@@ -3,33 +3,37 @@
 		<van-tabs :active="active" @change="onChange" animated tab-active-class='tabactive' nav-class='navtabClass'>
 			<van-tab title="未使用" class='tab1'>
 				<!-- 实现优惠券 -->
-				<view class="wrap" v-if='arr.length!=0'>
-					<view class="coupon">
+				<view class="wrap" v-if='conponList.length!=0'>
+					<view class="coupon" v-for='(item,index) in conponList'>
 						<view class="coupon-left">
 							<view class="coupon-left-box">
 								<img src="../../static/my/couponPrice.png" alt="">
-								<text class="coupon-left-boxPrice">30</text>
-								<text class="coupon-left-boxman">满100元可用</text>
+								<text class="coupon-left-boxPrice">{{item.coupon.amount}}</text>
+								<text class="coupon-left-boxman">满<text>{{item.coupon.minPoint!=0?item.coupon.minPoint:'无门槛'}}</text>元可用</text>
 							</view>
 						</view>
 						<view class="coupon-con">
 							<view class="coupon-con-title">
-								<text class="coupon-con-titles">店铺券 新用户专享优惠券</text>
+								<text class="coupon-con-titles">{{item.coupon.name}}</text>
 								<text class="coupon-con-goods">
-									坚果专区通用（部分除外）
+									{{item.coupon.note}}
 								</text>
-								<text class="coupon-con-time">09月1日-09月30日</text>
+								<text class="coupon-con-time">
+									<text>{{timestampToTime(item.coupon.startTime)}}</text>
+									-
+									<text>{{timestampToTime(item.coupon.endTime)}}</text>
+								</text>
 							</view>
 							<button class="coupon-btn">立即使用</button>
 						</view>
 					</view>
 				</view>
 				<!-- 没有优惠券的状态 -->
-				<empty :src="src" :msg='msg' v-if='arr.length==0'></empty>
+				<empty :src="src" :msg='msg' v-if='conponList.length==0'></empty>
 			</van-tab>
 			<van-tab title="已使用"  class='tab2'>
 				<!-- 实现优惠券 -->
-				<view class="wrap tabwrap" v-if='arr.length!=0'>
+				<view class="wrap tabwrap" v-if='conponList.length!=0'>
 					<view class="coupon">
 						<view class="coupon-left">
 							<view class="coupon-left-box">
@@ -51,11 +55,11 @@
 						</view>
 					</view>
 				</view>
-				<empty :src="src" :msg='msg' v-if='arr.length==0'></empty>
+				<empty :src="src" :msg='msg' v-if='conponList.length==0'></empty>
 			</van-tab>
 			<van-tab title="已过期"  class='tab3'>
 				<!-- 实现优惠券 -->
-				<view class="wrap tabwrap" v-if='arr.length!=0'>
+				<view class="wrap tabwrap" v-if='conponList.length!=0'>
 					<view class="coupon">
 						<view class="coupon-left">
 							<view class="coupon-left-box">
@@ -77,7 +81,7 @@
 						</view>
 					</view>
 				</view>
-				<empty :src="src" :msg='msg' v-if='arr.length==0'></empty>
+				<empty :src="src" :msg='msg' v-if='conponList.length==0'></empty>
 			</van-tab>
 		</van-tabs>
 	</view>
@@ -93,7 +97,7 @@
 		data() {
 			return {
 				active: 0,
-				arr:[],
+				conponList:[],
 				src:'../static/my/nocoupon.png',
 				msg:'您还没有任何优惠券，去看看其他的吧'
 			}
@@ -104,9 +108,11 @@
 		methods: {
 			// 获取用户的优惠券列表
 			getCoupon(n){
-				axios.post('/member/coupon/list/cart/0',{type:0}).then(res=>{
+				axios.post('/member/coupon/list/cart/'+n,{type:n}).then(res=>{
 					if(res.data.code==200){
-						console.log(res)
+						this.conponList = res.data.data;
+						console.log(this.conponList)
+						console.log(this.timestampToTime(this.conponList[0].coupon.startTime))
 					}
 				})
 			},
@@ -117,7 +123,20 @@
 				// 	title: `切换到标签 ${event.detail.name}`,
 				// 	icon: 'none'
 				// });
-			}
+			},
+			// 日期转换
+			// 时间戳转换成时间
+		    timestampToTime (time) {
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear()
+				var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
+				var D = date.getDate()
+				var h = date.getHours() + ':'
+				var m = date.getMinutes() + ':'
+				var s = date.getSeconds();
+				return M+'月'+D+'日'
+				console.log(timestampToTime (1533293827000))
+		    },
 		}
 
 	}
@@ -244,7 +263,7 @@
 		}
 
 		.coupon-left-boxPrice {
-			font-size: 80rpx;
+			font-size: 60rpx;
 			font-weight: 800;
 			color: rgba(185, 141, 93, 1);
 			// margin-bottom: 24rpx;
@@ -264,7 +283,7 @@
 	.coupon-con-title {
 		position: absolute;
 
-		text {
+		.coupon-con-titles,.coupon-con-goods,.coupon-con-time {
 			display: block;
 			position: relative;
 			z-index: 200;
@@ -274,7 +293,7 @@
 			font-size: 26rpx;
 			font-weight: bold;
 			color: rgba(185, 141, 93, 1);
-			margin-bottom: 30rpx;
+			margin-bottom: 50rpx;
 		}
 
 		.coupon-con-goods {
@@ -306,6 +325,7 @@
 		justify-content: center;
 		align-items: center;
 		z-index: 200;
+		border-radius: 40rpx;
 	}
 	.couponImg{
 		width: 100rpx;

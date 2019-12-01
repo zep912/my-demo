@@ -5,10 +5,10 @@
 			<image class="bg" src="../../static/my/user-bg.png"></image>
 			<view class="user-info-box">
 				<view class="portrait-box">
-					<image class="portrait" :src="userInfo.portrait || '../../static/my/missing-face.png'"></image>
+					<image class="portrait" :src="userInfo.avatarUrl || '../../static/my/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username" v-if='!authShow'>{{userInfo.nickname?userInfo.nickname:''}}</text>
+					<text class="username" v-if='!authShow'>{{userInfo.nickName?userInfo.nickName:''}}</text>
 					<text class="info-mobile" v-if='!authShow'>{{userInfo.mobile}}</text>
 					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
@@ -255,30 +255,22 @@
 			// 从登录页跳转过来，刷新页面,获取用户信息
 			loadData() {
 				// 优先使用微信登录
-				if(!uni.getStorageSync('isCanUse')){
+				let hasLogin = this.$store.state.hasLogin;
+				if(hasLogin){
 					this.authShow = false;
-					let setUserInfo = this.$store.state.userInfo;
-					
-				}
-				// 如果使用手机号登录
-				let userInfos = uni.getStorageSync('userInfo');
-				if (uni.getStorageSync('gt') && uni.getStorageSync('setPhone')) {
+					// let setUserInfo = this.$store.state.userInfo;
+					return;
+				}else if(uni.getStorageSync('setPhone')){//使用手机号登陆
 					axios.post('/sso/user/userInfo').then(res => {
 						if (res.data.code = '200') {
 							this.authShow = false;
 							this.userInfo.mobile = res.data.data.phone;
 							this.userInfo.id = res.data.data.id;
-
+					
 							this.$store.commit('login', this.userInfo)
 						}
 					})
-				} else if (!uni.getStorageSync('isCanUse')) { //如果是微信登录
-					this.authShow = false;
-					this.userInfo.nickName = userInfos.nickName
-
 				}
-				// 如果使用微信登录方式登录
-
 			},
 
 			// 查看更多订单

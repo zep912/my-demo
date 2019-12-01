@@ -35,7 +35,7 @@
 		
 		<view class="row default-checkbox">
 			<text class="tit default">设置为默认地址</text>
-			 <van-checkbox :value="defaultStatus" @change="switchChange" checked-color="#F7B52C"></van-checkbox>
+			 <van-checkbox :value="addressData.defaultStatus==1?true:false" @change="switchChange" checked-color="#F7B52C" v-model='addressData.defaultStatus'></van-checkbox>
 		</view>
 		<button class="add-btn" @click="confirm">保存地址</button>
 		<!-- 展示下拉列表 -->
@@ -101,11 +101,12 @@
 				title = '编辑收货地址'
 				this.addressData = JSON.parse(option.data);
 				this.address = this.addressData.locationAddress;
-				this.addressLabels.find((el,index)=>{
+				this.addressLabels.find((el,index)=>{//编辑的时候默认地址的回显
 					if(el==this.addressData.addressLabel){
 						this.n = index;
 					}
 				})
+				// 默认
 				console.log(this.addressData,777)
 			}
 			this.manageType = option.type;
@@ -123,14 +124,17 @@
 		methods: {
 			// 选择下拉
 			addressClick(){
-				this.show = true
+				this.show = true;
 			},
+			// 弹窗取消
 			onCancel(){
-				this.show = false
+				this.show = false;
 			},
+			// 弹窗确认
 			onConfirm(e){
+				console.log(e)
 				this.address =e.detail.value;
-				this.show = false
+				this.show = false;
 			},
 			// 地址标签，
 			changeList(item,index){
@@ -233,7 +237,6 @@
 								uni.navigateBack()
 							}, 800)
 						}
-						
 					})
 				}
 				

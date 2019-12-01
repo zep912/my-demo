@@ -4,7 +4,7 @@
     "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
     "van-radio": "/wxcomponents/vant/dist/radio/index",
     "van-radio-group": "/wxcomponents/vant/dist/radio-group/index",
-    "van-dropdown-menu": "/wxcomponents/vant/dist/dropdown-menu/index",
-    "van-dropdown-item": "/wxcomponents/vant/dist/dropdown-item/index"
+    "van-popup": "/wxcomponents/vant/dist/popup/index",
+    "van-picker": "/wxcomponents/vant/dist/picker/index"
   }
 }
