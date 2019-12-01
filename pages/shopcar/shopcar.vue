@@ -4,12 +4,12 @@
 		<!-- 商品 -->
 		<view class="shopcar-goods" v-if='list.length==0'>
 			<view class="shopcar-title">
-				<view class="shopcar-title-text">你购物车共<text class="shopcar-titleTxt-color">10</text>件商品</view>
+				<view class="shopcar-title-text">你购物车共<text class="shopcar-titleTxt-color">{{list.length}}</text>件商品</view>
 				<view class="edit" @click="edit">{{update}}</view>
 			</view>
 			<!-- 商品 -->
 			<view class="shopcar-wares">
-				<view class="shopcar-check">
+				<view class="shopcar-check" v-for="(item,index) in list">
 					<van-checkbox :value="checked" @change="onChange" custom-class='checkbox' checked-color="#F7B62C"></van-checkbox>
 					<view class="shopcar-shopTitle">
 						<view class="shopcar-check-shops">
@@ -67,7 +67,7 @@
 								<van-icon name="arrow" />
 							</view>
 							<!-- 修改优惠 -->
-							<view class="shopcar-discount">
+							<view class="shopcar-discount" @click="editPrefe">
 								修改优惠
 							</view>
 						</view>
@@ -76,11 +76,35 @@
 				</view>
 			</view>
 		</view>
+		<!-- 全选，删除 -->
+		<view class="foot">
+			<view class="foot-left">
+			<van-checkbox :value="checkeds" @change="allSlect" custom-class='checkbox-sp' checked-color="#F7B62C">全选</van-checkbox>
+			<view class="foot-total-price"   v-if='!deleShow'>
+				<view class="foot-total-top">
+					<text>合计:</text>
+					<text>￥998.90</text>
+				</view>
+				<view class="foot-totla-bottom">
+					<text>已优惠</text>
+					<text>￥998.90</text>
+				</view>
+			</view>	
+			</view>
+			
+			<view class="foot-btn"  v-if='!deleShow'>
+				<text>去结算<text>（2）</text></text>
+			</view>
+			<view class="foot-dele" v-if='deleShow'>
+				<text>删除</text>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
-	import empty from '@/components/empty.vue'
+	import empty from '@/components/empty.vue';
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components: {
 			empty
@@ -93,16 +117,55 @@
 				update: '编辑',
 				checked:true,
 				stepValue:1,
-				num:1
+				num:1,
+				deleShow:false,
+				list:[
+					
+				],
+				checkeds:false
 			}
 		},
+		onLoad(option){
+			this.getShopCar()
+		},
 		methods: {
+			// 修改优惠
+			editPrefe(){
+				
+			},
+			// 获取购物车列表
+			getShopCar(){
+				axios.post('/cart/list').then(res=>{
+					if(res.data.code==200){
+						console.log(res)
+					}
+				})
+			},
+			// 点击编辑或完成
 			edit() {
 				if (this.update == '编辑') {
 					this.update = '完成';
+					this.deleShow = true
 				} else {
 					this.update = '编辑';
+					this.deleShow = false
 				}
+			},
+			// 全选
+			allSlect(e){
+				console.log(e);
+				this.checkeds = e.detail
+			},
+			// 删除某个商品
+			delete(){
+				let obj ={
+					id:id
+				}
+				axios.post('/cart/delete',id).then(res=>{
+					if(res.data.code==200){
+						console.log(res)
+					}
+				})
 			},
 			onChange(){
 				
@@ -126,6 +189,68 @@
 </script>
 
 <style lang="scss">
+	.foot{
+		width:100%;
+		height:120rpx;
+		background:rgba(255,255,255,1);
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		box-sizing: border-box;
+		padding-left: 30rpx;
+		padding-right: 10rpx;
+		.foot-left{
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.foot-btn{
+			width:201rpx;
+			height:74rpx;
+			background:rgba(247,87,44,1);
+			border-radius:37rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size:28rpx;
+			font-weight:bold;
+			color:rgba(255,255,255,1);
+		}
+		.foot-total-top{
+			font-size:26rpx;
+			font-weight:500;
+			color:rgba(31,31,31,1);
+			margin-left: 56rpx;
+		}
+		.foot-total-top text:nth-of-type(2){
+			color: #F55641;
+			font-size: 26rpx;
+		}
+		.foot-totla-bottom{
+			font-size:20rpx;
+			font-weight:400;
+			color:rgba(158,158,158,1);
+			margin-left: 56rpx;
+		}
+		.checkbox-sp{
+			color: #1F1F1F;
+		}
+		.foot-dele{
+			width:200rpx;
+			height:74rpx;
+			border:1px solid rgba(181,181,181,1);
+			border-radius:37rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size:28rpx;
+			font-weight:500;
+			color:rgba(31,31,31,1);
+		}
+	}
 	// 购物车
 	.shopcar-wares{
 		background: #fff;
@@ -376,4 +501,6 @@
 			}
 		}
 	}
+	
+	
 </style>

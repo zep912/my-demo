@@ -130,7 +130,7 @@
 		},
 		data() {
 			return {
-				shoucang:1,
+				shoucang:0,
 				zuji:0,
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',

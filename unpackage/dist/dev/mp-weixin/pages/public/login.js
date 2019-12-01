@@ -213,7 +213,7 @@ var _default = { data: function data() {return { username: '', leftIcon: '../../
           telephone: _this.phone };
 
 
-        _uniAxios.default.post('/sso/user/sendCod', obj).then(function (res) {
+        _uniAxios.default.post('/sso/user/sendCode', obj).then(function (res) {
           console.log(res);
           if (res.data.code == '200') {
             _this.$api.msg('发送成功');

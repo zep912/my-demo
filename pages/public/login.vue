@@ -79,7 +79,7 @@
 					telephone: _this.phone
 				}
 				
-				axios.post('/sso/user/sendCod',obj).then(res=>{
+				axios.post('/sso/user/sendCode',obj).then(res=>{
 					console.log(res)
 					if(res.data.code=='200'){
 						_this.$api.msg('发送成功')

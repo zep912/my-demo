@@ -90,17 +90,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var m0 = __webpack_require__(/*! ../../static/index/btbg.png */ 439)
+  var m0 = __webpack_require__(/*! ../../static/index/btbg.png */ 22)
 
-  var m1 = __webpack_require__(/*! ../../static/index/btbg.png */ 439)
+  var m1 = __webpack_require__(/*! ../../static/index/btbg.png */ 22)
 
-  var m2 = __webpack_require__(/*! ../../static/index/btbg.png */ 439)
+  var m2 = __webpack_require__(/*! ../../static/index/btbg.png */ 22)
 
-  var m3 = __webpack_require__(/*! ../../static/index/btbg.png */ 439)
+  var m3 = __webpack_require__(/*! ../../static/index/btbg.png */ 22)
 
-  var m4 = __webpack_require__(/*! ../../static/index/btbg.png */ 439)
+  var m4 = __webpack_require__(/*! ../../static/index/btbg.png */ 22)
 
-  var m5 = __webpack_require__(/*! ../../static/index/btbg.png */ 439)
+  var m5 = __webpack_require__(/*! ../../static/index/btbg.png */ 22)
 
   _vm.$mp.data = Object.assign(
     {},
@@ -335,7 +335,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 358));};var uniIcons = function uniIcons() {return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 386));};var _default =
+
+
+var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 359));};var uniIcons = function uniIcons() {return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 366));};var _default =
 
 
 
@@ -408,16 +410,7 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
           console.log(loginRes, 'loginRes');
           if (!_this2.isCanUse) {
             //非第一次授权获取用户信息
-            uni.getUserInfo({
-              provider: 'weixin',
-              success: function success(infoRes) {
-                console.log(infoRes, 'login');
-                //获取用户信息后向调用信息更新方法
-                _this2.$store.commit('login', infoRes.userInfo);
-                _this2.isCanUse = false;
-                // _this.updateUserInfo(); //调用更新信息方法
-              } });
-
+            _this2.wxGetUserInfo();
           }
           //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
           // uni.request({
@@ -464,6 +457,9 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
     // 手机号登录
     toPhone: function toPhone() {
       uni.navigateTo({ url: '/pages/public/login' });
+    },
+    close: function close() {
+      this.isCanUse = false;
     },
     /**
         * 请求静态数据只是为了代码不那么乱

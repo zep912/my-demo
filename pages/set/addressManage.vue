@@ -10,14 +10,19 @@
 		</view>
 		<view class="row b-b">
 			<text class="tit">所在地址</text>
-			<text class="input">
+			<!-- <text class="input">
 				{{address}}
-			</text>
-			<text class="yticon icon-shouhuodizhi" @click="chooseLocation"></text>
+			</text> -->
+			<van-dropdown-menu>
+			  <van-dropdown-item :value="value1" :options="option1" @change='dropdownChange'/>
+			</van-dropdown-menu>
+			<!-- 跳转地图 -->
+			<!-- <text class="yticon icon-shouhuodizhi" @click="chooseLocation"></text> -->
 		</view>
-		<view class="row b-b"> 
+		<view class="row b-b rowTextArea"> 
 			<text class="tit">详细地址</text>
-			<input class="input" type="text" v-model="addressData.detailAddress " placeholder="道路,门牌号,小区,楼栋号,单元室等" placeholder-class="placeholder" />
+			<!-- <input class="input" type="textarea" v-model="addressData.detailAddress " placeholder="道路,门牌号,小区,楼栋号,单元室等" placeholder-class="placeholder" /> -->
+			<textarea value="" placeholder="道路,门牌号,小区,楼栋号,单元室等" v-model="addressData.detailAddress" placeholder-class="placeholder"  class="input textarea" auto-height='true'/>
 		</view>
 		
 		<view class="row default-row b-b">
@@ -39,6 +44,11 @@
 
 <script>
 	import axios from '@/utils/uniAxios.js';
+	// import amap from '../../libs/qqmap-wx-jssdk.js'; 
+	 import {
+	 	mapState
+	 } from 'vuex';
+	var qqmapsdk;
 	export default {
 		components:{
 		},
@@ -46,34 +56,52 @@
 			return {
 				addressData: {
 				 "addressLabel": "家庭",//地址标签，默认家庭
-				  "city": "",//城市
+				  "city": "武汉市",//城市
 				  "defaultStatus": 1,//是否默认,0否，1是
 				  "detailAddress": "",//详细地址
 				  "id": '',
-				  "memberId": 0,//会员ID
+				  "memberId":'',//会员ID
 				  "name": "",//收货人姓名
 				  "phoneNumber": "",//电话
-				  "postCode": "",//邮编
-				  "province": "",//省份
-				  "region": ""//区
+				  "postCode": "430070",//邮编
+				  "province": "湖北省",//省份
+				  "region": "洪山区"//区
 				},
 				address:'',
 				addressLabels:['家庭','公司','学校'],
 				n:0,
-				defaultStatus:true
+				defaultStatus:true,
+				key:'GOUBZ-B3U3R-WEAWX-WE266-WZBW5-JIFUR',//腾讯地图key
+				userId:'',
+				value1:'全部商品',
+				option1: [
+				      { text: '全部商品', value: '全部商品' },
+				      { text: '新款商品', value:'新款商品' },
+				      { text: '活动商品', value: '活动商品' }
+				    ],
 			}
+		},
+		computed: {
+			...mapState(['hasLogin', 'userInfo'])
 		},
 		onLoad(option){
 			let title = '添加收货地址';
 			if(option.type==='edit'){
 				title = '编辑收货地址'
 				this.addressData = JSON.parse(option.data)
-				console.log(this.addressData)
+				console.log(this.addressData,777)
 			}
 			this.manageType = option.type;
 			uni.setNavigationBarTitle({
 				title
 			})
+			// 获取id
+			this.id = this.$store.state.userInfo.id;
+			this.addressData.memberId = this.id;
+			// 实例化API核心类
+			// qqmapsdk = new amap.QQMapWX({
+			// 	key: this.key
+			// });
 		},
 		methods: {
 			// 地址标签
@@ -97,7 +125,8 @@
 				    type: 'wgs84',
 					geocode:true,
 				    success: function (res) {
-						console.log(res)
+						// console.log(res)
+						
 						// 在小程序中不能获取到address的详细信息。需要根据经纬度逆地理编码
 						//https://ask.dcloud.net.cn/article/35070
 						// https://lbs.qq.com/qqmap_wx_jssdk/
@@ -108,12 +137,31 @@
 				uni.chooseLocation({
 					success: (data)=> {
 						this.address = data.name;
+						// 将经纬度逆地理编码
+						var latitude = data.latitude;//维度
+						var longitude = data.longitude;//经度
+						qqmapsdk.reverseGeocoder({
+							location:{
+								latitude: latitude,
+								longitude: longitude
+							},
+							success:function(res){
+								this.addressData.province='';
+								this.addressData.city='';
+								this.addressData.region='';
+								this.addressData.postCode='';
+							}
+						})
 					}
 				})
 			},
-			
+			// 选择地址
+			dropdownChange(e){
+				console.log(e)
+			},
 			//提交
 			confirm(){
+				this.addressData.address = '华中科技大学'
 				let data = this.addressData;
 				if(!data.name){
 					this.$api.msg('请填写收货人姓名');
@@ -123,10 +171,10 @@
 					this.$api.msg('请输入正确的手机号码');
 					return;
 				}
-				if(!this.address){
-					this.$api.msg('请在地图选择所在位置');
-					return;
-				}
+				// if(!this.address){
+				// 	this.$api.msg('请在地图选择所在位置');
+				// 	return;
+				// }
 				if(!data.detailAddress){
 					this.$api.msg('请填写门牌号信息');
 					return;
@@ -234,8 +282,17 @@
 	// 	.uni-checkbox-input .uni-checkbox-input-checked {
 	// 		border: none !important;
 	// 	}
-
+.address .row .textarea{
+	height: 100rpx;
+}
+.address .rowTextArea{
+	height: auto;
+	min-height: 110rpx;
 	
+	padding-top: 5rpx;
+	padding-bottom: 10rpx;
+	box-sizing: border-box;
+}
 </style>
 <style>
 	.address .default-checkbox .uni-checkbox-wrapper .uni-checkbox-input {

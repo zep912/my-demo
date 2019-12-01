@@ -53,9 +53,10 @@
 					<view v-for="(item, index) in goodsList" :key="index" class="floor-item" @click="navToDetailPage(item)">
 						<image :src="item.image" mode="aspectFill"></image>
 						<text class="title pre-line">{{item.title}}</text>
-						<view>
+						<view class="pos-r">
 							<view class="price">¥{{item.price}}</view>
 							<view class="price-old">¥{{item.price}}</view>
+							<uni-icons class="pos-a" type="plus-filled" color ='#F55641' size="30"></uni-icons>
 						</view>
 					</view>
 				</view>
@@ -177,6 +178,7 @@
 		</view>
 		<!-- 微信登录  自动弹窗-->
 		<view class="weixinLogin" v-if="isCanUse">
+			<text class="weixinX" @click="close">X</text>
 			<image src="../../static/delivery/logo.png" mode=""></image>
 			<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN"
 			 @getuserinfo="wxGetUserInfo">微信一键登录</button>
@@ -259,16 +261,7 @@
 						console.log(loginRes, 'loginRes');
 						if (!this.isCanUse) {
 							//非第一次授权获取用户信息
-							uni.getUserInfo({
-								provider: 'weixin',
-								success: (infoRes) => {
-									console.log(infoRes, 'login');
-									//获取用户信息后向调用信息更新方法
-									this.$store.commit('login', infoRes.userInfo);
-									this.isCanUse = false;
-									// _this.updateUserInfo(); //调用更新信息方法
-								}
-							});
+							this.wxGetUserInfo()
 						}
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 						// uni.request({
@@ -315,6 +308,9 @@
 		// 手机号登录
 		toPhone() {
 			uni.navigateTo({url: '/pages/public/login'})
+		},
+		close(){
+			this.isCanUse=false
 		},
 		/**
 		 * 请求静态数据只是为了代码不那么乱
@@ -409,6 +405,13 @@
 
 		.weixin {
 			margin-bottom: 40rpx;
+		}
+		.weixinX{
+			position: absolute;
+			right: 5%;
+			top: 2%;
+			font-size: 14px;
+			color: #333;
 		}
 
 	}
@@ -876,6 +879,28 @@
 			color: $uni-color-primary;
 			line-height: 1;
 		}
+	}
+	
+	.pos-r {
+		position: relative;
+	}
+	
+	.pos-a {
+		position: absolute;
+		right: 0;
+		top: -24upx;
+	}
+	
+	.price {
+		font-size: $font-lg+2;
+		color: $uni-color-primary;
+		line-height: 1;
+	}
+	.price-old {
+		font-size: $font-sm;
+		line-height: 1;
+		text-decoration: line-through;
+		color: #999;
 	}
 
 	/* 好物推荐 */

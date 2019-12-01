@@ -132,7 +132,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 372));};var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -215,28 +215,91 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 94));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 381));};var _default =
 {
   components: {
     empty: empty },
 
-  data: function data() {
-    return {
+  data: function data() {var _ref;
+    return _ref = {
       src: '../../static/shopcarempty.png',
       msg: '购物车没有商品，你还可以',
       list: [],
       update: '编辑',
       checked: true,
       stepValue: 1,
-      num: 1 };
+      num: 1,
+      deleShow: false }, _defineProperty(_ref, "list",
+    []), _defineProperty(_ref, "checkeds",
+
+
+    false), _ref;
 
   },
+  onLoad: function onLoad(option) {
+    this.getShopCar();
+  },
   methods: {
+    // 修改优惠
+    editPrefe: function editPrefe() {
+
+    },
+    // 获取购物车列表
+    getShopCar: function getShopCar() {
+      _uniAxios.default.post('/cart/list').then(function (res) {
+        if (res.data.code == 200) {
+          console.log(res);
+        }
+      });
+    },
+    // 点击编辑或完成
     edit: function edit() {
       if (this.update == '编辑') {
         this.update = '完成';
+        this.deleShow = true;
       } else {
         this.update = '编辑';
+        this.deleShow = false;
       }
+    },
+    // 全选
+    allSlect: function allSlect(e) {
+      console.log(e);
+      this.checkeds = e.detail;
+    },
+    // 删除某个商品
+    delete: function _delete() {
+      var obj = {
+        id: id };
+
+      _uniAxios.default.post('/cart/delete', id).then(function (res) {
+        if (res.data.code == 200) {
+          console.log(res);
+        }
+      });
     },
     onChange: function onChange() {
 

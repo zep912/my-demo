@@ -98,6 +98,17 @@ page {
   background: #f7b52c;
   border-radius: 45rpx;
 }
+.address .row .textarea {
+  height: 100rpx;
+}
+.address .rowTextArea {
+  height: auto;
+  min-height: 110rpx;
+  padding-top: 5rpx;
+  padding-bottom: 10rpx;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
 
 
 .address .default-checkbox .uni-checkbox-wrapper .uni-checkbox-input {

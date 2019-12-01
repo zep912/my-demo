@@ -51,6 +51,13 @@
 .weixinLogin .weixin {
     margin-bottom: 40rpx;
 }
+.weixinLogin .weixinX {
+    position: absolute;
+    right: 5%;
+    top: 2%;
+    font-size: 14px;
+    color: #333;
+}
 .uni-list-cell-db {
   background: #fff;
 }
@@ -526,6 +533,25 @@ page {
     font-size: 32rpx;
     color: #fa436a;
     line-height: 1;
+}
+.pos-r {
+  position: relative;
+}
+.pos-a {
+  position: absolute;
+  right: 0;
+  top: -24rpx;
+}
+.price {
+  font-size: 34rpx;
+  color: #fa436a;
+  line-height: 1;
+}
+.price-old {
+  font-size: 24rpx;
+  line-height: 1;
+  text-decoration: line-through;
+  color: #999;
 }
 /* 好物推荐 */
 .good-sku .guess-item {

@@ -45,9 +45,9 @@ var prePage = function prePage() {
   var pages = getCurrentPages();
   var prePage = pages[pages.length - 2];
 
+  return prePage;
 
-
-  return prePage.$vm;
+  // return prePage.$vm;
 };
 
 
