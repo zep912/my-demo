@@ -1,16 +1,16 @@
 <template>
 	<view class="shopCar">
-		<empty :src='src' :msg='msg' v-if='list.length!=0'></empty>
+		<empty :src='src' :msg='msg' v-if='list.length==0'></empty>
 		<!-- 商品 -->
-		<view class="shopcar-goods" v-if='list.length==0'>
+		<view class="shopcar-goods"  v-if='list.length!=0'>
 			<view class="shopcar-title">
 				<view class="shopcar-title-text">你购物车共<text class="shopcar-titleTxt-color">{{list.length}}</text>件商品</view>
 				<view class="edit" @click="edit">{{update}}</view>
 			</view>
 			<!-- 商品 -->
-			<view class="shopcar-wares">
-				<view class="shopcar-check" v-for="(item,index) in list">
-					<van-checkbox :value="checked" @change="onChange" custom-class='checkbox' checked-color="#F7B62C"></van-checkbox>
+			<view class="shopcar-wares" v-for="(item,index) in list">
+				<view class="shopcar-check">
+					<van-checkbox :value="checked" @change="onChangeAll(item.deleteStatus,index)" custom-class='checkbox' checked-color="#F7B62C"></van-checkbox>
 					<view class="shopcar-shopTitle">
 						<view class="shopcar-check-shops">
 							<img src="../../static/shop.png" alt="" class='shopLogo'>
@@ -23,15 +23,16 @@
 				</view>
 				<view class="shopcar-sp">
 					<view style="display: flex;align-items: center;">
-						<van-checkbox :value="checked" @change="onChange" custom-class='checkbox-sp' checked-color="#F7B62C"></van-checkbox>
+						<van-checkbox :value="item.deleteStatus==0?false:true" @change="onChange(item.deleteStatus,index)" custom-class='checkbox-sp' checked-color="#F7B62C"></van-checkbox>
 					</view>
 					
 					<view class="shopcar-sp-titles">
 						<view class="shopcar-sp-mj">
 							<!-- 满减 -->
 							<view class="mj">
-								<text class="mj-text"><text class="shopcar-sp-titleColor">满减</text>够满99.00元可减20元</text>
-								<view class="mj-right">
+								<text class="mj-text" v-if='item.promotionMessage!="无优惠"?true:false'>
+								<text class="shopcar-sp-titleColor">{{item.promotionMessage}}</text>		
+								<view class="mj-right" v-if='item.promotionMessage!="无优惠"?true:false'>
 									<text>凑单</text>
 									<van-icon name="arrow" color='#F7B62C' size='12'/>
 								</view>
@@ -39,22 +40,22 @@
 							
 							<!-- 商品信息 -->
 							<view class="shopcar-goods-info">
-								<image src="../../static/goods.png" mode=""></image>
+								<image :src="item.productPic?item.productPic:'../../static/goods.png'" mode=""></image>
 								<view class="shopcar-goods-infoes">
-									<view class="shopcar-goodsinfo_one">香辣牛肉干</view>
-									<view class="shopcar-goodsinfo_two">规格：10*200g</view>
+									<view class="shopcar-goodsinfo_one">{{item.productName }}</view>
+									<view class="shopcar-goodsinfo_two" @click="changeAttr(item.productId)">规格：<text>{{item.sp1}}</text>  <text>{{item.sp2}}</text></view>
 									<view class="shopcar-goodsinfo_three">
-										<text>998.9</text>
-										<text>999</text>
+										<text>￥{{item.price?item.price:'暂无报价'}}</text>
+										<text>￥999</text>
 									</view>
 									
 									<!-- 加减 -->
 									<view class="shopcar-add">
-										<text>仅剩1件</text>
+										<text>仅剩<text>{{item.realStock}}</text>件</text>
 										<view class="add">
-											<text class="add-radius minus" @click="minus">-</text>
-											<text>{{num}}</text>
-											<text class="add-radius plus" @click="add">+</text>
+											<text class="add-radius minus" @click="minus(item,index,item.id,item.realStock)">-</text>
+											<text>{{item.quantity}}</text>
+											<text class="add-radius plus" @click="add(item,index,item.id,item.realStock)">+</text>
 										</view>
 										<!-- <van-stepper :value="stepValue" @change="stepperChange" minus-class='minusClass' plus-class='plusClass' input-class='inputClass' integer /> -->
 									</view>
@@ -77,7 +78,7 @@
 			</view>
 		</view>
 		<!-- 全选，删除 -->
-		<view class="foot">
+		<view class="foot" v-if='list.length!=0'>
 			<view class="foot-left">
 			<van-checkbox :value="checkeds" @change="allSlect" custom-class='checkbox-sp' checked-color="#F7B62C">全选</van-checkbox>
 			<view class="foot-total-price"   v-if='!deleShow'>
@@ -111,7 +112,7 @@
 		},
 		data() {
 			return {
-				src: '../../static/shopcarempty.png',
+				src: '../static/shopcarempty.png',
 				msg: '购物车没有商品，你还可以',
 				list: [],
 				update: '编辑',
@@ -126,9 +127,17 @@
 			}
 		},
 		onLoad(option){
-			this.getShopCar()
+			this.getShopCar();
+			let str = '打折优惠：满3件，打7.50折';
+			console.log(str.indexOf('：'))
 		},
 		methods: {
+			// 获取某个商品的规格
+			changeAttr(id){
+				axios.post('/cart/getProduct/'+id).then(res=>{
+					// 弹出规格的弹窗
+				})
+			},
 			// 修改优惠
 			editPrefe(){
 				
@@ -138,6 +147,7 @@
 				axios.post('/cart/list/promotion').then(res=>{
 					if(res.data.code==200){
 						console.log(res)
+						this.list = res.data.data
 					}
 				})
 			},
@@ -151,13 +161,17 @@
 					this.deleShow = false
 				}
 			},
-			// 全选
+			// 最终的全选
 			allSlect(e){
 				console.log(e);
 				this.checkeds = e.detail
 			},
+			//每个商店的全选
+			onChangeAll(){
+				
+			},
 			// 删除某个商品
-			delete(){
+			delete(id){
 				let obj ={
 					id:id
 				}
@@ -167,22 +181,42 @@
 					}
 				})
 			},
-			onChange(){
-				
+			// 单个商品的选择
+			onChange(status,index){
+				console.log(status,index)
+				this.list[index].deleteStatus = 1
 			},
 			stepperChange(){
 				
 			},
-			// 增加
-			minus(){
-				if(this.num==1){
-					this.num=1
+			// 减少商品数量
+			minus(item,index,id,realStock){
+				if(item.quantity==1){
+					item.quantity=1
 				}else{
-					this.num--
+					item.quantity--;
+					realStock++
 				}
+				let obj = {
+					id:id,
+					quantity:item.quantity
+				}
+				axios.post('/cart/update/quantity',obj).then(res=>{
+					
+				})
 			},
-			add(){
-				this.num++;
+			// 增加商品数量
+			add(item,index,id,realStock){
+				item.quantity++;
+				realStock--;
+				// 请求接口
+				let obj = {
+					id:id,
+					quantity:item.quantity
+				}
+				axios.post('/cart/update/quantity',obj).then(res=>{
+					
+				})
 			}
 		}
 	}
@@ -193,7 +227,7 @@
 		width:100%;
 		height:120rpx;
 		background:rgba(255,255,255,1);
-		position: absolute;
+		position: fixed;
 		bottom: 0;
 		left: 0;
 		display: flex;
@@ -304,7 +338,7 @@
 			.shopcar-sp-titles{
 				// float: left;
 				width: 90%;
-				margin-left:36px;
+				margin-left:24rpx;
 				box-sizing: border-box;
 				.shopcar-sp-mj{
 					margin-top: 20rpx;
@@ -341,14 +375,21 @@
 						}
 					}
 					.shopcar-sp-titleColor{
-						width:90rpx;
-						height:28rpx;
+						display: inline-block;
+						// width:80rpx;
+						padding-left: 5px;
+						padding-right: 5px;
+						padding-top: 2px;
+						padding-bottom: 2px;
+						// height:30rpx;
 						border:1px solid rgba(255,50,50,1);
 						border-radius:14rpx;
-						font-size:18rpx;
+						font-size:22rpx;
 						font-weight:400;
 						color:rgba(255,50,50,1);
 						margin-right: 20rpx;
+						text-align: center;
+						// line-height: 30rpx;
 					}
 					.shopcar-goods-info{
 						margin-top: 20rpx;

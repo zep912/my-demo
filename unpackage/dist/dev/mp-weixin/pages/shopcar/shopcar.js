@@ -86,23 +86,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  var m0 = __webpack_require__(/*! ../../static/shop.png */ 168)
-
-  _vm.$mp.data = Object.assign(
-    {},
-    {
-      $root: {
-        m0: m0
-      }
-    }
-  )
-}
+var render = function () {}
 var staticRenderFns = []
-render._withStripped = true
 
 
 
@@ -238,6 +223,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 94));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 381));};var _default =
 {
   components: {
@@ -245,7 +231,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
   data: function data() {var _ref;
     return _ref = {
-      src: '../../static/shopcarempty.png',
+      src: '../static/shopcarempty.png',
       msg: '购物车没有商品，你还可以',
       list: [],
       update: '编辑',
@@ -261,17 +247,26 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
   },
   onLoad: function onLoad(option) {
     this.getShopCar();
+    var str = '打折优惠：满3件，打7.50折';
+    console.log(str.indexOf('：'));
   },
   methods: {
+    // 获取某个商品的规格
+    changeAttr: function changeAttr(id) {
+      _uniAxios.default.post('/cart/getProduct/' + id).then(function (res) {
+        // 弹出规格的弹窗
+      });
+    },
     // 修改优惠
     editPrefe: function editPrefe() {
 
     },
     // 获取购物车列表
-    getShopCar: function getShopCar() {
+    getShopCar: function getShopCar() {var _this = this;
       _uniAxios.default.post('/cart/list/promotion').then(function (res) {
         if (res.data.code == 200) {
           console.log(res);
+          _this.list = res.data.data;
         }
       });
     },
@@ -285,13 +280,17 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         this.deleShow = false;
       }
     },
-    // 全选
+    // 最终的全选
     allSlect: function allSlect(e) {
       console.log(e);
       this.checkeds = e.detail;
     },
+    //每个商店的全选
+    onChangeAll: function onChangeAll() {
+
+    },
     // 删除某个商品
-    delete: function _delete() {
+    delete: function _delete(id) {
       var obj = {
         id: id };
 
@@ -301,22 +300,42 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         }
       });
     },
-    onChange: function onChange() {
-
+    // 单个商品的选择
+    onChange: function onChange(status, index) {
+      console.log(status, index);
+      this.list[index].deleteStatus = 1;
     },
     stepperChange: function stepperChange() {
 
     },
-    // 增加
-    minus: function minus() {
-      if (this.num == 1) {
-        this.num = 1;
+    // 减少商品数量
+    minus: function minus(item, index, id, realStock) {
+      if (item.quantity == 1) {
+        item.quantity = 1;
       } else {
-        this.num--;
+        item.quantity--;
+        realStock++;
       }
+      var obj = {
+        id: id,
+        quantity: item.quantity };
+
+      _uniAxios.default.post('/cart/update/quantity', obj).then(function (res) {
+
+      });
     },
-    add: function add() {
-      this.num++;
+    // 增加商品数量
+    add: function add(item, index, id, realStock) {
+      item.quantity++;
+      realStock--;
+      // 请求接口
+      var obj = {
+        id: id,
+        quantity: item.quantity };
+
+      _uniAxios.default.post('/cart/update/quantity', obj).then(function (res) {
+
+      });
     } } };exports.default = _default;
 
 /***/ }),

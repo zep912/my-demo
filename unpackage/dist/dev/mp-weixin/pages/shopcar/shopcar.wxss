@@ -9,7 +9,7 @@
   width: 100%;
   height: 120rpx;
   background: white;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   display: -webkit-box;
@@ -169,7 +169,7 @@
 }
 .shopcar-wares .shopcar-sp .shopcar-sp-titles {
       width: 90%;
-      margin-left: 36px;
+      margin-left: 24rpx;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
 }
@@ -227,14 +227,18 @@
               margin-right: 20rpx;
 }
 .shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj .shopcar-sp-titleColor {
-          width: 90rpx;
-          height: 28rpx;
+          display: inline-block;
+          padding-left: 5px;
+          padding-right: 5px;
+          padding-top: 2px;
+          padding-bottom: 2px;
           border: 1px solid #ff3232;
           border-radius: 14rpx;
-          font-size: 18rpx;
+          font-size: 22rpx;
           font-weight: 400;
           color: #ff3232;
           margin-right: 20rpx;
+          text-align: center;
 }
 .shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj .shopcar-goods-info {
           margin-top: 20rpx;

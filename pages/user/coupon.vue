@@ -34,21 +34,24 @@
 			<van-tab title="已使用"  class='tab2'>
 				<!-- 实现优惠券 -->
 				<view class="wrap tabwrap" v-if='conponList.length!=0'>
-					<view class="coupon">
+					<view class="coupon" v-for='(item,index) in conponList'>
 						<view class="coupon-left">
 							<view class="coupon-left-box">
 								<img src="../../static/my/beuesed.png" alt="">
-								<text class="coupon-left-boxPrice">30</text>
-								<text class="coupon-left-boxman">满100元可用</text>
+								<text class="coupon-left-boxPrice">{{item.coupon.amount}}</text>
+								<text class="coupon-left-boxman">满<text>{{item.coupon.minPoint!=0?item.coupon.minPoint:'无门槛'}}</text>元可用</text>
 							</view>
 						</view>
 						<view class="coupon-con">
 							<view class="coupon-con-title">
-								<text class="coupon-con-titles">店铺券 新用户专享优惠券</text>
+								<text class="coupon-con-titles">{{item.coupon.name}}</text>
 								<text class="coupon-con-goods">
-									坚果专区通用（部分除外）
+									{{item.coupon.note}}
 								</text>
-								<text class="coupon-con-time">09月1日-09月30日</text>
+								<text class="coupon-con-time">
+									<text>{{timestampToTime(item.coupon.startTime)}}</text>
+									-
+									<text>{{timestampToTime(item.coupon.endTime)}}</text></text>
 							</view>
 							<!-- <button class="coupon-btn">立即使用</button> -->
 							<img src="../../static/my/used.png" alt="" class='couponImg'>
@@ -60,21 +63,25 @@
 			<van-tab title="已过期"  class='tab3'>
 				<!-- 实现优惠券 -->
 				<view class="wrap tabwrap" v-if='conponList.length!=0'>
-					<view class="coupon">
+					<view class="coupon" v-for='(item,index) in conponList'>
 						<view class="coupon-left">
 							<view class="coupon-left-box">
 								<img src="../../static/my/beuesed.png" alt="">
-								<text class="coupon-left-boxPrice">30</text>
-								<text class="coupon-left-boxman">满100元可用</text>
+								<text class="coupon-left-boxPrice">{{item.coupon.amount}}</text>
+								<text class="coupon-left-boxman">满<text>{{item.coupon.minPoint!=0?item.coupon.minPoint:'无门槛'}}</text>元可用</text>
 							</view>
 						</view>
 						<view class="coupon-con">
 							<view class="coupon-con-title">
-								<text class="coupon-con-titles">店铺券 新用户专享优惠券</text>
+								<text class="coupon-con-titles">{{item.coupon.name}}</text>
 								<text class="coupon-con-goods">
-									坚果专区通用（部分除外）
+									{{item.coupon.note}}
 								</text>
-								<text class="coupon-con-time">09月1日-09月30日</text>
+								<text class="coupon-con-time">
+									<text>{{timestampToTime(item.coupon.startTime)}}</text>
+									-
+									<text>{{timestampToTime(item.coupon.endTime)}}</text>
+									</text>
 							</view>
 							<!-- <button class="coupon-btn">立即使用</button> -->
 							<img src="../../static/my/Beoverdue.png" alt="" class='couponImg'>
@@ -111,18 +118,11 @@
 				axios.post('/member/coupon/list/cart/'+n,{type:n}).then(res=>{
 					if(res.data.code==200){
 						this.conponList = res.data.data;
-						console.log(this.conponList)
-						console.log(this.timestampToTime(this.conponList[0].coupon.startTime))
 					}
 				})
 			},
 			onChange(event) {
-				console.log(event)
 				this.getCoupon(event.detail.name)
-				// wx.showToast({
-				// 	title: `切换到标签 ${event.detail.name}`,
-				// 	icon: 'none'
-				// });
 			},
 			// 日期转换
 			// 时间戳转换成时间
@@ -135,7 +135,6 @@
 				var m = date.getMinutes() + ':'
 				var s = date.getSeconds();
 				return M+'月'+D+'日'
-				console.log(timestampToTime (1533293827000))
 		    },
 		}
 
