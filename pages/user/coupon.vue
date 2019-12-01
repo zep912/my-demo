@@ -104,9 +104,9 @@
 		methods: {
 			// 获取用户的优惠券列表
 			getCoupon(n){
-				axios.post('/member/coupon/list',{useStatus:n}).then(res=>{
+				axios.post('/member/coupon/list/cart/0',{type:0}).then(res=>{
 					if(res.data.code==200){
-						
+						console.log(res)
 					}
 				})
 			},

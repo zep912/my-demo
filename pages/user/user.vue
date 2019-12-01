@@ -5,24 +5,25 @@
 			<image class="bg" src="../../static/my/user-bg.png"></image>
 			<view class="user-info-box">
 				<view class="portrait-box">
-					<image class="portrait" :src="userInfo.avatarUrl || '../../static/my/missing-face.png'"></image>
+					<image class="portrait" :src="userInfo.portrait || '../../static/my/missing-face.png'"></image>
 				</view>
 				<view class="info-box">
-					<text class="username" v-show='!authShow'>{{userInfo.nickName?userInfo.nickName:''}}</text>
-					<text class="info-mobile" v-show='!authShow'>{{userInfo.mobile}}</text>
-					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-show='authShow'>
+					<text class="username" v-if='!authShow'>{{userInfo.nickname?userInfo.nickname:''}}</text>
+					<text class="info-mobile" v-if='!authShow'>{{userInfo.mobile}}</text>
+					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
 					</view>
 				</view>
 
 			</view>
-			<view class='login-now' @click="accountManage">	
+			<view class='login-now' @click="accountManage">
 				<text>账号管理</text>
 			</view>
 		</view>
 		<!-- 查看订单 -->
 		<view class="user-order">
-			<view class="list-cell b-b m-t" @click="navTo('/pages/order/order?state=0')" hover-class="cell-hover" :hover-stay-time="50">
+			<view class="list-cell b-b m-t" @click="navTo('/pages/order/order?state=0')" hover-class="cell-hover"
+			 :hover-stay-time="50">
 				<text class="cell-tit">全部订单</text>
 				<text class="cell-tip" @click="lookOrder">查看全部订单</text>
 				<text class="cell-more yticon icon-you"></text>
@@ -32,22 +33,23 @@
 				<view class="order-section">
 
 					<view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover" :hover-stay-time="50">
-					
+
 						<img src="../../static/my/my-pending.png" alt="" style='width:64rpx;height:54rpx;margin-bottom: 18rpx;'>
 						<text>待付款</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover" :hover-stay-time="50">
-					
+
 						<img src="../../static/my/my-received.png" alt="" style='width:62rpx;height:54rpx;margin-bottom: 18rpx;'>
 						<text>待收货</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/order?state=3')" hover-class="common-hover" :hover-stay-time="50">
-			
+
 						<img src="../../static/my/my-evaluated.png" alt="" style='width:66rpx;height:54rpx;margin-bottom: 18rpx;'>
 						<text>待评价</text>
 					</view>
-					<view class="order-item" @click="navTo('/pages/order/aftersale?state=5')" hover-class="common-hover" :hover-stay-time="50">
-					
+					<view class="order-item" @click="navTo('/pages/order/aftersale?state=5')" hover-class="common-hover"
+					 :hover-stay-time="50">
+
 						<img src="../../static/my/my-refund.png" alt="" style='width:58rpx;height:60rpx;margin-bottom: 18rpx;'>
 						<text>退款/售后</text>
 					</view>
@@ -57,7 +59,7 @@
 		<!-- 商品-我的足迹 -->
 		<view class="my-footprint">
 			<view class="my-footprint-box">
-				<view class=""  @click="navTo('/pages/user/collect')">
+				<view class="" @click="navTo('/pages/user/collect')">
 					<text class="my-foot-num">{{shoucang?shoucang:0}}</text>
 					<text class="my-foot-title">商品收藏</text>
 				</view>
@@ -69,7 +71,7 @@
 		</view>
 		<!-- 钱包 -->
 		<view class="wallet">
-			<view class="wallet-cell" @click="navTo('/pages/user/wallet')" >
+			<view class="wallet-cell" @click="navTo('/pages/user/wallet')">
 				<img src="../../static/my/my-wallet.png" class="wallet-img"></image>
 				<text>钱包</text>
 			</view>
@@ -77,7 +79,7 @@
 				<img src="../../static/my/my-delivery.png" class="wallet-img"></image>
 				<text>麦吉配送</text>
 			</view>
-			<view class="wallet-cell"  @click="navTo('/pages/user/feedback')">
+			<view class="wallet-cell" @click="navTo('/pages/user/feedback')">
 				<img src="../../static/my/my-feedback.png" class="wallet-img"></image>
 				<text>意见反馈</text>
 			</view>
@@ -105,15 +107,21 @@
 					</view>
 					<view class="goods-price">
 						<text>{{'$'+item.price}}</text>
-						<van-icon name="add" color ='#F55641' size='38px'/>
+						<van-icon name="add" color='#F55641' size='38px' />
 					</view>
 				</view>
 			</view>
-			
+
 		</view>
 	</view>
 
-
+	<!-- 微信登录  自动弹窗-->
+	<!-- <view class="weixinLogin" v-if="isCanUse">
+		<text class="weixinX" @click="close">X</text>
+		<image src="../../static/delivery/logo.png" mode=""></image>
+		<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
+		<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
+	</view> -->
 	</view>
 </template>
 <script>
@@ -130,36 +138,36 @@
 		},
 		data() {
 			return {
-				shoucang:0,
-				zuji:0,
+				shoucang: 0,
+				zuji: 0,
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
-				abImg:'../../static/banner_01.png',
-				goodsList:[
-					{
-						img:'../../static/egg_01.png',
-						title:'正宗农家散养谷饲土鸡蛋20枚',
-						subTitle:'宇宙无敌巨好吃的鸡蛋',
-						jifen:'200',
-						price:999.90
+				abImg: '../../static/banner_01.png',
+				goodsList: [{
+						img: '../../static/egg_01.png',
+						title: '正宗农家散养谷饲土鸡蛋20枚',
+						subTitle: '宇宙无敌巨好吃的鸡蛋',
+						jifen: '200',
+						price: 999.90
 					},
 					{
-						img:'../../static/egg_01.png',
-						title:'正宗农家散养谷饲土鸡蛋20枚',
-						subTitle:'宇宙无敌巨好吃的鸡蛋',
-						jifen:'200',
-						price:999.90
+						img: '../../static/egg_01.png',
+						title: '正宗农家散养谷饲土鸡蛋20枚',
+						subTitle: '宇宙无敌巨好吃的鸡蛋',
+						jifen: '200',
+						price: 999.90
 					},
 					{
-						img:'../../static/egg_01.png',
-						title:'正宗农家散养谷饲土鸡蛋20枚',
-						subTitle:'宇宙无敌巨好吃的鸡蛋',
-						jifen:'200',
-						price:999.90
+						img: '../../static/egg_01.png',
+						title: '正宗农家散养谷饲土鸡蛋20枚',
+						subTitle: '宇宙无敌巨好吃的鸡蛋',
+						jifen: '200',
+						price: 999.90
 					}
 				],
-				authShow:true,
+				authShow: true,
+				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 			}
 		},
 		onLoad(option) {
@@ -169,42 +177,110 @@
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
-			// 个人资料
-			accountManage(){
-				if(uni.getStorageSync('setPhone')||uni.getStorageSync('gt')){
+			// 授权用户信息
+			wxGetUserInfo() {
+				let _this = this;
+				uni.getUserInfo({
+					provider: 'weixin',
+					success: function(infoRes) {
+						this.authShow = false
+						console.log(infoRes)
+						let nickName = infoRes.userInfo.nickName; //昵称
+						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+						let mobile = infoRes.userInfo.mobile; //头像
+						_this.userInfo.nickname = nickName;
+						_this.userInfo.portrait = avatarUrl;
+						_this.userInfo.mobile = mobile ? mobile : '';
+						_this.userInfo.gender = infoRes.userInfo.gender;
+						// _this.userInfo = infoRes.userInfo;
+						_this.$store.commit('login', _this.userInfo)
+						try {
+							uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
+							_this.updateUserInfo();
+						} catch (e) {}
+					},
+					fail(res) {}
+				})
+			},
+			login() {
+				let _this = this;
+				// 1.wx获取登录用户code
+				uni.login({
+					provider: 'weixin',
+					success: function(loginRes) {
+						let code = loginRes.code;
+						if (!_this.isCanUse) {
+							//非第一次授权获取用户信息
+							uni.getUserInfo({
+								provider: 'weixin',
+								success: function(infoRes) {
+									//获取用户信息后向调用信息更新方法
+									let nickName = infoRes.userInfo.nickName; //昵称
+									let avatarUrl = infoRes.userInfo.avatarUrl; //头像
+									_this.updateUserInfo(); //调用更新信息方法
+								}
+							});
+						}
+						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+						// uni.request({
+						// 	url: '服务器地址',
+						// 	data: {
+						// 		code: code,
+						// 	},
+						// 	method: 'GET',
+						// 	header: {
+						// 		'content-type': 'application/json'
+						// 	},
+						// 	success: (res) => {
+						// 		//openId、或SessionKdy存储//隐藏loading
+						// 		uni.hideLoading();
+						// 	}
+						// })
+					}
+				})
+			},
+			// 账号管理-个人资料
+			accountManage() {
+				// 手机号登录，或者微信登录，不是第一次登录
+				if (uni.getStorageSync('setPhone') || uni.getStorageSync('gt') || !uni.getStorageSync('isCanUse')) {
 					uni.navigateTo({
-						url:'../set/set?id='+this.userInfo.id 
+						url: '../set/set?id=' + this.userInfo.id
 					})
-				}else{
+				} else {
 					uni.navigateTo({
-						url:'../public/login'
+						url: '../public/login'
 					})
 				}
 			},
 			// 从登录页跳转过来，刷新页面,获取用户信息
-			loadData(){
+			loadData() {
+				// 优先使用微信登录
+				if(!uni.getStorageSync('isCanUse')){
+					this.authShow = false;
+					let setUserInfo = this.$store.state.userInfo;
+					
+				}
 				// 如果使用手机号登录
-				let userInfos = uni.getStorageSync('userInfo')
-				if(uni.getStorageSync('gt')&&uni.getStorageSync('setPhone')){
-					axios.post('/sso/user/userInfo').then(res=>{
-						if(res.data.code='200'){
+				let userInfos = uni.getStorageSync('userInfo');
+				if (uni.getStorageSync('gt') && uni.getStorageSync('setPhone')) {
+					axios.post('/sso/user/userInfo').then(res => {
+						if (res.data.code = '200') {
 							this.authShow = false;
 							this.userInfo.mobile = res.data.data.phone;
 							this.userInfo.id = res.data.data.id;
-							
-							this.$store.commit('login',this.userInfo)
+
+							this.$store.commit('login', this.userInfo)
 						}
 					})
-				}else if(userInfos.nickName){
-					console.log(userInfos.nickName)
+				} else if (!uni.getStorageSync('isCanUse')) { //如果是微信登录
 					this.authShow = false;
 					this.userInfo.nickName = userInfos.nickName
-					
+
 				}
 				// 如果使用微信登录方式登录
-				
+
 			},
-				
+
 			// 查看更多订单
 			lookOrder() {
 				uni.navigateTo({
@@ -267,7 +343,53 @@
 	}
 </script>
 <style lang='scss'>
-	
+	.weixinLogin {
+		width: 550rpx;
+		height: 530rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 30rpx;
+		position: fixed;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		box-sizing: border-box;
+		padding-top: 46rpx;
+		padding-left: 30rpx;
+		padding-right: 30rpx;
+		text-align: center;
+
+		image {
+			width: 118rpx;
+			height: 140rpx;
+			margin-bottom: 67rpx;
+		}
+
+		button {
+			width: 490rpx;
+			height: 80rpx;
+			background: rgba(75, 194, 102, 1);
+			border-radius: 40rpx;
+			font-size: 28rpx;
+			color: rgba(255, 255, 255, 1);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.weixin {
+			margin-bottom: 40rpx;
+		}
+
+		.weixinX {
+			position: absolute;
+			right: 5%;
+			top: 2%;
+			font-size: 14px;
+			color: #333;
+		}
+
+	}
+
 	%flex-center {
 		display: flex;
 		flex-direction: column;
@@ -405,6 +527,7 @@
 	.info-box {
 		margin-left: 30rpx;
 		text-align: left;
+
 		text {
 			display: block;
 		}
@@ -580,58 +703,68 @@
 	/* 我的足迹 */
 	.my-footprint {
 		width: 94%;
-		height:140rpx ;
-		border-radius: 20rpx;;
+		height: 140rpx;
+		border-radius: 20rpx;
+		;
 		margin: 0 auto;
 		background: #fff;
-		.my-footprint-box{
+
+		.my-footprint-box {
 			width: 60%;
 			height: 100%;
 			margin: 0 auto;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			.my-foot-num{
-				font-size:30rpx;
-				font-weight:bold;
-				color:rgba(88,88,88,1);
+
+			.my-foot-num {
+				font-size: 30rpx;
+				font-weight: bold;
+				color: rgba(88, 88, 88, 1);
 				margin-bottom: 8rpx;
 			}
-			.my-foot-title{
-				font-size:24rpx;
-				font-weight:500;
-				color:rgba(88,88,88,1);
+
+			.my-foot-title {
+				font-size: 24rpx;
+				font-weight: 500;
+				color: rgba(88, 88, 88, 1);
 			}
-			view{
+
+			view {
 				text-align: center;
-				text{
+
+				text {
 					display: block;
 				}
-				
+
 			}
-			
+
 		}
 	}
-	.wallet{
+
+	.wallet {
 		border-radius: 20rpx;
 		width: 94%;
 		margin: 0 auto;
 		margin-top: 20rpx;
 		background: #fff;
 		box-sizing: border-box;
-		padding-left:30rpx;
-		.wallet-cell{
+		padding-left: 30rpx;
+
+		.wallet-cell {
 			height: 100rpx;
-			font-size:26rpx;
-			font-weight:400;
-			color:rgba(88,88,88,1);
+			font-size: 26rpx;
+			font-weight: 400;
+			color: rgba(88, 88, 88, 1);
 			display: flex;
 			align-items: center;
 			border-bottom: 1px solid #E4E7ED;
 		}
-		.wallet-cell:nth-of-type(3){
+
+		.wallet-cell:nth-of-type(3) {
 			border-bottom: 0;
 		}
+
 		/* .wallet-cell:after{
 			    position: absolute;
 			    z-index: 3;
@@ -644,96 +777,109 @@
 			    transform: scaleY(0.5);
 			    border-bottom: 1px solid #E4E7ED;
 		} */
-		
+
 	}
-	.wallet-cell .wallet-img{
+
+	.wallet-cell .wallet-img {
 		width: 34rpx;
 		height: 34rpx;
 		display: inline-block;
 		margin-right: 24rpx;
 	}
+
 	/* ab */
-	.ab{
+	.ab {
 		width: 94%;
 		margin: 0 auto;
 		margin-top: 40rpx;
-		img{
+
+		img {
 			width: 100%;
 			height: 210rpx;
 		}
 	}
+
 	/* 好货推荐 */
-	.hot-goods{
+	.hot-goods {
 		margin-top: 28rpx;
-		.hot-title{
+
+		.hot-title {
 			width: 60%;
 			height: 40rpx;
 			margin: 0 auto;
 			text-align: center;
 			margin-bottom: 28rpx;
-			img{
+
+			img {
 				width: 100%;
 				height: 40rpx;
 			}
 		}
-		.goodsList{
+
+		.goodsList {
 			width: 94%;
 			margin: 0 auto;
 			display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
-		
-			.goodsList-list{
+
+			.goodsList-list {
 				width: 49%;
 				background: #fff;
 				margin-bottom: 20rpx;
 				border-radius: 20rpx;
 				box-sizing: border-box;
 				padding: 20rpx 20rpx 30rpx 20rpx;
-				img{
+
+				img {
 					width: 80%;
 					height: 240rpx;
 					margin: 0 auto;
 					display: block;
 				}
-				.goods-title{
-					font-size:22rpx;
-					font-weight:500;
-					color:rgba(69,69,69,1);
+
+				.goods-title {
+					font-size: 22rpx;
+					font-weight: 500;
+					color: rgba(69, 69, 69, 1);
 					margin-top: 20rpx;
 				}
-				.goods-subTitle{
-					font-size:18rpx;
-					font-weight:500;
-					color:rgba(169,168,168,1);
+
+				.goods-subTitle {
+					font-size: 18rpx;
+					font-weight: 500;
+					color: rgba(169, 168, 168, 1);
 					margin-top: 10rpx;
 				}
-				.goods-jifen{
-					width:120rpx;
-					border:1px solid rgba(245,86,65,1);
-					border-radius:14px;
+
+				.goods-jifen {
+					width: 120rpx;
+					border: 1px solid rgba(245, 86, 65, 1);
+					border-radius: 14px;
 					text-align: center;
-					font-size:26rpx;
-					font-weight:500;
-					color:rgba(245,86,65,1);
-					line-height:36rpx;
+					font-size: 26rpx;
+					font-weight: 500;
+					color: rgba(245, 86, 65, 1);
+					line-height: 36rpx;
 					margin-top: 16rpx;
 				}
-				.goods-price{
+
+				.goods-price {
 					width: 100%;
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
 					margin-top: 42rpx;
-					font-size:20px;
-					font-weight:500;
-					color:rgba(245,86,65,1);
+					font-size: 20px;
+					font-weight: 500;
+					color: rgba(245, 86, 65, 1);
 				}
 			}
 		}
-		
+
 	}
-	.info-box .authorize{
+
+	.info-box .authorize {
 		position: absolute;
 		right: 50%;
 		top: 38%;

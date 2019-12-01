@@ -8,22 +8,21 @@
 			<text class="tit">手机号码</text>
 			<input class="input" type="number" v-model="addressData.phoneNumber" placeholder="请填写收货人手机号" placeholder-class="placeholder" />
 		</view>
-		<view class="row b-b">
+		<view class="row b-b" @click="addressClick">
 			<text class="tit">所在地址</text>
-			<!-- <text class="input">
+			<text class="input inputAddress">
 				{{address}}
-			</text> -->
-			<van-dropdown-menu>
-			  <van-dropdown-item :value="value1" :options="option1" @change='dropdownChange'/>
-			</van-dropdown-menu>
+			</text>
+			<text class="cell-more yticon icon-you"></text>
 			<!-- 跳转地图 -->
 			<!-- <text class="yticon icon-shouhuodizhi" @click="chooseLocation"></text> -->
 		</view>
-		<view class="row b-b rowTextArea"> 
+		<view class="row b-b rowTextArea">
 			<text class="tit">详细地址</text>
 			<!-- <input class="input" type="textarea" v-model="addressData.detailAddress " placeholder="道路,门牌号,小区,楼栋号,单元室等" placeholder-class="placeholder" /> -->
-			<textarea value="" placeholder="道路,门牌号,小区,楼栋号,单元室等" v-model="addressData.detailAddress" placeholder-class="placeholder"  class="input textarea" auto-height='true'/>
-		</view>
+			<textarea value="" placeholder="道路,门牌号,小区,楼栋号,单元室等" v-model="addressData.detailAddress" placeholder-class="placeholder"
+			 class="input textarea" auto-height='true' />
+			</view>
 		
 		<view class="row default-row b-b">
 			<text class="tit default" >地址标签</text>
@@ -39,6 +38,22 @@
 			 <van-checkbox :value="defaultStatus" @change="switchChange" checked-color="#F7B52C"></van-checkbox>
 		</view>
 		<button class="add-btn" @click="confirm">保存地址</button>
+		<!-- 展示下拉列表 -->
+		<!-- 弹出层 -->
+		<van-popup
+		  :show="show"
+		  position="bottom"
+		  custom-style='popStyle'
+		>
+		<van-picker
+		  show-toolbar
+		  title=" "
+		  confirm-button-text='确定'
+		  :columns="columns"
+		  @cancel="onCancel"
+		  @confirm="onConfirm"
+		/>
+		</van-popup>
 	</view>
 </template>
 
@@ -67,18 +82,14 @@
 				  "province": "湖北省",//省份
 				  "region": "洪山区"//区
 				},
-				address:'',
+				address:'请选择所在地区',
 				addressLabels:['家庭','公司','学校'],
 				n:0,
 				defaultStatus:true,
 				key:'GOUBZ-B3U3R-WEAWX-WE266-WZBW5-JIFUR',//腾讯地图key
 				userId:'',
-				value1:'全部商品',
-				option1: [
-				      { text: '全部商品', value: '全部商品' },
-				      { text: '新款商品', value:'新款商品' },
-				      { text: '活动商品', value: '活动商品' }
-				    ],
+				show:false,
+				columns:['荟园1栋','荟园2栋','荟园3栋','荟园4栋','荟园5栋','荟园6栋']
 			}
 		},
 		computed: {
@@ -88,7 +99,13 @@
 			let title = '添加收货地址';
 			if(option.type==='edit'){
 				title = '编辑收货地址'
-				this.addressData = JSON.parse(option.data)
+				this.addressData = JSON.parse(option.data);
+				this.address = this.addressData.locationAddress;
+				this.addressLabels.find((el,index)=>{
+					if(el==this.addressData.addressLabel){
+						this.n = index;
+					}
+				})
 				console.log(this.addressData,777)
 			}
 			this.manageType = option.type;
@@ -104,9 +121,20 @@
 			// });
 		},
 		methods: {
-			// 地址标签
+			// 选择下拉
+			addressClick(){
+				this.show = true
+			},
+			onCancel(){
+				this.show = false
+			},
+			onConfirm(e){
+				this.address =e.detail.value;
+				this.show = false
+			},
+			// 地址标签，
 			changeList(item,index){
-				this.n = index;//this指向app
+				this.n = index;
 				this.addressData.addressLabel = item;
 			},
 			// 切换默认
@@ -126,7 +154,6 @@
 					geocode:true,
 				    success: function (res) {
 						// console.log(res)
-						
 						// 在小程序中不能获取到address的详细信息。需要根据经纬度逆地理编码
 						//https://ask.dcloud.net.cn/article/35070
 						// https://lbs.qq.com/qqmap_wx_jssdk/
@@ -161,7 +188,7 @@
 			},
 			//提交
 			confirm(){
-				this.addressData.address = '华中科技大学'
+				this.addressData.locationAddress = this.address
 				let data = this.addressData;
 				if(!data.name){
 					this.$api.msg('请填写收货人姓名');
@@ -179,29 +206,54 @@
 					this.$api.msg('请填写门牌号信息');
 					return;
 				}
-				console.log(this.addressData)
-				axios.post('/member/address/add',this.addressData).then(res=>{
-					if(res.data.code==200){
-						//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
-						this.$api.prePage().refreshList(data, this.manageType);
-						this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);
-						setTimeout(()=>{
-							uni.navigateBack()
-						}, 800)
-					}
-					
-				})
+				// 判断是新增还是编辑
+				if(this.manageType=='edit'){
+					axios.post('/member/address/update/'+this.addressData.id,this.addressData).then(res=>{
+						if(res.data.code==200){
+							console.log(this.$api.prePage())
+							let pages = getCurrentPages();
+							let prePage = pages[pages.length - 2];
+							//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
+							prePage.$vm.refreshList(data, this.manageType);
+							this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);
+							setTimeout(()=>{
+								uni.navigateBack()
+							}, 800)
+						}else{
+							this.$api.msg('保存失败')
+						}
+					})
+				}else{//新增
+					axios.post('/member/address/add',this.addressData).then(res=>{
+						if(res.data.code==200){
+							//this.$api.prePage()获取上一页实例，可直接调用上页所有数据和方法，在App.vue定义
+							this.$api.prePage().$vm.refreshList(data, this.manageType);
+							this.$api.msg(`地址${this.manageType=='edit' ? '修改': '添加'}成功`);
+							setTimeout(()=>{
+								uni.navigateBack()
+							}, 800)
+						}
+						
+					})
+				}
+				
 				
 			},
 		}
 	}
 </script>
 <style lang="scss">
+	.popStyle{
+		height: 638rpx;
+	}
 	page{
 		background: $page-color-base;
 		padding-top: 16upx;
 	}
-
+	.address .row .inputAddress{
+		color: #959595;
+		font-size: 26rpx;
+	}
 	.row{
 		display: flex;
 		align-items: center;

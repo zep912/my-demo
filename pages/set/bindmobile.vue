@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
@@ -30,8 +31,8 @@
 			}
 		},
 		onLoad(option) {
-			this.oldMobile = option.oldMobile;
-			this.id=option.id
+			// this.oldMobile = option.oldMobile;
+			this.id=option.id;
 		},
 		methods: {
 			// 获取验证码
@@ -46,7 +47,7 @@
 						}
 						axios.post('/sso/user/sendCode', obj).then(res => {
 							if (res.data.code = '200') {
-								this.$api.msg('发送成功');
+								this.$api.msg('验证码发送成功');
 								this.disabled = true;
 								this.code = this.num + 's';
 								var timer = setInterval(() => {
@@ -80,7 +81,7 @@
 					}else{
 						let obj ={
 							  authCode: this.newCode,
-							  oldPhone: this.oldMobile,
+							  oldPhone: uni.getStorageSync('setPhone')||this.$store.state.userInfo.mobile,
 							  phone: this.newMobile
 						}
 						axios.post('/sso/user/bindNewPhone',obj).then(res=>{

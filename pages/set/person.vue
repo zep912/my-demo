@@ -2,27 +2,27 @@
 	<view class="container">
 		<view class="list-cell b-b m-t" @click="navTo('头像')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">头像</text>
-			<img :src="person.avartar" class='cell-tip-img' />
+			<img :src="person.portrait||'../../static/my/missing-face.png'" class='cell-tip-img' />
 			<text class="cell-more yticon icon-you cell-more-middle"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('用户名')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">用户名</text>
-			<text class="cell-tip">{{person.userName}}</text>
+			<text class="cell-tip">{{person.nickname}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('性别')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">性别</text>
-			<text class="cell-tip">{{person.sex}}</text>
+			<text class="cell-tip">{{gender}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('生日')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">生日</text>
-			<text class="cell-tip">{{person.birthday}}</text>
+			<text class="cell-tip">{{person.birthday?person.birthday:''}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('体重')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">体重</text>
-			<text class="cell-tip">{{person.weight}}</text>
+			<text class="cell-tip">{{person.weight?person.weight:''}}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell log-out-btn log-save" @click="save" id='log-save'>
@@ -40,18 +40,20 @@
 		data() {
 			return {
 				person:{
-					avartar:'/static/missing-face.png',
-					userName:'涂志奇',
-					sex:'男',
-					birthday:'1994-04-21',
-					weight:'74KG',
+					portrait:'',
+					userName:'',
+					gender:'',
+					birthday:'',
+					weight:'',
 				},
-				id:''
+				id:'',
+				gender:''
 			};
 		},
 		onLoad(option){
 			this.id = option.id;
-			this.getData()
+			this.getData();
+			
 		},
 		methods:{
 			...mapMutations(['logout']),
@@ -60,8 +62,19 @@
 				let obj ={
 					id:this.id
 				}
-				// 如果是手机号码直接登录，不填
-				if(uni.getStorageSync('setPhone')){
+				// 优先判断是不是微信登录
+				if(!uni.getStorageSync('isCanUse')){
+					this.person = this.$store.state.userInfo;
+					console.log(this.person )
+					if(this.person.gender==1){
+						this.gender = '男'
+					}else if(this.person.gender==0){
+						this.gender = '女'
+					}else{
+						this.gender=''
+					};
+					return;
+				}else if(uni.getStorageSync('setPhone')){//判断是不是手机登录
 					axios.post('/sso/user/id',obj).then(res=>{
 						// this.person = res.data.data;
 						this.person = {
@@ -75,7 +88,6 @@
 				}
 			},
 			navTo(url){
-				// this.$api.msg(`跳转到${url}`);
 			},
 			//保存
 			save(){

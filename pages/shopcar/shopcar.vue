@@ -135,7 +135,7 @@
 			},
 			// 获取购物车列表
 			getShopCar(){
-				axios.post('/cart/list').then(res=>{
+				axios.post('/cart/list/promotion').then(res=>{
 					if(res.data.code==200){
 						console.log(res)
 					}

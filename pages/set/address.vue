@@ -6,18 +6,21 @@
 			<view class="wrapper">
 				<view class="u-box">
 					<text class="name">{{item.name}}</text>
-					<text class="mobile">{{item.mobile}}</text>
-					<text v-if="item.default" class="tag">默认</text>
+					<text class="mobile">{{item.phoneNumber}}</text>
+					<text v-if="item.defaultStatus" class="tag">默认</text>
 				</view>
 				<view class="address-box">
-					<text class="address">{{item.addressName}} {{item.area}}</text>
+					<text class="address">{{item.province+item.city+item.region+item.detailAddress}}</text>
 				</view>
 			</view>
 			<view  @click.stop="addAddress('edit', item)">
 				<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'>
 			</view>
 		</view>
-		<button class="add-btn" @click="addAddress('add')">添加新地址</button>
+		<view class="footBtn">
+			<button class="add-btn" @click="addAddress('add')">添加新地址</button>
+		</view>
+		
 	</view>
 </template>
 
@@ -96,6 +99,9 @@
 </script>
 
 <style lang='scss'>
+	.adress{
+		padding-bottom: 80rpx;
+	}
 	.adress .noCollect img{
 		width: 116rpx;
 		height: 154rpx;
@@ -176,11 +182,6 @@
 	}
 
 	.add-btn {
-		position: fixed;
-		left: 30upx;
-		right: 30upx;
-		bottom: 50upx;
-		z-index: 95;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -190,5 +191,17 @@
 		color: #fff;
 		background:rgba(247,181,44,1);
 		border-radius:45rpx;
+	}
+	.footBtn{
+		width: 100%;
+		height: 160rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #fff;
+		z-index: 10000;
+		position: fixed;
+		left: 0;
+		bottom: 0;
 	}
 </style>

@@ -34,11 +34,14 @@
 		},
 		onLoad(option) {
 			this.id = option.id;
-			axios.post('/sso/user/id',{id:this.id}).then(res=>{
-				console.log(res)
-				 this.phone = res.data.data.phone;
-				this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(7);
-			})
+			let getMobile = uni.getStorageSync('setPhone')||this.$store.state.userInfo.mobile;
+			this.phone = getMobile;
+			this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(7);
+			// axios.post('/sso/user/id',{id:this.id}).then(res=>{
+			// 	console.log(res)
+			//     this.phone = res.data.data.phone;
+			// 	this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(7);
+			// })
 		},
 		methods: {
 			// 下一步input
@@ -52,9 +55,12 @@
 					}
 					axios.post('/sso/user/validCode',obj).then(res=>{
 						if(res.data.code==200){
+							this.$api.msg('操作成功')
 							uni.navigateTo({
 								url: '../set/bindmobile?oldMobile='+this.oldMobile+'?id='+this.id,
 							});
+						}else{
+							this.$api.msg(res.data.data)
 						}
 					})
 					
@@ -68,7 +74,7 @@
 				}
 				axios.post('/sso/user/sendCode',obj).then(res=>{
 					if(res.data.code=='200'){
-						this.$api.msg('发送成功')
+						this.$api.msg('验证码发送成功')
 						if (this.code == '获取验证码' || this.code == '重新发送') {
 							this.disabled = true;
 							this.code = this.num + 's';

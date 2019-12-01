@@ -2,12 +2,13 @@
 	<view class="container">
 		<view class="user-info-box">
 
-			<img :src="img" class="portrait" />
+			<img :src="user.portrait || '../../static/my/missing-face.png'" class="portrait" />
 
 			<view class="info-box">
 				<text class="username">
 					<text class="name">{{user.name}}</text>
-					<text class="username-info">{{user.nickName}}</text>
+					<!-- <text class="username-info">{{user.nickname}}</text> -->
+					<text class="username-info">{{user.mobile}}</text>
 				</text>
 			</view>
 			<text class='login-now'>
@@ -25,7 +26,7 @@
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 
-		<view class="list-cell" @click="navTo('mobile')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell" @click="mobileClick" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">修改手机号</text>
 			<text class="cell-tip">{{phone}}</text>
 			<text class="cell-more yticon icon-you"></text>
@@ -50,13 +51,18 @@
 				id:'',
 				user:{
 					name:'',
-					nickName:''
+					nickName:'',
+					portrait:'',
+					mobile:''
 				}
 			};
 		},
 		onLoad(option) {
 			this.id = option.id;
-			this.getData()
+			this.getData();
+		},
+		computed:{
+			
 		},
 		methods: {
 			...mapMutations(['logout']),
@@ -66,16 +72,34 @@
 					url: `../set/${url}`+'?id='+this.id
 				});
 			},
+			// 修改手机号
+			mobileClick(){
+				if(this.phone||this.user.mobile){
+					uni.navigateTo({
+						url:`../set/mobile`+'?id='+this.id
+					})
+				}else{
+					
+				}
+			},
 			// 初始化
 			getData(){
-				// 如果是手机登录
-				if(uni.getStorageSync('setPhone')){
+				// 先判断是不是微信登录，优先使用微信登录
+				if(!uni.getStorageSync('isCanUse')){//已经授权登录
+					let setUserInfo = this.$store.state.userInfo;
+					this.user ={
+						name:setUserInfo.nickname,
+						mobile:setUserInfo.mobile,
+						portrait:setUserInfo.portrait
+					};
+					this.phone = setUserInfo.mobile;
+					return
+				}else if(uni.getStorageSync('setPhone')){//判断是不是手机登录
 					axios.post('/sso/user/id',{id:this.id}).then(res=>{
 						this.phone = res.data.data.phone;
 						this.user.name = this.phone;
 					})
 				}
-				
 			}
 		}
 	}
