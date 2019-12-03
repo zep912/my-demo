@@ -160,6 +160,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 94));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 381));};var _default =
 {
   components: {
@@ -170,32 +172,25 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       src: '../static/my/my-address.png',
       msg: '你还没有任何地址，赶紧添加吧',
       source: 0,
-      addressList: [
-        // 	{
-        // 	name: '刘晓晓',
-        // 	mobile: '18666666666',
-        // 	addressName: '贵族皇仕牛排(东城店)',
-        // 	address: '北京市东城区',
-        // 	area: 'B区',
-        // 	default: true
-        // }, {
-        // 	name: '刘大大',
-        // 	mobile: '18667766666',
-        // 	addressName: '龙回1区12号楼',
-        // 	address: '山东省济南市历城区',
-        // 	area: '西单元302',
-        // 	default: false,
-        // },
-      ],
-      id: '' };
+      addressList: [],
+      id: '',
+      checked: false,
+      isToAddress: false };
 
   },
   onLoad: function onLoad(option) {
     this.id = option.id;
     this.source = option.source;
     this.getAddress();
+    if (option.postOrder) {//标明是从提交订单页面进入的
+      this.isToAddress = true;
+    }
   },
   methods: {
+    // 选择地址
+    select: function select(item, index) {
+      console.log(item, index);
+    },
     // 获取所有地址列表
     getAddress: function getAddress() {var _this = this;
       var obj = {

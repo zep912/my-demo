@@ -249,6 +249,12 @@
 			}
 		}, 
 		{
+			"path": "pages/shopcar/postOrder",
+			"style": {
+				"navigationBarTitleText": "提交订单"
+			}
+		},
+		{
 			"path": "pages/user/wallet",
 			"style": {
 				"navigationBarTitleText": "钱包",
@@ -326,7 +332,11 @@
 		},{
 			"path": "pages/set/address",
 			"style": {
-				"navigationBarTitleText": "我的收货地址"
+				"navigationBarTitleText": "我的收货地址",
+				"usingComponents": {
+				  "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
+				  "van-checkbox-group": "/wxcomponents/vant/dist/checkbox-group/index"
+				}
 			}
 		}, {
 			"path": "pages/set/addressManage",

@@ -1,12 +1,13 @@
 <template>
 	<view class="order-details">
 		<!-- 地址 -->
-		<view class="order-address">
+		<view class="order-address b-b i-top" @click="toAddress">
 			<img src="../../static/dizhi.png" />
 			<view class="order-ad-user">
 				<text class="phone">涂志奇15692124707</text>
 				<text class="address">湖北省武汉市江夏市光谷智慧园7栋4楼</text>
 			</view>
+			<text class="cell-more yticon icon-you"></text>	
 		</view>
 		<!-- 商品信息 -->
 		<view class="order-goods">
@@ -126,6 +127,12 @@
 			
 		},
 		methods: {
+			// 修改地址
+			toAddress(){
+				uni.navigateTo({
+					url:'../set/address?postOrder=1'
+				})
+			},
 			consult(){
 				uni.navigateTo({
 					url:'consult'
@@ -150,6 +157,20 @@
 </script>
 
 <style lang="scss">
+	.footBtn{
+		width:210rpx;
+		height:74rpx;
+		background:rgba(247,87,44,1);
+		border-radius:37rpx;
+		font-size:28rpx;
+		font-weight:bold;
+		color:rgba(255,255,255,1);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-right: 0;
+		margin-left: 0;
+	}
 	.close{
 		width: 94%;
 		margin: 0 auto;
@@ -408,7 +429,9 @@
 		padding-left: 30rpx;
 		display: flex;
 		align-items: center;
-
+		.cell-more{
+			margin-left: 26%;
+		}
 		img {
 			width: 31rpx;
 			height: 42rpx;
@@ -522,8 +545,8 @@
 	justify-content: space-between;
 	align-items: center;
 	box-sizing: border-box;
-	padding-left: 10rpx;
-	padding-right: 10rpx;
+	padding-left: 20rpx;
+	padding-right: 20rpx;
 	.payBtn{
 		width:211rpx;
 		height:74rpx;

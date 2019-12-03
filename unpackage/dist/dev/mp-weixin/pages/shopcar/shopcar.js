@@ -143,7 +143,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -272,13 +272,25 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     []), _defineProperty(_ref, "checkeds",
     false), _defineProperty(_ref, "total",
     0), _defineProperty(_ref, "allNum",
-    0), _ref;
+    0), _defineProperty(_ref, "deleIds",
+    []), _ref;
 
   },
   onLoad: function onLoad(option) {
     this.getShopCar();
   },
   methods: {
+    // 结算
+    payGoods: function payGoods() {
+      if (this.allNum == 0) {
+        this.$api.msg('请选择商品');
+      } else {
+        uni.navigateTo({
+          url: 'postOrder' });
+
+      }
+
+    },
     // 促销信息
     promote: function promote(n) {
       var str = n.split('：');
@@ -298,7 +310,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     getShopCar: function getShopCar() {var _this = this;
       _uniAxios.default.post('/cart/list/promotion').then(function (res) {
         if (res.data.code == 200) {
-          console.log(res);
           _this.list = res.data.data;
         }
       });
@@ -308,9 +319,23 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       if (this.update == '编辑') {
         this.update = '完成';
         this.deleShow = true;
+        this.total = 0;
+        this.allNum = 0;
+        this.deleIds = [];
+        // 处理完成状态时，请求接口对商品进行处理
+        this.list.forEach(function (el) {
+          el.deleteStatus = 0; //全都不选中
+        });
+        this.checkeds = false;
       } else {
         this.update = '编辑';
         this.deleShow = false;
+        this.checkeds = false;
+        this.total = 0;
+        this.list.forEach(function (el) {
+          el.deleteStatus = 0; //全都不选中
+        });
+        // 处于编辑状态时，不需要做处理
       }
     },
     // 最终的全选
@@ -339,31 +364,56 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     // 删除某个商品
-    delete: function _delete(id) {
+    deleteGoods: function deleteGoods() {var _this3 = this;
       var obj = {
-        id: id };
+        ids: this.deleIds };
 
-      _uniAxios.default.post('/cart/delete', id).then(function (res) {
-        if (res.data.code == 200) {
-          console.log(res);
-        }
-      });
-    },
-    // 单个商品的选择
-    singleOnChange: function singleOnChange(status, index) {
-      if (status == 1) {//表示取消选中
-        this.list[index].deleteStatus = 0;
-        var price = this.list[index].price * this.list[index].quantity;
-        this.total -= price;
-        this.allNum--;
+      if (this.deleIds.length == 0) {
+        this.$api.msg('请选择商品');
       } else {
-        this.list[index].deleteStatus = 1;
-        var _price = this.list[index].price * this.list[index].quantity;
-        this.total += _price;
-        this.$store.commit('totalMoney', _price);
-        this.allNum++;
+        _uniAxios.default.post('/cart/delete', obj).then(function (res) {
+          if (res.data.code == 200) {
+            console.log(res);
+            _this3.$api.msg('删除成功');
+            _this3.getShopCar();
+          }
+        });
       }
 
+    },
+    // 单个商品的选择
+    singleOnChange: function singleOnChange(status, index, id) {var _this4 = this;
+      // 首选判断是否处于删除状态
+      if (this.deleShow) {//表示删除状态
+        if (status == 1) {
+          // 取消选中
+          this.list[index].deleteStatus = 0;
+          this.list.forEach(function (el, index) {
+            if (el.id == id) {
+              _this4.deleIds.splice(index, 1);
+            }
+          });
+        } else {//选中
+          this.list[index].deleteStatus = 1;
+          this.deleIds.push(id);
+        }
+        console.log(this.deleIds);
+      } else {//表示订单状态时
+        if (status == 1) {//表示取消选中
+          this.list[index].deleteStatus = 0;
+          var price = this.list[index].price * this.list[index].quantity;
+          this.total -= price;
+          this.allNum--;
+
+        } else {
+          this.list[index].deleteStatus = 1;
+          var _price = this.list[index].price * this.list[index].quantity;
+          this.total += _price;
+          this.$store.commit('totalMoney', _price);
+          this.allNum++;
+          this.deleIds.push(id);
+        }
+      }
     },
     // 减少商品数量
     // 同时判断总价
@@ -373,6 +423,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         item.quantity = 1;
       } else {
         item.quantity--;
+        this.list[index].realStock++;
         realStock++;
         if (item.deleteStatus == 1) {//表示选中
           this.total -= item.price * 1;
@@ -390,6 +441,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     add: function add(item, index, id, realStock) {
       item.quantity++;
       realStock--;
+      this.list[index].realStock--;
       if (item.deleteStatus == 1) {//表示选中
         this.total += item.price * 1;
       }
@@ -402,6 +454,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
       });
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

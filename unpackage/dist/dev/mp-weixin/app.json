@@ -22,6 +22,7 @@
     "pages/user/user",
     "pages/detail/detail",
     "pages/order/order",
+    "pages/shopcar/postOrder",
     "pages/user/wallet",
     "pages/user/coupon",
     "pages/money/money",
@@ -80,6 +81,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap66.json"
+  "usingComponents": {}
 }

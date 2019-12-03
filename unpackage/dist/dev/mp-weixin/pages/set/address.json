@@ -1,6 +1,8 @@
 {
   "navigationBarTitleText": "我的收货地址",
   "usingComponents": {
+    "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
+    "van-checkbox-group": "/wxcomponents/vant/dist/checkbox-group/index",
     "empty": "/components/empty"
   }
 }

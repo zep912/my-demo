@@ -13,8 +13,10 @@
 					<text class="address">{{item.province+item.city+item.region+item.detailAddress}}</text>
 				</view>
 			</view>
-			<view  @click.stop="addAddress('edit', item)">
-				<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'>
+			<view style="display: flex;justify-content: center;align-items: center;" class="address_checkd">
+				<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'  @click.stop="addAddress('edit', item)">
+				<van-checkbox :value="checked" @change="select(item,index)"
+				 custom-class='checkbox-sp' checked-color="#F7B62C" v-if='isToAddress'></van-checkbox>
 			</view>
 		</view>
 		<view class="footBtn">
@@ -36,32 +38,25 @@
 				src:'../static/my/my-address.png',
 				msg:'你还没有任何地址，赶紧添加吧',
 				source: 0,
-				addressList: [
-					// 	{
-					// 	name: '刘晓晓',
-					// 	mobile: '18666666666',
-					// 	addressName: '贵族皇仕牛排(东城店)',
-					// 	address: '北京市东城区',
-					// 	area: 'B区',
-					// 	default: true
-					// }, {
-					// 	name: '刘大大',
-					// 	mobile: '18667766666',
-					// 	addressName: '龙回1区12号楼',
-					// 	address: '山东省济南市历城区',
-					// 	area: '西单元302',
-					// 	default: false,
-					// },
-				],
-				id:''
+				addressList: [],
+				id:'',
+				checked:false,
+				isToAddress:false
 			}
 		},
 		onLoad(option) {
 			this.id = option.id;
 			this.source = option.source;
-			this.getAddress()
+			this.getAddress();
+			if(option.postOrder){//标明是从提交订单页面进入的
+				this.isToAddress = true;
+			}
 		},
 		methods: {
+			// 选择地址
+			select(item,index){
+				console.log(item,index)
+			},
 			// 获取所有地址列表
 			getAddress(){
 				let obj = {
@@ -97,8 +92,10 @@
 		}
 	}
 </script>
-
 <style lang='scss'>
+	.address_checkd .checkbox-sp{
+		margin-left:30rpx ;
+	}
 	.adress{
 		padding-bottom: 80rpx;
 	}

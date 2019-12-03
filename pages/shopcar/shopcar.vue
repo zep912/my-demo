@@ -22,10 +22,10 @@
 						</view>
 					</view>
 				</view>
-				<view class="shopcar-sp"  v-for="(item,index) in list">
+				<view class="shopcar-sp" v-for="(item,index) in list">
 					<view style="display: flex;align-items: center;">
-						<van-checkbox :value="item.deleteStatus==0?false:true" @change="singleOnChange(item.deleteStatus,index)" custom-class='checkbox-sp'
-						 checked-color="#F7B62C"></van-checkbox>
+						<van-checkbox :value="item.deleteStatus==0?false:true" @change="singleOnChange(item.deleteStatus,index,item.id)"
+						 custom-class='checkbox-sp' checked-color="#F7B62C"></van-checkbox>
 					</view>
 
 					<view class="shopcar-sp-titles">
@@ -61,7 +61,7 @@
 											<text>{{item.quantity}}</text>
 											<text class="add-radius plus" @click="add(item,index,item.id,item.realStock)">+</text>
 										</view>
-										
+
 									</view>
 								</view>
 
@@ -97,10 +97,10 @@
 				</view>
 			</view>
 
-			<view class="foot-btn" v-if='!deleShow'>
+			<view class="foot-btn" v-if='!deleShow' @click="payGoods">
 				<text>去结算<text>（{{allNum}}）</text></text>
 			</view>
-			<view class="foot-dele" v-if='deleShow'>
+			<view class="foot-dele" v-if='deleShow' @click="deleteGoods">
 				<text>删除</text>
 			</view>
 		</view>
@@ -126,14 +126,26 @@
 				deleShow: false,
 				list: [],
 				checkeds: false,
-				total:0,
-				allNum:0,//总的数量
+				total: 0,
+				allNum: 0, //总的数量
+				deleIds: []
 			}
 		},
 		onLoad(option) {
 			this.getShopCar();
 		},
 		methods: {
+			// 结算
+			payGoods(){
+				if(this.allNum==0){
+					this.$api.msg('请选择商品')
+				}else{
+					uni.navigateTo({
+						url:'postOrder'
+					})
+				}
+				
+			},
 			// 促销信息
 			promote(n) {
 				var str = n.split('：');
@@ -153,7 +165,6 @@
 			getShopCar() {
 				axios.post('/cart/list/promotion').then(res => {
 					if (res.data.code == 200) {
-						console.log(res)
 						this.list = res.data.data
 					}
 				})
@@ -162,63 +173,102 @@
 			edit() {
 				if (this.update == '编辑') {
 					this.update = '完成';
-					this.deleShow = true
+					this.deleShow = true;
+					this.total = 0;
+					this.allNum = 0;
+					this.deleIds = [];
+					// 处理完成状态时，请求接口对商品进行处理
+					this.list.forEach(el => {
+						el.deleteStatus = 0; //全都不选中
+					})
+					this.checkeds = false;
 				} else {
 					this.update = '编辑';
-					this.deleShow = false
+					this.deleShow = false;
+					this.checkeds = false;
+					this.total = 0;
+					this.list.forEach(el => {
+						el.deleteStatus = 0; //全都不选中
+					})
+					// 处于编辑状态时，不需要做处理
 				}
 			},
 			// 最终的全选
 			allSlect(e) {
 				this.checkeds = e.detail;
-				if(this.checkeds){//全部选择
+				if (this.checkeds) { //全部选择
 					this.total = 0;
 					let totalPrices = '';
-					this.list.forEach((el,index)=>{
+					this.list.forEach((el, index) => {
 						el.deleteStatus = 1;
-						totalPrices=el.price*el.quantity;
+						totalPrices = el.price * el.quantity;
 						this.total += totalPrices;
 					})
 					this.allNum = this.list.length;
-				}else{//全不选中
+				} else { //全不选中
 					this.total = 0;
-					this.list.forEach((el,index)=>{
+					this.list.forEach((el, index) => {
 						el.deleteStatus = 0;
 					});
 					this.allNum = 0;
 				}
-				
+
 			},
 			//每个商店的全选
 			onChangeAll() {
 
 			},
 			// 删除某个商品
-			delete(id) {
+			deleteGoods() {
 				let obj = {
-					id: id
+					ids:this.deleIds
 				}
-				axios.post('/cart/delete', id).then(res => {
-					if (res.data.code == 200) {
-						console.log(res)
-					}
-				})
+				if (this.deleIds.length == 0) {
+					this.$api.msg('请选择商品')
+				} else {
+					axios.post('/cart/delete',obj).then(res => {
+						if (res.data.code == 200) {
+							console.log(res)
+							this.$api.msg('删除成功');
+							this.getShopCar();
+						}
+					})
+				}
+
 			},
 			// 单个商品的选择
-			singleOnChange(status, index) {
-				if(status==1){//表示取消选中
-					this.list[index].deleteStatus = 0;
-					let price = this.list[index].price*this.list[index].quantity;
-					this.total-= price;
-					this.allNum--;
-				}else{
-					this.list[index].deleteStatus = 1;
-					let price = this.list[index].price*this.list[index].quantity;
-					this.total+= price;
-					this.$store.commit('totalMoney', price);
-					this.allNum++
+			singleOnChange(status, index, id) {
+				// 首选判断是否处于删除状态
+				if (this.deleShow) { //表示删除状态
+					if (status == 1) {
+						// 取消选中
+						this.list[index].deleteStatus = 0;
+						this.list.forEach((el, index) => {
+							if (el.id == id) {
+								this.deleIds.splice(index, 1)
+							}
+						})
+					} else { //选中
+						this.list[index].deleteStatus = 1;
+						this.deleIds.push(id)
+					}
+					console.log(this.deleIds)
+				} else { //表示订单状态时
+					if (status == 1) { //表示取消选中
+						this.list[index].deleteStatus = 0;
+						let price = this.list[index].price * this.list[index].quantity;
+						this.total -= price;
+						this.allNum--;
+
+					} else {
+						this.list[index].deleteStatus = 1;
+						let price = this.list[index].price * this.list[index].quantity;
+						this.total += price;
+						this.$store.commit('totalMoney', price);
+						this.allNum++;
+						this.deleIds.push(id)
+					}
 				}
-				
 			},
 			// 减少商品数量
 			// 同时判断总价
@@ -228,9 +278,10 @@
 					item.quantity = 1;
 				} else {
 					item.quantity--;
+					this.list[index].realStock++;
 					realStock++;
-					if(item.deleteStatus==1){//表示选中
-						this.total-=item.price*1
+					if (item.deleteStatus == 1) { //表示选中
+						this.total -= item.price * 1
 					}
 				}
 				let obj = {
@@ -245,8 +296,9 @@
 			add(item, index, id, realStock) {
 				item.quantity++;
 				realStock--;
-				if(item.deleteStatus==1){//表示选中
-					this.total+=item.price*1
+				this.list[index].realStock--;
+				if (item.deleteStatus == 1) { //表示选中
+					this.total += item.price * 1
 				}
 				// 请求接口
 				let obj = {
@@ -337,6 +389,7 @@
 		background: #fff;
 		margin-top: 10rpx;
 		padding-bottom: 60rpx;
+
 		.shopcar-check {
 			box-sizing: border-box;
 			padding-left: 20rpx;
@@ -395,6 +448,7 @@
 				margin-left: 24rpx;
 				box-sizing: border-box;
 				border-bottom: 1px solid #E3E3E3;
+
 				.shopcar-sp-mj {
 					margin-top: 20rpx;
 
