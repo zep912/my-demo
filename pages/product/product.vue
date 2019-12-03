@@ -149,6 +149,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	import share from '@/components/share';
 	export default{
 		components: {
@@ -245,6 +246,7 @@
 			//接收传值,id里面放的是标题，因为测试数据并没写id 
 			let id = options.id;
 			if(id){
+				this.productInfoById(id);
 				this.$api.msg(`点击了${id}`);
 			}
 			
@@ -308,6 +310,12 @@
 			buy(){
 				uni.navigateTo({
 					url: `/pages/order/createOrder`
+				})
+			},
+			productInfoById(id) {
+				axios.post('/product/productInfoById', {id}).then(({data}) => {
+					console.log(data);
+					if (data.code === 200) {}
 				})
 			},
 			stopPrevent(){}

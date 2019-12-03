@@ -21,6 +21,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
@@ -34,10 +35,12 @@
 		},
 		onLoad(){
 			this.loadData();
+			// this.withChildren();
 		},
 		methods: {
 			async loadData(){
 				let list = await this.$api.json('cateList');
+				console.log(list);
 				list.forEach(item=>{
 					if(!item.pid){
 						this.flist.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
@@ -87,6 +90,19 @@
 			navToList(sid, tid){
 				uni.navigateTo({
 					url: `/pages/product/list?fid=${this.currentId}&sid=${sid}&tid=${tid}`
+				})
+			},
+			withChildren() {
+				axios.post('/home/list/withChildren', {}).then(({data})=>{
+					console.log(data);
+					if (data.code === 200) {
+						const dataList = data.data;
+						this.flist = dataList;
+						this.slist = dataList.reduce((res, item) => {
+							res = res.concat(item.children);
+							return res;
+						}, [])
+					}
 				})
 			}
 		}

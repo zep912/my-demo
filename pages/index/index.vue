@@ -12,17 +12,18 @@
 			<view class="titleNview-placing"></view>
 			<!-- 背景色区域 -->
 			<swiper class="carousel" indicator-dots autoplay circular @change="swiperChange">
-				<swiper-item v-for="(item, index) in carouselList" :key="index" class="carousel-item" @click="navToDetailPage({title: '轮播广告'})">
-					<image :src="item.src" />
+				<swiper-item v-for="(item, index) in carouselList" :key="index" class="carousel-item" @click="navToDetailPage(item)">
+					<image :src="item.pic" />
 				</swiper-item>
 			</swiper>
 		</view>
 		<!-- 分类 -->
 		<view class="cate-section">
-			<view class="cate-item">
-				<image src="/static/index/mz.png"></image>
+			<view class="cate-item" v-for="(item, index) in productCategoryList" :key="index">
+				<image :src="item.icon"></image>
+				<view>{{item.name}}</view>
 			</view>
-			<view class="cate-item">
+			<!-- <view class="cate-item">
 				<image src="/static/index/mf.png"></image>
 			</view>
 			<view class="cate-item">
@@ -33,7 +34,7 @@
 			</view>
 			<view class="cate-item">
 				<image src="/static/index/mw.png"></image>
-			</view>
+			</view> -->
 		</view>
 
 		<!-- 限时抢购 -->
@@ -41,7 +42,7 @@
 			<view class="s-header">
 				<text class="tip-title">限时抢购</text>
 				<text class="tip-timer">
-					<text class="tip">10点场</text>
+					<text class="tip">{{homeFlashTime}}点场</text>
 					<text class="timer">01天06时29分</text>
 				</text>
 				<text class="yticon">坚果特惠
@@ -50,12 +51,13 @@
 			</view>
 			<scroll-view class="floor-list" scroll-x>
 				<view class="scoll-wrapper">
-					<view v-for="(item, index) in goodsList" :key="index" class="floor-item" @click="navToDetailPage(item)">
-						<image :src="item.image" mode="aspectFill"></image>
-						<text class="title pre-line">{{item.title}}</text>
+					<view v-for="(item, index) in productList" :key="index" class="floor-item" @click="navToDetailPage(item)">
+						<image :src="item.pic" mode="aspectFill"></image>
+						<text class="title pre-line">{{item.name}}</text>
+						<text class="tag">秒杀</text>
 						<view class="pos-r">
-							<view class="price">¥{{item.price}}</view>
-							<view class="price-old">¥{{item.price}}</view>
+							<view class="price">¥{{item.flashPromotionPrice}}</view>
+							<view class="price-old">¥{{item.originalPrice}}</view>
 							<uni-icons class="pos-a" type="plus-filled" color ='#F55641' size="30"></uni-icons>
 						</view>
 					</view>
@@ -70,8 +72,8 @@
 				<view class="title">限量秒杀新品，比手快</view>
 			</view>
 			<view class="poster-content">
-				<view class="content-item">
-					<image src="/static/index/qjf.png"></image>
+				<view class="content-item" v-for="(item, index) in newProductList" :key="index">
+					<image :src="item.pic"></image>
 				</view>
 				<view class="content-item">
 					<image src="/static/index/sg.png"></image>
@@ -145,8 +147,11 @@
 						<view class="image-wrapper">
 							<image :src="item.image" mode="aspectFill"></image>
 						</view>
-						<text class="title clamp">{{item.title}}</text>
-						<text class="price">￥{{item.price}}</text>
+						<text class="title pre-line">{{item.title}}</text>
+						<view class="pos-r">
+							<view class="price">¥{{item.price}}</view>
+							<uni-icons class="pos-a" type="plus-filled" color ='#F55641' size="30"></uni-icons>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -159,18 +164,18 @@
 			</view>
 			<view class="goodsList">
 				<view v-for='(item, index) in skuList' :key="index" class="goodsList-list">
-					<img :src="item.img" alt="">
+					<img :src="item.pic" alt="">
 					<view class="goods-title">
-						<text>{{item.title}}</text>
+						<text>{{item.name}}</text>
 					</view>
 					<view class="goods-subTitle">
 						<text>{{item.subTitle}}</text>
 					</view>
 					<view class="goods-jifen">
-						<text>{{item.jifen+'积分'}}</text>
+						<text>{{item.giftPoint+'积分'}}</text>
 					</view>
 					<view class="goods-price">
-						<text>{{'¥'+item.price}}</text>
+						<text>{{'¥'+item.originalPrice}}</text>
 						<uni-icons type="plus-filled" color ='#F55641' size="30"></uni-icons>
 					</view>
 				</view>
@@ -191,6 +196,7 @@
 	import {
 		mapState
 	} from 'vuex';
+	import axios from '@/utils/uniAxios.js'
 	import {uniSearchBar} from "@/components/uni-search-bar/uni-search-bar.vue";
 	import {uniIcons} from "@/components/uni-icons/uni-icons.vue";
 	export default {
@@ -226,6 +232,10 @@
 						price:999.90
 					}
 				],
+				productList: [],
+				homeFlashTime: '00',
+				newProductList: [],
+				productCategoryList: []
 			};
 		},
 		computed: {
@@ -324,6 +334,7 @@
 
 			let goodsList = await this.$api.json('goodsList');
 			this.goodsList = goodsList || [];
+			this.getHomeList();
 		},
 		//轮播图切换修改背景色
 		swiperChange(e) {
@@ -334,11 +345,24 @@
 		//详情页
 		navToDetailPage(item) {
 			//测试数据没有写id，用title代替
-			let id = item.title;
+			let id = item.id;
 			uni.navigateTo({
 				url: `/pages/product/product?id=${id}`
 			})
 		},
+		getHomeList() {
+			axios.post('/home/list', {}).then(({data})=>{
+				if (data.code === 200) {
+					this.carouselList = data.data.advertiseList || [];
+					this.productCategoryList = data.data.productCategoryList || [];
+					this.skuList = data.data.hotProductList || [];
+					this.newProductList = data.data.newProductList || [];
+					this.productList = data.data.homeFlashPromotion.productList || [];
+					if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime).getHours() - 8;
+					// this.dataRes = data.data;
+				}
+			})
+		}
 	},
 	// #ifndef MP
 	// 标题栏input搜索框点击
@@ -564,7 +588,7 @@
 		flex-wrap: wrap;
 		padding: 30upx 22upx;
 		background: #fff;
-
+		color: #454545;
 		.cate-item {
 			width: 20%;
 			display: flex;
@@ -576,8 +600,8 @@
 
 		/* 原图标颜色太深,不想改图了,所以加了透明度 */
 		image {
-			width: 88upx;
-			height: 128upx;
+			width: 90upx;
+			height: 90upx;
 			margin-bottom: 14upx;
 			opacity: .7;
 		}
@@ -677,17 +701,25 @@
 				border-radius: 6upx;
 			}
 			
-			.pre-line {
-				white-space: pre-line;
-				display: block;
-				font-size: 18upx;
-				height: 64upx;
+			.tag {
+				padding: 0 20upx;
+				fon-size: 20upx;
+				border: 1upx solid #F55641;
+				border-radius: 50upx;
+				color: #F55641;
 			}
 
 			.price {
 				color: $uni-color-primary;
 			}
 		}
+	}
+
+	.pre-line {
+		white-space: pre-line;
+		display: block;
+		font-size: 18upx;
+		height: 64upx;
 	}
 
 	.ui-poster {
@@ -866,12 +898,6 @@
 				height: 100%;
 				opacity: 1;
 			}
-		}
-
-		.title {
-			font-size: $font-lg;
-			color: $font-color-dark;
-			line-height: 80upx;
 		}
 
 		.price {
