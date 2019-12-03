@@ -86,8 +86,34 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  var m0 = __webpack_require__(/*! ../../static/shop.png */ 168)
+
+  var l0 = _vm.__map(_vm.list, function(item, index) {
+    var m1 = _vm.promote(item.promotionMessage)
+    var m2 = _vm.promote(item.promotionMessage)
+    return {
+      $orig: _vm.__get_orig(item),
+      m1: m1,
+      m2: m2
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        l0: l0
+      }
+    }
+  )
+}
 var staticRenderFns = []
+render._withStripped = true
 
 
 
@@ -224,6 +250,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
+
+
+
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 94));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 381));};var _default =
 {
   components: {
@@ -240,17 +270,20 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       num: 1,
       deleShow: false }, _defineProperty(_ref, "list",
     []), _defineProperty(_ref, "checkeds",
-
-
-    false), _ref;
+    false), _defineProperty(_ref, "total",
+    0), _defineProperty(_ref, "allNum",
+    0), _ref;
 
   },
   onLoad: function onLoad(option) {
     this.getShopCar();
-    var str = '打折优惠：满3件，打7.50折';
-    console.log(str.indexOf('：'));
   },
   methods: {
+    // 促销信息
+    promote: function promote(n) {
+      var str = n.split('：');
+      return str;
+    },
     // 获取某个商品的规格
     changeAttr: function changeAttr(id) {
       _uniAxios.default.post('/cart/getProduct/' + id).then(function (res) {
@@ -281,9 +314,25 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
     },
     // 最终的全选
-    allSlect: function allSlect(e) {
-      console.log(e);
+    allSlect: function allSlect(e) {var _this2 = this;
       this.checkeds = e.detail;
+      if (this.checkeds) {//全部选择
+        this.total = 0;
+        var totalPrices = '';
+        this.list.forEach(function (el, index) {
+          el.deleteStatus = 1;
+          totalPrices = el.price * el.quantity;
+          _this2.total += totalPrices;
+        });
+        this.allNum = this.list.length;
+      } else {//全不选中
+        this.total = 0;
+        this.list.forEach(function (el, index) {
+          el.deleteStatus = 0;
+        });
+        this.allNum = 0;
+      }
+
     },
     //每个商店的全选
     onChangeAll: function onChangeAll() {
@@ -301,20 +350,33 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       });
     },
     // 单个商品的选择
-    onChange: function onChange(status, index) {
-      console.log(status, index);
-      this.list[index].deleteStatus = 1;
-    },
-    stepperChange: function stepperChange() {
+    singleOnChange: function singleOnChange(status, index) {
+      if (status == 1) {//表示取消选中
+        this.list[index].deleteStatus = 0;
+        var price = this.list[index].price * this.list[index].quantity;
+        this.total -= price;
+        this.allNum--;
+      } else {
+        this.list[index].deleteStatus = 1;
+        var _price = this.list[index].price * this.list[index].quantity;
+        this.total += _price;
+        this.$store.commit('totalMoney', _price);
+        this.allNum++;
+      }
 
     },
     // 减少商品数量
+    // 同时判断总价
     minus: function minus(item, index, id, realStock) {
+      console.log(item);
       if (item.quantity == 1) {
         item.quantity = 1;
       } else {
         item.quantity--;
         realStock++;
+        if (item.deleteStatus == 1) {//表示选中
+          this.total -= item.price * 1;
+        }
       }
       var obj = {
         id: id,
@@ -328,6 +390,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     add: function add(item, index, id, realStock) {
       item.quantity++;
       realStock--;
+      if (item.deleteStatus == 1) {//表示选中
+        this.total += item.price * 1;
+      }
       // 请求接口
       var obj = {
         id: id,

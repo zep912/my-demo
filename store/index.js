@@ -7,6 +7,7 @@ const store = new Vuex.Store({
 	state: {
 		hasLogin: false,
 		userInfo: {},
+		totalPrice:''
 	},
 	mutations: {
 		login(state, provider) {
@@ -17,7 +18,6 @@ const store = new Vuex.Store({
 			    key: 'userInfo',  
 			    data: provider  
 			}) 
-			console.log(state.userInfo,555);
 		},
 		logout(state) {
 			state.hasLogin = false;
@@ -25,6 +25,9 @@ const store = new Vuex.Store({
 			uni.removeStorage({  
                 key: 'userInfo'  
             })
+		},
+		totalMoney(state){
+			
 		}
 	},
 	actions: {

@@ -107,6 +107,7 @@
 .shopcar-wares {
   background: #fff;
   margin-top: 10rpx;
+  padding-bottom: 60rpx;
 }
 .shopcar-wares .shopcar-check {
     -webkit-box-sizing: border-box;
@@ -172,6 +173,7 @@
       margin-left: 24rpx;
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
+      border-bottom: 1px solid #E3E3E3;
 }
 .shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj {
         margin-top: 20rpx;
@@ -287,7 +289,8 @@
             color: #9E9E9E;
             text-align: center;
 }
-.shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj .shopcar-goods-info .shopcar-add .minusClass, .shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj .shopcar-goods-info .shopcar-add .plusClass {
+.shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj .shopcar-goods-info .shopcar-add .minusClass,
+            .shopcar-wares .shopcar-sp .shopcar-sp-titles .shopcar-sp-mj .shopcar-goods-info .shopcar-add .plusClass {
               width: 28rpx;
               height: 28rpx;
               color: #F7B52C;

@@ -11359,7 +11359,8 @@ _vue.default.use(_vuex.default);
 var store = new _vuex.default.Store({
   state: {
     hasLogin: false,
-    userInfo: {} },
+    userInfo: {},
+    totalPrice: '' },
 
   mutations: {
     login: function login(state, provider) {
@@ -11370,13 +11371,15 @@ var store = new _vuex.default.Store({
         key: 'userInfo',
         data: provider });
 
-      console.log(state.userInfo, 555);
     },
     logout: function logout(state) {
       state.hasLogin = false;
       state.userInfo = {};
       uni.removeStorage({
         key: 'userInfo' });
+
+    },
+    totalMoney: function totalMoney(state) {
 
     } },
 
