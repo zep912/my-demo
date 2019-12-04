@@ -23,6 +23,7 @@
     "pages/detail/detail",
     "pages/order/order",
     "pages/shopcar/postOrder",
+    "pages/shopcar/paySuccess",
     "pages/user/wallet",
     "pages/user/coupon",
     "pages/money/money",

@@ -354,7 +354,7 @@ page {
     height: 42rpx;
     margin-right: 30rpx;
 }
-.order-address .order-ad-user text {
+.order-address .order-ad-user .phone, .order-address .order-ad-user .address {
     display: block;
 }
 .order-address .order-ad-user .phone {
@@ -362,6 +362,9 @@ page {
     font-weight: bold;
     color: #515151;
     margin-bottom: 14rpx;
+}
+.order-address .order-ad-user .phone text:nth-of-type(1) {
+      margin-right: 10rpx;
 }
 .order-address .order-ad-user .address {
     font-size: 22rpx;

@@ -3,6 +3,8 @@
   "usingComponents": {
     "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
     "van-checkbox-group": "/wxcomponents/vant/dist/checkbox-group/index",
+    "van-radio": "/wxcomponents/vant/dist/radio/index",
+    "van-radio-group": "/wxcomponents/vant/dist/radio-group/index",
     "empty": "/components/empty"
   }
 }

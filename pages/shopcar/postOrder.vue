@@ -4,8 +4,8 @@
 		<view class="order-address b-b i-top" @click="toAddress">
 			<img src="../../static/dizhi.png" />
 			<view class="order-ad-user">
-				<text class="phone">涂志奇15692124707</text>
-				<text class="address">湖北省武汉市江夏市光谷智慧园7栋4楼</text>
+				<text class="phone"><text>{{orderList.name}}</text><text>{{orderList.phoneNumber}}</text></text>
+				<text class="address">{{orderList.address}}</text>
 			</view>
 			<text class="cell-more yticon icon-you"></text>	
 		</view>
@@ -48,10 +48,9 @@
 					<text class="order-list-bold">{{'￥'+form.goodsObj.allPay}}</text>
 				</li>
 				<li>
-					<text>抵扣积分<text>使用100积分抵扣1元钱</text></text>
+					<text>抵扣积分<text style="font-size: 24rpx;color: #C9C9C9;margin-left: 30rpx;">使用100积分抵扣1元钱</text></text>
 					<van-switch :checked="checked" @change="swithChange" active-color="#07c160"
-  inactive-color="#ee0a24" />
-					<!-- <text class="order-list-bold">{{form.goodsObj.jifen+'分'}}</text> -->
+  inactive-color="#f7572c" />
 				</li>
 				<li>
 					<text>商品优惠</text>
@@ -119,12 +118,24 @@
 				statuss:'',
 				show:false,
 				marginBottom:'',
-				checked:false
+				checked:true,
+				orderList:{
+					name:'',
+					phoneNumber:'',
+					address:''
+				}
 			}
 		},
 		onLoad(option){
-			console.log(option)
-			
+			if(uni.getStorageSync('addressMsg')){//从地址跳转回来
+				let orderAddress = JSON.parse(uni.getStorageSync('addressMsg'));
+				// 地址更新
+				this.orderList = {
+					name:orderAddress.name,
+					phoneNumber:orderAddress.phoneNumber,
+					address:orderAddress.province+orderAddress.city+orderAddress.region+orderAddress.detailAddress,
+				}
+			}
 		},
 		methods: {
 			// 修改地址
@@ -133,24 +144,16 @@
 					url:'../set/address?postOrder=1'
 				})
 			},
-			consult(){
-				uni.navigateTo({
-					url:'consult'
-				})
-			},
-			// 查看物流
-			logisticsTap(){
-				uni.navigateTo({
-					url:'logistics'
-				})
-			},
 			//使用积分
 			swithChange({detail}){
 				this.checked = detail
 			},
 			// 立即支付
 			payBtn(){
-				
+				console.log(777)
+				uni.navigateTo({
+					url:'paySuccess'
+				})
 			}
 		}
 	}
@@ -439,7 +442,7 @@
 		}
 
 		.order-ad-user {
-			text {
+			.phone,.address {
 				display: block;
 			}
 
@@ -448,6 +451,9 @@
 				font-weight: bold;
 				color: rgba(81, 81, 81, 1);
 				margin-bottom: 14rpx;
+				text:nth-of-type(1){
+					margin-right: 10rpx;
+				}
 			}
 
 			.address {

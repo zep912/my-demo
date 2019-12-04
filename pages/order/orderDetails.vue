@@ -223,7 +223,7 @@
 					color:'#515151'
 				}
 			}else if(this.statuss==6){
-				//已完成
+				//交易成功
 				this.show = true;
 				this.order = {
 					status:2,
@@ -265,11 +265,18 @@
 					url:'consult'
 				})
 			},
-			// 查看物流
+			// 根据不同状态，跳转或请求不同的页面
 			logisticsTap(){
-				uni.navigateTo({
-					url:'logistics'
-				})
+				if(this.statuss==2){//查看物流
+					uni.navigateTo({
+						url:'logistics'
+					})
+				}else if(this.statuss==7||this.statuss==9||this.statuss==6){//已完成，交易关闭，交易成功的订单，就删除订单
+					
+				}else if(this.statuss==1){//待支付，取消订单
+					
+				}
+				
 			}
 		}
 	}

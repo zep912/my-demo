@@ -251,7 +251,19 @@
 		{
 			"path": "pages/shopcar/postOrder",
 			"style": {
-				"navigationBarTitleText": "提交订单"
+				"navigationBarTitleText": "提交订单",
+				"usingComponents": {
+				  "van-switch": "/wxcomponents/vant/dist/switch/index"
+				}
+			}
+		},
+		{
+			"path": "pages/shopcar/paySuccess",
+			"style": {
+				"navigationBarTitleText": "购物车",
+				"usingComponents": {
+				  "van-switch": "/wxcomponents/vant/dist/switch/index"
+				}
 			}
 		},
 		{
@@ -335,7 +347,9 @@
 				"navigationBarTitleText": "我的收货地址",
 				"usingComponents": {
 				  "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
-				  "van-checkbox-group": "/wxcomponents/vant/dist/checkbox-group/index"
+				  "van-checkbox-group": "/wxcomponents/vant/dist/checkbox-group/index",
+				  "van-radio": "/wxcomponents/vant/dist/radio/index",
+				  "van-radio-group": "/wxcomponents/vant/dist/radio-group/index"
 				}
 			}
 		}, {

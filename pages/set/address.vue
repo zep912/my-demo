@@ -2,23 +2,26 @@
 	<view class="content b-t adress">
 		<!-- 缺省 -->
 		<empty :src='src' :msg='msg' v-if='addressList.length==0'></empty>
-		<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)"  v-if='addressList.length!=0'>
-			<view class="wrapper">
-				<view class="u-box">
-					<text class="name">{{item.name}}</text>
-					<text class="mobile">{{item.phoneNumber}}</text>
-					<text v-if="item.defaultStatus" class="tag">默认</text>
+		<van-radio-group :value="radio" @change="select">
+			<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)"  v-if='addressList.length!=0'>
+				<view class="wrapper">
+					<view class="u-box">
+						<text class="name">{{item.name}}</text>
+						<text class="mobile">{{item.phoneNumber}}</text>
+						<text v-if="item.defaultStatus" class="tag">默认</text>
+					</view>
+					<view class="address-box">
+						<text class="address">{{item.province+item.city+item.region+item.detailAddress}}</text>
+					</view>
 				</view>
-				<view class="address-box">
-					<text class="address">{{item.province+item.city+item.region+item.detailAddress}}</text>
+				<view style="display: flex;justify-content: center;align-items: center;" class="address_checkd">
+					<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'  @click.stop="addAddress('edit', item)">
+					<!-- <van-checkbox :value="checked" @change="select(item,index)"
+					 custom-class='checkbox-sp' checked-color="#F7B62C" v-if='isToAddress'></van-checkbox> -->
+					 <van-radio :name="index"  v-if='isToAddress' custom-class='checkbox-sp' checked-color="#F7B62C" />
 				</view>
 			</view>
-			<view style="display: flex;justify-content: center;align-items: center;" class="address_checkd">
-				<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'  @click.stop="addAddress('edit', item)">
-				<van-checkbox :value="checked" @change="select(item,index)"
-				 custom-class='checkbox-sp' checked-color="#F7B62C" v-if='isToAddress'></van-checkbox>
-			</view>
-		</view>
+		</van-radio-group>
 		<view class="footBtn">
 			<button class="add-btn" @click="addAddress('add')">添加新地址</button>
 		</view>
@@ -41,7 +44,8 @@
 				addressList: [],
 				id:'',
 				checked:false,
-				isToAddress:false
+				isToAddress:false,
+				radio:''
 			}
 		},
 		onLoad(option) {
@@ -54,8 +58,17 @@
 		},
 		methods: {
 			// 选择地址
-			select(item,index){
-				console.log(item,index)
+			select(e){
+				this.radio = e.detail;
+				console.log(JSON.stringify(this.addressList[this.radio]))
+				uni.setStorageSync('addressMsg',JSON.stringify(this.addressList[this.radio]))
+				
+				setTimeout(()=>{
+					uni.navigateTo({
+						url:'../shopcar/postOrder'
+					})
+				})
+				
 			},
 			// 获取所有地址列表
 			getAddress(){
@@ -63,7 +76,6 @@
 					id:this.id
 				}
 				axios.post('/member/address/list').then(res=>{
-					console.log(res)
 					if(res.data.code==200){
 						this.addressList = res.data.data;
 					}
