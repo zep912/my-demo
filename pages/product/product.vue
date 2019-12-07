@@ -22,7 +22,7 @@
 				<text class="m-price">¥{{productInfo.originalPrice}}</text>
 			</view>
 			<text class="title">{{productInfo.name}}</text>
-			<view class="row">规格: 0.2g*2盒</view>
+			<view class="row">规格: {{productInfo.weight}}g/{{productInfo.unit}}</view>
 			<view class="row bot-row">
 				<text>限购1件</text>
 				<text>库存{{productInfo.stock}}</text>
@@ -97,7 +97,7 @@
 				<button type="primary" class=" action-btn no-border add-cart-btn">加入购物车</button>
 			</view>
 		</view>
-		
+
 		
 		<!-- 规格-模态层弹窗 -->
 		<view 
@@ -313,6 +313,7 @@
 					console.log(data);
 					if (data.code === 200) {
 						this.productInfo = data.data;
+						this.productInfo.albumPics = this.productInfo.albumPics.split(',');
 					}
 				})
 			},

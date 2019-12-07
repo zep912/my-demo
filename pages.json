@@ -229,17 +229,7 @@
 					// }
 				}
 			}
-		}, {
-			"path": "pages/detail/detail",
-			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
-			}
-		}, {
+		},{
 			"path": "pages/order/order",
 			"style": {
 				"navigationBarTitleText": "我的订单",
@@ -316,13 +306,7 @@
 				  "van-steps": "/wxcomponents/vant/dist/steps/index"
 				}
 			}
-		},
-		{
-			"path": "pages/order/consult",
-			"style": {
-				"navigationBarTitleText": "协商历史"
-			}
-		}, {
+		},{
 			"path": "pages/order/refund",
 			"style": {
 				"navigationBarTitleText": "申请退款",

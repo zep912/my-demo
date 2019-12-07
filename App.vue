@@ -12,7 +12,7 @@
 		onLaunch: function() {
 			let userInfo = uni.getStorageSync('userInfo') || '';
 			console.log(userInfo, 'userInfo')
-			if(userInfo.id){
+			if(userInfo){
 				//更新登陆状态
 				uni.getStorage({
 					key: 'userInfo',

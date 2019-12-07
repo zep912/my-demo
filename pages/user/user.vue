@@ -85,9 +85,9 @@
 			</view>
 		</view>
 		<!-- ab -->
-		<view class="ab">
-			<img :src="abImg" alt="">
-		</view>
+		<!--<view class="ab">-->
+			<!--<img :src="abImg" alt="">-->
+		<!--</view>-->
 		<!-- 好货推荐 -->
 		<view class="hot-goods">
 			<view class="hot-title">
@@ -143,23 +143,23 @@
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
-				abImg: '../../static/banner_01.png',
+				// abImg: '../../static/banner_01.png',
 				goodsList: [{
-						img: '../../static/egg_01.png',
+						img: '../../static/index/egg.png',
 						title: '正宗农家散养谷饲土鸡蛋20枚',
 						subTitle: '宇宙无敌巨好吃的鸡蛋',
 						jifen: '200',
 						price: 999.90
 					},
 					{
-						img: '../../static/egg_01.png',
+						img: '../../static/index/egg.png',
 						title: '正宗农家散养谷饲土鸡蛋20枚',
 						subTitle: '宇宙无敌巨好吃的鸡蛋',
 						jifen: '200',
 						price: 999.90
 					},
 					{
-						img: '../../static/egg_01.png',
+						img: '../../static/index/egg.png',
 						title: '正宗农家散养谷饲土鸡蛋20枚',
 						subTitle: '宇宙无敌巨好吃的鸡蛋',
 						jifen: '200',

@@ -7,9 +7,6 @@
 			<text class="position-text">华中农业大学</text>
 			<uni-icons type="arrowdown" color ='#F7B62C' size="20"></uni-icons>
 		</view>
-		<!-- <view class="mp-search-box" @click="navToSearch">
-			<uni-search-bar :radius="100" class="ser-input" :isShow='false' placeholder="牛轧糖"/>
-		</view> -->
 		<view class="mp-search-box">
 			<input class="ser-input" type="text" value="输入关键字搜索" @click="navToSearch"/>
 			<uni-icons type="chat" size="30" color ='#ffffff99' @click="navToSearch()"></uni-icons>
@@ -63,27 +60,27 @@
 		</view>
 
 		<!-- 限量秒杀新品，比手快 -->
-		<view class="hot-goods">
-			<view class="hot-title">
-				<img src="../../static/index/btbg.png" alt="">
-				<view class="title">限量秒杀新品，比手快</view>
-			</view>
-			<view class="poster-content">
-				<view class="content-item" v-for="(item, index) in newProductList" :key="index" @click="navToDetailPage(item)">
-					<image :src="item.pic"></image>
-				</view>
-				<view class="content-item">
-					<image src="/static/index/sg.png"></image>
-				</view>
-			</view>
-		</view>
+		<!--<view class="hot-goods">-->
+			<!--<view class="hot-title">-->
+				<!--<img src="../../static/index/btbg.png" alt="">-->
+				<!--<view class="title">限量秒杀新品，比手快</view>-->
+			<!--</view>-->
+			<!--<view class="poster-content">-->
+				<!--<view class="content-item" v-for="(item, index) in newProductList" :key="index" @click="navToDetailPage(item)">-->
+					<!--<image :src="item.pic"></image>-->
+				<!--</view>-->
+				<!--<view class="content-item">-->
+					<!--<image src="/static/index/sg.png"></image>-->
+				<!--</view>-->
+			<!--</view>-->
+		<!--</view>-->
 		<!-- 精选美味，等你来吃 -->
 		<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">精选美味，等你来吃</view>
 			</view>
-			<view class="poster-content">
+			<view class="poster-content" @click="navToCate">
 				<view class="content-item">
 					<image src="/static/index/box.png"></image>
 				</view>
@@ -99,58 +96,23 @@
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">酸甜可口的酸奶盖，等你来舔</view>
 			</view>
-			<view class="box-grid">
+			<view class="box-grid" @click="navToCate">
 				<image src="/static/index/cja.png"></image>
 				<image src="/static/index/lmja.png"></image>
 				<image src="/static/index/ja.png"></image>
 			</view>
-			<view class="box-100">
+			<view class="box-100" @click="navToCate">
 				<image src="/static/index/xptj.png"></image>
 			</view>
 		</view>
 		<!-- 花里胡哨的包包，等你来剁手 -->
-		<view class="hot-goods">
-			<view class="hot-title">
+		<view class="hot-goods" @click="navToCate">
+			<view class="hot-title" @click="navToCate">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">花里胡哨的包包，等你来剁手</view>
 			</view>
 			<view class="box-grid box-100">
 				<image src="/static/index/prxd.png"></image>
-			</view>
-		</view>
-		<!-- 品牌秒杀 -->
-		<view class="hot-goods">
-			<view class="hot-title">
-				<img src="../../static/index/btbg.png" alt="">
-				<view class="title">品牌秒杀</view>
-			</view>
-			<view class="brand-section">
-				<view class="s-header">
-					<view class="box-img">
-						<image src="/static/logo/lppz.png"></image>
-					</view>
-					<view class="box-text">
-						<view class="tip-title">良品铺子</view>
-						<view class="tip">让嘴巴去旅行</view>
-					</view>
-					<view class="btn">
-						<button type="warn" class="yticon" size="mini">查看更多
-							<text class="icon-you"></text>
-						</button>
-					</view>
-				</view>
-				<view class="guess-section good-sku">
-					<view v-for="(item, index) in goodsList" :key="index" class="guess-item" v-if="index <= 2" @click="navToDetailPage(item)">
-						<view class="image-wrapper">
-							<image :src="item.image" mode="aspectFill"></image>
-						</view>
-						<text class="title pre-line">{{item.title}}</text>
-						<view class="pos-r">
-							<view class="price">¥{{item.price}}</view>
-							<uni-icons class="pos-a" type="plus-filled" color ='#F55641' size="30"></uni-icons>
-						</view>
-					</view>
-				</view>
 			</view>
 		</view>
 		
@@ -160,7 +122,7 @@
 				<view class="title">好货推荐</view>
 			</view>
 			<view class="goodsList">
-				<view v-for='(item, index) in skuList' :key="index" class="goodsList-list">
+				<view v-for='(item, index) in skuList' :key="index" class="goodsList-list" @click="navToDetailPage(item)">
 					<img :src="item.pic" alt="">
 					<view class="goods-title">
 						<text>{{item.name}}</text>
@@ -249,12 +211,7 @@
 					provider: 'weixin',
 					success: (infoRes) => {
 						this.$store.commit('login', infoRes.userInfo);
-						// try {
-						console.log(infoRes, 'wxGetUserInfo');
 						this.isCanUse = false;
-						// uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
-							// _this.updateUserInfo();
-						// } catch (e) {}
 					},
 					fail(res) {}
 				})
@@ -265,7 +222,8 @@
 					provider: 'weixin',
 					success: (loginRes) => {
 						let code = loginRes.code;
-						console.log(loginRes, 'loginRes');
+						console.log(this.$store.state.hasLogin, this.$store.state, loginRes, 'loginRes');
+						this.isCanUse = !this.$store.state.hasLogin;
 						if (!this.isCanUse) {
 							//非第一次授权获取用户信息
 							this.wxGetUserInfo()
@@ -288,93 +246,71 @@
 					}
 				})
 			},
-			// //向后台更新信息
-			// updateUserInfo() {
-			// 	let _this = this;
-			// 	uni.request({
-			// 		url: 'url', //服务器端地址
-			// 		data: {
-			// 			appKey: this.$store.state.appKey,
-			// 			customerId: _this.customerId,
-			// 			nickName: _this.nickName,
-			// 			headUrl: _this.avatarUrl
-			// 		},
-			// 		method: 'POST',
-			// 		header: {
-			// 			'content-type': 'application/json'
-			// 		},
-			// 		success: (res) => {
-			// 			if (res.data.state == "success") {
-			// 				uni.reLaunch({ //信息更新成功后跳转到小程序首页
-			// 					url: '/pages/index/index'
-			// 				});
-			// 			}
-			// 		}
-			// 	})
-			// }
-		// 手机号登录
-		toPhone() {
-			uni.navigateTo({url: '/pages/public/login'})
-		},
-		close(){
-			this.isCanUse=false
-		},
-		/**
-		 * 请求静态数据只是为了代码不那么乱
-		 * 分次请求未作整合
-		 */
-		async loadData() {
-			let carouselList = await this.$api.json('carouselList');
-			this.titleNViewBackground = carouselList[0].background;
-			this.swiperLength = carouselList.length;
-			this.carouselList = carouselList;
+            // 手机号登录
+            toPhone() {
+                uni.navigateTo({url: '/pages/public/login'})
+            },
+            close(){
+                this.isCanUse=false
+            },
+              /**
+             * 请求静态数据只是为了代码不那么乱
+             * 分次请求未作整合
+             */
+            async loadData() {
+                let carouselList = await this.$api.json('carouselList');
+                this.titleNViewBackground = carouselList[0].background;
+                this.swiperLength = carouselList.length;
+                this.carouselList = carouselList;
 
-			let goodsList = await this.$api.json('goodsList');
-			this.goodsList = goodsList || [];
-			this.getHomeList();
-		},
-		//轮播图切换修改背景色
-		swiperChange(e) {
-			const index = e.detail.current;
-			this.swiperCurrent = index;
-			this.titleNViewBackground = this.carouselList[index].background;
-		},
-		//详情页
-		navToDetailPage(item) {
-			//测试数据没有写id，用title代替
-			// let id = item.id;
-			// uni.navigateTo({
-			// 	url: `/pages/product/product?id=${id}`
-			// })
-			uni.navigateTo({
-				url: `/pages/product/list`
-			})
-		},
-		navToPosition() {
-			uni.navigateTo({
-				url: `/pages/index/selectPosition`
-			})
-		},
-		navToSearch() {
-			uni.navigateTo({
-				url: `/pages/index/search`
-			})
-		},
-		getHomeList() {
-			axios.post('/home/list', {}).then(({data})=>{
-				if (data.code === 200) {
-					this.carouselList = data.data.advertiseList || [];
-					this.productCategoryList = data.data.productCategoryList || [];
-					this.skuList = data.data.hotProductList || [];
-					this.newProductList = data.data.newProductList || [];
-					this.productList = data.data.homeFlashPromotion.productList || [];
-					if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime).getHours() - 8;
-					// this.dataRes = data.data;
-				}
-			})
-		}
-	}
-}
+                let goodsList = await this.$api.json('goodsList');
+                this.goodsList = goodsList || [];
+                this.getHomeList();
+            },
+            //轮播图切换修改背景色
+            swiperChange(e) {
+                const index = e.detail.current;
+                this.swiperCurrent = index;
+                this.titleNViewBackground = this.carouselList[index].background;
+            },
+            //详情页
+            navToDetailPage(item) {
+                //测试数据没有写id，用title代替
+                let id = item.id;
+                uni.navigateTo({
+                	url: `/pages/product/product?id=${id}`
+                })
+            },
+            navToPosition() {
+                uni.navigateTo({
+                    url: `/pages/index/selectPosition`
+                })
+            },
+            navToSearch() {
+                uni.navigateTo({
+                    url: `/pages/index/search`
+                })
+            },
+            navToCate() {
+              uni.switchTab({
+                url: `/pages/category/category`
+              })
+            },
+            getHomeList() {
+                axios.post('/home/list', {}).then(({data})=>{
+                    if (data.code === 200) {
+                        this.carouselList = data.data.advertiseList || [];
+                        this.productCategoryList = data.data.productCategoryList || [];
+                        this.skuList = data.data.hotProductList || [];
+                        this.newProductList = data.data.newProductList || [];
+                        this.productList = data.data.homeFlashPromotion.productList || [];
+                        if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime).getHours() - 8;
+                        // this.dataRes = data.data;
+                    }
+                })
+            }
+	    }
+    }
 </script>
 
 <style lang="scss">
@@ -466,6 +402,7 @@
 			border-radius: 20px;
 			margin-right: 80upx;
 			background: rgba(255,255,255,.6);
+			padding: 0 20upx;
 		}
 		uni-icons {
 			position: absolute;
