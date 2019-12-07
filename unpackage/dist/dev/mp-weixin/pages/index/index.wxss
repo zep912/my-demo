@@ -61,11 +61,30 @@
 .uni-list-cell-db {
   background: #fff;
 }
+.container {
+  padding-top: 80rpx;
+}
+.mp-position-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  padding: 0 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #fff;
+  z-index: 9999;
+}
+.mp-position-box .position-text {
+    padding: 0 10rpx;
+    font-size: 32rpx;
+    color: #F7B62C;
+}
 .mp-search-box {
   position: absolute;
   left: 0;
-  top: 30rpx;
-  z-index: 9999;
+  top: 100rpx;
+  z-index: 999;
   width: 100%;
   padding: 0 20rpx;
 }
@@ -78,16 +97,14 @@
     line-height: 56rpx;
     font-size: 28rpx;
     color: #606266;
+    border-radius: 20px;
+    margin-right: 80rpx;
+    background: rgba(255, 255, 255, 0.6);
 }
-.mp-search-box .ser-input .uni-searchbar__box {
-      border: none;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 20px;
-      -webkit-box-pack: left;
-      -webkit-justify-content: left;
-          -ms-flex-pack: left;
-              justify-content: left;
-      padding: 0 10rpx;
+.mp-search-box uni-icons {
+    position: absolute;
+    top: 0;
+    right: 20rpx;
 }
 page .cate-section {
   position: relative;

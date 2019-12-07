@@ -27,22 +27,22 @@ const carouselList = [{
 const goodsList = [{
 		image: "/static/index/egg.png",
 		title: "正宗农家散养谷饲土鸡蛋20枚",
-		price: 1.00
+		price: '1.00'
 	},
 	{
 		image: "/static/index/mm.png",
 		title: "福尔佳透明质酸钠修复面膜99盒",
-		price: 1.00
+		price: '1.00'
 	},
 	{
 		image: "/static/index/mgg.png",
 		title: "味道一般般蛋芒果干10kg",
-		price: 1.00
+		price: '1.00'
 	},
 	{
 		image: "/static/index/ht.png",
 		title: "香甜核桃100kg",
-		price: 1.00
+		price: '1.00'
 	}
 ]
 

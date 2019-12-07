@@ -2,8 +2,17 @@
 	<view class="container">
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
+		<view class="mp-position-box" @click="navToPosition">
+			<uni-icons type="location-filled" color ='#F7B62C' size="20"></uni-icons>
+			<text class="position-text">华中农业大学</text>
+			<uni-icons type="arrowdown" color ='#F7B62C' size="20"></uni-icons>
+		</view>
+		<!-- <view class="mp-search-box" @click="navToSearch">
+			<uni-search-bar :radius="100" class="ser-input" :isShow='false' placeholder="牛轧糖"/>
+		</view> -->
 		<view class="mp-search-box">
-			<uni-search-bar :radius="100" class="ser-input" placeholder="牛轧糖"/>
+			<input class="ser-input" type="text" value="输入关键字搜索" @click="navToSearch"/>
+			<uni-icons type="chat" size="30" color ='#ffffff99' @click="navToSearch()"></uni-icons>
 		</view>
 		<!-- #endif -->
 		<!-- 头部轮播 -->
@@ -23,18 +32,6 @@
 				<image :src="item.icon"></image>
 				<view>{{item.name}}</view>
 			</view>
-			<!-- <view class="cate-item">
-				<image src="/static/index/mf.png"></image>
-			</view>
-			<view class="cate-item">
-				<image src="/static/index/md.png"></image>
-			</view>
-			<view class="cate-item">
-				<image src="/static/index/ms.png"></image>
-			</view>
-			<view class="cate-item">
-				<image src="/static/index/mw.png"></image>
-			</view> -->
 		</view>
 
 		<!-- 限时抢购 -->
@@ -56,7 +53,7 @@
 						<text class="title pre-line">{{item.name}}</text>
 						<text class="tag">秒杀</text>
 						<view class="pos-r">
-							<view class="price">¥{{item.flashPromotionPrice}}</view>
+							<view class="price">¥{{item.promotionPrice}}</view>
 							<view class="price-old">¥{{item.originalPrice}}</view>
 							<uni-icons class="pos-a" type="plus-filled" color ='#F55641' size="30"></uni-icons>
 						</view>
@@ -72,7 +69,7 @@
 				<view class="title">限量秒杀新品，比手快</view>
 			</view>
 			<view class="poster-content">
-				<view class="content-item" v-for="(item, index) in newProductList" :key="index">
+				<view class="content-item" v-for="(item, index) in newProductList" :key="index" @click="navToDetailPage(item)">
 					<image :src="item.pic"></image>
 				</view>
 				<view class="content-item">
@@ -345,9 +342,22 @@
 		//详情页
 		navToDetailPage(item) {
 			//测试数据没有写id，用title代替
-			let id = item.id;
+			// let id = item.id;
+			// uni.navigateTo({
+			// 	url: `/pages/product/product?id=${id}`
+			// })
 			uni.navigateTo({
-				url: `/pages/product/product?id=${id}`
+				url: `/pages/product/list`
+			})
+		},
+		navToPosition() {
+			uni.navigateTo({
+				url: `/pages/index/selectPosition`
+			})
+		},
+		navToSearch() {
+			uni.navigateTo({
+				url: `/pages/index/search`
 			})
 		},
 		getHomeList() {
@@ -363,33 +373,8 @@
 				}
 			})
 		}
-	},
-	// #ifndef MP
-	// 标题栏input搜索框点击
-	onNavigationBarSearchInputClicked: async function(e) {
-			this.$api.msg('点击了搜索框');
-		},
-		//点击导航栏 buttons 时触发
-		onNavigationBarButtonTap(e) {
-			const index = e.index;
-			if (index === 0) {
-				this.$api.msg('点击了扫描');
-			} else if (index === 1) {
-				// #ifdef APP-PLUS
-				const pages = getCurrentPages();
-				const page = pages[pages.length - 1];
-				const currentWebview = page.$getAppWebview();
-				currentWebview.hideTitleNViewButtonRedDot({
-					index
-				});
-				// #endif
-				uni.navigateTo({
-					url: '/pages/notice/notice'
-				})
-			}
-		}
-	// #endif
 	}
+}
 </script>
 
 <style lang="scss">
@@ -443,30 +428,64 @@
 	.uni-list-cell-db {
 		background: #fff;
 	}
+	
+	.container {
+		padding-top: 80upx;
+	}
 
 	/* #ifdef MP */
+	.mp-position-box {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		padding: 0 20upx;
+		height: 80upx;
+		line-height: 80upx;
+		background-color: #fff;
+		z-index: 9999;
+		.position-text {
+			padding: 0 10upx;
+			font-size: $font-lg;
+			color: #F7B62C;
+		}
+	}
 	.mp-search-box {
 		position: absolute;
 		left: 0;
-		top: 30upx;
-		z-index: 9999;
+		top: 100upx;
+		z-index: 999;
 		width: 100%;
 		padding: 0 20upx;
-
-		.ser-input {
-			flex: 1;
+		.ser-input{
+			flex:1;
 			height: 56upx;
 			line-height: 56upx;
 			font-size: 28upx;
-			color: $font-color-base;
-			.uni-searchbar__box {
-				border: none;
-				background: rgba(255, 255, 255, .6);
-				border-radius: 20px;
-				justify-content: left;
-				padding: 0 10upx;
-			}
+			color:$font-color-base;
+			border-radius: 20px;
+			margin-right: 80upx;
+			background: rgba(255,255,255,.6);
 		}
+		uni-icons {
+			position: absolute;
+			top: 0;
+			right: 20upx;
+		}
+		// .ser-input {
+		// 	flex: 1;
+		// 	height: 56upx;
+		// 	line-height: 56upx;
+		// 	font-size: 28upx;
+		// 	color: $font-color-base;
+		// 	.uni-searchbar__box {
+		// 		border: none;
+		// 		background: rgba(255, 255, 255, .6);
+		// 		border-radius: 20px;
+		// 		justify-content: left;
+		// 		padding: 0 10upx;
+		// 	}
+		// }
 	}
 
 	page {

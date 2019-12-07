@@ -255,7 +255,7 @@ function isSyncApi(name) {
 }
 
 function isCallbackApi(name) {
-  return CALLBACK_API_RE.test(name) && name !== 'onPush';
+  return CALLBACK_API_RE.test(name);
 }
 
 function handlePromise(promise) {
@@ -1285,20 +1285,11 @@ function parseBaseComponent(vueComponentOptions)
 {var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage = _ref5.isPage,initRelation = _ref5.initRelation;var _initVueComponent =
   initVueComponent(_vue.default, vueComponentOptions),_initVueComponent2 = _slicedToArray(_initVueComponent, 2),VueComponent = _initVueComponent2[0],vueOptions = _initVueComponent2[1];
 
-  var options = {
-    multipleSlots: true,
-    addGlobalClass: true };
-
-
-  {
-    // 微信multipleSlots  部分情况有 bug，导致内容顺序错乱 如 u-list，提供覆盖选项
-    if (vueOptions['mp-weixin'] && vueOptions['mp-weixin']['options']) {
-      Object.assign(options, vueOptions['mp-weixin']['options']);
-    }
-  }
-
   var componentOptions = {
-    options: options,
+    options: {
+      multipleSlots: true,
+      addGlobalClass: true },
+
     data: initData(vueOptions, _vue.default.prototype),
     behaviors: initBehaviors(vueOptions, initBehavior),
     properties: initProperties(vueOptions.props, false, vueOptions.__file),
@@ -2568,9 +2559,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 168:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/shop.png ***!
-  \**********************************************************************/
+/*!*************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/shop.png ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2579,9 +2570,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAgCAIAAAD4
 /***/ }),
 
 /***/ 17:
-/*!**************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/Json.js ***!
-  \**************************************************************/
+/*!*****************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/Json.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2615,22 +2606,22 @@ var carouselList = [{
 var goodsList = [{
   image: "/static/index/egg.png",
   title: "正宗农家散养谷饲土鸡蛋20枚",
-  price: 1.00 },
+  price: '1.00' },
 
 {
   image: "/static/index/mm.png",
   title: "福尔佳透明质酸钠修复面膜99盒",
-  price: 1.00 },
+  price: '1.00' },
 
 {
   image: "/static/index/mgg.png",
   title: "味道一般般蛋芒果干10kg",
-  price: 1.00 },
+  price: '1.00' },
 
 {
   image: "/static/index/ht.png",
   title: "香甜核桃100kg",
-  price: 1.00 }];
+  price: '1.00' }];
 
 
 
@@ -3287,9 +3278,9 @@ var cateList = [{
 /***/ }),
 
 /***/ 185:
-/*!*******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-pending.png ***!
-  \*******************************************************************************/
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-pending.png ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3298,9 +3289,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD8AAAA2CAYAAABw
 /***/ }),
 
 /***/ 186:
-/*!********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-received.png ***!
-  \********************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-received.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3309,9 +3300,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD4AAAA2CAYAAACf
 /***/ }),
 
 /***/ 187:
-/*!*********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-evaluated.png ***!
-  \*********************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-evaluated.png ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3320,9 +3311,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEMAAAA2CAYAAACc
 /***/ }),
 
 /***/ 188:
-/*!******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-refund.png ***!
-  \******************************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-refund.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3331,9 +3322,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAA8CAYAAAA3
 /***/ }),
 
 /***/ 189:
-/*!******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-wallet.png ***!
-  \******************************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-wallet.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3342,9 +3333,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADR
 /***/ }),
 
 /***/ 190:
-/*!********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-delivery.png ***!
-  \********************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-delivery.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3353,9 +3344,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAgCAYAAACY
 /***/ }),
 
 /***/ 191:
-/*!********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/my-feedback.png ***!
-  \********************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/my-feedback.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -3364,9 +3355,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAkCAYAAAAD
 /***/ }),
 
 /***/ 192:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/title_01.png ***!
-  \**************************************************************************/
+/*!*****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/title_01.png ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9338,9 +9329,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 217:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/dizhi.png ***!
-  \***********************************************************************/
+/*!**************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/dizhi.png ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9349,9 +9340,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAqCAIAAADE
 /***/ }),
 
 /***/ 22:
-/*!****************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/index/btbg.png ***!
-  \****************************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/index/btbg.png ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9359,10 +9350,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUUAAAALCAYAAADo
 
 /***/ }),
 
-/***/ 234:
-/*!********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/couponPrice.png ***!
-  \********************************************************************************/
+/***/ 242:
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/couponPrice.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9370,10 +9361,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 
 /***/ }),
 
-/***/ 235:
-/*!****************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/beuesed.png ***!
-  \****************************************************************************/
+/***/ 243:
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/beuesed.png ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9381,10 +9372,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 
 /***/ }),
 
-/***/ 236:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/used.png ***!
-  \*************************************************************************/
+/***/ 244:
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/used.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9392,10 +9383,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw
 
 /***/ }),
 
-/***/ 237:
-/*!******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/Beoverdue.png ***!
-  \******************************************************************************/
+/***/ 245:
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/Beoverdue.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9463,25 +9454,14 @@ if (hadRuntime) {
 
 /***/ }),
 
-/***/ 260:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/nogoods.png ***!
-  \*************************************************************************/
+/***/ 268:
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/nogoods.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAACzCAIAAAChA9+yAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEVDNjg3MUEwNDg3MTFFQUFGNjFCQ0EwQ0VCNDAwRTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEVDNjg3MTkwNDg3MTFFQUFGNjFCQ0EwQ0VCNDAwRTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmRpZDpCNDNDNTVGOTg2MDRFQTExOTQ1QURCMERCMUFCQTMyMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCNDNDNTVGOTg2MDRFQTExOTQ1QURCMERCMUFCQTMyMyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pi2Zy4oAABuZSURBVHja7F1pj+M4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"
-
-/***/ }),
-
-/***/ 269:
-/*!******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/order/guanbi.png ***!
-  \******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjUwNjU4MjEwMDRFMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjUwNjU4MjIwMDRFMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QUMzQTkyQzAwNEUxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCNTA2NTgyMDAwNEUxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgzX0ZUAAAXqSURBVHja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"
 
 /***/ }),
 
@@ -10217,25 +10197,91 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4
 
 /***/ }),
 
-/***/ 286:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/userImg.png ***!
-  \*************************************************************************/
+/***/ 277:
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/order/guanbi.png ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QjUwNjU4MjEwMDRFMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QjUwNjU4MjIwMDRFMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5QUMzQTkyQzAwNEUxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCNTA2NTgyMDAwNEUxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgzX0ZUAAAXqSURBVHja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"
+
+/***/ }),
+
+/***/ 28:
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/utils/uniAxios.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var _uniAxiosMin = _interopRequireDefault(__webpack_require__(/*! ./../dist/uni-axios.min.js */ 29));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+_uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
+_uniAxiosMin.default.interceptors.first.use(function (config) {
+  var token = uni.getStorageSync('gt');
+  // console.log(token, 'Ftoken', config);
+  if (token) {
+    config.headers = { Authorization: token, ContentType: "application/json;charset=UTF-8" };
+  }
+  // console.log(config, 'configF');
+  var showLoading = config.showLoading;
+  if (showLoading) {
+    uni.showLoading({
+      mask: true,
+      title: showLoading === true ? '加载中...' : showLoading });
+
+  }
+  return config;
+}, function (err) {
+  return Promise.reject(err);
+});
+_uniAxiosMin.default.interceptors.response.use(function (response) {
+  // console.log(response)
+  return response;
+}, function (err) {
+  return Promise.reject(err);
+});
+_uniAxiosMin.default.interceptors.last.use(function (config) {
+  // console.log(config, 'last');
+  if (config.showLoading) {
+    uni.hideLoading();
+  }
+});
+
+module.exports = _uniAxiosMin.default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 29:
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/dist/uni-axios.min.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) { true ? module.exports = t() : undefined;}(void 0, function () {return function (e) {function t(n) {if (r[n]) return r[n].exports;var o = r[n] = { exports: {}, id: n, loaded: !1 };return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;}var r = {};return t.m = e, t.c = r, t.p = "", t(0);}([function (e, t, r) {e.exports = r(1);}, function (e, t, r) {function n(e) {var t = new c(e),r = i(c.prototype.request, t);return s.extend(r, c.prototype, t), s.extend(r, t), r;}var o = r(2),s = o.utils,i = o.bind,a = o.mergeConfig,u = r(24),c = r(26),f = n(u);f.Axios = c, f.create = function (e) {return n(a(f.defaults, e));}, e.exports = f, e.exports.default = f;}, function (e, t, r) {e.exports = { utils: r(3), bind: r(4), Axios: r(6), mergeConfig: r(23), dispatchRequest: r(9), buildURL: r(7), settle: r(15), InterceptorManager: r(8) };}, function (e, t, r) {"use strict";function n(e) {return "[object Array]" === j.call(e);}function o(e) {return "[object ArrayBuffer]" === j.call(e);}function s(e) {return "undefined" != typeof FormData && e instanceof FormData;}function i(e) {var t;return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;}function a(e) {return "string" == typeof e;}function u(e) {return "number" == typeof e;}function c(e) {return "undefined" == typeof e;}function f(e) {return null !== e && "object" == typeof e;}function p(e) {return "[object Date]" === j.call(e);}function d(e) {return "[object File]" === j.call(e);}function l(e) {return "[object Blob]" === j.call(e);}function h(e) {return "[object Function]" === j.call(e);}function m(e) {return f(e) && h(e.pipe);}function y(e) {return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;}function g(e) {return e.replace(/^\s*/, "").replace(/\s*$/, "");}function x() {return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;}function v(e, t) {if (null !== e && "undefined" != typeof e) if ("object" != typeof e && (e = [e]), n(e)) for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}}function b() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function w() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function E(e, t, r) {return v(t, function (t, n) {r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;}), e;}var R = r(4),S = r(5),j = Object.prototype.toString;e.exports = { isArray: n, isArrayBuffer: o, isBuffer: S, isFormData: s, isArrayBufferView: i, isString: a, isNumber: u, isObject: f, isUndefined: c, isDate: p, isFile: d, isBlob: l, isFunction: h, isStream: m, isURLSearchParams: y, isStandardBrowserEnv: x, forEach: v, merge: b, deepMerge: w, extend: E, trim: g };}, function (e, t) {"use strict";e.exports = function (e, t) {return function () {for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}return e.apply(t, r);};};}, function (e, t) {/*!
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Determine if an object is a Buffer
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author   Feross Aboukhadijeh <https://feross.org>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license  MIT
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+    e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 30), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 294:
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/userImg.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAIAAACRXR/mAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MjJENTc2OUMwNkU1MTFFQTkwNzI4NzlGODAzNTk0MjEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjJENTc2OUQwNkU1MTFFQTkwNzI4NzlGODAzNTk0MjEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoyMkQ1NzY5QTA2RTUxMUVBOTA3Mjg3OUY4MDM1OTQyMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoyMkQ1NzY5QjA2RTUxMUVBOTA3Mjg3OUY4MDM1OTQyMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PqHdT8kAABKUSURBVHjarFlpjF1n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"
-
-/***/ }),
-
-/***/ 295:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/upload.png ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDU4RTlDRDgwN0IwMTFFQUIyM0U4QjkxOTZFMTFBQzciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDU4RTlDRDkwN0IwMTFFQUIyM0U4QjkxOTZFMTFBQzciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowNThFOUNENjA3QjAxMUVBQjIzRThCOTE5NkUxMUFDNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowNThFOUNENzA3QjAxMUVBQjIzRThCOTE5NkUxMUFDNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PiYIJ4wAAAmgSURBVHja7F3tUxJf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"
 
 /***/ }),
 
@@ -10270,10 +10316,298 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 312:
-/*!******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/my/toAddress.png ***!
-  \******************************************************************************/
+/***/ 30:
+/*!********************************************************!*\
+  !*** ./node_modules/node-libs-browser/mock/process.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.nextTick = function nextTick(fn) {
+	setTimeout(fn, 0);
+};
+
+exports.platform = exports.arch = 
+exports.execPath = exports.title = 'browser';
+exports.pid = 1;
+exports.browser = true;
+exports.env = {};
+exports.argv = [];
+
+exports.binding = function (name) {
+	throw new Error('No such module. (Possibly not yet loaded)')
+};
+
+(function () {
+    var cwd = '/';
+    var path;
+    exports.cwd = function () { return cwd };
+    exports.chdir = function (dir) {
+        if (!path) path = __webpack_require__(/*! path */ 31);
+        cwd = path.resolve(dir, cwd);
+    };
+})();
+
+exports.exit = exports.kill = 
+exports.umask = exports.dlopen = 
+exports.uptime = exports.memoryUsage = 
+exports.uvCounters = function() {};
+exports.features = {};
+
+
+/***/ }),
+
+/***/ 303:
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/upload.png ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDU4RTlDRDgwN0IwMTFFQUIyM0U4QjkxOTZFMTFBQzciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDU4RTlDRDkwN0IwMTFFQUIyM0U4QjkxOTZFMTFBQzciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowNThFOUNENjA3QjAxMUVBQjIzRThCOTE5NkUxMUFDNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowNThFOUNENzA3QjAxMUVBQjIzRThCOTE5NkUxMUFDNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PiYIJ4wAAAmgSURBVHja7F3tUxJf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"
+
+/***/ }),
+
+/***/ 31:
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
+  }
+
+  return parts;
+}
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+var splitPath = function(filename) {
+  return splitPathRe.exec(filename).slice(1);
+};
+
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
+
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
+  }
+
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
+
+
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
+
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
+
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
+
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
+
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function(path) {
+  var result = splitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+exports.basename = function(path, ext) {
+  var f = splitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+exports.extname = function(path) {
+  return splitPath(path)[3];
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
+;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 30)))
+
+/***/ }),
+
+/***/ 320:
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/toAddress.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10281,10 +10615,10 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAe
 
 /***/ }),
 
-/***/ 34:
-/*!*******************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/delivery/logo.png ***!
-  \*******************************************************************************/
+/***/ 38:
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/logo.png ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10292,10 +10626,22 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAf
 
 /***/ }),
 
-/***/ 379:
-/*!************************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/components/uni-icons/icons.js ***!
-  \************************************************************************************/
+/***/ 4:
+/*!********************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/***/ }),
+
+/***/ 403:
+/*!***************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/components/uni-icons/icons.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10395,18 +10741,6 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   'closefill': "\uE589",
   'sound': "\uE590",
   'scan': "\uE612" };exports.default = _default;
-
-/***/ }),
-
-/***/ 4:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/pages.json ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 
 /***/ }),
 
@@ -11297,10 +11631,10 @@ main();
 
 /***/ }),
 
-/***/ 51:
-/*!**********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/static/delivery/emptybg.png ***!
-  \**********************************************************************************/
+/***/ 55:
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/emptybg.png ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11315,26 +11649,26 @@ module.exports = __webpack_require__.p + "static/img/emptybg.ccdbb797.png";
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-24220191115004","_inBundle":false,"_integrity":"sha512-UKnpiHSP7h9c5IFpJFkWkpm1KyWz9iHj1hchrQSUxPhChx+KPOmunnQcKGiQvvBz9CeSi7Se/eauJYha5ch0kw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-24220191115004.tgz","_shasum":"5848f2204f37daaf8c340fb27d9f76b16fcbfdeb","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"bcf65737c5111d47398695d3db8ed87305df346e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-24220191115004"};
+module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-23720191024001","_inBundle":false,"_integrity":"sha512-vJEk493Vdb8KueNzR2otzDi23rfyRcQBo/t1R41MwNGPk+AUB94gh10+HVLo98DRcvMzkuVofz3KXTAfEx24iw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-23720191024001.tgz","_shasum":"18272814446a9bc6053bc92666ec7064a1767588","_spec":"@dcloudio/uni-stat@next","_where":"/Users/fxy/Documents/DCloud/HbuilderX-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"a725c04ef762e5df78a9a69d140c2666e0de05fc","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-23720191024001"};
 
 /***/ }),
 
 /***/ 7:
-/*!**********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/pages.json?{"type":"style"} ***!
-  \**********************************************************************************/
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"style"} ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送", "usingComponents": {} }, "pages/delivery/set": { "navigationBarTitleText": "接单设置", "usingComponents": {} }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计", "usingComponents": {} }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益", "usingComponents": {} }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计", "usingComponents": {} }, "pages/product/product": { "navigationBarTitleText": "详情展示", "usingComponents": { "share": "/components/share" } }, "pages/set/set": { "navigationBarTitleText": "账号管理", "usingComponents": {} }, "pages/set/person": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/set/mobile": { "navigationBarTitleText": "修改手机号", "usingComponents": {} }, "pages/set/bindmobile": { "navigationBarTitleText": "绑定手机号", "usingComponents": {} }, "pages/set/aboutus": { "navigationBarTitleText": "关于我们", "usingComponents": {} }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料", "usingComponents": {} }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈", "usingComponents": {} }, "pages/user/collect": { "navigationBarTitleText": "商品收藏", "usingComponents": { "empty": "/components/empty" } }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹", "usingComponents": { "empty": "/components/empty" } }, "pages/shopcar/shopcar": { "navigationBarTitleText": "购物车", "usingComponents": { "empty": "/components/empty" } }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "我的", "usingComponents": {} }, "pages/detail/detail": { "navigationBarTitleText": "", "usingComponents": { "share": "/components/share" } }, "pages/order/order": { "navigationBarTitleText": "我的订单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/shopcar/postOrder": { "navigationBarTitleText": "提交订单", "usingComponents": {} }, "pages/user/wallet": { "navigationBarTitleText": "钱包", "usingComponents": {} }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券", "usingComponents": { "empty": "/components/empty" } }, "pages/money/money": { "usingComponents": {} }, "pages/order/createOrder": { "navigationBarTitleText": "创建订单", "usingComponents": {} }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单", "usingComponents": {} }, "pages/order/logistics": { "navigationBarTitleText": "物流信息", "usingComponents": {} }, "pages/order/consult": { "navigationBarTitleText": "协商历史", "usingComponents": {} }, "pages/order/refund": { "navigationBarTitleText": "申请退款", "usingComponents": {} }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情", "usingComponents": {} }, "pages/set/address": { "navigationBarTitleText": "我的收货地址", "usingComponents": { "empty": "/components/empty" } }, "pages/set/addressManage": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/money/pay": { "navigationBarTitleText": "支付", "usingComponents": {} }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功", "usingComponents": {} }, "pages/notice/notice": { "navigationBarTitleText": "通知", "usingComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": {} }, "pages/product/list": { "navigationBarTitleText": "商品列表", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more" } }, "pages/shopcar/paySuccess": { "navigationBarTitleText": "购物车", "usingComponents": {} } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "麦田圈", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送", "usingComponents": {} }, "pages/delivery/set": { "navigationBarTitleText": "接单设置", "usingComponents": {} }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计", "usingComponents": {} }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益", "usingComponents": {} }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计", "usingComponents": {} }, "pages/product/product": { "navigationBarTitleText": "详情展示", "usingComponents": { "share": "/components/share" } }, "pages/set/set": { "navigationBarTitleText": "账号管理", "usingComponents": {} }, "pages/set/person": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/set/mobile": { "navigationBarTitleText": "修改手机号", "usingComponents": {} }, "pages/set/bindmobile": { "navigationBarTitleText": "绑定手机号", "usingComponents": {} }, "pages/set/aboutus": { "navigationBarTitleText": "关于我们", "usingComponents": {} }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料", "usingComponents": {} }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈", "usingComponents": {} }, "pages/user/collect": { "navigationBarTitleText": "商品收藏", "usingComponents": { "empty": "/components/empty" } }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹", "usingComponents": { "empty": "/components/empty" } }, "pages/shopcar/shopcar": { "navigationBarTitleText": "购物车", "usingComponents": { "empty": "/components/empty" } }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "我的", "usingComponents": {} }, "pages/detail/detail": { "navigationBarTitleText": "", "usingComponents": { "share": "/components/share" } }, "pages/order/order": { "navigationBarTitleText": "我的订单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/shopcar/postOrder": { "navigationBarTitleText": "提交订单", "usingComponents": {} }, "pages/shopcar/paySuccess": { "navigationBarTitleText": "购物车", "usingComponents": {} }, "pages/user/wallet": { "navigationBarTitleText": "钱包", "usingComponents": {} }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券", "usingComponents": { "empty": "/components/empty" } }, "pages/money/money": { "usingComponents": {} }, "pages/order/createOrder": { "navigationBarTitleText": "创建订单", "usingComponents": {} }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单", "usingComponents": {} }, "pages/order/logistics": { "navigationBarTitleText": "物流信息", "usingComponents": {} }, "pages/order/consult": { "navigationBarTitleText": "协商历史", "usingComponents": {} }, "pages/order/refund": { "navigationBarTitleText": "申请退款", "usingComponents": {} }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情", "usingComponents": {} }, "pages/set/address": { "navigationBarTitleText": "我的收货地址", "usingComponents": { "empty": "/components/empty" } }, "pages/set/addressManage": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/money/pay": { "navigationBarTitleText": "支付", "usingComponents": {} }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功", "usingComponents": {} }, "pages/notice/notice": { "navigationBarTitleText": "通知", "usingComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": {} }, "pages/product/list": { "navigationBarTitleText": "商品列表", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/index/selectPosition": { "navigationBarTitleText": "选择当前位置", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/index/search": { "navigationBarTitleText": "搜素商品", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "麦田圈", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
 
 /***/ }),
 
 /***/ 8:
-/*!*********************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/pages.json?{"type":"stat"} ***!
-  \*********************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"stat"} ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11344,9 +11678,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 9:
-/*!*********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/store/index.js ***!
-  \*********************************************************************/
+/*!************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/store/index.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11390,349 +11724,6 @@ var store = new _vuex.default.Store({
 
 store;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 94:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/utils/uniAxios.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _uniAxiosMin = _interopRequireDefault(__webpack_require__(/*! ./../dist/uni-axios.min.js */ 95));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-_uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
-_uniAxiosMin.default.interceptors.first.use(function (config) {
-  var token = uni.getStorageSync('gt');
-  // console.log(token, 'Ftoken', config);
-  if (token) {
-    config.headers = { Authorization: token, ContentType: "application/json;charset=UTF-8" };
-  }
-  // console.log(config, 'configF');
-  var showLoading = config.showLoading;
-  if (showLoading) {
-    uni.showLoading({
-      mask: true,
-      title: showLoading === true ? '加载中...' : showLoading });
-
-  }
-  return config;
-}, function (err) {
-  return Promise.reject(err);
-});
-_uniAxiosMin.default.interceptors.response.use(function (response) {
-  // console.log(response)
-  return response;
-}, function (err) {
-  return Promise.reject(err);
-});
-_uniAxiosMin.default.interceptors.last.use(function (config) {
-  // console.log(config, 'last');
-  if (config.showLoading) {
-    uni.hideLoading();
-  }
-});
-
-module.exports = _uniAxiosMin.default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 95:
-/*!****************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/project/my-demo/dist/uni-axios.min.js ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) { true ? module.exports = t() : undefined;}(void 0, function () {return function (e) {function t(n) {if (r[n]) return r[n].exports;var o = r[n] = { exports: {}, id: n, loaded: !1 };return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;}var r = {};return t.m = e, t.c = r, t.p = "", t(0);}([function (e, t, r) {e.exports = r(1);}, function (e, t, r) {function n(e) {var t = new c(e),r = i(c.prototype.request, t);return s.extend(r, c.prototype, t), s.extend(r, t), r;}var o = r(2),s = o.utils,i = o.bind,a = o.mergeConfig,u = r(24),c = r(26),f = n(u);f.Axios = c, f.create = function (e) {return n(a(f.defaults, e));}, e.exports = f, e.exports.default = f;}, function (e, t, r) {e.exports = { utils: r(3), bind: r(4), Axios: r(6), mergeConfig: r(23), dispatchRequest: r(9), buildURL: r(7), settle: r(15), InterceptorManager: r(8) };}, function (e, t, r) {"use strict";function n(e) {return "[object Array]" === j.call(e);}function o(e) {return "[object ArrayBuffer]" === j.call(e);}function s(e) {return "undefined" != typeof FormData && e instanceof FormData;}function i(e) {var t;return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;}function a(e) {return "string" == typeof e;}function u(e) {return "number" == typeof e;}function c(e) {return "undefined" == typeof e;}function f(e) {return null !== e && "object" == typeof e;}function p(e) {return "[object Date]" === j.call(e);}function d(e) {return "[object File]" === j.call(e);}function l(e) {return "[object Blob]" === j.call(e);}function h(e) {return "[object Function]" === j.call(e);}function m(e) {return f(e) && h(e.pipe);}function y(e) {return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;}function g(e) {return e.replace(/^\s*/, "").replace(/\s*$/, "");}function x() {return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;}function v(e, t) {if (null !== e && "undefined" != typeof e) if ("object" != typeof e && (e = [e]), n(e)) for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}}function b() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function w() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function E(e, t, r) {return v(t, function (t, n) {r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;}), e;}var R = r(4),S = r(5),j = Object.prototype.toString;e.exports = { isArray: n, isArrayBuffer: o, isBuffer: S, isFormData: s, isArrayBufferView: i, isString: a, isNumber: u, isObject: f, isUndefined: c, isDate: p, isFile: d, isBlob: l, isFunction: h, isStream: m, isURLSearchParams: y, isStandardBrowserEnv: x, forEach: v, merge: b, deepMerge: w, extend: E, trim: g };}, function (e, t) {"use strict";e.exports = function (e, t) {return function () {for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}return e.apply(t, r);};};}, function (e, t) {/*!
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Determine if an object is a Buffer
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author   Feross Aboukhadijeh <https://feross.org>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license  MIT
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-    e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 96), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 96:
-/*!********************************************************!*\
-  !*** ./node_modules/node-libs-browser/mock/process.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.nextTick = function nextTick(fn) {
-	setTimeout(fn, 0);
-};
-
-exports.platform = exports.arch = 
-exports.execPath = exports.title = 'browser';
-exports.pid = 1;
-exports.browser = true;
-exports.env = {};
-exports.argv = [];
-
-exports.binding = function (name) {
-	throw new Error('No such module. (Possibly not yet loaded)')
-};
-
-(function () {
-    var cwd = '/';
-    var path;
-    exports.cwd = function () { return cwd };
-    exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 97);
-        cwd = path.resolve(dir, cwd);
-    };
-})();
-
-exports.exit = exports.kill = 
-exports.umask = exports.dlopen = 
-exports.uptime = exports.memoryUsage = 
-exports.uvCounters = function() {};
-exports.features = {};
-
-
-/***/ }),
-
-/***/ 97:
-/*!***********************************************!*\
-  !*** ./node_modules/path-browserify/index.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-// resolves . and .. elements in a path array with directory names there
-// must be no slashes, empty elements, or device names (c:\) in the array
-// (so also no leading and trailing slashes - it does not distinguish
-// relative and absolute paths)
-function normalizeArray(parts, allowAboveRoot) {
-  // if the path tries to go above the root, `up` ends up > 0
-  var up = 0;
-  for (var i = parts.length - 1; i >= 0; i--) {
-    var last = parts[i];
-    if (last === '.') {
-      parts.splice(i, 1);
-    } else if (last === '..') {
-      parts.splice(i, 1);
-      up++;
-    } else if (up) {
-      parts.splice(i, 1);
-      up--;
-    }
-  }
-
-  // if the path is allowed to go above the root, restore leading ..s
-  if (allowAboveRoot) {
-    for (; up--; up) {
-      parts.unshift('..');
-    }
-  }
-
-  return parts;
-}
-
-// Split a filename into [root, dir, basename, ext], unix version
-// 'root' is just a slash, or nothing.
-var splitPathRe =
-    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-var splitPath = function(filename) {
-  return splitPathRe.exec(filename).slice(1);
-};
-
-// path.resolve([from ...], to)
-// posix version
-exports.resolve = function() {
-  var resolvedPath = '',
-      resolvedAbsolute = false;
-
-  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
-    var path = (i >= 0) ? arguments[i] : process.cwd();
-
-    // Skip empty and invalid entries
-    if (typeof path !== 'string') {
-      throw new TypeError('Arguments to path.resolve must be strings');
-    } else if (!path) {
-      continue;
-    }
-
-    resolvedPath = path + '/' + resolvedPath;
-    resolvedAbsolute = path.charAt(0) === '/';
-  }
-
-  // At this point the path should be resolved to a full absolute path, but
-  // handle relative paths to be safe (might happen when process.cwd() fails)
-
-  // Normalize the path
-  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
-    return !!p;
-  }), !resolvedAbsolute).join('/');
-
-  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
-};
-
-// path.normalize(path)
-// posix version
-exports.normalize = function(path) {
-  var isAbsolute = exports.isAbsolute(path),
-      trailingSlash = substr(path, -1) === '/';
-
-  // Normalize the path
-  path = normalizeArray(filter(path.split('/'), function(p) {
-    return !!p;
-  }), !isAbsolute).join('/');
-
-  if (!path && !isAbsolute) {
-    path = '.';
-  }
-  if (path && trailingSlash) {
-    path += '/';
-  }
-
-  return (isAbsolute ? '/' : '') + path;
-};
-
-// posix version
-exports.isAbsolute = function(path) {
-  return path.charAt(0) === '/';
-};
-
-// posix version
-exports.join = function() {
-  var paths = Array.prototype.slice.call(arguments, 0);
-  return exports.normalize(filter(paths, function(p, index) {
-    if (typeof p !== 'string') {
-      throw new TypeError('Arguments to path.join must be strings');
-    }
-    return p;
-  }).join('/'));
-};
-
-
-// path.relative(from, to)
-// posix version
-exports.relative = function(from, to) {
-  from = exports.resolve(from).substr(1);
-  to = exports.resolve(to).substr(1);
-
-  function trim(arr) {
-    var start = 0;
-    for (; start < arr.length; start++) {
-      if (arr[start] !== '') break;
-    }
-
-    var end = arr.length - 1;
-    for (; end >= 0; end--) {
-      if (arr[end] !== '') break;
-    }
-
-    if (start > end) return [];
-    return arr.slice(start, end - start + 1);
-  }
-
-  var fromParts = trim(from.split('/'));
-  var toParts = trim(to.split('/'));
-
-  var length = Math.min(fromParts.length, toParts.length);
-  var samePartsLength = length;
-  for (var i = 0; i < length; i++) {
-    if (fromParts[i] !== toParts[i]) {
-      samePartsLength = i;
-      break;
-    }
-  }
-
-  var outputParts = [];
-  for (var i = samePartsLength; i < fromParts.length; i++) {
-    outputParts.push('..');
-  }
-
-  outputParts = outputParts.concat(toParts.slice(samePartsLength));
-
-  return outputParts.join('/');
-};
-
-exports.sep = '/';
-exports.delimiter = ':';
-
-exports.dirname = function(path) {
-  var result = splitPath(path),
-      root = result[0],
-      dir = result[1];
-
-  if (!root && !dir) {
-    // No dirname whatsoever
-    return '.';
-  }
-
-  if (dir) {
-    // It has a dirname, strip trailing slash
-    dir = dir.substr(0, dir.length - 1);
-  }
-
-  return root + dir;
-};
-
-
-exports.basename = function(path, ext) {
-  var f = splitPath(path)[2];
-  // TODO: make this comparison case-insensitive on windows?
-  if (ext && f.substr(-1 * ext.length) === ext) {
-    f = f.substr(0, f.length - ext.length);
-  }
-  return f;
-};
-
-
-exports.extname = function(path) {
-  return splitPath(path)[3];
-};
-
-function filter (xs, f) {
-    if (xs.filter) return xs.filter(f);
-    var res = [];
-    for (var i = 0; i < xs.length; i++) {
-        if (f(xs[i], i, xs)) res.push(xs[i]);
-    }
-    return res;
-}
-
-// String.prototype.substr - negative index don't work in IE8
-var substr = 'ab'.substr(-1) === 'b'
-    ? function (str, start, len) { return str.substr(start, len) }
-    : function (str, start, len) {
-        if (start < 0) start = str.length + start;
-        return str.substr(start, len);
-    }
-;
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 96)))
 
 /***/ })
 

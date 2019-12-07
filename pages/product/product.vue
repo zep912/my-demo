@@ -2,10 +2,10 @@
 	<view class="container">
 		<view class="carousel">
 			<swiper indicator-dots circular duration="400">
-				<swiper-item class="swiper-item" v-for="(item,index) in imgList" :key="index">
+				<swiper-item class="swiper-item" v-for="(item,index) in productInfo.albumPics" :key="index">
 					<view class="image-wrapper">
 						<image
-							:src="item.src" 
+							:src="item" 
 							class="loaded" 
 							mode="aspectFill"
 						></image>
@@ -18,14 +18,14 @@
 		<view class="introduce-section">
 			<view class="price-box">
 				<text class="price-tip">¥</text>
-				<text class="price">88.8</text>
-				<text class="m-price">¥888</text>
+				<text class="price">{{productInfo.price}}</text>
+				<text class="m-price">¥{{productInfo.originalPrice}}</text>
 			</view>
-			<text class="title">恒源祥2019春季春季春季春季春季春季长袖白色t恤 新款春装</text>
+			<text class="title">{{productInfo.name}}</text>
 			<view class="row">规格: 0.2g*2盒</view>
 			<view class="row bot-row">
 				<text>限购1件</text>
-				<text>库存4690</text>
+				<text>库存{{productInfo.stock}}</text>
 			</view>
 		</view>
 		
@@ -159,20 +159,16 @@
 			return {
 				specClass: 'none',
 				specSelected:[],
-				
+				productInfo: {
+					albumPics: [
+						'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg',
+						'https://gd3.alicdn.com/imgextra/i3/TB1RPFPPFXXXXcNXpXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg',
+						'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'
+					],
+				},
 				favorite: true,
 				shareList: [],
-				imgList: [
-					{
-						src: 'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg'
-					},
-					{
-						src: 'https://gd3.alicdn.com/imgextra/i3/TB1RPFPPFXXXXcNXpXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg'
-					},
-					{
-						src: 'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'
-					}
-				],
+				
 				desc: `
 					<div style="width:100%">
 						<img style="width:100%;display:block;" src="https://gd3.alicdn.com/imgextra/i4/479184430/O1CN01nCpuLc1iaz4bcSN17_!!479184430.jpg_400x400.jpg" />
@@ -315,7 +311,9 @@
 			productInfoById(id) {
 				axios.post('/product/productInfoById', {id}).then(({data}) => {
 					console.log(data);
-					if (data.code === 200) {}
+					if (data.code === 200) {
+						this.productInfo = data.data;
+					}
 				})
 			},
 			stopPrevent(){}

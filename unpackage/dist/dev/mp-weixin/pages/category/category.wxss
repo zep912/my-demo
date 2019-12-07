@@ -67,21 +67,15 @@ page,
       -ms-flex: 1;
           flex: 1;
   overflow: hidden;
-  padding-left: 20rpx;
+  padding: 0 20rpx;
 }
 .s-item {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  display: block;
+  width: 100%;
   height: 70rpx;
-  padding-top: 8rpx;
   font-size: 28rpx;
   color: #303133;
+  padding-left: 20rpx;
 }
 .t-list {
   display: -webkit-box;
@@ -93,7 +87,9 @@ page,
           flex-wrap: wrap;
   width: 100%;
   background: #fff;
-  padding-top: 12rpx;
+  padding: 20rpx 0;
+  margin: 20rpx 0;
+  border-radius: 20rpx;
 }
 .t-list:after {
     content: '';
@@ -124,13 +120,14 @@ page,
   -webkit-flex-direction: column;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 176rpx;
+  width: 170rpx;
   font-size: 26rpx;
   color: #666;
   padding-bottom: 20rpx;
 }
 .t-item image {
-    width: 140rpx;
-    height: 140rpx;
+    width: 100rpx;
+    height: 100rpx;
+    margin-bottom: 15rpx;
 }
 

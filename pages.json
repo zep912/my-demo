@@ -398,7 +398,19 @@
 				"navigationBarTitleText": "商品列表"
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/index/selectPosition",
+            "style" : {
+				"navigationBarTitleText": "选择当前位置"
+			}
+        }
+        ,{
+            "path" : "pages/index/search",
+            "style" : {
+            	"navigationBarTitleText": "搜素商品"
+            }
+        }
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "麦田圈",

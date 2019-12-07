@@ -9,14 +9,14 @@
 			<!-- #ifndef MP-ALIPAY -->
 			<uni-icons color="#999999" class="uni-searchbar__box-icon-search" size="18" type="search" />
 			<!-- #endif -->
-			<input v-if="show" :focus="showSync" :placeholder="placeholder" @confirm="confirm" class="uni-searchbar__box-search-input"
+			<input v-if="show" :focus="showSync" :placeholder="placeholder" class="uni-searchbar__box-search-input"
 			 confirm-type="search" type="text" v-model="searchVal" />
 			<text v-else class="uni-searchbar__text-placeholder">{{ placeholder }}</text>
 			<view v-if="show && (clearButton==='always'||clearButton==='auto'&&searchVal!=='')" class="uni-searchbar__box-icon-clear">
 				<uni-icons color="#999999" class="" size="24" type="clear" />
 			</view>
 		</view>
-		<text @click="cancel" class="uni-searchbar__cancel" v-if="show">取消</text>
+		<text @click="cancel" class="uni-searchbar__cancel" v-if="isShow"  on-click="confirm">搜索</text>
 	</view>
 </template>
 
@@ -39,6 +39,10 @@
 			clearButton: {
 				type: String,
 				default: "auto"
+			},
+			isShow: {
+				type: Boolean,
+				default: true
 			}
 		},
 		data() {
