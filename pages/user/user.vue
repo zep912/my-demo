@@ -144,28 +144,7 @@
 				coverTransition: '0s',
 				moving: false,
 				// abImg: '../../static/banner_01.png',
-				goodsList: [{
-						img: '../../static/index/egg.png',
-						title: '正宗农家散养谷饲土鸡蛋20枚',
-						subTitle: '宇宙无敌巨好吃的鸡蛋',
-						jifen: '200',
-						price: 999.90
-					},
-					{
-						img: '../../static/index/egg.png',
-						title: '正宗农家散养谷饲土鸡蛋20枚',
-						subTitle: '宇宙无敌巨好吃的鸡蛋',
-						jifen: '200',
-						price: 999.90
-					},
-					{
-						img: '../../static/index/egg.png',
-						title: '正宗农家散养谷饲土鸡蛋20枚',
-						subTitle: '宇宙无敌巨好吃的鸡蛋',
-						jifen: '200',
-						price: 999.90
-					}
-				],
+				goodsList: [],
 				authShow: true,
 				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 			}

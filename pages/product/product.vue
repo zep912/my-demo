@@ -93,8 +93,8 @@
 			</view>
 			
 			<view class="action-btn-group">
-				<button type="primary" class=" action-btn no-border buy-now-btn" @click="buy">立即购买</button>
-				<button type="primary" class=" action-btn no-border add-cart-btn">加入购物车</button>
+				<button type="primary" class="action-btn no-border buy-now-btn" @click="buy">立即购买</button>
+				<button type="primary" class="action-btn no-border add-cart-btn" @click="addCart">加入购物车</button>
 			</view>
 		</view>
 
@@ -307,6 +307,12 @@
 				uni.navigateTo({
 					url: `/pages/order/createOrder`
 				})
+			},
+			addCart() {
+				const {id, productCategoryId} = this.productInfo;
+				axios.post('/cart/add', {productId: id, productCategoryId}).then(({data}) => {
+					console.log(data);
+				});
 			},
 			productInfoById(id) {
 				axios.post('/product/productInfoById', {id}).then(({data}) => {

@@ -586,7 +586,6 @@
 			align-items: center;
 			height: 92upx;
 			line-height: 1;
-			background: url(../../static/index/xsqg.png) 100% no-repeat;
 			border-radius: 20upx 20upx 0 0;
 			color: #fff;
 			font-size: $font-base;
@@ -684,7 +683,6 @@
 		line-height: 40upx;
 		font-size: $font-base;
 		text-align: center;
-		background: url(../../static/index/btbg.png) 100% no-reapat;
 	}
 
 	.poster-content {
