@@ -94,12 +94,16 @@ var render = function() {
 
   var m1 = __webpack_require__(/*! ../../static/shop.png */ 168)
 
+  var m2 = _vm.timestampToTime(_vm.order.createTime)
+  var m3 = _vm.timestampToTime(_vm.order.paymentTime)
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
         m0: m0,
-        m1: m1
+        m1: m1,
+        m2: m2,
+        m3: m3
       }
     }
   )
@@ -135,285 +139,300 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      form: {
-        collect: [{
-          time: '2019-04-06 11:37',
-          shopName: '麦田圈官网旗舰店',
-          state: 5,
-
-          goodsList: [{
-            title: '香辣牛肉干',
-            price: 88.88,
-            image: '/static/goods.png',
-            number: 1,
-            attr: '规格 10*200g' }] }],
-
-
-        goodsObj: {
-          remarks: '香辣味的',
-          allPay: '120',
-          jifen: '100',
-          preferential: '20.00',
-          total: '880' },
-
-        orderMsg: {
-          number: '13245679851354664',
-          num: '3212313213213213132',
-          creatTime: '2019-11-05 11:12:12',
-          payTime: '2019-11-05 11:12:12',
-          payWay: '微信支付' } },
-
-
-      img: [
-      '../../static/order/fahuo.png',
-      '../../static/order/fukuan.png',
-      '../../static/order/shouhuo.png',
-      '../../static/order/chenggong.png',
-      '../../static/order/guanbi.png',
-      '../../static/order/wancheng.png'],
-
-      order: {
-        status: '',
-        img: '',
-        wuliu: '',
-        pay: '',
-        statusMsg: '',
-        color: '' },
-
-      statuss: '',
-      show: false,
-      marginBottom: '',
-      steps: [
-      {
-        text: '步骤一',
-        desc: '描述信息' },
-
-      {
-        text: '步骤二',
-        desc: '描述信息' },
-
-      {
-        text: '步骤三',
-        desc: '描述信息' },
-
-      {
-        text: '步骤四',
-        desc: '描述信息' }] };
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
-  },
-  onLoad: function onLoad(option) {
-    console.log(option);
-    this.statuss = option.status;
-    if (this.statuss == 1) {
-      // 待支付
-      this.show = true;
-      this.order = {
-        status: 1,
-        statusMsg: '',
-        img: this.img[1],
-        wuliu: '取消订单',
-        pay: '立即支付' };
-
-    } else if (this.statuss == 4) {
-      //待发货
-      this.show = false;
-      this.order = {
-        status: 4,
-        statusMsg: '待发货',
-        img: this.img[0],
-        wuliu: '',
-        pay: '',
-        color: '#F7B62C' };
-
-    } else if (this.statuss == 2) {
-      //待收货
-      this.show = true;
-      this.order = {
-        status: 2,
-        statusMsg: '待收货',
-        img: this.img[2],
-        wuliu: '查看物流',
-        pay: '确认收货',
-        color: '#515151' };
-
-    } else if (this.statuss == 6) {
-      //交易成功
-      this.show = true;
-      this.order = {
-        status: 2,
-        statusMsg: '交易成功',
-        img: this.img[3],
-        wuliu: '删除订单',
-        pay: '去评价',
-        color: '#01B300' };
-
-    } else if (this.statuss == 9) {
-      // 交易关闭
-      this.show = true;
-      this.order = {
-        status: 9,
-        statusMsg: '',
-        img: this.img[4],
-        wuliu: '删除订单',
-        pay: '',
-        color: '' };
-
-    } else if (this.statuss == 7) {
-      // 已完成
-      this.show = true;
-      this.order = {
-        status: 7,
-        statusMsg: '已完成',
-        img: this.img[5],
-        wuliu: '删除订单',
-        pay: '再次购买',
-        color: '#515151' };
-
-    }
 
 
-  },
-  methods: {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5, goodsList: [{ title: '香辣牛肉干', price: 88.88, image: '/static/goods.png', number: 1, attr: '规格 10*200g' }] }], goodsObj: { remarks: '香辣味的', allPay: '120', jifen: '100', preferential: '20.00', total: '880' }, orderMsg: { number: '13245679851354664', num: '3212313213213213132', creatTime: '2019-11-05 11:12:12', payTime: '2019-11-05 11:12:12', payWay: '微信支付' } }, img: ['../../static/order/fahuo.png', '../../static/order/fukuan.png', '../../static/order/shouhuo.png', '../../static/order/chenggong.png', '../../static/order/guanbi.png', //关闭
+      '../../static/order/wancheng.png'], order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', steps: [{ text: '步骤一', desc: '描述信息' }, { text: '步骤二', desc: '描述信息' }, { text: '步骤三', desc: '描述信息' }, { text: '步骤四', desc: '描述信息' }], id: '' };}, onLoad: function onLoad(option) {console.log(option);this.statuss = option.status;this.id = option.id;this.getOrder();}, methods: { // 获取订单详情
+    getOrder: function getOrder() {var _this = this;_uniAxios.default.post('/order/getDetailByOrderId', { id: this.id }).then(function (res) {if (res.data.code == '200') {_this.order = res.data.data;if (_this.order.status == 0) {// 待支付
+            _this.order.statusMsg = '';_this.order.wuliu = '取消订单';_this.order.img = _this.img[1];_this.order.pay = '立即支付';_this.order.color = '';} else if (_this.order.status == 1) {//待发货	
+            _this.show = false;_this.order.statusMsg = '待发货';_this.order.wuliu = '';_this.order.img = _this.img[0];_this.order.pay = '';_this.order.color = '#F7B62C';} else if (_this.order.status == 2) {//待收货
+            _this.show = true;_this.order.statusMsg = '待收货';_this.order.wuliu = '查看物流';_this.order.img = _this.img[2];_this.order.pay = '确认收货';_this.order.color = '#515151';} else if (_this.order.status == 6) {//交易成功
+            _this.show = true;_this.order.statusMsg = '交易成功';_this.order.wuliu = '删除订单';_this.order.img = _this.img[3];_this.order.pay = '去评价';_this.order.color = '#01B300';} else if (_this.order.status == 4) {// 交易关闭
+            _this.show = true;_this.order.wuliu = '删除订单';_this.order.img = _this.img[4];
+          } else if (_this.order.status == 3) {
+            // 已完成
+            _this.show = true;
+
+            _this.order.statusMsg = '已完成';
+            _this.order.wuliu = '删除订单';
+            _this.order.img = _this.img[5];
+            _this.order.pay = '再次购买';
+            _this.order.color = '#515151';
+          }
+
+        }
+      });
+    },
     consult: function consult() {
       uni.navigateTo({
         url: 'consult' });
 
     },
     // 根据不同状态，跳转或请求不同的页面
-    logisticsTap: function logisticsTap() {
+    logisticsTap: function logisticsTap() {var _this2 = this;
       if (this.statuss == 2) {//查看物流
         uni.navigateTo({
           url: 'logistics' });
 
-      } else if (this.statuss == 7 || this.statuss == 9 || this.statuss == 6) {//已完成，交易关闭，交易成功的订单，就删除订单
-
+      } else if (this.statuss == 7 || this.statuss == 4 || this.statuss == 6) {//已完成，交易关闭，交易成功的订单，就删除订单
+        _uniAxios.default.post('/order/deleteOrder', { id: this.order.id }).then(function (res) {
+          console.log(res);
+          if (res.data.code == '200') {
+            _this2.$api.msg('删除成功');
+            uni.navigateTo({
+              url: 'order' //返回到订单详情
+            });
+          }
+        });
       } else if (this.statuss == 1) {//待支付，取消订单
 
       }
+    },
+    // 日期转换
+    // 时间戳转换成时间
+    timestampToTime: function timestampToTime(time) {
+      var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear();
+      var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+      var D = date.getDate();
+      var h = date.getHours() + ':';
+      var m = date.getMinutes() + ':';
+      var s = date.getSeconds();
 
+      return Y + '-' + M + '-' + D + ' ' + h + m + s;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

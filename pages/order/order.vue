@@ -1,5 +1,5 @@
 <template>
-	<view class="content">
+	<view class="content order">
 		<view class="navbar">
 			<view v-for="(item, index) in navList" :key="index" class="nav-item" :class="{current: tabCurrentIndex === index}"
 			 @click="tabClick(index)">
@@ -16,20 +16,20 @@
 					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
 						<view class="i-top b-b">
 							<img src="../../static/shop.png" alt="" class='shopLogo'>
-							<text class="time">{{item.shopName}}</text>
-							<text class="state"  @click="orderDetails(item)">{{item.stateTip}}</text>
+							<text class="time">麦田圈官方旗舰店</text>
+							<text class="state"  @click="orderDetails(item,item.id)">{{item.status==0?'代付款':item.status==1?'待发货':item.status==2?'待收货':item.status==3?'待评价':item.status==4?'已关闭':'无效订单'}}</text>
 						</view>
 
-						<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
-							<image class="goods-img" :src="goodsItem.image" mode="aspectFill"></image>
+						<view class="goods-box-single b-b">
+							<image class="goods-img" :src="item.productPic" mode="aspectFill"></image>
 
 							<view class="right">
-								<text class="title ellipsis">{{goodsItem.title}}</text>
+								<text class="title ellipsis">{{item.productName}}</text>
 								<text class="attr-box">{{goodsItem.attr}}</text>
 							</view>
 							<view class="goods-right">
-								<text class="price">{{'￥'+goodsItem.price}}</text>
-								<text class="number">x{{goodsItem.number}}</text>
+								<text class="price">{{'￥'+item.realAmount}}</text>
+								<text class="number">x{{item.productQuantity}}</text>
 							</view>
 						</view>
 
@@ -37,9 +37,9 @@
 						<view class="action-box b-t" v-if="item.state != 9">
 							<view class="price-box">
 								共
-								<text class="num">{{item.goodsList.length}}</text>
+								<text class="num">{{tabItem.orderList.length}}</text>
 								件商品 实付款
-								<text class="price">{{111}}</text>
+								<text class="price">{{item.payAmount}}</text>
 							</view>
 							<view class="action-box-buttom">
 								<button class="action-btn" @click="evaluate(item)" v-show='item.state==3'>评价</button>
@@ -62,6 +62,7 @@
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import empty from "@/components/empty";
 	import Json from '@/Json';
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components: {
 			uniLoadMore,
@@ -69,40 +70,45 @@
 		},
 		data() {
 			return {
-				src:'../../static/nogoods.png',
+				src:'../static/nogoods.png',
 				msg:'你还没有任何订单，看看其他的吧',
 				tabCurrentIndex: 0,
 				navList: [{
-						state: 0,
+						status: 0,
 						text: '全部',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
-						state: 1,
+						status: 0,
 						text: '待付款',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
-						state: 4,
+						status: 1,
 						text: '待发货',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
-						state: 2,
+						status: 2,
 						text: '待收货',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
-						state: 3,
+						status: 3,
 						text: '待评价',
 						loadingType: 'more',
 						orderList: []
 					},
 				],
+				page:{
+					current:1,
+					pageSize:10
+				},
+				orderList:[]
 			};
 		},
 
@@ -111,9 +117,8 @@
 			 * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
 			 * 替换onLoad下代码即可
 			 */
-
 			this.tabCurrentIndex = +options.state;
-			this.loadData();
+			this.loadData('tabChange',0);
 			if (options.state == 0) {
 				this.loadData()
 			}
@@ -121,11 +126,11 @@
 
 		methods: {
 			//获取订单列表
-			loadData(source) {
+			loadData(source,n) {
 				//这里是将订单挂载到tab列表下
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
-				let state = navItem.state;
+				let state = navItem.status;
 				if (source === 'tabChange' && navItem.loaded === true) {
 					//tab切换只有第一次需要加载数据
 					return;
@@ -136,26 +141,54 @@
 				}
 
 				// navItem.loadingType = 'loading';
-
-				let orderList = Json.orderList.filter(item => {
-					//添加不同状态下订单的表现形式
-					item = Object.assign(item, this.orderStateExp(item.state));
-					//演示数据所以自己进行状态筛选
-					if (state === 0) {
-						//0为全部订单
-						return item;
+				let obj = {
+				  "orderType": 0,//订单类型
+				  "pageNum": this.page.current,//页码
+				  "pageSize": this.page.pageSize,//页数
+				  "sourceType":1,//订单来源
+				  "status": n//订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
+				}
+				// let orderList=[]
+				axios.post('/order/list',obj).then(res=>{
+					if(res.data.code=='200'){
+						let result = res.data.data.list;
+						this.orderList = result.filter(item => {
+							//添加不同状态下订单的表现形式
+							item = Object.assign(item, this.orderStateExp(item.status));
+							//演示数据所以自己进行状态筛选
+							if (state === 0) {
+								//0为全部订单
+								return item;
+							}
+							return item.status === status
+						});
+						
+						this.orderList.forEach(item => {
+							navItem.orderList.push(item);
+						})
+						this.$set(navItem, 'loaded', true);
+						console.log(this.navList,77)
 					}
-					return item.state === state
-				});
-				orderList.forEach(item => {
-					navItem.orderList.push(item);
 				})
+				// let orderList = Json.orderList.filter(item => {
+				// 	//添加不同状态下订单的表现形式
+				// 	item = Object.assign(item, this.orderStateExp(item.state));
+				// 	//演示数据所以自己进行状态筛选
+				// 	if (state === 0) {
+				// 		//0为全部订单
+				// 		return item;
+				// 	}
+				// 	return item.state === state
+				// });
+				
+				// orderList.forEach(item => {
+				// 	navItem.orderList.push(item);
+				// })
 				//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-				this.$set(navItem, 'loaded', true);
+				
 
 				//判断是否还有数据， 有改为 more， 没有改为noMore 
 				// navItem.loadingType = 'more';
-
 			},
 
 			//swiper 切换
@@ -215,10 +248,10 @@
 				let stateTip = '',
 					stateTipColor = '#fa436a';
 				switch (+state) {
-					case 1:
+					case 0:
 						stateTip = '待支付';
 						break;
-					case 4:
+					case 1:
 						stateTip = '待发货';
 						break;
 					case 2:
@@ -247,10 +280,11 @@
 				};
 			},
 			//订单详情
-			orderDetails(item) {
-				if(item.state!=3){
+			orderDetails(item,id) {
+				console.log(item)
+				if(item.status!=3){
 					uni.navigateTo({
-						url: 'orderDetails?status=' + item.state
+						url: 'orderDetails?status=' + item.status+'&id='+id
 					})
 				}
 				
@@ -266,6 +300,10 @@
 </script>
 
 <style lang="scss">
+	.order .noCollect img {
+		width: 200rpx;
+		height: 180rpx;
+	}
 	page,
 	.content {
 		background: #F2F2F2;

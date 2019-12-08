@@ -2,12 +2,12 @@
 	<view class="order-details">
 		<!-- 订单状态 -->
 		<view class="order-state">
-			<text class="toBeShipped" v-if='order.status!=1&&order.status!=9' :style="{color:order.color}">{{order.statusMsg}}</text>
+			<text class="toBeShipped" v-if='order.status!=1&&order.status!=9&&order.status!=4' :style="{color:order.color}">{{order.statusMsg}}</text>
 			<text v-if='order.status==1' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
-			<text v-if='order.status==9' class="payClose"><text>交易关闭</text><text>订单取消</text></text>
+			<text v-if='order.status==4' class="payClose"><text>交易关闭</text><text>订单取消</text></text>
 			<img :src="order.img" alt="">
 		</view>
-		<!-- 交易关闭--退款 -->
+		<!-- 交易关闭退款 -->
 		<view class="close"  v-if='order.status==9'>
 			<ul>
 				<li>
@@ -32,29 +32,29 @@
 		<view class="order-address">
 			<img src="../../static/dizhi.png" />
 			<view class="order-ad-user">
-				<text class="phone">涂志奇15692124707</text>
-				<text class="address">湖北省武汉市江夏市光谷智慧园7栋4楼</text>
+				<text class="phone">{{order.receiverName}}{{order.receiverPhone}}</text>
+				<text class="address">{{order.receiverProvince+order.receiverCity+order.receiverRegion+order.receiverDetailAddress}}</text>
 			</view>
 		</view>
 		<!-- 商品信息 -->
 		<view class="order-goods">
-			<view v-for="(item,index) in form.collect" :key="index" class="order-item">
+			<view class="order-item">
 				<view class="i-top b-b">
 					<img src="../../static/shop.png" alt="" class='shopLogo'>
-					<text class="time">{{item.shopName}}</text>
+					<text class="time">麦田圈官网旗舰店</text>
 					<text class="cell-more yticon icon-you"></text>
 				</view>
 
-				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
-					<image class="goods-img" :src="goodsItem.image" mode="aspectFill"></image>
+				<view class="goods-box-single b-b">
+					<image class="goods-img" :src="order.productPic" mode="aspectFill"></image>
 
 					<view class="right">
-						<text class="title ellipsis">{{goodsItem.title}}</text>
-						<text class="attr-box">{{goodsItem.attr}}</text>
-						<text class="price">{{'￥'+goodsItem.price}}</text>
+						<text class="title ellipsis">{{order.productName}}</text>
+						<text class="attr-box">规格:{{order.sp1+order.sp2}}</text>
+						<text class="price">{{'￥'+order.productPrice}}</text>
 					</view>
 					<view class="goods-right">
-						<text class="number">X{{goodsItem.number}}</text>
+						<text class="number">X{{order.productQuantity}}</text>
 					</view>
 				</view>
 			</view>
@@ -64,23 +64,23 @@
 			<ul>
 				<li>
 					<text>订单备注</text>
-					<text>{{form.goodsObj.remarks}}</text>
+					<text>{{order.note}}</text>
 				</li>
 				<li>
 					<text>商品总价</text>
-					<text class="order-list-bold">{{'￥'+form.goodsObj.allPay}}</text>
+					<text class="order-list-bold">{{'￥'+order.totalAmount}}</text>
 				</li>
 				<li>
 					<text>抵扣积分</text>
-					<text class="order-list-bold">{{form.goodsObj.jifen+'分'}}</text>
+					<text class="order-list-bold">{{100+'分'}}</text>
 				</li>
 				<li>
 					<text>商品优惠</text>
-					<text class="order-list-bold">{{'-￥'+form.goodsObj.preferential}}</text>
+					<text class="order-list-bold">{{'-￥'+order.promotionAmount }}</text>
 				</li>
 				<li>
 					<text>实付合计</text>
-					<text class="order-list-bold">{{'￥'+form.goodsObj.total}}</text>
+					<text class="order-list-bold">{{'￥'+order.payAmount}}</text>
 				</li>
 			</ul>
 		</view>
@@ -88,34 +88,35 @@
 		<view class="order-pay" :class="{'marginBottom':statuss!=4}">
 			<view>
 				<text>订单编号：</text>
-				<text>{{form.orderMsg.number}}</text>
+				<text>{{order.orderSn}}</text>
 			</view>
 			<view v-if='statuss!=1'>
 				<text>支付流水号：</text>
-				<text>{{form.orderMsg.num}}</text>
+				<text>{{order.orderMsg.num}}</text>
 			</view>
 			<view>
 				<text>订单创建时间：</text>
-				<text>{{form.orderMsg.creatTime}}</text>
+				<text>{{order.createTime?timestampToTime(order.createTime):''}}</text>
 			</view>
 			<view v-if='statuss!=1'>
 				<text>订单付款时间：</text>
-				<text>{{form.orderMsg.payTime}}</text>
+				<text>{{order.paymentTime?timestampToTime(order.paymentTime):'' }}</text>
 			</view>
 			<view v-if='statuss!=1'>
 				<text>支付方式：</text>
-				<text>{{form.orderMsg.payWay}}</text>
+				<text>{{order.payType==0?'未支付':order.payType==1?'支付宝':'微信'}}</text>
 			</view>
 		</view>
 		<!-- 尾部 -->
 		<view class="foot" v-if='show'>
 			<button class="btn1" @click="logisticsTap">{{order.wuliu}}</button>
-			<button class="btn2" v-if='order.status!=9'>{{order.pay}}</button>
+			<button class="btn2" v-if='order.status!=4'>{{order.pay}}</button>
 		</view>
 	</view>
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
@@ -153,7 +154,7 @@
 					'../../static/order/fukuan.png',
 					'../../static/order/shouhuo.png',
 					'../../static/order/chenggong.png',
-					'../../static/order/guanbi.png',
+					'../../static/order/guanbi.png',//关闭
 					'../../static/order/wancheng.png',
 				],
 				order:{
@@ -184,82 +185,76 @@
 				        text: '步骤四',
 				        desc: '描述信息'
 				      }
-				    ]
+				    ],
+				id:''
 			}
 		},
 		onLoad(option){
 			console.log(option)
 			this.statuss = option.status;
-			if(this.statuss==1){
-				// 待支付
-				this.show = true;
-				this.order = {
-					status:1,
-					statusMsg:'',
-					img:this.img[1],
-					wuliu:'取消订单',
-					pay:'立即支付'
-				}
-			}else if(this.statuss==4){
-				//待发货
-				this.show = false;
-				this.order = {
-					status:4,
-					statusMsg:'待发货',
-					img:this.img[0],
-					wuliu:'',
-					pay:'',
-					color:'#F7B62C'
-				}
-			}else if(this.statuss==2){
-				//待收货
-				this.show = true;
-				this.order = {
-					status:2,
-					statusMsg:'待收货',
-					img:this.img[2],
-					wuliu:'查看物流',
-					pay:'确认收货',
-					color:'#515151'
-				}
-			}else if(this.statuss==6){
-				//交易成功
-				this.show = true;
-				this.order = {
-					status:2,
-					statusMsg:'交易成功',
-					img:this.img[3],
-					wuliu:'删除订单',
-					pay:'去评价',
-					color:'#01B300'
-				}
-			}else if(this.statuss==9){
-				// 交易关闭
-				this.show = true;
-				this.order = {
-					status:9,
-					statusMsg:'',
-					img:this.img[4],
-					wuliu:'删除订单',
-					pay:'',
-					color:''
-				}
-			}else if(this.statuss==7){
-				// 已完成
-				this.show = true;
-				this.order = {
-					status:7,
-					statusMsg:'已完成',
-					img:this.img[5],
-					wuliu:'删除订单',
-					pay:'再次购买',
-					color:'#515151'
-				}
-			}
+			this.id = option.id;
 			
-			
+			this.getOrder()
 		},
 		methods: {
+			// 获取订单详情
+			getOrder(){
+				axios.post('/order/getDetailByOrderId',{id:this.id}).then(res=>{
+					if(res.data.code=='200'){
+						this.order = res.data.data;
+						if(this.order.status==0){
+							// 待支付
+							this.order.statusMsg = '';
+							this.order.wuliu = '取消订单';
+							this.order.img=this.img[1];
+							this.order.pay='立即支付';
+							this.order.color = ''
+						}else if(this.order.status==1){
+							//待发货	
+							this.show = false;
+							
+							this.order.statusMsg = '待发货';
+							this.order.wuliu = '';
+							this.order.img=this.img[0];
+							this.order.pay='';
+							this.order.color = '#F7B62C'
+						}else if(this.order.status==2){
+							//待收货
+							this.show = true;
+						
+							this.order.statusMsg = '待收货';
+							this.order.wuliu = '查看物流';
+							this.order.img=this.img[2];
+							this.order.pay='确认收货';
+							this.order.color = '#515151'
+						}else if(this.order.status==6){
+							//交易成功
+							this.show = true;
+					
+							this.order.statusMsg = '交易成功';
+							this.order.wuliu = '删除订单';
+							this.order.img=this.img[3];
+							this.order.pay='去评价';
+							this.order.color = '#01B300'
+						}else if(this.order.status==4){
+							// 交易关闭
+							this.show = true;
+							this.order.wuliu = '删除订单';
+							this.order.img=this.img[4]
+						}else if(this.order.status==3){
+							// 已完成
+							this.show = true;
+						
+							this.order.statusMsg = '已完成';
+							this.order.wuliu = '删除订单';
+							this.order.img=this.img[5];
+							this.order.pay='再次购买';
+							this.order.color = '#515151'
+						}
+						
+					}
+				})
+			},
 			consult(){
 				uni.navigateTo({
 					url:'consult'
@@ -271,12 +266,32 @@
 					uni.navigateTo({
 						url:'logistics'
 					})
-				}else if(this.statuss==7||this.statuss==9||this.statuss==6){//已完成，交易关闭，交易成功的订单，就删除订单
-					
+				}else if(this.statuss==7||this.statuss==4||this.statuss==6){//已完成，交易关闭，交易成功的订单，就删除订单
+					axios.post('/order/deleteOrder',{id:this.order.id}).then(res=>{
+						console.log(res)
+						if(res.data.code=='200'){
+							this.$api.msg('删除成功');
+							uni.navigateTo({
+								url:'order'//返回到订单详情
+							})
+						}
+					})
 				}else if(this.statuss==1){//待支付，取消订单
 					
 				}
+			},
+			// 日期转换
+			// 时间戳转换成时间
+			timestampToTime (time) {
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear()
+				var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
+				var D = date.getDate()
+				var h = date.getHours() + ':'
+				var m = date.getMinutes() + ':'
+				var s = date.getSeconds();
 				
+				return Y+'-'+M+'-'+D+' '+h+m+s
 			}
 		}
 	}
@@ -610,7 +625,7 @@
 	font-weight:400;
 	color:rgba(88,88,88,1);
 	line-height:28px;
-	margin-bottom: 20rpx;
+	margin-bottom: 150rpx;
 }
 .toBeFinish{
 	.toBeFinishBlock{

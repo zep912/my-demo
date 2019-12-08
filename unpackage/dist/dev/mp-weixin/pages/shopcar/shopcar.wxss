@@ -353,8 +353,8 @@ page {
   background: #F2F2F2;
 }
 .shopCar .noCollect ._img {
-  width: 100rpx;
-  height: 100rpx;
+  width: 200rpx;
+  height: 200rpx;
 }
 .shopcar-goods {
   width: 100%;

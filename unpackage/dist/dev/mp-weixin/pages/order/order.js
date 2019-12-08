@@ -202,7 +202,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 389));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 396));};var _default =
+var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 389));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 396));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -210,40 +211,45 @@ var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));functi
 
   data: function data() {
     return {
-      src: '../../static/nogoods.png',
+      src: '../static/nogoods.png',
       msg: '你还没有任何订单，看看其他的吧',
       tabCurrentIndex: 0,
       navList: [{
-        state: 0,
+        status: 0,
         text: '全部',
         loadingType: 'more',
         orderList: [] },
 
       {
-        state: 1,
+        status: 0,
         text: '待付款',
         loadingType: 'more',
         orderList: [] },
 
       {
-        state: 4,
+        status: 1,
         text: '待发货',
         loadingType: 'more',
         orderList: [] },
 
       {
-        state: 2,
+        status: 2,
         text: '待收货',
         loadingType: 'more',
         orderList: [] },
 
       {
-        state: 3,
+        status: 3,
         text: '待评价',
         loadingType: 'more',
-        orderList: [] }] };
+        orderList: [] }],
 
 
+      page: {
+        current: 1,
+        pageSize: 10 },
+
+      orderList: [] };
 
   },
 
@@ -252,9 +258,8 @@ var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));functi
                                      * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
                                      * 替换onLoad下代码即可
                                      */
-
     this.tabCurrentIndex = +options.state;
-    this.loadData();
+    this.loadData('tabChange', 0);
     if (options.state == 0) {
       this.loadData();
     }
@@ -262,11 +267,11 @@ var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));functi
 
   methods: {
     //获取订单列表
-    loadData: function loadData(source) {var _this = this;
+    loadData: function loadData(source, n) {var _this = this;
       //这里是将订单挂载到tab列表下
       var index = this.tabCurrentIndex;
       var navItem = this.navList[index];
-      var state = navItem.state;
+      var state = navItem.status;
       if (source === 'tabChange' && navItem.loaded === true) {
         //tab切换只有第一次需要加载数据
         return;
@@ -277,26 +282,54 @@ var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));functi
       }
 
       // navItem.loadingType = 'loading';
+      var obj = {
+        "orderType": 0, //订单类型
+        "pageNum": this.page.current, //页码
+        "pageSize": this.page.pageSize, //页数
+        "sourceType": 1, //订单来源
+        "status": n //订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
 
-      var orderList = _Json.default.orderList.filter(function (item) {
-        //添加不同状态下订单的表现形式
-        item = Object.assign(item, _this.orderStateExp(item.state));
-        //演示数据所以自己进行状态筛选
-        if (state === 0) {
-          //0为全部订单
-          return item;
+        // let orderList=[]
+      };_uniAxios.default.post('/order/list', obj).then(function (res) {
+        if (res.data.code == '200') {
+          var result = res.data.data.list;
+          _this.orderList = result.filter(function (item) {
+            //添加不同状态下订单的表现形式
+            item = Object.assign(item, _this.orderStateExp(item.status));
+            //演示数据所以自己进行状态筛选
+            if (state === 0) {
+              //0为全部订单
+              return item;
+            }
+            return item.status === status;
+          });
+
+          _this.orderList.forEach(function (item) {
+            navItem.orderList.push(item);
+          });
+          _this.$set(navItem, 'loaded', true);
+          console.log(_this.navList, 77);
         }
-        return item.state === state;
       });
-      orderList.forEach(function (item) {
-        navItem.orderList.push(item);
-      });
+      // let orderList = Json.orderList.filter(item => {
+      // 	//添加不同状态下订单的表现形式
+      // 	item = Object.assign(item, this.orderStateExp(item.state));
+      // 	//演示数据所以自己进行状态筛选
+      // 	if (state === 0) {
+      // 		//0为全部订单
+      // 		return item;
+      // 	}
+      // 	return item.state === state
+      // });
+
+      // orderList.forEach(item => {
+      // 	navItem.orderList.push(item);
+      // })
       //loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-      this.$set(navItem, 'loaded', true);
+
 
       //判断是否还有数据， 有改为 more， 没有改为noMore 
       // navItem.loadingType = 'more';
-
     },
 
     //swiper 切换
@@ -356,10 +389,10 @@ var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));functi
       var stateTip = '',
       stateTipColor = '#fa436a';
       switch (+state) {
-        case 1:
+        case 0:
           stateTip = '待支付';
           break;
-        case 4:
+        case 1:
           stateTip = '待发货';
           break;
         case 2:
@@ -388,10 +421,11 @@ var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 17));functi
 
     },
     //订单详情
-    orderDetails: function orderDetails(item) {
-      if (item.state != 3) {
+    orderDetails: function orderDetails(item, id) {
+      console.log(item);
+      if (item.status != 3) {
         uni.navigateTo({
-          url: 'orderDetails?status=' + item.state });
+          url: 'orderDetails?status=' + item.status + '&id=' + id });
 
       }
 
