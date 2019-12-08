@@ -91,6 +91,7 @@
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import empty from "@/components/empty";
 	import Json from '@/Json';
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components: {
 			uniLoadMore,
@@ -109,34 +110,28 @@
 				tabCurrentIndex: 0,
 				navList: [{
 						state: 0,
-						text: '全部',
+						text: '执行订单',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
 						state: 1,
-						text: '待付款',
+						text: '取单中',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
 						state: 4,
-						text: '待发货',
+						text: '配送中',
 						loadingType: 'more',
 						orderList: []
 					},
 					{
 						state: 2,
-						text: '待收货',
+						text: '已送达',
 						loadingType: 'more',
 						orderList: []
-					},
-					{
-						state: 3,
-						text: '待评价',
-						loadingType: 'more',
-						orderList: []
-					},
+					}
 				],
 				deliverylist: [{
 					state: 1,
@@ -167,7 +162,12 @@
 						biaoshi:25,
 						time:'2019-11-14 12:12:00'
 					}
-				}]
+				}],
+				sendStatus:0,
+				page:{
+					current:1,
+					pageSize:10
+				}
 			};
 		},
 
@@ -177,7 +177,7 @@
 			 * 替换onLoad下代码即可
 			 */
 			this.tabCurrentIndex = 0;
-			// this.loadData();
+			this.loadData('tabChange',0);
 			if (options.state == 1) {
 				// this.loadData()
 			}
@@ -207,7 +207,7 @@
 				}
 			},
 			//获取订单列表
-			loadData(source) {
+			loadData(source,n) {
 				//这里是将订单挂载到tab列表下
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
@@ -223,19 +223,27 @@
 
 				// navItem.loadingType = 'loading';
 
-				let orderList = Json.deliverylist.filter(item => {
-					//添加不同状态下订单的表现形式
-					item = Object.assign(item, this.orderStateExp(item.state));
-					//演示数据所以自己进行状态筛选
-					if (state === 0) {
-						//0为全部订单
-						return item;
-					}
-					return item.state === state
-				});
-				orderList.forEach(item => {
-					navItem.orderList.push(item);
+				// let orderList = Json.deliverylist.filter(item => {
+				// 	//添加不同状态下订单的表现形式
+				// 	item = Object.assign(item, this.orderStateExp(item.state));
+				// 	//演示数据所以自己进行状态筛选
+				// 	if (state === 0) {
+				// 		//0为全部订单
+				// 		return item;
+				// 	}
+				// 	return item.state === state
+				// });
+				let obj = {
+					pageNum:this.page.current,
+					pageSize:this.page.pageSize,
+					sendStatus:n
+				}
+				axios.post('/sendInformation/list',obj).then(res=>{
+					console.log(res)
 				})
+				// orderList.forEach(item => {
+				// 	navItem.orderList.push(item);
+				// })
 				//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
 				this.$set(navItem, 'loaded', true);
 
@@ -253,49 +261,6 @@
 			tabClick(index) {
 				this.tabCurrentIndex = index;
 			},
-			//删除订单
-			deleteOrder(index) {
-				uni.showLoading({
-					title: '请稍后'
-				})
-				setTimeout(() => {
-					this.navList[this.tabCurrentIndex].orderList.splice(index, 1);
-					uni.hideLoading();
-				}, 600)
-			},
-			// 评价
-			evaluate(item) {
-				console.log(item)
-			},
-			// 再次购买
-			againBuy(item) {
-				console.log(item)
-			},
-			//取消订单
-			cancelOrder(item) {
-				uni.showLoading({
-					title: '请稍后'
-				})
-				setTimeout(() => {
-					let {
-						stateTip,
-						stateTipColor
-					} = this.orderStateExp(9);
-					item = Object.assign(item, {
-						state: 9,
-						stateTip,
-						stateTipColor
-					})
-
-					//取消订单后删除待付款中该项
-					let list = this.navList[1].orderList;
-					let index = list.findIndex(val => val.id === item.id);
-					index !== -1 && list.splice(index, 1);
-
-					uni.hideLoading();
-				}, 600)
-			},
-
 			//订单状态文字和颜色
 			orderStateExp(state) {
 				let stateTip = '',
@@ -332,21 +297,6 @@
 					stateTipColor
 				};
 			},
-			//订单详情
-			orderDetails(item) {
-				if (item.state != 3) {
-					uni.navigateTo({
-						url: 'orderDetails?status=' + item.state
-					})
-				}
-
-			},
-			// 物流信息
-			logisticsTap() {
-				uni.navigateTo({
-					url: 'logistics'
-				})
-			}
 		},
 	}
 </script>

@@ -1,8 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/delivery/delivery",
     "pages/delivery/set",
+    
+    
+   
+    "pages/delivery/delivery",
+    
     "pages/delivery/deliverylist",
     "pages/delivery/statistics",
     "pages/delivery/myprofit",
@@ -20,7 +24,6 @@
     "pages/shopcar/shopcar",
     "pages/public/login",
     "pages/user/user",
-    "pages/detail/detail",
     "pages/order/order",
     "pages/shopcar/postOrder",
     "pages/shopcar/paySuccess",
@@ -31,7 +34,6 @@
     "pages/order/aftersale",
     "pages/order/cancelOrder",
     "pages/order/logistics",
-    "pages/order/consult",
     "pages/order/refund",
     "pages/order/orderDetails",
     "pages/set/address",
@@ -84,5 +86,6 @@
     ]
   },
   "permission": {},
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
 }

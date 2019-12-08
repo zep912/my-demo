@@ -3,32 +3,32 @@
 		<view class="bill-box">
 			<view class="bill-box-info">
 				<view class="bill-box--letop borderritop" style="border-bottom: 1px solid #EDEDED;border-right: 1px solid #EDEDED;">
-					<text class="bill-price block"><text class="bill-color">66.00</text>元</text>
+					<text class="bill-price block"><text class="bill-color">{{form.totalAmount}}</text>元</text>
 					<text class="block bill-price-title">累计收入</text>
 				</view>
 				<view class="bill-box--letop" style="border-bottom: 1px solid #EDEDED;">
-					<text class="bill-price block"><text class="bill-color">66.00</text>元</text>
+					<text class="bill-price block"><text class="bill-color">{{form.monthAmount}}</text>元</text>
 					<text class="block bill-price-title">当月收入</text>
 				</view>
 				<view class="bill-box--letop" style="border-right: 1px solid #EDEDED;">
-					<text class="bill-price block"><text class="bill-color">66.00</text>元</text>
+					<text class="bill-price block"><text class="bill-color">{{form.totalactulAmount}}</text>元</text>
 					<text class="block bill-price-title">当月所有提现</text>
 				</view>
 				<view class="bill-box--letop borderletop">
-					<text class="bill-price block"><text class="bill-color">66.00</text>元</text>
+					<text class="bill-price block"><text class="bill-color">{{form.totalAmount}}</text>元</text>
 					<text class="block bill-price-title">累计实际提现</text>
 				</view>
 			</view>
 		</view>
 		<view class="bill-list">
-			<view class="bill-list-box">
+			<view class="bill-list-box" v-for='(item,index) in list.incomeList'>
 				<view class="bill-list-title">
-					<text class="bill-list-shop">麦田圈配送收益(订单配送)</text>
-					<text class="bill-list-time">11-14 14:05</text>
+					<text class="bill-list-shop">{{item.incomeName}}</text>
+					<text class="bill-list-time">{{item.createTime}}</text>
 				</view>
 				<view class="bill-list-number">
-					<text>相当单号：<text>56465654654646654</text></text>
-					<text class="bill-list-price">+<text>5.00</text>元</text>
+					<text>相当单号：<text>{{item.orderId}}</text></text>
+					<text class="bill-list-price">+<text>{{item.orderAmount}}</text>元</text>
 				</view>
 			</view>
 		</view>
@@ -36,10 +36,37 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
-
+				form:{
+					incomeList: [],// 收益列表
+					monthAmount: '',//当月收入 
+					monthtxAmount: '',//当月所提现 
+					notRecordedAmount: '',
+					totalAmount: '',//累计收入
+					totalactulAmount: '',//累计实际提现
+					yyAmount: ''//账户余额
+				},
+				page:{
+					current:1,
+					pageSize:10
+				}
+			}
+		},
+		onLoad(){
+			this.getData()
+		},
+		methods:{
+			getData(){
+				let obj = {
+					pageNum:this.page.current,
+					pageSize:this.page.pageSize
+				};
+				axios.post('/income/list',obj).then(res=>{
+					this.form = res.data.data
+				})
 			}
 		}
 	}

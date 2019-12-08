@@ -4,12 +4,12 @@
 			<image src="../../static/delivery/shouyibg.png" mode="" class="bg"></image>
 			<view class="sta-bg-top">
 				<text class="sta-bg-title sta-bgtitle">账户余额</text>
-				<text class="sta-bg-title"><text class="sta-bg-num">366.00</text>元</text>
+				<text class="sta-bg-title"><text class="sta-bg-num">{{list.yyAmount}}</text>元</text>
 			</view>
 		</view>
 		<!-- 未入金额 -->
 		<view class="nomoney">
-			<text>未入账金额:<text class="nomoney-num">233.00</text>元</text>
+			<text>未入账金额:<text class="nomoney-num">{{list.notRecordedAmount}}</text>元</text>
 		</view>
 		<!-- 账单统计 -->
 		<view class="myprofit-sta">
@@ -22,13 +22,34 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
-
+				page:{
+					current:1,
+					pageSize:10
+				},
+				list:{
+					yyAmount:'',//账户余额
+					notRecordedAmount:'',//未入账金额
+				}
 			}
 		},
+		onLoad() {
+			this.getData()
+		},
 		methods:{
+			getData(){
+				let obj = {
+					pageNum:this.page.current,
+					pageSize:this.page.pageSize
+				}
+				axios.post('/income/list',obj).then(res=>{
+					console.log(res)
+					this.list = res.data.data
+				})
+			},
 			next(){
 				uni.navigateTo({
 					url:'billstatistics'

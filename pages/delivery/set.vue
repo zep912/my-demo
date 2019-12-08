@@ -17,7 +17,7 @@
 			<text class="cell-tip">快乐风男</text>
 		</view>
 		
-		<view class="list-cell b-b" @click="navTo('address')" hover-class="cell-hover" :hover-stay-time="50" style="margin-top: 10rpx;">
+		<view class="list-cell b-b" hover-class="cell-hover" :hover-stay-time="50" style="margin-top: 10rpx;">
 			<text class="cell-tit">接单状态</text>
 			<van-switch :checked="checked" @change="onChange" active-color="#07c160" custom-class='switchClass'/>
 		</view>
@@ -46,17 +46,19 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	import {
 		mapMutations
 	} from 'vuex';
 	export default {
 		data() {
 			return {
-				img: '/static/missing-face.png',
+				img: '../../static/my/missing-face.png',
 				checked:true,
 				songdan:'../../static/delivery/songdan2.png',
 				jiedan:'../../static/delivery/jiedanset.png',
-				daliveryData:2
+				daliveryData:2,
+				rorderStatus:''
 			};
 		},
 		methods: {
@@ -67,8 +69,20 @@
 					url: `../delivery/${url}`
 				});
 			},
-			onChange(){
-				
+			// 接单状态的改变
+			onChange(e){
+				console.log(e)
+				if(e.detail){//开启
+					this.rorderStatus = 1;
+					axios.post('/sso/user/isOpenSend',{rorderStatus:1}).then(res=>{
+						this.$api.msg('开启成功')
+					})
+				}else{
+					axios.post('/sso/user/isOpenSend',{rorderStatus:0}).then(res=>{
+						this.$api.msg('关闭成功')
+					})
+				}
+				this.checked = !this.checked	
 			},
 			sd(e){
 				if(e==1){
