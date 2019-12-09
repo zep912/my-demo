@@ -31,78 +31,35 @@
 			</view>
 		</view>
 
-		<!-- 限时抢购 -->
-		<view class="seckill-section m-t">
-			<view class="s-header">
-				<text class="tip-title">限时抢购</text>
-				<text class="tip-timer">
-					<text class="tip">{{homeFlashTime}}点场</text>
-					<text class="timer">01天06时29分</text>
-				</text>
-				<text class="yticon">坚果特惠
-					<text class="yticon icon-you"></text>
-				</text>
+		<!-- 美味坚果，等你来尝 -->
+		<view class="hot-goods">
+			<view class="hot-title">
+				<img src="../../static/index/btbg.png" alt="">
+				<view class="title">美味坚果，等你来尝</view>
 			</view>
-			<scroll-view class="floor-list" scroll-x>
-				<view class="scoll-wrapper">
-					<view v-for="(item, index) in productList" :key="index" class="floor-item" @click="navToDetailPage(item)">
-						<image :src="item.pic" mode="aspectFill"></image>
-						<text class="title pre-line">{{item.name}}</text>
-						<text class="tag">秒杀</text>
-						<view class="pos-r">
-							<view class="price">¥{{item.promotionPrice}}</view>
-							<view class="price-old">¥{{item.originalPrice}}</view>
-							<uni-icons class="pos-a" type="plus-filled" color ='#F55641' size="30"></uni-icons>
-						</view>
-					</view>
-				</view>
-			</scroll-view>
+			<view class="box-grid" @click="navToCate">
+				<image src="/static/index/xxls1.jpg"></image>
+				<image src="/static/index/xxls2.jpg"></image>
+				<image src="/static/index/xxls3.jpg"></image>
+			</view>
+			<view class="box-100" @click="navToCate">
+				<image src="/static/index/xxls4.jpg"></image>
+			</view>
 		</view>
-
-		<!-- 限量秒杀新品，比手快 -->
-		<!--<view class="hot-goods">-->
-			<!--<view class="hot-title">-->
-				<!--<img src="../../static/index/btbg.png" alt="">-->
-				<!--<view class="title">限量秒杀新品，比手快</view>-->
-			<!--</view>-->
-			<!--<view class="poster-content">-->
-				<!--<view class="content-item" v-for="(item, index) in newProductList" :key="index" @click="navToDetailPage(item)">-->
-					<!--<image :src="item.pic"></image>-->
-				<!--</view>-->
-				<!--<view class="content-item">-->
-					<!--<image src="/static/index/sg.png"></image>-->
-				<!--</view>-->
-			<!--</view>-->
-		<!--</view>-->
 		<!-- 精选美味，等你来吃 -->
 		<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
-				<view class="title">精选美味，等你来吃</view>
+				<view class="title">爽口饮品，激情畅饮</view>
 			</view>
 			<view class="poster-content" @click="navToCate">
 				<view class="content-item">
-					<image src="/static/index/box.png"></image>
+					<image src="/static/index/yp1.jpg"></image>
 				</view>
 				<view class="content-item">
-					<image class="img-50" src="/static/index/three.png"></image>
-					<image class="img-50" src="/static/index/five.png"></image>
+					<image class="img-50" src="/static/index/yp2.jpg"></image>
+					<image class="img-50" src="/static/index/yp3.jpg"></image>
 				</view>
-			</view>
-		</view>
-		<!-- 酸甜可口的酸奶盖，等你来舔 -->
-		<view class="hot-goods">
-			<view class="hot-title">
-				<img src="../../static/index/btbg.png" alt="">
-				<view class="title">酸甜可口的酸奶盖，等你来舔</view>
-			</view>
-			<view class="box-grid" @click="navToCate">
-				<image src="/static/index/cja.png"></image>
-				<image src="/static/index/lmja.png"></image>
-				<image src="/static/index/ja.png"></image>
-			</view>
-			<view class="box-100" @click="navToCate">
-				<image src="/static/index/xptj.png"></image>
 			</view>
 		</view>
 		<!-- 花里胡哨的包包，等你来剁手 -->
@@ -111,8 +68,17 @@
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">花里胡哨的包包，等你来剁手</view>
 			</view>
+			<view class="poster-content" @click="navToCate">
+				<view class="content-item">
+					<image src="/static/index/ls1.jpg"></image>
+				</view>
+				<view class="content-item">
+					<image class="img-50" src="/static/index/ls2.jpg"></image>
+					<image class="img-50" src="/static/index/ls3.jpg"></image>
+				</view>
+			</view>
 			<view class="box-grid box-100">
-				<image src="/static/index/prxd.png"></image>
+				<image src="/static/index/ls4.jpg"></image>
 			</view>
 		</view>
 		
@@ -210,6 +176,7 @@
 				uni.getUserInfo({
 					provider: 'weixin',
 					success: (infoRes) => {
+						console.log(infoRes, 'infoRes');
 						this.$store.commit('login', infoRes.userInfo);
 						this.isCanUse = false;
 					},
@@ -692,7 +659,7 @@
 
 	.poster-content {
 		display: flex;
-		margin: 20upx;
+		margin: 0 20upx;
 
 		.content-item {
 			width: 49%;
