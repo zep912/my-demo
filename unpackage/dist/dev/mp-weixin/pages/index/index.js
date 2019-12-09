@@ -294,21 +294,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vuex = __webpack_require__(/*! vuex */ 10);
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 390));};var uniIcons = function uniIcons() {return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 397));};var _default =
-
-
-
-
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 30));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 391));};var uniIcons = function uniIcons() {return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 398));};var _default =
 
 
 {
-  components: {
-    uniSearchBar: uniSearchBar,
-    uniIcons: uniIcons },
-
+  components: { uniSearchBar: uniSearchBar, uniIcons: uniIcons },
   data: function data() {
     return {
       titleNViewBackground: '',
@@ -317,7 +311,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       carouselList: [],
       goodsList: [],
       isCanUse: true, //默认为true
-      skuList: [{
+      skuList: [
+      {
         img: '../../static/egg_01.png',
         title: '正宗农家散养谷饲土鸡蛋20枚',
         subTitle: '宇宙无敌巨好吃的鸡蛋',
@@ -353,123 +348,58 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.login();
   },
   methods: {
-    //第一授权获取用户信息===》按钮触发
-    wxGetUserInfo: function wxGetUserInfo() {
-      var _this = this;
+    // 授权用户信息
+    wxGetUserInfo: function wxGetUserInfo() {var _this = this;
       uni.getUserInfo({
         provider: 'weixin',
         success: function success(infoRes) {
-          var nickName = infoRes.userInfo.nickName; //昵称
-          var avatarUrl = infoRes.userInfo.avatarUrl; //头像
-          try {
-            uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
-            this.$store.commit('login', infoRes.userInfo);
-            _this.updateUserInfo();
-          } catch (e) {}
+          _this.$store.commit('login', infoRes.userInfo);
+          _this.isCanUse = false;
         },
         fail: function fail(res) {} });
 
     },
-
-    //登录
-    login: function login() {
-      var _this = this;
-      uni.showLoading({
-        title: '登录中...' });
-
-
+    login: function login() {var _this2 = this;
       // 1.wx获取登录用户code
       uni.login({
         provider: 'weixin',
         success: function success(loginRes) {
           var code = loginRes.code;
-          if (!_this.isCanUse) {
+          console.log(_this2.$store.state.hasLogin, _this2.$store.state, loginRes, 'loginRes');
+          _this2.isCanUse = !_this2.$store.state.hasLogin;
+          if (!_this2.isCanUse) {
             //非第一次授权获取用户信息
-            _this.wxGetUserInfo();
-            // uni.getUserInfo({
-            // 	provider: 'weixin',
-            // 	success: function(infoRes) {
-            // 		//获取用户信息后向调用信息更新方法
-            // 		let nickName = infoRes.userInfo.nickName; //昵称
-            // 		let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-            // 		// _this.updateUserInfo(); //调用更新信息方法
-            // 	}
-            // });
+            _this2.wxGetUserInfo();
           }
-
           //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-          uni.request({
-            url: '/sso/user/miniLogin',
-            data: {
-              code: code },
-
-            method: 'POST',
-            header: {
-              'content-type': 'application/json' },
-
-            success: function success(res) {
-              console.log(res);
-              //openId、或SessionKdy存储//隐藏loading
-              uni.hideLoading();
-            } });
-
+          // uni.request({
+          // 	url: '服务器地址',
+          // 	data: {
+          // 		code: code,
+          // 	},
+          // 	method: 'GET',
+          // 	header: {
+          // 		'content-type': 'application/json'
+          // 	},
+          // 	success: (res) => {
+          // 		//openId、或SessionKdy存储//隐藏loading
+          // 		uni.hideLoading();
+          // 	}
+          // })
         } });
 
     },
-    // // 授权用户信息
-    // wxGetUserInfo() {
-    // 	uni.getUserInfo({
-    // 		provider: 'weixin',
-    // 		success: (infoRes) => {
-    // 			this.$store.commit('login', infoRes.userInfo);
-    // 			this.isCanUse = false;
-    // 		},
-    // 		fail(res) {}
-    // 	})
-    // },
-    // login() {
-    // 	// 1.wx获取登录用户code
-    // 	uni.login({
-    // 		provider: 'weixin',
-    // 		success: (loginRes) => {
-    // 			let code = loginRes.code;
-    // 			console.log(this.$store.state.hasLogin, this.$store.state, loginRes, 'loginRes');
-    // 			this.isCanUse = !this.$store.state.hasLogin;
-    // 			if (!this.isCanUse) {
-    // 				//非第一次授权获取用户信息
-    // 				this.wxGetUserInfo()
-    // 			}
-    // 			// 2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-    // 			uni.request({
-    // 				url: '服务器地址',
-    // 				data: {
-    // 					code: code,
-    // 				},
-    // 				method: 'GET',
-    // 				header: {
-    // 					'content-type': 'application/json'
-    // 				},
-    // 				success: (res) => {
-    // 					//openId、或SessionKdy存储//隐藏loading
-    // 					uni.hideLoading();
-    // 				}
-    // 			})
-    // 		}
-    // 	})
-    // },
     // 手机号登录
     toPhone: function toPhone() {
-      uni.navigateTo({
-        url: '/pages/public/login' });
-
+      uni.navigateTo({ url: '/pages/public/login' });
     },
     close: function close() {
       this.isCanUse = false;
     },
     /**
-        * 请求静态数据只是为了代码不那么乱
-        * 分次请求未作整合
-        */
+       * 请求静态数据只是为了代码不那么乱
+       * 分次请求未作整合
+       */
     loadData: function () {var _loadData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var carouselList, goodsList;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:_context.next = 2;return (
                   this.$api.json('carouselList'));case 2:carouselList = _context.sent;
                 this.titleNViewBackground = carouselList[0].background;
@@ -514,18 +444,15 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         url: "/pages/category/category" });
 
     },
-    getHomeList: function getHomeList() {var _this2 = this;
-      _uniAxios.default.post('/home/list', {}).then(function (_ref)
-
-      {var data = _ref.data;
+    getHomeList: function getHomeList() {var _this3 = this;
+      _uniAxios.default.post('/home/list', {}).then(function (_ref) {var data = _ref.data;
         if (data.code === 200) {
-          _this2.carouselList = data.data.advertiseList || [];
-          _this2.productCategoryList = data.data.productCategoryList || [];
-          _this2.skuList = data.data.hotProductList || [];
-          _this2.newProductList = data.data.newProductList || [];
-          _this2.productList = data.data.homeFlashPromotion.productList || [];
-          if (data.data.homeFlashPromotion.startTime) _this2.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime).
-          getHours() - 8;
+          _this3.carouselList = data.data.advertiseList || [];
+          _this3.productCategoryList = data.data.productCategoryList || [];
+          _this3.skuList = data.data.hotProductList || [];
+          _this3.newProductList = data.data.newProductList || [];
+          _this3.productList = data.data.homeFlashPromotion.productList || [];
+          if (data.data.homeFlashPromotion.startTime) _this3.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime).getHours() - 8;
           // this.dataRes = data.data;
         }
       });
