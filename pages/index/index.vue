@@ -32,7 +32,7 @@
 		</view>
 
 		<!-- 限时抢购 -->
-		<!-- <view class="seckill-section m-t">
+		<view class="seckill-section m-t">
 			<view class="s-header">
 				<text class="tip-title">限时抢购</text>
 				<text class="tip-timer">
@@ -57,7 +57,7 @@
 					</view>
 				</view>
 			</scroll-view>
-		</view> -->
+		</view>
 
 		<!-- 限量秒杀新品，比手快 -->
 		<!--<view class="hot-goods">-->
