@@ -9,11 +9,11 @@
 		<view class="de-login">
 			<view class="de-login-phone">
 				<image src="../../static/delivery/phone.png" mode=""></image>
-				<input type="text" value="" placeholder="请输入手机号码" placeholder-class='customClss'/>
+				<input type="text" value="" placeholder="请输入手机号码" placeholder-class='customClss' v-model="phone"/>
 			</view>
 			<view class="de-login-code">
 				<image src="../../static/delivery/code.png" mode=""></image>
-				<input type="text" value="" placeholder="请输入验证码"  placeholder-class='customClss'/>
+				<input type="text" value="" placeholder="请输入验证码"  placeholder-class='customClss' v-model="authCode" />
 				<button class="postCode" plain='true' @click="postCode" :disabled="disabled">{{code}}</button>
 				<!-- <text class="postCode"></text> -->
 			</view>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data(){
 			return{
@@ -31,7 +32,9 @@
 				leftIcon:'../../static/delivery/phone.png',
 				code:'发送验证码',
 				disabled:false,
-				num:60
+				num:60,
+				phone:'',
+				authCode:''
 			}
 		},
 		mounted() {
@@ -39,21 +42,66 @@
 		},
 		methods:{
 			login(){
-				uni.navigateTo({
-					url:'set'
+				var _this = this;
+				let obj = {
+					phone: _this.phone,
+					authCode: _this.authCode
+				};
+				axios.post('/sso/user/login',obj).then(res=>{
+					if(res.data.code=='200'){
+						var token = res.data.data.token;
+						uni.setStorageSync('gt',token);
+						uni.setStorageSync('deliveryPhone',_this.phone);
+						uni.redirectTo({
+							url:'set'
+						})
+						// uni.switchTab({
+						// 	url:'set',
+						// 	success:(res)=> { 
+						// 		 let page = getCurrentPages();  //跳转页面成功之后
+						// 		 if (!page){
+						// 			 return
+						// 		 }else{
+						// 			 page[page.length-1].data.loadData()
+						// 			 // var beforePage = page[0].data;
+						// 			 //  page.loadData(); //如果页面存在，则重新刷新页面
+						// 		 };   
+						// 	  }
+						// });
+					}else{
+						this.$api.msg(res.data.message)
+					}
 				})
 			},
+			// 发送验证码
 			postCode(){
-				this.disabled = true;
-				
-				this.code=this.num+'s';
-				setInterval(()=>{
-					this.num--;
-					this.code=this.num+'s';
-					if(this.num==0){
-						this.code = '重新发送'
+				if (this.phone == '') {
+					this.$api.msg('请输入手机号码')
+				} else {
+					var _this = this;
+					let obj = {
+						telephone: _this.phone
 					}
-				},1000)
+					axios.post('/sso/user/sendCode',obj).then(res=>{
+						console.log(res)
+						if(res.data.code=='200'){
+							_this.$api.msg('发送成功')
+							if(res.data.code==200){
+								_this.disabled = true;
+								_this.code = _this.num + 's';
+								var timer=setInterval(() => {
+									_this.num--;
+									_this.code = _this.num + 's';
+									if (_this.num == 0) {
+										clearInterval(timer)
+										_this.code = '重新发送';
+										_this.num = 60;
+									}
+								}, 1000)
+							}
+						}
+					})
+				}
 			}
 				
 		}

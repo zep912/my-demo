@@ -5,6 +5,10 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.order .noCollect ._img {
+  width: 200rpx;
+  height: 180rpx;
+}
 page,
 .content {
   background: #F2F2F2;

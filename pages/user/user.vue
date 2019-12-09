@@ -75,7 +75,7 @@
 				<img src="../../static/my/my-wallet.png" class="wallet-img"></image>
 				<text>钱包</text>
 			</view>
-			<view class="wallet-cell" @click="navTo('/pages/delivery/delivery')">
+			<view class="wallet-cell" @click="deliveryClick">
 				<img src="../../static/my/my-delivery.png" class="wallet-img"></image>
 				<text>麦吉配送</text>
 			</view>
@@ -114,14 +114,6 @@
 
 		</view>
 	</view>
-
-	<!-- 微信登录  自动弹窗-->
-	<!-- <view class="weixinLogin" v-if="isCanUse">
-		<text class="weixinX" @click="close">X</text>
-		<image src="../../static/delivery/logo.png" mode=""></image>
-		<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
-		<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
-	</view> -->
 	</view>
 </template>
 <script>
@@ -144,7 +136,28 @@
 				coverTransition: '0s',
 				moving: false,
 				// abImg: '../../static/banner_01.png',
-				goodsList: [],
+				goodsList: [{
+						img: '',
+						title: '正宗农家散养谷饲土鸡蛋20枚',
+						subTitle: '宇宙无敌巨好吃的鸡蛋',
+						jifen: '200',
+						price: 999.90
+					},
+					{
+						img: '',
+						title: '正宗农家散养谷饲土鸡蛋20枚',
+						subTitle: '宇宙无敌巨好吃的鸡蛋',
+						jifen: '200',
+						price: 999.90
+					},
+					{
+						img: '',
+						title: '正宗农家散养谷饲土鸡蛋20枚',
+						subTitle: '宇宙无敌巨好吃的鸡蛋',
+						jifen: '200',
+						price: 999.90
+					}
+				],
 				authShow: true,
 				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
 			}
@@ -228,6 +241,18 @@
 				} else {
 					uni.navigateTo({
 						url: '../public/login'
+					})
+				}
+			},
+			// 麦吉配送
+			deliveryClick(){
+				if(uni.getStorageSync('deliveryPhone')){//已经登录过
+					uni.navigateTo({
+						url:'../delivery/set'
+					})
+				}else{
+					uni.navigateTo({
+						url:'../delivery/delivery'
 					})
 				}
 			},

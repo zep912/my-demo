@@ -1,8 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/delivery/delivery",
     "pages/delivery/set",
+
+
+
+    "pages/delivery/delivery",
+
     "pages/delivery/deliverylist",
     "pages/delivery/statistics",
     "pages/delivery/myprofit",
@@ -83,5 +87,5 @@
   },
   "permission": {},
   "usingComponents": {},
-  "sitemapLocation": "sitemap54.json"
+  "sitemapLocation": "sitemap.json"
 }

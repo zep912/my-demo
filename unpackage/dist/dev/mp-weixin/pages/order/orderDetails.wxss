@@ -395,7 +395,7 @@ page {
   font-weight: 400;
   color: #585858;
   line-height: 28px;
-  margin-bottom: 20rpx;
+  margin-bottom: 150rpx;
 }
 .toBeFinish .toBeFinishBlock {
   display: block;

@@ -314,6 +314,7 @@
 </script>
 
 <style lang="scss">
+	
 	.foot {
 		width: 100%;
 		height: 120rpx;
@@ -635,8 +636,8 @@
 	}
 
 	.shopCar .noCollect img {
-		width: 100rpx;
-		height: 100rpx;
+		width: 200rpx;
+		height: 200rpx;
 	}
 
 	.shopcar-goods {
