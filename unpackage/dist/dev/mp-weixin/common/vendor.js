@@ -1,6 +1,6 @@
-(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
-/* 0 */,
-/* 1 */
+(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
+
+/***/ 1:
 /*!************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js ***!
   \************************************************************/
@@ -1508,7 +1508,1786 @@ var uni$1 = uni;var _default =
 uni$1;exports.default = _default;
 
 /***/ }),
-/* 2 */
+
+/***/ 10:
+/*!********************************************!*\
+  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
+  \********************************************/
+/*! exports provided: Store, install, mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers, default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
+/**
+ * vuex v3.0.1
+ * (c) 2017 Evan You
+ * @license MIT
+ */
+var applyMixin = function (Vue) {
+  var version = Number(Vue.version.split('.')[0]);
+
+  if (version >= 2) {
+    Vue.mixin({ beforeCreate: vuexInit });
+  } else {
+    // override init and inject vuex init procedure
+    // for 1.x backwards compatibility.
+    var _init = Vue.prototype._init;
+    Vue.prototype._init = function (options) {
+      if ( options === void 0 ) options = {};
+
+      options.init = options.init
+        ? [vuexInit].concat(options.init)
+        : vuexInit;
+      _init.call(this, options);
+    };
+  }
+
+  /**
+   * Vuex init hook, injected into each instances init hooks list.
+   */
+
+  function vuexInit () {
+    var options = this.$options;
+    // store injection
+    if (options.store) {
+      this.$store = typeof options.store === 'function'
+        ? options.store()
+        : options.store;
+    } else if (options.parent && options.parent.$store) {
+      this.$store = options.parent.$store;
+    }
+  }
+};
+
+var devtoolHook =
+  typeof window !== 'undefined' &&
+  window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
+
+function devtoolPlugin (store) {
+  if (!devtoolHook) { return }
+
+  store._devtoolHook = devtoolHook;
+
+  devtoolHook.emit('vuex:init', store);
+
+  devtoolHook.on('vuex:travel-to-state', function (targetState) {
+    store.replaceState(targetState);
+  });
+
+  store.subscribe(function (mutation, state) {
+    devtoolHook.emit('vuex:mutation', mutation, state);
+  });
+}
+
+/**
+ * Get the first item that pass the test
+ * by second argument function
+ *
+ * @param {Array} list
+ * @param {Function} f
+ * @return {*}
+ */
+/**
+ * Deep copy the given object considering circular structure.
+ * This function caches all nested objects and its copies.
+ * If it detects circular structure, use cached copy to avoid infinite loop.
+ *
+ * @param {*} obj
+ * @param {Array<Object>} cache
+ * @return {*}
+ */
+
+
+/**
+ * forEach for object
+ */
+function forEachValue (obj, fn) {
+  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
+}
+
+function isObject (obj) {
+  return obj !== null && typeof obj === 'object'
+}
+
+function isPromise (val) {
+  return val && typeof val.then === 'function'
+}
+
+function assert (condition, msg) {
+  if (!condition) { throw new Error(("[vuex] " + msg)) }
+}
+
+var Module = function Module (rawModule, runtime) {
+  this.runtime = runtime;
+  this._children = Object.create(null);
+  this._rawModule = rawModule;
+  var rawState = rawModule.state;
+  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
+};
+
+var prototypeAccessors$1 = { namespaced: { configurable: true } };
+
+prototypeAccessors$1.namespaced.get = function () {
+  return !!this._rawModule.namespaced
+};
+
+Module.prototype.addChild = function addChild (key, module) {
+  this._children[key] = module;
+};
+
+Module.prototype.removeChild = function removeChild (key) {
+  delete this._children[key];
+};
+
+Module.prototype.getChild = function getChild (key) {
+  return this._children[key]
+};
+
+Module.prototype.update = function update (rawModule) {
+  this._rawModule.namespaced = rawModule.namespaced;
+  if (rawModule.actions) {
+    this._rawModule.actions = rawModule.actions;
+  }
+  if (rawModule.mutations) {
+    this._rawModule.mutations = rawModule.mutations;
+  }
+  if (rawModule.getters) {
+    this._rawModule.getters = rawModule.getters;
+  }
+};
+
+Module.prototype.forEachChild = function forEachChild (fn) {
+  forEachValue(this._children, fn);
+};
+
+Module.prototype.forEachGetter = function forEachGetter (fn) {
+  if (this._rawModule.getters) {
+    forEachValue(this._rawModule.getters, fn);
+  }
+};
+
+Module.prototype.forEachAction = function forEachAction (fn) {
+  if (this._rawModule.actions) {
+    forEachValue(this._rawModule.actions, fn);
+  }
+};
+
+Module.prototype.forEachMutation = function forEachMutation (fn) {
+  if (this._rawModule.mutations) {
+    forEachValue(this._rawModule.mutations, fn);
+  }
+};
+
+Object.defineProperties( Module.prototype, prototypeAccessors$1 );
+
+var ModuleCollection = function ModuleCollection (rawRootModule) {
+  // register root module (Vuex.Store options)
+  this.register([], rawRootModule, false);
+};
+
+ModuleCollection.prototype.get = function get (path) {
+  return path.reduce(function (module, key) {
+    return module.getChild(key)
+  }, this.root)
+};
+
+ModuleCollection.prototype.getNamespace = function getNamespace (path) {
+  var module = this.root;
+  return path.reduce(function (namespace, key) {
+    module = module.getChild(key);
+    return namespace + (module.namespaced ? key + '/' : '')
+  }, '')
+};
+
+ModuleCollection.prototype.update = function update$1 (rawRootModule) {
+  update([], this.root, rawRootModule);
+};
+
+ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
+    var this$1 = this;
+    if ( runtime === void 0 ) runtime = true;
+
+  if (true) {
+    assertRawModule(path, rawModule);
+  }
+
+  var newModule = new Module(rawModule, runtime);
+  if (path.length === 0) {
+    this.root = newModule;
+  } else {
+    var parent = this.get(path.slice(0, -1));
+    parent.addChild(path[path.length - 1], newModule);
+  }
+
+  // register nested modules
+  if (rawModule.modules) {
+    forEachValue(rawModule.modules, function (rawChildModule, key) {
+      this$1.register(path.concat(key), rawChildModule, runtime);
+    });
+  }
+};
+
+ModuleCollection.prototype.unregister = function unregister (path) {
+  var parent = this.get(path.slice(0, -1));
+  var key = path[path.length - 1];
+  if (!parent.getChild(key).runtime) { return }
+
+  parent.removeChild(key);
+};
+
+function update (path, targetModule, newModule) {
+  if (true) {
+    assertRawModule(path, newModule);
+  }
+
+  // update target module
+  targetModule.update(newModule);
+
+  // update nested modules
+  if (newModule.modules) {
+    for (var key in newModule.modules) {
+      if (!targetModule.getChild(key)) {
+        if (true) {
+          console.warn(
+            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
+            'manual reload is needed'
+          );
+        }
+        return
+      }
+      update(
+        path.concat(key),
+        targetModule.getChild(key),
+        newModule.modules[key]
+      );
+    }
+  }
+}
+
+var functionAssert = {
+  assert: function (value) { return typeof value === 'function'; },
+  expected: 'function'
+};
+
+var objectAssert = {
+  assert: function (value) { return typeof value === 'function' ||
+    (typeof value === 'object' && typeof value.handler === 'function'); },
+  expected: 'function or object with "handler" function'
+};
+
+var assertTypes = {
+  getters: functionAssert,
+  mutations: functionAssert,
+  actions: objectAssert
+};
+
+function assertRawModule (path, rawModule) {
+  Object.keys(assertTypes).forEach(function (key) {
+    if (!rawModule[key]) { return }
+
+    var assertOptions = assertTypes[key];
+
+    forEachValue(rawModule[key], function (value, type) {
+      assert(
+        assertOptions.assert(value),
+        makeAssertionMessage(path, key, type, value, assertOptions.expected)
+      );
+    });
+  });
+}
+
+function makeAssertionMessage (path, key, type, value, expected) {
+  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
+  if (path.length > 0) {
+    buf += " in module \"" + (path.join('.')) + "\"";
+  }
+  buf += " is " + (JSON.stringify(value)) + ".";
+  return buf
+}
+
+var Vue; // bind on install
+
+var Store = function Store (options) {
+  var this$1 = this;
+  if ( options === void 0 ) options = {};
+
+  // Auto install if it is not done yet and `window` has `Vue`.
+  // To allow users to avoid auto-installation in some cases,
+  // this code should be placed here. See #731
+  if (!Vue && typeof window !== 'undefined' && window.Vue) {
+    install(window.Vue);
+  }
+
+  if (true) {
+    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
+    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
+    assert(this instanceof Store, "Store must be called with the new operator.");
+  }
+
+  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
+  var strict = options.strict; if ( strict === void 0 ) strict = false;
+
+  var state = options.state; if ( state === void 0 ) state = {};
+  if (typeof state === 'function') {
+    state = state() || {};
+  }
+
+  // store internal state
+  this._committing = false;
+  this._actions = Object.create(null);
+  this._actionSubscribers = [];
+  this._mutations = Object.create(null);
+  this._wrappedGetters = Object.create(null);
+  this._modules = new ModuleCollection(options);
+  this._modulesNamespaceMap = Object.create(null);
+  this._subscribers = [];
+  this._watcherVM = new Vue();
+
+  // bind commit and dispatch to self
+  var store = this;
+  var ref = this;
+  var dispatch = ref.dispatch;
+  var commit = ref.commit;
+  this.dispatch = function boundDispatch (type, payload) {
+    return dispatch.call(store, type, payload)
+  };
+  this.commit = function boundCommit (type, payload, options) {
+    return commit.call(store, type, payload, options)
+  };
+
+  // strict mode
+  this.strict = strict;
+
+  // init root module.
+  // this also recursively registers all sub-modules
+  // and collects all module getters inside this._wrappedGetters
+  installModule(this, state, [], this._modules.root);
+
+  // initialize the store vm, which is responsible for the reactivity
+  // (also registers _wrappedGetters as computed properties)
+  resetStoreVM(this, state);
+
+  // apply plugins
+  plugins.forEach(function (plugin) { return plugin(this$1); });
+
+  if (Vue.config.devtools) {
+    devtoolPlugin(this);
+  }
+};
+
+var prototypeAccessors = { state: { configurable: true } };
+
+prototypeAccessors.state.get = function () {
+  return this._vm._data.$$state
+};
+
+prototypeAccessors.state.set = function (v) {
+  if (true) {
+    assert(false, "Use store.replaceState() to explicit replace store state.");
+  }
+};
+
+Store.prototype.commit = function commit (_type, _payload, _options) {
+    var this$1 = this;
+
+  // check object-style commit
+  var ref = unifyObjectStyle(_type, _payload, _options);
+    var type = ref.type;
+    var payload = ref.payload;
+    var options = ref.options;
+
+  var mutation = { type: type, payload: payload };
+  var entry = this._mutations[type];
+  if (!entry) {
+    if (true) {
+      console.error(("[vuex] unknown mutation type: " + type));
+    }
+    return
+  }
+  this._withCommit(function () {
+    entry.forEach(function commitIterator (handler) {
+      handler(payload);
+    });
+  });
+  this._subscribers.forEach(function (sub) { return sub(mutation, this$1.state); });
+
+  if (
+     true &&
+    options && options.silent
+  ) {
+    console.warn(
+      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
+      'Use the filter functionality in the vue-devtools'
+    );
+  }
+};
+
+Store.prototype.dispatch = function dispatch (_type, _payload) {
+    var this$1 = this;
+
+  // check object-style dispatch
+  var ref = unifyObjectStyle(_type, _payload);
+    var type = ref.type;
+    var payload = ref.payload;
+
+  var action = { type: type, payload: payload };
+  var entry = this._actions[type];
+  if (!entry) {
+    if (true) {
+      console.error(("[vuex] unknown action type: " + type));
+    }
+    return
+  }
+
+  this._actionSubscribers.forEach(function (sub) { return sub(action, this$1.state); });
+
+  return entry.length > 1
+    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
+    : entry[0](payload)
+};
+
+Store.prototype.subscribe = function subscribe (fn) {
+  return genericSubscribe(fn, this._subscribers)
+};
+
+Store.prototype.subscribeAction = function subscribeAction (fn) {
+  return genericSubscribe(fn, this._actionSubscribers)
+};
+
+Store.prototype.watch = function watch (getter, cb, options) {
+    var this$1 = this;
+
+  if (true) {
+    assert(typeof getter === 'function', "store.watch only accepts a function.");
+  }
+  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
+};
+
+Store.prototype.replaceState = function replaceState (state) {
+    var this$1 = this;
+
+  this._withCommit(function () {
+    this$1._vm._data.$$state = state;
+  });
+};
+
+Store.prototype.registerModule = function registerModule (path, rawModule, options) {
+    if ( options === void 0 ) options = {};
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+    assert(path.length > 0, 'cannot register the root module by using registerModule.');
+  }
+
+  this._modules.register(path, rawModule);
+  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
+  // reset store to update getters...
+  resetStoreVM(this, this.state);
+};
+
+Store.prototype.unregisterModule = function unregisterModule (path) {
+    var this$1 = this;
+
+  if (typeof path === 'string') { path = [path]; }
+
+  if (true) {
+    assert(Array.isArray(path), "module path must be a string or an Array.");
+  }
+
+  this._modules.unregister(path);
+  this._withCommit(function () {
+    var parentState = getNestedState(this$1.state, path.slice(0, -1));
+    Vue.delete(parentState, path[path.length - 1]);
+  });
+  resetStore(this);
+};
+
+Store.prototype.hotUpdate = function hotUpdate (newOptions) {
+  this._modules.update(newOptions);
+  resetStore(this, true);
+};
+
+Store.prototype._withCommit = function _withCommit (fn) {
+  var committing = this._committing;
+  this._committing = true;
+  fn();
+  this._committing = committing;
+};
+
+Object.defineProperties( Store.prototype, prototypeAccessors );
+
+function genericSubscribe (fn, subs) {
+  if (subs.indexOf(fn) < 0) {
+    subs.push(fn);
+  }
+  return function () {
+    var i = subs.indexOf(fn);
+    if (i > -1) {
+      subs.splice(i, 1);
+    }
+  }
+}
+
+function resetStore (store, hot) {
+  store._actions = Object.create(null);
+  store._mutations = Object.create(null);
+  store._wrappedGetters = Object.create(null);
+  store._modulesNamespaceMap = Object.create(null);
+  var state = store.state;
+  // init all modules
+  installModule(store, state, [], store._modules.root, true);
+  // reset vm
+  resetStoreVM(store, state, hot);
+}
+
+function resetStoreVM (store, state, hot) {
+  var oldVm = store._vm;
+
+  // bind store public getters
+  store.getters = {};
+  var wrappedGetters = store._wrappedGetters;
+  var computed = {};
+  forEachValue(wrappedGetters, function (fn, key) {
+    // use computed to leverage its lazy-caching mechanism
+    computed[key] = function () { return fn(store); };
+    Object.defineProperty(store.getters, key, {
+      get: function () { return store._vm[key]; },
+      enumerable: true // for local getters
+    });
+  });
+
+  // use a Vue instance to store the state tree
+  // suppress warnings just in case the user has added
+  // some funky global mixins
+  var silent = Vue.config.silent;
+  Vue.config.silent = true;
+  store._vm = new Vue({
+    data: {
+      $$state: state
+    },
+    computed: computed
+  });
+  Vue.config.silent = silent;
+
+  // enable strict mode for new vm
+  if (store.strict) {
+    enableStrictMode(store);
+  }
+
+  if (oldVm) {
+    if (hot) {
+      // dispatch changes in all subscribed watchers
+      // to force getter re-evaluation for hot reloading.
+      store._withCommit(function () {
+        oldVm._data.$$state = null;
+      });
+    }
+    Vue.nextTick(function () { return oldVm.$destroy(); });
+  }
+}
+
+function installModule (store, rootState, path, module, hot) {
+  var isRoot = !path.length;
+  var namespace = store._modules.getNamespace(path);
+
+  // register in namespace map
+  if (module.namespaced) {
+    store._modulesNamespaceMap[namespace] = module;
+  }
+
+  // set state
+  if (!isRoot && !hot) {
+    var parentState = getNestedState(rootState, path.slice(0, -1));
+    var moduleName = path[path.length - 1];
+    store._withCommit(function () {
+      Vue.set(parentState, moduleName, module.state);
+    });
+  }
+
+  var local = module.context = makeLocalContext(store, namespace, path);
+
+  module.forEachMutation(function (mutation, key) {
+    var namespacedType = namespace + key;
+    registerMutation(store, namespacedType, mutation, local);
+  });
+
+  module.forEachAction(function (action, key) {
+    var type = action.root ? key : namespace + key;
+    var handler = action.handler || action;
+    registerAction(store, type, handler, local);
+  });
+
+  module.forEachGetter(function (getter, key) {
+    var namespacedType = namespace + key;
+    registerGetter(store, namespacedType, getter, local);
+  });
+
+  module.forEachChild(function (child, key) {
+    installModule(store, rootState, path.concat(key), child, hot);
+  });
+}
+
+/**
+ * make localized dispatch, commit, getters and state
+ * if there is no namespace, just use root ones
+ */
+function makeLocalContext (store, namespace, path) {
+  var noNamespace = namespace === '';
+
+  var local = {
+    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if ( true && !store._actions[type]) {
+          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      return store.dispatch(type, payload)
+    },
+
+    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
+      var args = unifyObjectStyle(_type, _payload, _options);
+      var payload = args.payload;
+      var options = args.options;
+      var type = args.type;
+
+      if (!options || !options.root) {
+        type = namespace + type;
+        if ( true && !store._mutations[type]) {
+          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
+          return
+        }
+      }
+
+      store.commit(type, payload, options);
+    }
+  };
+
+  // getters and state object must be gotten lazily
+  // because they will be changed by vm update
+  Object.defineProperties(local, {
+    getters: {
+      get: noNamespace
+        ? function () { return store.getters; }
+        : function () { return makeLocalGetters(store, namespace); }
+    },
+    state: {
+      get: function () { return getNestedState(store.state, path); }
+    }
+  });
+
+  return local
+}
+
+function makeLocalGetters (store, namespace) {
+  var gettersProxy = {};
+
+  var splitPos = namespace.length;
+  Object.keys(store.getters).forEach(function (type) {
+    // skip if the target getter is not match this namespace
+    if (type.slice(0, splitPos) !== namespace) { return }
+
+    // extract local getter type
+    var localType = type.slice(splitPos);
+
+    // Add a port to the getters proxy.
+    // Define as getter property because
+    // we do not want to evaluate the getters in this time.
+    Object.defineProperty(gettersProxy, localType, {
+      get: function () { return store.getters[type]; },
+      enumerable: true
+    });
+  });
+
+  return gettersProxy
+}
+
+function registerMutation (store, type, handler, local) {
+  var entry = store._mutations[type] || (store._mutations[type] = []);
+  entry.push(function wrappedMutationHandler (payload) {
+    handler.call(store, local.state, payload);
+  });
+}
+
+function registerAction (store, type, handler, local) {
+  var entry = store._actions[type] || (store._actions[type] = []);
+  entry.push(function wrappedActionHandler (payload, cb) {
+    var res = handler.call(store, {
+      dispatch: local.dispatch,
+      commit: local.commit,
+      getters: local.getters,
+      state: local.state,
+      rootGetters: store.getters,
+      rootState: store.state
+    }, payload, cb);
+    if (!isPromise(res)) {
+      res = Promise.resolve(res);
+    }
+    if (store._devtoolHook) {
+      return res.catch(function (err) {
+        store._devtoolHook.emit('vuex:error', err);
+        throw err
+      })
+    } else {
+      return res
+    }
+  });
+}
+
+function registerGetter (store, type, rawGetter, local) {
+  if (store._wrappedGetters[type]) {
+    if (true) {
+      console.error(("[vuex] duplicate getter key: " + type));
+    }
+    return
+  }
+  store._wrappedGetters[type] = function wrappedGetter (store) {
+    return rawGetter(
+      local.state, // local state
+      local.getters, // local getters
+      store.state, // root state
+      store.getters // root getters
+    )
+  };
+}
+
+function enableStrictMode (store) {
+  store._vm.$watch(function () { return this._data.$$state }, function () {
+    if (true) {
+      assert(store._committing, "Do not mutate vuex store state outside mutation handlers.");
+    }
+  }, { deep: true, sync: true });
+}
+
+function getNestedState (state, path) {
+  return path.length
+    ? path.reduce(function (state, key) { return state[key]; }, state)
+    : state
+}
+
+function unifyObjectStyle (type, payload, options) {
+  if (isObject(type) && type.type) {
+    options = payload;
+    payload = type;
+    type = type.type;
+  }
+
+  if (true) {
+    assert(typeof type === 'string', ("Expects string as the type, but found " + (typeof type) + "."));
+  }
+
+  return { type: type, payload: payload, options: options }
+}
+
+function install (_Vue) {
+  if (Vue && _Vue === Vue) {
+    if (true) {
+      console.error(
+        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
+      );
+    }
+    return
+  }
+  Vue = _Vue;
+  applyMixin(Vue);
+}
+
+var mapState = normalizeNamespace(function (namespace, states) {
+  var res = {};
+  normalizeMap(states).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedState () {
+      var state = this.$store.state;
+      var getters = this.$store.getters;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
+        if (!module) {
+          return
+        }
+        state = module.context.state;
+        getters = module.context.getters;
+      }
+      return typeof val === 'function'
+        ? val.call(this, state, getters)
+        : state[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+var mapMutations = normalizeNamespace(function (namespace, mutations) {
+  var res = {};
+  normalizeMap(mutations).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedMutation () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      var commit = this.$store.commit;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
+        if (!module) {
+          return
+        }
+        commit = module.context.commit;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [commit].concat(args))
+        : commit.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+var mapGetters = normalizeNamespace(function (namespace, getters) {
+  var res = {};
+  normalizeMap(getters).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    val = namespace + val;
+    res[key] = function mappedGetter () {
+      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
+        return
+      }
+      if ( true && !(val in this.$store.getters)) {
+        console.error(("[vuex] unknown getter: " + val));
+        return
+      }
+      return this.$store.getters[val]
+    };
+    // mark vuex getter for devtools
+    res[key].vuex = true;
+  });
+  return res
+});
+
+var mapActions = normalizeNamespace(function (namespace, actions) {
+  var res = {};
+  normalizeMap(actions).forEach(function (ref) {
+    var key = ref.key;
+    var val = ref.val;
+
+    res[key] = function mappedAction () {
+      var args = [], len = arguments.length;
+      while ( len-- ) args[ len ] = arguments[ len ];
+
+      var dispatch = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
+        if (!module) {
+          return
+        }
+        dispatch = module.context.dispatch;
+      }
+      return typeof val === 'function'
+        ? val.apply(this, [dispatch].concat(args))
+        : dispatch.apply(this.$store, [val].concat(args))
+    };
+  });
+  return res
+});
+
+var createNamespacedHelpers = function (namespace) { return ({
+  mapState: mapState.bind(null, namespace),
+  mapGetters: mapGetters.bind(null, namespace),
+  mapMutations: mapMutations.bind(null, namespace),
+  mapActions: mapActions.bind(null, namespace)
+}); };
+
+function normalizeMap (map) {
+  return Array.isArray(map)
+    ? map.map(function (key) { return ({ key: key, val: key }); })
+    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
+}
+
+function normalizeNamespace (fn) {
+  return function (namespace, map) {
+    if (typeof namespace !== 'string') {
+      map = namespace;
+      namespace = '';
+    } else if (namespace.charAt(namespace.length - 1) !== '/') {
+      namespace += '/';
+    }
+    return fn(namespace, map)
+  }
+}
+
+function getModuleByNamespace (store, helper, namespace) {
+  var module = store._modulesNamespaceMap[namespace];
+  if ( true && !module) {
+    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
+  }
+  return module
+}
+
+var index_esm = {
+  Store: Store,
+  install: install,
+  version: '3.0.1',
+  mapState: mapState,
+  mapMutations: mapMutations,
+  mapGetters: mapGetters,
+  mapActions: mapActions,
+  createNamespacedHelpers: createNamespacedHelpers
+};
+
+
+/* harmony default export */ __webpack_exports__["default"] = (index_esm);
+
+
+/***/ }),
+
+/***/ 170:
+/*!**************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/shop.png ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAgCAIAAAD47T2eAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTNCNzJDNzgwM0MwMTFFQTgyMzE4Q0FFQTY2NjU2NEMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTNCNzJDNzkwM0MwMTFFQTgyMzE4Q0FFQTY2NjU2NEMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1M0I3MkM3NjAzQzAxMUVBODIzMThDQUVBNjY2NTY0QyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1M0I3MkM3NzAzQzAxMUVBODIzMThDQUVBNjY2NTY0QyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjyEHcMAAAMuSURBVHja3FbNSypRFHeGV1QmYVi5yJQIhYJELKGWUYRQK4UWLlq0rI0gCGKtWkiupCCIQv0DhAd9QFKBEfRBm4yKFAv6WARpCSoV1byf78o4zkuIZmrxfovBc+71fNzzO+deimEYCQe3t7fT09PRaLSiooKiKFbP21YOLy8vjY2NExMT/f39JQsMB/F4vLa2ViIGlpeXuZYpbpharRaeRkZGbDYbRJINm1O5H1wRODw8dLlc1dXV6XQaR8LPZnV1FWJdXR0jGCaTCaY8Hg+rKbppa2vD2vz8vHA3BwcHMCWVSl9fX0vcrK+vYwGZMiJBr9fD4NzcXImbzs5OaBcXF8Vys7GxAYMNDQ1FNyRHEJERFT09PTC7sLBQcDM4OAjZ5/OJ62ZnZwdmlUplntBXV1ctLS2oyuPjY2VlJRYcDsfm5iaXqTyU08Pc29sbusLv95P+a29vPzs7y3PY6/VCRt+yUTQ1NQnszWQySUyFQiGI3d3dVEdHx8nJyf7+PiE78PDwkEgkvuyjubkZB8WKVVVVz8/PhfQzmQxoLvkG4PSy2SxdU1ND0vyyoVQqVW7p9PQUPvJ1QsEhW63WD9mSy+VQttnZ2XJ06uvrA32WlpY+XO3q6oLxmZmZ4nE5nU7eJhCGpcPAwMDx8TFvA4JjAx8aGsLQ5K6Oj49Dr9FoCn2ztbVFthoMBowHWJ+ammLLiHhZZwgF3XB9fb2ystLb2wuNTCZzu90YuGSD2WxGP2KaGI1Gojk/Py+ZaSqVineyIGEwGMQqRvrY2Ni/R4+wYrEYNqC0JHYu1Gr17u4u/75BZ/3+C/wHTMch4Mv9GxoNuaJz7+/vwdrR0VG73c7dcHd3h1EWiUSenp6Gh4ctFgtN04WO/uTtKxC05EdAs4XS6XRk8IgCcKS1tXVtba3Ezd7eHooZCATEchMOhy8vL7e3t0vcgJf4KhQKsdzI5XLysvigNiwxhIP36PlZCvxfbjACyANKLLv19fX44p1GxF/cl/jNzQ1ojRfp+/u7kOLDGjqEjb74uMWY+o7b8+joiD86cdNNTk5eXFzktWXeLp8EksB4xmDFJUI0fwQYAE8v8GwlyturAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 18:
+/*!********************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 187:
+/*!******************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/title_01.png ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUwAAAAZCAIAAADVOID4AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OEM1QjM1OTEwMzg0MTFFQTk5QUVEQjY2QjE3ODMwMTUiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OEM1QjM1OTIwMzg0MTFFQTk5QUVEQjY2QjE3ODMwMTUiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo4QzVCMzU4RjAzODQxMUVBOTlBRURCNjZCMTc4MzAxNSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo4QzVCMzU5MDAzODQxMUVBOTlBRURCNjZCMTc4MzAxNSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Ptl1kVsAAAnRSURBVHja7Jx/bBPn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"
+
+/***/ }),
+
+/***/ 19:
+/*!******************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/Json.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _ref;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /* 用户 */
+var userInfo = {}
+// status: 1,
+// data: {
+// 	id: 1,
+// 	mobile: 18888888888,
+// 	nickname: 'Leo yo',
+// 	portrait: '/static/my/missing-face.png'
+// },
+// msg: '提示'
+
+/* 首页轮播图 */;
+var carouselList = [{
+  src: "/static/temp/banner3.jpg",
+  background: "rgb(203, 87, 60)" },
+
+{
+  src: "/static/temp/banner2.jpg",
+  background: "rgb(205, 215, 218)" },
+
+{
+  src: "/static/temp/banner4.jpg",
+  background: "rgb(183, 73, 69)" }];
+
+
+/* 商品列表 */
+var goodsList = [{
+  image: "/static/index/egg.png",
+  title: "正宗农家散养谷饲土鸡蛋20枚",
+  price: '1.00' },
+
+{
+  image: "/static/index/ht.png",
+  title: "香甜核桃100kg",
+  price: '1.00' }];
+
+
+
+/* 购物车 */
+var cartList = [{
+  id: 1,
+  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553005139&di=3368549edf9eee769a9bcb3fbbed2504&imgtype=jpg&er=1&src=http%3A%2F%2Fimg002.hc360.cn%2Fy3%2FM01%2F5F%2FDB%2FwKhQh1T7iceEGRdWAAAAADQvqk8733.jpg',
+  attr_val: '春装款 L',
+  stock: 15,
+  title: 'OVBE 长袖风衣',
+  price: 278.00,
+  number: 1 },
+
+{
+  id: 3,
+  image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2319343996,1107396922&fm=26&gp=0.jpg',
+  attr_val: '激光导航 扫拖一体',
+  stock: 3,
+  title: '科沃斯 Ecovacs 扫地机器人',
+  price: 1348.00,
+  number: 5 },
+
+{
+  id: 4,
+  image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2668268226,1765897385&fm=26&gp=0.jpg',
+  attr_val: 'XL',
+  stock: 55,
+  title: '朵绒菲小西装',
+  price: 175.88,
+  number: 1 },
+
+{
+  id: 5,
+  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552410549432&di=06dd3758053fb6d6362516f30a42d055&imgtype=0&src=http%3A%2F%2Fimgcache.mysodao.com%2Fimg3%2FM0A%2F67%2F42%2FCgAPD1vNSsHNm-TnAAEy61txQb4543_400x400x2.JPG',
+  attr_val: '520 #粉红色',
+  stock: 15,
+  title: '迪奥（Dior）烈艳唇膏',
+  price: 1089.00,
+  number: 1 },
+
+{
+  id: 6,
+  image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1031875829,2994442603&fm=26&gp=0.jpg',
+  attr_val: '樱花味润手霜 30ml',
+  stock: 15,
+  title: "欧舒丹（L'OCCITANE）乳木果",
+  price: 128,
+  number: 1 },
+
+{
+  id: 7,
+  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553007107&di=390915aa8a022cf0b03c03340881b0e7&imgtype=jpg&er=1&src=http%3A%2F%2Fimg13.360buyimg.com%2Fn0%2Fjfs%2Ft646%2F285%2F736444951%2F480473%2Faa701c97%2F548176feN10c9ed7b.jpg',
+  attr_val: '特级 12个',
+  stock: 7,
+  title: '新疆阿克苏苹果 特级',
+  price: 58.8,
+  number: 10 },
+
+{
+  id: 8,
+  image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2319343996,1107396922&fm=26&gp=0.jpg',
+  attr_val: '激光导航 扫拖一体',
+  stock: 15,
+  title: '科沃斯 Ecovacs 扫地机器人',
+  price: 1348.00,
+  number: 1 },
+
+{
+  id: 9,
+  image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2668268226,1765897385&fm=26&gp=0.jpg',
+  attr_val: 'XL',
+  stock: 55,
+  title: '朵绒菲小西装',
+  price: 175.88,
+  number: 1 },
+
+{
+  id: 10,
+  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552410549432&di=06dd3758053fb6d6362516f30a42d055&imgtype=0&src=http%3A%2F%2Fimgcache.mysodao.com%2Fimg3%2FM0A%2F67%2F42%2FCgAPD1vNSsHNm-TnAAEy61txQb4543_400x400x2.JPG',
+  attr_val: '520 #粉红色',
+  stock: 15,
+  title: '迪奥（Dior）烈艳唇膏',
+  price: 1089.00,
+  number: 1 },
+
+{
+  id: 11,
+  image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1031875829,2994442603&fm=26&gp=0.jpg',
+  attr_val: '樱花味润手霜 30ml',
+  stock: 15,
+  title: "欧舒丹（L'OCCITANE）乳木果",
+  price: 128,
+  number: 1 },
+
+{
+  id: 12,
+  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553007107&di=390915aa8a022cf0b03c03340881b0e7&imgtype=jpg&er=1&src=http%3A%2F%2Fimg13.360buyimg.com%2Fn0%2Fjfs%2Ft646%2F285%2F736444951%2F480473%2Faa701c97%2F548176feN10c9ed7b.jpg',
+  attr_val: '特级 12个',
+  stock: 7,
+  title: '新疆阿克苏苹果 特级',
+  price: 58.8,
+  number: 10 },
+
+{
+  id: 13,
+  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552405266625&di=a703f2b2cdb0fe7f3f05f62dd91307ab&imgtype=0&src=http%3A%2F%2Fwww.78.cn%2Fzixun%2Fnews%2Fupload%2F20190214%2F1550114706486250.jpg',
+  attr_val: '春装款/m',
+  stock: 15,
+  title: '女装2019春秋新款',
+  price: 420.00,
+  number: 1 }];
+
+
+//详情展示页面
+var detailData = {
+  title: '纯种金毛幼犬活体有血统证书',
+  title2: '拆家小能手 你值得拥有',
+  favorite: true,
+  imgList: [{
+    src: '/static/missing-face.png' },
+
+  {
+    src: 'http://img.pconline.com.cn/images/upload/upc/tx/itbbs/1309/06/c4/25310541_1378426131583.jpg' },
+
+  {
+    src: 'http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1610/26/c4/28926240_1477451226577_mthumb.jpg' },
+
+  {
+    src: 'http://picture.ik123.com/uploads/allimg/190219/12-1Z219105139.jpg' }],
+
+
+  episodeList: [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
+
+  guessList: [{
+    src: 'http://img.52z.com/upload/news/image/20180530/20180530081619_31029.jpg',
+    title: '猫眼指甲油',
+    title2: '独树一帜的免照灯猫眼指甲' },
+
+  {
+    src: 'http://m.china-7.net/uploads/14778449362891.jpg',
+    title: '创意屋',
+    title2: '创意屋形上下双层高低床' },
+
+  {
+    src: 'http://www.k73.com/up/allimg/130415/22-130415093527.jpg',
+    title: 'MissCandy 指甲油',
+    title2: '十分适合喜欢素净的妹纸，尽显淡雅的气质' },
+
+  {
+    src: 'http://img0.imgtn.bdimg.com/it/u=2108933440,2194129200&fm=214&gp=0.jpg	',
+    title: 'RMK 2017星空海蓝唇釉',
+    title2: '唇釉质地，上唇后很滋润。少女也会心动的蓝色，透明液体形状。' }],
+
+
+  evaList: [{
+    src: 'http://gss0.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/77c6a7efce1b9d1663174705fbdeb48f8d546486.jpg',
+    nickname: 'Ranth Allngal',
+    time: '09-20 12:54',
+    zan: '54',
+    content: '评论不要太苛刻，不管什么产品都会有瑕疵，客服也说了可以退货并且商家承担运费，我觉得至少态度就可以给五星。' },
+
+  {
+    src: 'http://img0.imgtn.bdimg.com/it/u=2396068252,4277062836&fm=26&gp=0.jpg',
+    nickname: 'Ranth Allngal',
+    time: '09-20 12:54',
+    zan: '54',
+    content: '楼上说的好有道理。' }] };
+
+
+
+var shareList = [{
+  type: 1,
+  icon: '/static/temp/share_wechat.png',
+  text: '微信好友' },
+
+{
+  type: 2,
+  icon: '/static/temp/share_moment.png',
+  text: '朋友圈' },
+
+{
+  type: 3,
+  icon: '/static/temp/share_qq.png',
+  text: 'QQ好友' },
+
+{
+  type: 4,
+  icon: '/static/temp/share_qqzone.png',
+  text: 'QQ空间' }];
+
+
+var lazyLoadList = [{
+  src: 'http://img0.imgtn.bdimg.com/it/u=2396068252,4277062836&fm=26&gp=0.jpg' },
+
+{
+  src: 'http://img.pconline.com.cn/images/upload/upc/tx/itbbs/1309/06/c4/25310541_1378426131583.jpg' },
+
+{
+  src: 'http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1610/26/c4/28926240_1477451226577_mthumb.jpg' },
+
+{
+  src: 'http://picture.ik123.com/uploads/allimg/190219/12-1Z219105139.jpg' },
+
+{
+  src: 'http://img5.imgtn.bdimg.com/it/u=2904900134,438461613&fm=26&gp=0.jpg' },
+
+{
+  src: 'http://img1.imgtn.bdimg.com/it/u=1690475408,2565370337&fm=26&gp=0.jpg' },
+
+{
+  src: 'http://img.99114.com/group1/M00/7F/99/wKgGS1kVrPGAe5LmAAU2KrJmb3Q923_600_600.jpg' },
+
+{
+  src: 'http://img4.imgtn.bdimg.com/it/u=261047209,372231813&fm=26&gp=0.jpg' },
+
+{
+  src: 'http://i2.17173cdn.com/i7mz64/YWxqaGBf/tu17173com/20150107/eMyVMObjlbcvDEv.jpg' },
+
+{
+  src: 'http://img008.hc360.cn/m4/M02/E7/87/wKhQ6FSrfU6EfUoyAAAAAITAfyc280.jpg' },
+
+{
+  src: 'http://pic1.win4000.com/wallpaper/d/5991569950166.jpg' },
+
+{
+  src: 'http://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/6f061d950a7b0208f9fe945e60d9f2d3572cc85e.jpg' },
+
+{
+  src: 'http://pic41.nipic.com/20140429/18169759_125841756000_2.jpg' },
+
+{
+  src: 'http://www.k73.com/up/allimg/130415/22-130415093527.jpg' },
+
+{
+  src: 'http://img.52z.com/upload/news/image/20180530/20180530081619_31029.jpg' },
+
+{
+  src: 'http://b-ssl.duitang.com/uploads/item/201410/02/20141002111638_tXAzU.jpeg' },
+
+{
+  src: 'http://img2.ph.126.net/C4JW6f57QWSB21-8jh2UGQ==/1762596304262286698.jpg' },
+
+{
+  src: 'http://att.bbs.duowan.com/forum/201405/17/190257nzcvkkdg6w2e8226.jpg' },
+
+{
+  src: 'http://attach.bbs.miui.com/forum/201504/10/223644v3intigyvva0vgym.jpg' },
+
+{
+  src: 'http://pic1.win4000.com/mobile/3/57888a298d61d.jpg' }];
+
+
+
+var orderList = [{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 1,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 2,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' },
+
+  {
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 3,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' },
+
+  {
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 4,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 2,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 5,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 6,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 7,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] },
+
+
+
+{
+  time: '2019-04-06 11:37',
+  shopName: '麦田圈官网旗舰店',
+  state: 9,
+  goodsList: [{
+    title: '香辣牛肉干',
+    price: 88.88,
+    image: '/static/goods.png',
+    number: 1,
+    attr: '规格 10*200g' }] }];
+
+
+
+
+var deliverylist = [(_ref = {
+
+  state: 1,
+  time: '15:12',
+  countDown: '00:12:30',
+  shopName: '麦田圈官网旗舰店' }, _defineProperty(_ref, "state",
+5), _defineProperty(_ref, "steps",
+[
+{
+  text: '步骤一',
+  desc: '描述' }]), _defineProperty(_ref, "info",
+
+
+{
+  a: 20,
+  b: '麦田圈预单',
+  c: '预' }), _defineProperty(_ref, "msg",
+
+''), _ref)];
+
+
+var cateList = [{
+  id: 1,
+  name: '手机数码' },
+
+{
+  id: 2,
+  name: '礼品鲜花' },
+
+{
+  id: 3,
+  name: '男装女装' },
+
+{
+  id: 4,
+  name: '母婴用品' },
+
+{
+  id: 5,
+  pid: 1,
+  name: '手机通讯' },
+
+{
+  id: 6,
+  pid: 1,
+  name: '运营商' },
+
+{
+  id: 8,
+  pid: 5,
+  name: '全面屏手机',
+  picture: '/static/temp/cate2.jpg' },
+
+{
+  id: 9,
+  pid: 5,
+  name: '游戏手机',
+  picture: '/static/temp/cate3.jpg' },
+
+{
+  id: 10,
+  pid: 5,
+  name: '老人机',
+  picture: '/static/temp/cate1.jpg' },
+
+{
+  id: 11,
+  pid: 5,
+  name: '拍照手机',
+  picture: '/static/temp/cate4.jpg' },
+
+{
+  id: 12,
+  pid: 5,
+  name: '女性手机',
+  picture: '/static/temp/cate5.jpg' },
+
+{
+  id: 14,
+  pid: 6,
+  name: '合约机',
+  picture: '/static/temp/cate1.jpg' },
+
+{
+  id: 15,
+  pid: 6,
+  name: '选好卡',
+  picture: '/static/temp/cate4.jpg' },
+
+{
+  id: 16,
+  pid: 6,
+  name: '办套餐',
+  picture: '/static/temp/cate5.jpg' },
+
+{
+  id: 17,
+  pid: 2,
+  name: '礼品' },
+
+{
+  id: 18,
+  pid: 2,
+  name: '鲜花' },
+
+{
+  id: 19,
+  pid: 17,
+  name: '公益摆件',
+  picture: '/static/temp/cate7.jpg' },
+
+{
+  id: 20,
+  pid: 17,
+  name: '创意礼品',
+  picture: '/static/temp/cate8.jpg' },
+
+{
+  id: 21,
+  pid: 18,
+  name: '鲜花',
+  picture: '/static/temp/cate9.jpg' },
+
+{
+  id: 22,
+  pid: 18,
+  name: '每周一花',
+  picture: '/static/temp/cate10.jpg' },
+
+{
+  id: 23,
+  pid: 18,
+  name: '卡通花束',
+  picture: '/static/temp/cate11.jpg' },
+
+{
+  id: 24,
+  pid: 18,
+  name: '永生花',
+  picture: '/static/temp/cate12.jpg' },
+
+{
+  id: 25,
+  pid: 3,
+  name: '男装' },
+
+{
+  id: 26,
+  pid: 3,
+  name: '女装' },
+
+{
+  id: 27,
+  pid: 25,
+  name: '男士T恤',
+  picture: '/static/temp/cate13.jpg' },
+
+{
+  id: 28,
+  pid: 25,
+  name: '男士外套',
+  picture: '/static/temp/cate14.jpg' },
+
+{
+  id: 29,
+  pid: 26,
+  name: '裙装',
+  picture: '/static/temp/cate15.jpg' },
+
+{
+  id: 30,
+  pid: 26,
+  name: 'T恤',
+  picture: '/static/temp/cate16.jpg' },
+
+{
+  id: 31,
+  pid: 26,
+  name: '上装',
+  picture: '/static/temp/cate15.jpg' },
+
+{
+  id: 32,
+  pid: 26,
+  name: '下装',
+  picture: '/static/temp/cate16.jpg' },
+
+{
+  id: 33,
+  pid: 4,
+  name: '奶粉' },
+
+{
+  id: 34,
+  pid: 4,
+  name: '营养辅食' },
+
+{
+  id: 35,
+  pid: 4,
+  name: '童装' },
+
+{
+  id: 39,
+  pid: 4,
+  name: '喂养用品' },
+
+{
+  id: 36,
+  pid: 33,
+  name: '有机奶粉',
+  picture: '/static/temp/cate17.jpg' },
+
+{
+  id: 37,
+  pid: 34,
+  name: '果泥/果汁',
+  picture: '/static/temp/cate18.jpg' },
+
+{
+  id: 39,
+  pid: 34,
+  name: '面条/粥',
+  picture: '/static/temp/cate20.jpg' },
+
+{
+  id: 42,
+  pid: 35,
+  name: '婴童衣橱',
+  picture: '/static/temp/cate19.jpg' },
+
+{
+  id: 43,
+  pid: 39,
+  name: '吸奶器',
+  picture: '/static/temp/cate21.jpg' },
+
+{
+  id: 44,
+  pid: 39,
+  name: '儿童餐具',
+  picture: '/static/temp/cate22.jpg' },
+
+{
+  id: 45,
+  pid: 39,
+  name: '牙胶安抚',
+  picture: '/static/temp/cate23.jpg' },
+
+{
+  id: 46,
+  pid: 39,
+  name: '围兜',
+  picture: '/static/temp/cate24.jpg' }];var _default =
+
+
+
+{
+  carouselList: carouselList,
+  cartList: cartList,
+  detailData: detailData,
+  lazyLoadList: lazyLoadList,
+  userInfo: userInfo,
+  shareList: shareList,
+  goodsList: goodsList,
+  orderList: orderList,
+  cateList: cateList };exports.default = _default;
+
+/***/ }),
+
+/***/ 2:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
   \******************************************************************************************/
@@ -7470,7 +9249,877 @@ internalMixin(Vue);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 3)))
 
 /***/ }),
-/* 3 */
+
+/***/ 204:
+/*!***************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/dizhi.png ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAqCAIAAADEexdwAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NURFN0U3QjIwNTU1MTFFQUE2QjNFQjJFOEY4MzQ1N0UiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NURFN0U3QjMwNTU1MTFFQUE2QjNFQjJFOEY4MzQ1N0UiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1REU3RTdCMDA1NTUxMUVBQTZCM0VCMkU4RjgzNDU3RSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1REU3RTdCMTA1NTUxMUVBQTZCM0VCMkU4RjgzNDU3RSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pp8zw9UAAAWcSURBVHjapFdZLF1dFHava2wbLTXVUCWKVtEK1YqpMbTxQlAJIdTQSjzwQCNKhAdtQ9TQSozx4EHF1EQqxBhCWzXVLIaQlqKmdET5P5acnp57L9ff9XCyzt5rf2fvtb81HN7u7q6UGPn27VtXV9eHDx9mZmY+ffr08+dPDMrIyGhpaZ0/f/7KlSvW1tanT5+WEi88kehra2vl5eX19fUbGxuHLFZQUHBxcfH29lZXV5cUvba2trCwEBunV4FAYGhoeO7cORUVFfowzjExMfHr1y/GIDg4GN84Gv3p06eNjY2kX7x48c6dO9evXydczuHevXuHww0MDNCIjY1NUlISj8cTix4XF9fT00NHjoiIcHNzkzpK2tvbc3Nzl5eXoeOIWVlZfD5fBHpycnJHRwcUAwMD7EJNTU1KMvn69SvW9vf3Qzc1NU1PT2emDr5TWVlJ0BcuXMjOzpYcGnLy5En489q1a9AHBwfz8/P/2vuXL1/8/PzwoqioWFpaiqdIFPh6Z2fnzJkzHOcyEhAQsLi4CCUvLw+UPUBPSUmB+/CSmppKW2AL6FFXV9fX17e0tARjoJubm7u6uoLvHEuExf3796FcunQpIyMDinRkZOSzZ8+gYU1gYCBnQXFxMU49Pj4O4v/eFzB1cnISbFldXQWd2MaILJB1enoa+7C1tcU+pAFKFxIfH3/27Fm2Nb5aXV1NupWVlZOT09WrV+Hlubk5OhO+euvWLfYSkLiqqmpv19LSiGTBmzdv8IJrNDIyYts1Nze/fv0aiqam5sOHD01MTJip2dnZtLS0sbGxt2/fvnz58u7du8wU4WAK0bC5ucnHMWlrbGj4NycnB8qJEydAITY0RFdXNzMzk3jFjmomrPCcn5/Hyfjb29vEcbZFb28vWAwlKCjo1KlTIkKcx8OFkd7W1sae0tfXJwUOPOA7x+PDw8N7scDn29vbi6M53IqTQYEf2OPKysoMgw/QZWVl2Rbfv3/HU05OTklJSWx25fEIiOMZJhMgzf3R2Ba0KSR00E4cOoUhxSp7fGtrixRUggN0Dsrly5dpfUtLizh0ZA46IufO4RCG/nwK648fP7ItLCwsyCclJSW0QY5ggy9evCDdzs6OPQW2MOzkE7GmpqY466Oiosg54AaFGzs3YJC++uDBA6Rr9ixRHIN6enoCnOvz588gCaiJKsMY3bx5E2GCYFlZWYmNjTXdF0Tg6Ojo+/fvycbZ2dnT05OzLWQkPI2NjVVVVQU3btyAc3/8+IGgRXJg24WEhFhaWiLhYTuD+8JMaWhoYFaYryMjI1RJKAUJQFu4HhfY2trKQacLgH9xgXAOEgCymI6ODu7c0dER5xC+DyayCEqAbI7chILX2dmJuwKNhNfY7osklaSpqYnCla5zj5G3b9/GE0kH25f6B+nu7iY6otb/qXxwn7y8PBT0MP+CXlZWRjGMJucPOt7d3d2puHCShuSCukHdB8oAw9GDWGVyNBjy/9ALCgpI8ff35/YEiFrQgIo68vJxoRcWFqilAEG0tbW56JCwsDBSUC6Oi45iQgp6rL/yJaMhxaPSQ8HewU7JoYeGhqiDQ+hQoyG600PEIrIxghSGHCAhOuoXZS70QpwqxOd0zOSf9fV1Ca8XLCRoHx8fDjQXHeLl5YUmAEpFRYVw4uQIcIuKiqDgrKGhocIGfOGhhIQEjiJOEhMTSXn06JFIAxHo6A98fX2hINuhERMHjeyGvEZxb2ZmJik65N69e9Q44E/h1atXwgYYr6mpgYJ/Gqozx0CnjpWKyfPnz9FzsacQccyZnjx5cojrxKIjevEB5gKQ/xjomJgYxu9EgeP98zHS0NCAlpH06OhodDiPHz9mwtLDw+Pwaz8CHYJelVpwtoSHh4O7R0bD0egQ+B0MoajB/x9+ARwcHCSJtf8EGACOR7GhgMmT0AAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 229:
+/*!************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/my/couponPrice.png ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDgzRDg1M0EwMDUwMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MjhCRDc2MzAwMDUwMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowODNEODUzODAwNTAxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowODNEODUzOTAwNTAxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgztcLAAAAFFSURBVHjazJXNUcMwEIVtDQ2kBacEUUIyVIBvXJ0COOAS4gMFJFduuAIGSohKiFtwC7wd1pkXjdaRGQ7sjC1Z0n7en5e4LGAfr08bDJ/Fj4247h+e34Yi0+Avvht9bJ3cAfjCEHRxhatZADwQsAerc7Tf0rzJBDZ0NgBYy+QCjaNVhzmgx3DQRylVPe256GyXEy2AUqJ36kHNPbiCYqPXt4p5bWDKBFjpXICBN13CYTZavGhPjdlp2a6sNNI7aySS2hqOY0J6HdbblL8z0utieQFYUR17C2hC4XCk2j5SHVcsnUXQKFqvvxgfS8eyUlN7wbAvfmdHRL7jhTuah4RDpSlPAh8TZ0JW940/im1KPnPpn4x9jjQYZ7aT5C5Qlco5cXgkoGUDgOvs9COh97dklCspf6OJ/wdace3+Gjos+V6JfQswAPv+db83nkXXAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 230:
+/*!********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/my/beuesed.png ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACpF6WWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NzhBNjVGODQwMDUwMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NzhBNjVGODUwMDUwMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo3OEE2NUY4MjAwNTAxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo3OEE2NUY4MzAwNTAxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PmGlkq4AAAE5SURBVHjazJXtEYIwDIah5wKugCPUEewIMgKOICPICDqCjIAj2BFkBVbwzRm42GuweP4wd9DSNg/5eJU8g3Vdt6Mhe9mAa+uc67NEgz/57vixNnQH4IbB8+IaV7UAeBbAFqzGiP1azKtEYCXOegBLmkzQMFp2mANaDGd+pFKV454JzjYp0QJIJbqKHpSyB29QbLT8VjLLDYwZAQueE9DLTRNxmI0WLzqJxhy4bG+WK+k9OBJKbQPHISK9But1zN8o6TWhvAAsRB1bDahC4XARtd2LOq6ldBZBg2gt/2JsKB3Nck7tiOGUfWcXRH6QCysx9xGHglMeBT5Ezvik7it/FC4mn7n078q+jNQrZ9wouQnKUnlEDg8CqFkP4CY5/UDo7ScZpUrKfmji/0ALWbtfQ/sl3yuypwADALlFdKNf8vgJAAAAAElFTkSuQmCC"
+
+/***/ }),
+
+/***/ 24:
+/*!********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/index/btbg.png ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUUAAAALCAYAAADoUZ/1AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6QkIzQjIzNUUwMDQxMTFFQTk5RjBDNTYxOUYwMzFEOTYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6QkIzQjIzNUYwMDQxMTFFQTk5RjBDNTYxOUYwMzFEOTYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5RjQ4MDdGMTAwNDExMUVBOTlGMEM1NjE5RjAzMUQ5NiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5RjQ4MDdGMjAwNDExMUVBOTlGMEM1NjE5RjAzMUQ5NiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PieuEJIAAAG4SURBVHja7JoxcoMwEEXXnnRJmnTJAewDpMyBclK36eMDUKZKOrSbxQYkLQLHHsgIzf/jBWwPiEGaN/8jbeTjnTLRi9ZO60FrQ9C6JdJs9OO0ONqL1O33pvSY6/M+OBauJ/4//y79NVzcDnHbPgT9bbRqfWsdtaq7TG7qWesVfVPYOJMOTtyOO9ZtBy82MDNFbIDnAuCNnCNtOwAidJ0aE/bYMWibyU3t0S+FucTOKRIbCHICbDH4Bg7QgvQEVwNQEgARmkO7XKB4j74oKTazgWEXm3kQpT30RoA4OIf9dfp2xMARgm5nUS5Q/EFflBSbJYYj8RCI5Kbjs3WRiM3QP7EoFyge0RclxeaEU0zFaAM+Ma7RHwexWRCboWVZlMtES9Xu922UxuzzqmOzRNDzcfeK94iJ6CxhZEZshmaNN6e0+kkZzT53YKzQPysdUmFsDpzhZGymFBCNg6QL8RouEZpZWzwCaBYqmneI8USIu7wEJ+kg/XXExm7EZmghNU7xTesJjwJaLjaPL8GRxAy0d4dhbHbUL/Eh4xShUvSldYBThMqKzTISm298j5iemBHvFCFoZv0KMABfk6I+Jm4CHgAAAABJRU5ErkJggg=="
+
+/***/ }),
+
+/***/ 253:
+/*!*****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/nogoods.png ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAACzCAIAAAChA9+yAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MEVDNjg3MUEwNDg3MTFFQUFGNjFCQ0EwQ0VCNDAwRTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MEVDNjg3MTkwNDg3MTFFQUFGNjFCQ0EwQ0VCNDAwRTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmRpZDpCNDNDNTVGOTg2MDRFQTExOTQ1QURCMERCMUFCQTMyMyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpCNDNDNTVGOTg2MDRFQTExOTQ1QURCMERCMUFCQTMyMyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pi2Zy4oAABuZSURBVHja7F1pj+M4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"
+
+/***/ }),
+
+/***/ 27:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 28);
+
+
+/***/ }),
+
+/***/ 278:
+/*!****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/upload.png ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDU4RTlDRDgwN0IwMTFFQUIyM0U4QjkxOTZFMTFBQzciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDU4RTlDRDkwN0IwMTFFQUIyM0U4QjkxOTZFMTFBQzciPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDowNThFOUNENjA3QjAxMUVBQjIzRThCOTE5NkUxMUFDNyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowNThFOUNENzA3QjAxMUVBQjIzRThCOTE5NkUxMUFDNyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PiYIJ4wAAAmgSURBVHja7F3tUxJf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"
+
+/***/ }),
+
+/***/ 28:
+/*!************************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// This method of obtaining a reference to the global object needs to be
+// kept identical to the way it is obtained in runtime.js
+var g = (function() {
+  return this || (typeof self === "object" && self);
+})() || Function("return this")();
+
+// Use `getOwnPropertyNames` because not all browsers support calling
+// `hasOwnProperty` on the global `self` object in a worker. See #183.
+var hadRuntime = g.regeneratorRuntime &&
+  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
+
+// Save the old regeneratorRuntime in case it needs to be restored later.
+var oldRuntime = hadRuntime && g.regeneratorRuntime;
+
+// Force reevalutation of runtime.js.
+g.regeneratorRuntime = undefined;
+
+module.exports = __webpack_require__(/*! ./runtime */ 29);
+
+if (hadRuntime) {
+  // Restore the original runtime.
+  g.regeneratorRuntime = oldRuntime;
+} else {
+  // Remove the global property added by runtime.js.
+  try {
+    delete g.regeneratorRuntime;
+  } catch(e) {
+    g.regeneratorRuntime = undefined;
+  }
+}
+
+
+/***/ }),
+
+/***/ 29:
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+!(function(global) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  var inModule = typeof module === "object";
+  var runtime = global.regeneratorRuntime;
+  if (runtime) {
+    if (inModule) {
+      // If regeneratorRuntime is defined globally and we're in a module,
+      // make the exports object identical to regeneratorRuntime.
+      module.exports = runtime;
+    }
+    // Don't bother evaluating the rest of this file if the runtime was
+    // already defined globally.
+    return;
+  }
+
+  // Define the runtime globally (as expected by generated code) as either
+  // module.exports (if we're in a module) or a new, empty object.
+  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  runtime.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  runtime.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  runtime.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  runtime.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  runtime.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        if (delegate.iterator.return) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  runtime.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  runtime.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+})(
+  // In sloppy mode, unbound `this` refers to the global object, fallback to
+  // Function constructor if we're in global strict mode. That is sadly a form
+  // of indirect eval which violates Content Security Policy.
+  (function() {
+    return this || (typeof self === "object" && self);
+  })() || Function("return this")()
+);
+
+
+/***/ }),
+
+/***/ 295:
+/*!**********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/my/toAddress.png ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MzY0MEI3QjcwMDUyMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MzY0MEI3QjgwMDUyMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpERjYyMjk0ODAwNTExMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDozNjQwQjdCNjAwNTIxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PsE7FCEAAAXNSURBVHja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"
+
+/***/ }),
+
+/***/ 3:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -7500,7 +10149,351 @@ module.exports = g;
 
 
 /***/ }),
-/* 4 */
+
+/***/ 30:
+/*!****************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/utils/uniAxios.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var _uniAxiosMin = _interopRequireDefault(__webpack_require__(/*! ./../dist/uni-axios.min.js */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+_uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
+_uniAxiosMin.default.interceptors.first.use(function (config) {
+  var token = uni.getStorageSync('gt');
+  // console.log(token, 'Ftoken', config);
+  if (token) {
+    config.headers = { Authorization: token, ContentType: "application/json;charset=UTF-8" };
+  }
+  // console.log(config, 'configF');
+  var showLoading = config.showLoading;
+  if (showLoading) {
+    uni.showLoading({
+      mask: true,
+      title: showLoading === true ? '加载中...' : showLoading });
+
+  }
+  return config;
+}, function (err) {
+  return Promise.reject(err);
+});
+_uniAxiosMin.default.interceptors.response.use(function (response) {
+  // console.log(response)
+  return response;
+}, function (err) {
+  return Promise.reject(err);
+});
+_uniAxiosMin.default.interceptors.last.use(function (config) {
+  // console.log(config, 'last');
+  if (config.showLoading) {
+    uni.hideLoading();
+  }
+});
+
+module.exports = _uniAxiosMin.default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 31:
+/*!********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/dist/uni-axios.min.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) { true ? module.exports = t() : undefined;}(void 0, function () {return function (e) {function t(n) {if (r[n]) return r[n].exports;var o = r[n] = { exports: {}, id: n, loaded: !1 };return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;}var r = {};return t.m = e, t.c = r, t.p = "", t(0);}([function (e, t, r) {e.exports = r(1);}, function (e, t, r) {function n(e) {var t = new c(e),r = i(c.prototype.request, t);return s.extend(r, c.prototype, t), s.extend(r, t), r;}var o = r(2),s = o.utils,i = o.bind,a = o.mergeConfig,u = r(24),c = r(26),f = n(u);f.Axios = c, f.create = function (e) {return n(a(f.defaults, e));}, e.exports = f, e.exports.default = f;}, function (e, t, r) {e.exports = { utils: r(3), bind: r(4), Axios: r(6), mergeConfig: r(23), dispatchRequest: r(9), buildURL: r(7), settle: r(15), InterceptorManager: r(8) };}, function (e, t, r) {"use strict";function n(e) {return "[object Array]" === j.call(e);}function o(e) {return "[object ArrayBuffer]" === j.call(e);}function s(e) {return "undefined" != typeof FormData && e instanceof FormData;}function i(e) {var t;return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;}function a(e) {return "string" == typeof e;}function u(e) {return "number" == typeof e;}function c(e) {return "undefined" == typeof e;}function f(e) {return null !== e && "object" == typeof e;}function p(e) {return "[object Date]" === j.call(e);}function d(e) {return "[object File]" === j.call(e);}function l(e) {return "[object Blob]" === j.call(e);}function h(e) {return "[object Function]" === j.call(e);}function m(e) {return f(e) && h(e.pipe);}function y(e) {return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;}function g(e) {return e.replace(/^\s*/, "").replace(/\s*$/, "");}function x() {return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;}function v(e, t) {if (null !== e && "undefined" != typeof e) if ("object" != typeof e && (e = [e]), n(e)) for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}}function b() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function w() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function E(e, t, r) {return v(t, function (t, n) {r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;}), e;}var R = r(4),S = r(5),j = Object.prototype.toString;e.exports = { isArray: n, isArrayBuffer: o, isBuffer: S, isFormData: s, isArrayBufferView: i, isString: a, isNumber: u, isObject: f, isUndefined: c, isDate: p, isFile: d, isBlob: l, isFunction: h, isStream: m, isURLSearchParams: y, isStandardBrowserEnv: x, forEach: v, merge: b, deepMerge: w, extend: E, trim: g };}, function (e, t) {"use strict";e.exports = function (e, t) {return function () {for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}return e.apply(t, r);};};}, function (e, t) {/*!
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Determine if an object is a Buffer
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author   Feross Aboukhadijeh <https://feross.org>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license  MIT
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+    e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 32), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 32:
+/*!********************************************************!*\
+  !*** ./node_modules/node-libs-browser/mock/process.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.nextTick = function nextTick(fn) {
+	setTimeout(fn, 0);
+};
+
+exports.platform = exports.arch = 
+exports.execPath = exports.title = 'browser';
+exports.pid = 1;
+exports.browser = true;
+exports.env = {};
+exports.argv = [];
+
+exports.binding = function (name) {
+	throw new Error('No such module. (Possibly not yet loaded)')
+};
+
+(function () {
+    var cwd = '/';
+    var path;
+    exports.cwd = function () { return cwd };
+    exports.chdir = function (dir) {
+        if (!path) path = __webpack_require__(/*! path */ 33);
+        cwd = path.resolve(dir, cwd);
+    };
+})();
+
+exports.exit = exports.kill = 
+exports.umask = exports.dlopen = 
+exports.uptime = exports.memoryUsage = 
+exports.uvCounters = function() {};
+exports.features = {};
+
+
+/***/ }),
+
+/***/ 33:
+/*!***********************************************!*\
+  !*** ./node_modules/path-browserify/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
+  }
+
+  return parts;
+}
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+var splitPath = function(filename) {
+  return splitPathRe.exec(filename).slice(1);
+};
+
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
+
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
+  }
+
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
+
+
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
+
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
+
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
+
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
+
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function(path) {
+  var result = splitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+exports.basename = function(path, ext) {
+  var f = splitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+exports.extname = function(path) {
+  return splitPath(path)[3];
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
+;
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 32)))
+
+/***/ }),
+
+/***/ 4:
 /*!*********************************************************!*\
   !*** C:/Users/Administrator/Desktop/my-demo/pages.json ***!
   \*********************************************************/
@@ -7511,7 +10504,125 @@ module.exports = g;
 
 
 /***/ }),
-/* 5 */
+
+/***/ 40:
+/*!***********************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/logo.png ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAfSgeZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTg0NDYxMUIwMDQzMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTg0NDYxMUMwMDQzMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1ODQ0NjExOTAwNDMxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1ODQ0NjExQTAwNDMxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkV2CogAAB4ySURBVHja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"
+
+/***/ }),
+
+/***/ 402:
+/*!****************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/components/uni-icons/icons.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  'contact': "\uE100",
+  'person': "\uE101",
+  'personadd': "\uE102",
+  'contact-filled': "\uE130",
+  'person-filled': "\uE131",
+  'personadd-filled': "\uE132",
+  'phone': "\uE200",
+  'email': "\uE201",
+  'chatbubble': "\uE202",
+  'chatboxes': "\uE203",
+  'phone-filled': "\uE230",
+  'email-filled': "\uE231",
+  'chatbubble-filled': "\uE232",
+  'chatboxes-filled': "\uE233",
+  'weibo': "\uE260",
+  'weixin': "\uE261",
+  'pengyouquan': "\uE262",
+  'chat': "\uE263",
+  'qq': "\uE264",
+  'videocam': "\uE300",
+  'camera': "\uE301",
+  'mic': "\uE302",
+  'location': "\uE303",
+  'mic-filled': "\uE332",
+  'speech': "\uE332",
+  'location-filled': "\uE333",
+  'micoff': "\uE360",
+  'image': "\uE363",
+  'map': "\uE364",
+  'compose': "\uE400",
+  'trash': "\uE401",
+  'upload': "\uE402",
+  'download': "\uE403",
+  'close': "\uE404",
+  'redo': "\uE405",
+  'undo': "\uE406",
+  'refresh': "\uE407",
+  'star': "\uE408",
+  'plus': "\uE409",
+  'minus': "\uE410",
+  'circle': "\uE411",
+  'checkbox': "\uE411",
+  'close-filled': "\uE434",
+  'clear': "\uE434",
+  'refresh-filled': "\uE437",
+  'star-filled': "\uE438",
+  'plus-filled': "\uE439",
+  'minus-filled': "\uE440",
+  'circle-filled': "\uE441",
+  'checkbox-filled': "\uE442",
+  'closeempty': "\uE460",
+  'refreshempty': "\uE461",
+  'reload': "\uE462",
+  'starhalf': "\uE463",
+  'spinner': "\uE464",
+  'spinner-cycle': "\uE465",
+  'search': "\uE466",
+  'plusempty': "\uE468",
+  'forward': "\uE470",
+  'back': "\uE471",
+  'left-nav': "\uE471",
+  'checkmarkempty': "\uE472",
+  'home': "\uE500",
+  'navigate': "\uE501",
+  'gear': "\uE502",
+  'paperplane': "\uE503",
+  'info': "\uE504",
+  'help': "\uE505",
+  'locked': "\uE506",
+  'more': "\uE507",
+  'flag': "\uE508",
+  'home-filled': "\uE530",
+  'gear-filled': "\uE532",
+  'info-filled': "\uE534",
+  'help-filled': "\uE535",
+  'more-filled': "\uE537",
+  'settings': "\uE560",
+  'list': "\uE562",
+  'bars': "\uE563",
+  'loop': "\uE565",
+  'paperclip': "\uE567",
+  'eye': "\uE568",
+  'arrowup': "\uE580",
+  'arrowdown': "\uE581",
+  'arrowleft': "\uE582",
+  'arrowright': "\uE583",
+  'arrowthinup': "\uE584",
+  'arrowthindown': "\uE585",
+  'arrowthinleft': "\uE586",
+  'arrowthinright': "\uE587",
+  'pulldown': "\uE588",
+  'closefill': "\uE589",
+  'sound': "\uE590",
+  'scan': "\uE612" };exports.default = _default;
+
+/***/ }),
+
+/***/ 5:
 /*!*******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/dist/index.js ***!
   \*******************************************************/
@@ -8397,7 +11508,19 @@ main();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
-/* 6 */
+
+/***/ 57:
+/*!**************************************************************************!*\
+  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/emptybg.png ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "static/img/emptybg.ccdbb797.png";
+
+/***/ }),
+
+/***/ 6:
 /*!******************************************************!*\
   !*** ./node_modules/@dcloudio/uni-stat/package.json ***!
   \******************************************************/
@@ -8407,7 +11530,8 @@ main();
 module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-24220191115004","_inBundle":false,"_integrity":"sha512-UKnpiHSP7h9c5IFpJFkWkpm1KyWz9iHj1hchrQSUxPhChx+KPOmunnQcKGiQvvBz9CeSi7Se/eauJYha5ch0kw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-24220191115004.tgz","_shasum":"5848f2204f37daaf8c340fb27d9f76b16fcbfdeb","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"bcf65737c5111d47398695d3db8ed87305df346e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-24220191115004"};
 
 /***/ }),
-/* 7 */
+
+/***/ 7:
 /*!**************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"style"} ***!
   \**************************************************************************/
@@ -8415,10 +11539,11 @@ module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar", "uni-icons": "/components/uni-icons/uni-icons" } }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送", "usingComponents": {} }, "pages/delivery/set": { "navigationBarTitleText": "接单设置", "usingComponents": {} }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计", "usingComponents": {} }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益", "usingComponents": {} }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计", "usingComponents": {} }, "pages/product/product": { "navigationBarTitleText": "详情展示", "usingComponents": { "share": "/components/share" } }, "pages/set/set": { "navigationBarTitleText": "账号管理", "usingComponents": {} }, "pages/set/person": { "navigationBarTitleText": "个人资料", "usingComponents": {} }, "pages/set/mobile": { "navigationBarTitleText": "修改手机号", "usingComponents": {} }, "pages/set/bindmobile": { "navigationBarTitleText": "绑定手机号", "usingComponents": {} }, "pages/set/aboutus": { "navigationBarTitleText": "关于我们", "usingComponents": {} }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料", "usingComponents": {} }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈", "usingComponents": {} }, "pages/user/collect": { "navigationBarTitleText": "商品收藏", "usingComponents": { "empty": "/components/empty" } }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹", "usingComponents": { "empty": "/components/empty" } }, "pages/shopcar/shopcar": { "navigationBarTitleText": "购物车", "usingComponents": { "empty": "/components/empty" } }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom", "usingComponents": {} }, "pages/user/user": { "navigationBarTitleText": "我的", "usingComponents": {} }, "pages/order/order": { "navigationBarTitleText": "我的订单", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/shopcar/postOrder": { "navigationBarTitleText": "提交订单", "usingComponents": {} }, "pages/shopcar/paySuccess": { "navigationBarTitleText": "购物车", "usingComponents": {} }, "pages/user/wallet": { "navigationBarTitleText": "钱包", "usingComponents": {} }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券", "usingComponents": { "empty": "/components/empty" } }, "pages/money/money": { "usingComponents": {} }, "pages/order/createOrder": { "navigationBarTitleText": "创建订单", "usingComponents": {} }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "empty": "/components/empty" } }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单", "usingComponents": {} }, "pages/order/logistics": { "navigationBarTitleText": "物流信息", "usingComponents": {} }, "pages/order/refund": { "navigationBarTitleText": "申请退款", "usingComponents": {} }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情", "usingComponents": {} }, "pages/set/address": { "navigationBarTitleText": "我的收货地址", "usingComponents": { "empty": "/components/empty" } }, "pages/set/addressManage": { "navigationBarTitleText": "", "usingComponents": {} }, "pages/money/pay": { "navigationBarTitleText": "支付", "usingComponents": {} }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功", "usingComponents": {} }, "pages/notice/notice": { "navigationBarTitleText": "通知", "usingComponents": {} }, "pages/category/category": { "navigationBarTitleText": "分类", "usingComponents": {} }, "pages/product/list": { "navigationBarTitleText": "商品列表", "usingComponents": { "uni-load-more": "/components/uni-load-more/uni-load-more", "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/index/selectPosition": { "navigationBarTitleText": "选择当前位置", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/index/search": { "navigationBarTitleText": "搜素商品", "usingComponents": { "uni-search-bar": "/components/uni-search-bar/uni-search-bar" } }, "pages/message/center": { "navigationBarTitleText": "消息中心" }, "pages/message/couponInfo": { "navigationBarTitleText": "优惠券信息" }, "pages/message/orderWarn": { "navigationBarTitleText": "订单提醒" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "麦田圈", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "pages": { "pages/index/index": { "navigationBarTitleText": "麦田圈" }, "pages/delivery/delivery": { "navigationBarTitleText": "麦吉专送" }, "pages/delivery/set": { "navigationBarTitleText": "接单设置" }, "pages/delivery/deliverylist": { "navigationBarTitleText": "全部送单" }, "pages/delivery/statistics": { "navigationBarTitleText": "送单统计" }, "pages/delivery/myprofit": { "navigationBarTitleText": "我的收益" }, "pages/delivery/billstatistics": { "navigationBarTitleText": "账单统计" }, "pages/product/product": { "navigationBarTitleText": "详情展示" }, "pages/set/set": { "navigationBarTitleText": "账号管理" }, "pages/set/person": { "navigationBarTitleText": "个人资料" }, "pages/set/mobile": { "navigationBarTitleText": "修改手机号" }, "pages/set/bindmobile": { "navigationBarTitleText": "绑定手机号" }, "pages/set/aboutus": { "navigationBarTitleText": "关于我们" }, "pages/userinfo/userinfo": { "navigationBarTitleText": "修改资料" }, "pages/user/feedback": { "navigationBarTitleText": "意见反馈" }, "pages/user/collect": { "navigationBarTitleText": "商品收藏" }, "pages/user/footmark": { "navigationBarTitleText": "我的足迹" }, "pages/shopcar/shopcar": { "navigationBarTitleText": "购物车" }, "pages/public/login": { "navigationBarTitleText": "", "navigationStyle": "custom" }, "pages/user/user": { "navigationBarTitleText": "我的" }, "pages/order/order": { "navigationBarTitleText": "我的订单" }, "pages/shopcar/postOrder": { "navigationBarTitleText": "提交订单" }, "pages/shopcar/paySuccess": { "navigationBarTitleText": "购物车" }, "pages/user/wallet": { "navigationBarTitleText": "钱包" }, "pages/user/coupon": { "navigationBarTitleText": "我的优惠券" }, "pages/money/money": {}, "pages/order/createOrder": { "navigationBarTitleText": "创建订单" }, "pages/order/aftersale": { "navigationBarTitleText": "退款售后" }, "pages/order/cancelOrder": { "navigationBarTitleText": "取消订单" }, "pages/order/logistics": { "navigationBarTitleText": "物流信息" }, "pages/order/refund": { "navigationBarTitleText": "申请退款" }, "pages/order/orderDetails": { "navigationBarTitleText": "订单详情" }, "pages/set/address": { "navigationBarTitleText": "我的收货地址" }, "pages/set/addressManage": { "navigationBarTitleText": "" }, "pages/money/pay": { "navigationBarTitleText": "支付" }, "pages/money/paySuccess": { "navigationBarTitleText": "支付成功" }, "pages/notice/notice": { "navigationBarTitleText": "通知" }, "pages/category/category": { "navigationBarTitleText": "分类" }, "pages/product/list": { "navigationBarTitleText": "商品列表" }, "pages/index/selectPosition": { "navigationBarTitleText": "选择当前位置" }, "pages/index/search": { "navigationBarTitleText": "搜素商品" }, "pages/message/center": { "navigationBarTitleText": "消息中心" }, "pages/message/couponInfo": { "navigationBarTitleText": "优惠券信息" }, "pages/message/orderWarn": { "navigationBarTitleText": "订单提醒" } }, "globalStyle": { "navigationBarTextStyle": "black", "navigationBarTitleText": "麦田圈", "navigationBarBackgroundColor": "#FFFFFF", "backgroundColor": "#f8f8f8" } };exports.default = _default;
 
 /***/ }),
-/* 8 */
+
+/***/ 8:
 /*!*************************************************************************!*\
   !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"stat"} ***!
   \*************************************************************************/
@@ -8429,7 +11554,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = { "appid": "__UNI__1C2E211" };exports.default = _default;
 
 /***/ }),
-/* 9 */
+
+/***/ 9:
 /*!*************************************************************!*\
   !*** C:/Users/Administrator/Desktop/my-demo/store/index.js ***!
   \*************************************************************/
@@ -8477,1766 +11603,7 @@ var store = new _vuex.default.Store({
 store;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
-/***/ }),
-/* 10 */
-/*!********************************************!*\
-  !*** ./node_modules/vuex/dist/vuex.esm.js ***!
-  \********************************************/
-/*! exports provided: Store, install, mapState, mapMutations, mapGetters, mapActions, createNamespacedHelpers, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Store", function() { return Store; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "install", function() { return install; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapState", function() { return mapState; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapMutations", function() { return mapMutations; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapGetters", function() { return mapGetters; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapActions", function() { return mapActions; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createNamespacedHelpers", function() { return createNamespacedHelpers; });
-/**
- * vuex v3.0.1
- * (c) 2017 Evan You
- * @license MIT
- */
-var applyMixin = function (Vue) {
-  var version = Number(Vue.version.split('.')[0]);
-
-  if (version >= 2) {
-    Vue.mixin({ beforeCreate: vuexInit });
-  } else {
-    // override init and inject vuex init procedure
-    // for 1.x backwards compatibility.
-    var _init = Vue.prototype._init;
-    Vue.prototype._init = function (options) {
-      if ( options === void 0 ) options = {};
-
-      options.init = options.init
-        ? [vuexInit].concat(options.init)
-        : vuexInit;
-      _init.call(this, options);
-    };
-  }
-
-  /**
-   * Vuex init hook, injected into each instances init hooks list.
-   */
-
-  function vuexInit () {
-    var options = this.$options;
-    // store injection
-    if (options.store) {
-      this.$store = typeof options.store === 'function'
-        ? options.store()
-        : options.store;
-    } else if (options.parent && options.parent.$store) {
-      this.$store = options.parent.$store;
-    }
-  }
-};
-
-var devtoolHook =
-  typeof window !== 'undefined' &&
-  window.__VUE_DEVTOOLS_GLOBAL_HOOK__;
-
-function devtoolPlugin (store) {
-  if (!devtoolHook) { return }
-
-  store._devtoolHook = devtoolHook;
-
-  devtoolHook.emit('vuex:init', store);
-
-  devtoolHook.on('vuex:travel-to-state', function (targetState) {
-    store.replaceState(targetState);
-  });
-
-  store.subscribe(function (mutation, state) {
-    devtoolHook.emit('vuex:mutation', mutation, state);
-  });
-}
-
-/**
- * Get the first item that pass the test
- * by second argument function
- *
- * @param {Array} list
- * @param {Function} f
- * @return {*}
- */
-/**
- * Deep copy the given object considering circular structure.
- * This function caches all nested objects and its copies.
- * If it detects circular structure, use cached copy to avoid infinite loop.
- *
- * @param {*} obj
- * @param {Array<Object>} cache
- * @return {*}
- */
-
-
-/**
- * forEach for object
- */
-function forEachValue (obj, fn) {
-  Object.keys(obj).forEach(function (key) { return fn(obj[key], key); });
-}
-
-function isObject (obj) {
-  return obj !== null && typeof obj === 'object'
-}
-
-function isPromise (val) {
-  return val && typeof val.then === 'function'
-}
-
-function assert (condition, msg) {
-  if (!condition) { throw new Error(("[vuex] " + msg)) }
-}
-
-var Module = function Module (rawModule, runtime) {
-  this.runtime = runtime;
-  this._children = Object.create(null);
-  this._rawModule = rawModule;
-  var rawState = rawModule.state;
-  this.state = (typeof rawState === 'function' ? rawState() : rawState) || {};
-};
-
-var prototypeAccessors$1 = { namespaced: { configurable: true } };
-
-prototypeAccessors$1.namespaced.get = function () {
-  return !!this._rawModule.namespaced
-};
-
-Module.prototype.addChild = function addChild (key, module) {
-  this._children[key] = module;
-};
-
-Module.prototype.removeChild = function removeChild (key) {
-  delete this._children[key];
-};
-
-Module.prototype.getChild = function getChild (key) {
-  return this._children[key]
-};
-
-Module.prototype.update = function update (rawModule) {
-  this._rawModule.namespaced = rawModule.namespaced;
-  if (rawModule.actions) {
-    this._rawModule.actions = rawModule.actions;
-  }
-  if (rawModule.mutations) {
-    this._rawModule.mutations = rawModule.mutations;
-  }
-  if (rawModule.getters) {
-    this._rawModule.getters = rawModule.getters;
-  }
-};
-
-Module.prototype.forEachChild = function forEachChild (fn) {
-  forEachValue(this._children, fn);
-};
-
-Module.prototype.forEachGetter = function forEachGetter (fn) {
-  if (this._rawModule.getters) {
-    forEachValue(this._rawModule.getters, fn);
-  }
-};
-
-Module.prototype.forEachAction = function forEachAction (fn) {
-  if (this._rawModule.actions) {
-    forEachValue(this._rawModule.actions, fn);
-  }
-};
-
-Module.prototype.forEachMutation = function forEachMutation (fn) {
-  if (this._rawModule.mutations) {
-    forEachValue(this._rawModule.mutations, fn);
-  }
-};
-
-Object.defineProperties( Module.prototype, prototypeAccessors$1 );
-
-var ModuleCollection = function ModuleCollection (rawRootModule) {
-  // register root module (Vuex.Store options)
-  this.register([], rawRootModule, false);
-};
-
-ModuleCollection.prototype.get = function get (path) {
-  return path.reduce(function (module, key) {
-    return module.getChild(key)
-  }, this.root)
-};
-
-ModuleCollection.prototype.getNamespace = function getNamespace (path) {
-  var module = this.root;
-  return path.reduce(function (namespace, key) {
-    module = module.getChild(key);
-    return namespace + (module.namespaced ? key + '/' : '')
-  }, '')
-};
-
-ModuleCollection.prototype.update = function update$1 (rawRootModule) {
-  update([], this.root, rawRootModule);
-};
-
-ModuleCollection.prototype.register = function register (path, rawModule, runtime) {
-    var this$1 = this;
-    if ( runtime === void 0 ) runtime = true;
-
-  if (true) {
-    assertRawModule(path, rawModule);
-  }
-
-  var newModule = new Module(rawModule, runtime);
-  if (path.length === 0) {
-    this.root = newModule;
-  } else {
-    var parent = this.get(path.slice(0, -1));
-    parent.addChild(path[path.length - 1], newModule);
-  }
-
-  // register nested modules
-  if (rawModule.modules) {
-    forEachValue(rawModule.modules, function (rawChildModule, key) {
-      this$1.register(path.concat(key), rawChildModule, runtime);
-    });
-  }
-};
-
-ModuleCollection.prototype.unregister = function unregister (path) {
-  var parent = this.get(path.slice(0, -1));
-  var key = path[path.length - 1];
-  if (!parent.getChild(key).runtime) { return }
-
-  parent.removeChild(key);
-};
-
-function update (path, targetModule, newModule) {
-  if (true) {
-    assertRawModule(path, newModule);
-  }
-
-  // update target module
-  targetModule.update(newModule);
-
-  // update nested modules
-  if (newModule.modules) {
-    for (var key in newModule.modules) {
-      if (!targetModule.getChild(key)) {
-        if (true) {
-          console.warn(
-            "[vuex] trying to add a new module '" + key + "' on hot reloading, " +
-            'manual reload is needed'
-          );
-        }
-        return
-      }
-      update(
-        path.concat(key),
-        targetModule.getChild(key),
-        newModule.modules[key]
-      );
-    }
-  }
-}
-
-var functionAssert = {
-  assert: function (value) { return typeof value === 'function'; },
-  expected: 'function'
-};
-
-var objectAssert = {
-  assert: function (value) { return typeof value === 'function' ||
-    (typeof value === 'object' && typeof value.handler === 'function'); },
-  expected: 'function or object with "handler" function'
-};
-
-var assertTypes = {
-  getters: functionAssert,
-  mutations: functionAssert,
-  actions: objectAssert
-};
-
-function assertRawModule (path, rawModule) {
-  Object.keys(assertTypes).forEach(function (key) {
-    if (!rawModule[key]) { return }
-
-    var assertOptions = assertTypes[key];
-
-    forEachValue(rawModule[key], function (value, type) {
-      assert(
-        assertOptions.assert(value),
-        makeAssertionMessage(path, key, type, value, assertOptions.expected)
-      );
-    });
-  });
-}
-
-function makeAssertionMessage (path, key, type, value, expected) {
-  var buf = key + " should be " + expected + " but \"" + key + "." + type + "\"";
-  if (path.length > 0) {
-    buf += " in module \"" + (path.join('.')) + "\"";
-  }
-  buf += " is " + (JSON.stringify(value)) + ".";
-  return buf
-}
-
-var Vue; // bind on install
-
-var Store = function Store (options) {
-  var this$1 = this;
-  if ( options === void 0 ) options = {};
-
-  // Auto install if it is not done yet and `window` has `Vue`.
-  // To allow users to avoid auto-installation in some cases,
-  // this code should be placed here. See #731
-  if (!Vue && typeof window !== 'undefined' && window.Vue) {
-    install(window.Vue);
-  }
-
-  if (true) {
-    assert(Vue, "must call Vue.use(Vuex) before creating a store instance.");
-    assert(typeof Promise !== 'undefined', "vuex requires a Promise polyfill in this browser.");
-    assert(this instanceof Store, "Store must be called with the new operator.");
-  }
-
-  var plugins = options.plugins; if ( plugins === void 0 ) plugins = [];
-  var strict = options.strict; if ( strict === void 0 ) strict = false;
-
-  var state = options.state; if ( state === void 0 ) state = {};
-  if (typeof state === 'function') {
-    state = state() || {};
-  }
-
-  // store internal state
-  this._committing = false;
-  this._actions = Object.create(null);
-  this._actionSubscribers = [];
-  this._mutations = Object.create(null);
-  this._wrappedGetters = Object.create(null);
-  this._modules = new ModuleCollection(options);
-  this._modulesNamespaceMap = Object.create(null);
-  this._subscribers = [];
-  this._watcherVM = new Vue();
-
-  // bind commit and dispatch to self
-  var store = this;
-  var ref = this;
-  var dispatch = ref.dispatch;
-  var commit = ref.commit;
-  this.dispatch = function boundDispatch (type, payload) {
-    return dispatch.call(store, type, payload)
-  };
-  this.commit = function boundCommit (type, payload, options) {
-    return commit.call(store, type, payload, options)
-  };
-
-  // strict mode
-  this.strict = strict;
-
-  // init root module.
-  // this also recursively registers all sub-modules
-  // and collects all module getters inside this._wrappedGetters
-  installModule(this, state, [], this._modules.root);
-
-  // initialize the store vm, which is responsible for the reactivity
-  // (also registers _wrappedGetters as computed properties)
-  resetStoreVM(this, state);
-
-  // apply plugins
-  plugins.forEach(function (plugin) { return plugin(this$1); });
-
-  if (Vue.config.devtools) {
-    devtoolPlugin(this);
-  }
-};
-
-var prototypeAccessors = { state: { configurable: true } };
-
-prototypeAccessors.state.get = function () {
-  return this._vm._data.$$state
-};
-
-prototypeAccessors.state.set = function (v) {
-  if (true) {
-    assert(false, "Use store.replaceState() to explicit replace store state.");
-  }
-};
-
-Store.prototype.commit = function commit (_type, _payload, _options) {
-    var this$1 = this;
-
-  // check object-style commit
-  var ref = unifyObjectStyle(_type, _payload, _options);
-    var type = ref.type;
-    var payload = ref.payload;
-    var options = ref.options;
-
-  var mutation = { type: type, payload: payload };
-  var entry = this._mutations[type];
-  if (!entry) {
-    if (true) {
-      console.error(("[vuex] unknown mutation type: " + type));
-    }
-    return
-  }
-  this._withCommit(function () {
-    entry.forEach(function commitIterator (handler) {
-      handler(payload);
-    });
-  });
-  this._subscribers.forEach(function (sub) { return sub(mutation, this$1.state); });
-
-  if (
-     true &&
-    options && options.silent
-  ) {
-    console.warn(
-      "[vuex] mutation type: " + type + ". Silent option has been removed. " +
-      'Use the filter functionality in the vue-devtools'
-    );
-  }
-};
-
-Store.prototype.dispatch = function dispatch (_type, _payload) {
-    var this$1 = this;
-
-  // check object-style dispatch
-  var ref = unifyObjectStyle(_type, _payload);
-    var type = ref.type;
-    var payload = ref.payload;
-
-  var action = { type: type, payload: payload };
-  var entry = this._actions[type];
-  if (!entry) {
-    if (true) {
-      console.error(("[vuex] unknown action type: " + type));
-    }
-    return
-  }
-
-  this._actionSubscribers.forEach(function (sub) { return sub(action, this$1.state); });
-
-  return entry.length > 1
-    ? Promise.all(entry.map(function (handler) { return handler(payload); }))
-    : entry[0](payload)
-};
-
-Store.prototype.subscribe = function subscribe (fn) {
-  return genericSubscribe(fn, this._subscribers)
-};
-
-Store.prototype.subscribeAction = function subscribeAction (fn) {
-  return genericSubscribe(fn, this._actionSubscribers)
-};
-
-Store.prototype.watch = function watch (getter, cb, options) {
-    var this$1 = this;
-
-  if (true) {
-    assert(typeof getter === 'function', "store.watch only accepts a function.");
-  }
-  return this._watcherVM.$watch(function () { return getter(this$1.state, this$1.getters); }, cb, options)
-};
-
-Store.prototype.replaceState = function replaceState (state) {
-    var this$1 = this;
-
-  this._withCommit(function () {
-    this$1._vm._data.$$state = state;
-  });
-};
-
-Store.prototype.registerModule = function registerModule (path, rawModule, options) {
-    if ( options === void 0 ) options = {};
-
-  if (typeof path === 'string') { path = [path]; }
-
-  if (true) {
-    assert(Array.isArray(path), "module path must be a string or an Array.");
-    assert(path.length > 0, 'cannot register the root module by using registerModule.');
-  }
-
-  this._modules.register(path, rawModule);
-  installModule(this, this.state, path, this._modules.get(path), options.preserveState);
-  // reset store to update getters...
-  resetStoreVM(this, this.state);
-};
-
-Store.prototype.unregisterModule = function unregisterModule (path) {
-    var this$1 = this;
-
-  if (typeof path === 'string') { path = [path]; }
-
-  if (true) {
-    assert(Array.isArray(path), "module path must be a string or an Array.");
-  }
-
-  this._modules.unregister(path);
-  this._withCommit(function () {
-    var parentState = getNestedState(this$1.state, path.slice(0, -1));
-    Vue.delete(parentState, path[path.length - 1]);
-  });
-  resetStore(this);
-};
-
-Store.prototype.hotUpdate = function hotUpdate (newOptions) {
-  this._modules.update(newOptions);
-  resetStore(this, true);
-};
-
-Store.prototype._withCommit = function _withCommit (fn) {
-  var committing = this._committing;
-  this._committing = true;
-  fn();
-  this._committing = committing;
-};
-
-Object.defineProperties( Store.prototype, prototypeAccessors );
-
-function genericSubscribe (fn, subs) {
-  if (subs.indexOf(fn) < 0) {
-    subs.push(fn);
-  }
-  return function () {
-    var i = subs.indexOf(fn);
-    if (i > -1) {
-      subs.splice(i, 1);
-    }
-  }
-}
-
-function resetStore (store, hot) {
-  store._actions = Object.create(null);
-  store._mutations = Object.create(null);
-  store._wrappedGetters = Object.create(null);
-  store._modulesNamespaceMap = Object.create(null);
-  var state = store.state;
-  // init all modules
-  installModule(store, state, [], store._modules.root, true);
-  // reset vm
-  resetStoreVM(store, state, hot);
-}
-
-function resetStoreVM (store, state, hot) {
-  var oldVm = store._vm;
-
-  // bind store public getters
-  store.getters = {};
-  var wrappedGetters = store._wrappedGetters;
-  var computed = {};
-  forEachValue(wrappedGetters, function (fn, key) {
-    // use computed to leverage its lazy-caching mechanism
-    computed[key] = function () { return fn(store); };
-    Object.defineProperty(store.getters, key, {
-      get: function () { return store._vm[key]; },
-      enumerable: true // for local getters
-    });
-  });
-
-  // use a Vue instance to store the state tree
-  // suppress warnings just in case the user has added
-  // some funky global mixins
-  var silent = Vue.config.silent;
-  Vue.config.silent = true;
-  store._vm = new Vue({
-    data: {
-      $$state: state
-    },
-    computed: computed
-  });
-  Vue.config.silent = silent;
-
-  // enable strict mode for new vm
-  if (store.strict) {
-    enableStrictMode(store);
-  }
-
-  if (oldVm) {
-    if (hot) {
-      // dispatch changes in all subscribed watchers
-      // to force getter re-evaluation for hot reloading.
-      store._withCommit(function () {
-        oldVm._data.$$state = null;
-      });
-    }
-    Vue.nextTick(function () { return oldVm.$destroy(); });
-  }
-}
-
-function installModule (store, rootState, path, module, hot) {
-  var isRoot = !path.length;
-  var namespace = store._modules.getNamespace(path);
-
-  // register in namespace map
-  if (module.namespaced) {
-    store._modulesNamespaceMap[namespace] = module;
-  }
-
-  // set state
-  if (!isRoot && !hot) {
-    var parentState = getNestedState(rootState, path.slice(0, -1));
-    var moduleName = path[path.length - 1];
-    store._withCommit(function () {
-      Vue.set(parentState, moduleName, module.state);
-    });
-  }
-
-  var local = module.context = makeLocalContext(store, namespace, path);
-
-  module.forEachMutation(function (mutation, key) {
-    var namespacedType = namespace + key;
-    registerMutation(store, namespacedType, mutation, local);
-  });
-
-  module.forEachAction(function (action, key) {
-    var type = action.root ? key : namespace + key;
-    var handler = action.handler || action;
-    registerAction(store, type, handler, local);
-  });
-
-  module.forEachGetter(function (getter, key) {
-    var namespacedType = namespace + key;
-    registerGetter(store, namespacedType, getter, local);
-  });
-
-  module.forEachChild(function (child, key) {
-    installModule(store, rootState, path.concat(key), child, hot);
-  });
-}
-
-/**
- * make localized dispatch, commit, getters and state
- * if there is no namespace, just use root ones
- */
-function makeLocalContext (store, namespace, path) {
-  var noNamespace = namespace === '';
-
-  var local = {
-    dispatch: noNamespace ? store.dispatch : function (_type, _payload, _options) {
-      var args = unifyObjectStyle(_type, _payload, _options);
-      var payload = args.payload;
-      var options = args.options;
-      var type = args.type;
-
-      if (!options || !options.root) {
-        type = namespace + type;
-        if ( true && !store._actions[type]) {
-          console.error(("[vuex] unknown local action type: " + (args.type) + ", global type: " + type));
-          return
-        }
-      }
-
-      return store.dispatch(type, payload)
-    },
-
-    commit: noNamespace ? store.commit : function (_type, _payload, _options) {
-      var args = unifyObjectStyle(_type, _payload, _options);
-      var payload = args.payload;
-      var options = args.options;
-      var type = args.type;
-
-      if (!options || !options.root) {
-        type = namespace + type;
-        if ( true && !store._mutations[type]) {
-          console.error(("[vuex] unknown local mutation type: " + (args.type) + ", global type: " + type));
-          return
-        }
-      }
-
-      store.commit(type, payload, options);
-    }
-  };
-
-  // getters and state object must be gotten lazily
-  // because they will be changed by vm update
-  Object.defineProperties(local, {
-    getters: {
-      get: noNamespace
-        ? function () { return store.getters; }
-        : function () { return makeLocalGetters(store, namespace); }
-    },
-    state: {
-      get: function () { return getNestedState(store.state, path); }
-    }
-  });
-
-  return local
-}
-
-function makeLocalGetters (store, namespace) {
-  var gettersProxy = {};
-
-  var splitPos = namespace.length;
-  Object.keys(store.getters).forEach(function (type) {
-    // skip if the target getter is not match this namespace
-    if (type.slice(0, splitPos) !== namespace) { return }
-
-    // extract local getter type
-    var localType = type.slice(splitPos);
-
-    // Add a port to the getters proxy.
-    // Define as getter property because
-    // we do not want to evaluate the getters in this time.
-    Object.defineProperty(gettersProxy, localType, {
-      get: function () { return store.getters[type]; },
-      enumerable: true
-    });
-  });
-
-  return gettersProxy
-}
-
-function registerMutation (store, type, handler, local) {
-  var entry = store._mutations[type] || (store._mutations[type] = []);
-  entry.push(function wrappedMutationHandler (payload) {
-    handler.call(store, local.state, payload);
-  });
-}
-
-function registerAction (store, type, handler, local) {
-  var entry = store._actions[type] || (store._actions[type] = []);
-  entry.push(function wrappedActionHandler (payload, cb) {
-    var res = handler.call(store, {
-      dispatch: local.dispatch,
-      commit: local.commit,
-      getters: local.getters,
-      state: local.state,
-      rootGetters: store.getters,
-      rootState: store.state
-    }, payload, cb);
-    if (!isPromise(res)) {
-      res = Promise.resolve(res);
-    }
-    if (store._devtoolHook) {
-      return res.catch(function (err) {
-        store._devtoolHook.emit('vuex:error', err);
-        throw err
-      })
-    } else {
-      return res
-    }
-  });
-}
-
-function registerGetter (store, type, rawGetter, local) {
-  if (store._wrappedGetters[type]) {
-    if (true) {
-      console.error(("[vuex] duplicate getter key: " + type));
-    }
-    return
-  }
-  store._wrappedGetters[type] = function wrappedGetter (store) {
-    return rawGetter(
-      local.state, // local state
-      local.getters, // local getters
-      store.state, // root state
-      store.getters // root getters
-    )
-  };
-}
-
-function enableStrictMode (store) {
-  store._vm.$watch(function () { return this._data.$$state }, function () {
-    if (true) {
-      assert(store._committing, "Do not mutate vuex store state outside mutation handlers.");
-    }
-  }, { deep: true, sync: true });
-}
-
-function getNestedState (state, path) {
-  return path.length
-    ? path.reduce(function (state, key) { return state[key]; }, state)
-    : state
-}
-
-function unifyObjectStyle (type, payload, options) {
-  if (isObject(type) && type.type) {
-    options = payload;
-    payload = type;
-    type = type.type;
-  }
-
-  if (true) {
-    assert(typeof type === 'string', ("Expects string as the type, but found " + (typeof type) + "."));
-  }
-
-  return { type: type, payload: payload, options: options }
-}
-
-function install (_Vue) {
-  if (Vue && _Vue === Vue) {
-    if (true) {
-      console.error(
-        '[vuex] already installed. Vue.use(Vuex) should be called only once.'
-      );
-    }
-    return
-  }
-  Vue = _Vue;
-  applyMixin(Vue);
-}
-
-var mapState = normalizeNamespace(function (namespace, states) {
-  var res = {};
-  normalizeMap(states).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    res[key] = function mappedState () {
-      var state = this.$store.state;
-      var getters = this.$store.getters;
-      if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapState', namespace);
-        if (!module) {
-          return
-        }
-        state = module.context.state;
-        getters = module.context.getters;
-      }
-      return typeof val === 'function'
-        ? val.call(this, state, getters)
-        : state[val]
-    };
-    // mark vuex getter for devtools
-    res[key].vuex = true;
-  });
-  return res
-});
-
-var mapMutations = normalizeNamespace(function (namespace, mutations) {
-  var res = {};
-  normalizeMap(mutations).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    res[key] = function mappedMutation () {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      var commit = this.$store.commit;
-      if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapMutations', namespace);
-        if (!module) {
-          return
-        }
-        commit = module.context.commit;
-      }
-      return typeof val === 'function'
-        ? val.apply(this, [commit].concat(args))
-        : commit.apply(this.$store, [val].concat(args))
-    };
-  });
-  return res
-});
-
-var mapGetters = normalizeNamespace(function (namespace, getters) {
-  var res = {};
-  normalizeMap(getters).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    val = namespace + val;
-    res[key] = function mappedGetter () {
-      if (namespace && !getModuleByNamespace(this.$store, 'mapGetters', namespace)) {
-        return
-      }
-      if ( true && !(val in this.$store.getters)) {
-        console.error(("[vuex] unknown getter: " + val));
-        return
-      }
-      return this.$store.getters[val]
-    };
-    // mark vuex getter for devtools
-    res[key].vuex = true;
-  });
-  return res
-});
-
-var mapActions = normalizeNamespace(function (namespace, actions) {
-  var res = {};
-  normalizeMap(actions).forEach(function (ref) {
-    var key = ref.key;
-    var val = ref.val;
-
-    res[key] = function mappedAction () {
-      var args = [], len = arguments.length;
-      while ( len-- ) args[ len ] = arguments[ len ];
-
-      var dispatch = this.$store.dispatch;
-      if (namespace) {
-        var module = getModuleByNamespace(this.$store, 'mapActions', namespace);
-        if (!module) {
-          return
-        }
-        dispatch = module.context.dispatch;
-      }
-      return typeof val === 'function'
-        ? val.apply(this, [dispatch].concat(args))
-        : dispatch.apply(this.$store, [val].concat(args))
-    };
-  });
-  return res
-});
-
-var createNamespacedHelpers = function (namespace) { return ({
-  mapState: mapState.bind(null, namespace),
-  mapGetters: mapGetters.bind(null, namespace),
-  mapMutations: mapMutations.bind(null, namespace),
-  mapActions: mapActions.bind(null, namespace)
-}); };
-
-function normalizeMap (map) {
-  return Array.isArray(map)
-    ? map.map(function (key) { return ({ key: key, val: key }); })
-    : Object.keys(map).map(function (key) { return ({ key: key, val: map[key] }); })
-}
-
-function normalizeNamespace (fn) {
-  return function (namespace, map) {
-    if (typeof namespace !== 'string') {
-      map = namespace;
-      namespace = '';
-    } else if (namespace.charAt(namespace.length - 1) !== '/') {
-      namespace += '/';
-    }
-    return fn(namespace, map)
-  }
-}
-
-function getModuleByNamespace (store, helper, namespace) {
-  var module = store._modulesNamespaceMap[namespace];
-  if ( true && !module) {
-    console.error(("[vuex] module namespace not found in " + helper + "(): " + namespace));
-  }
-  return module
-}
-
-var index_esm = {
-  Store: Store,
-  install: install,
-  version: '3.0.1',
-  mapState: mapState,
-  mapMutations: mapMutations,
-  mapGetters: mapGetters,
-  mapActions: mapActions,
-  createNamespacedHelpers: createNamespacedHelpers
-};
-
-
-/* harmony default export */ __webpack_exports__["default"] = (index_esm);
-
-
-/***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */
-/*!********************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode /* vue-cli only */
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
-
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
-
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-/* 19 */
-/*!******************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/Json.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _ref;function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;} /* 用户 */
-var userInfo = {}
-// status: 1,
-// data: {
-// 	id: 1,
-// 	mobile: 18888888888,
-// 	nickname: 'Leo yo',
-// 	portrait: '/static/my/missing-face.png'
-// },
-// msg: '提示'
-
-/* 首页轮播图 */;
-var carouselList = [{
-  src: "/static/temp/banner3.jpg",
-  background: "rgb(203, 87, 60)" },
-
-{
-  src: "/static/temp/banner2.jpg",
-  background: "rgb(205, 215, 218)" },
-
-{
-  src: "/static/temp/banner4.jpg",
-  background: "rgb(183, 73, 69)" }];
-
-
-/* 商品列表 */
-var goodsList = [{
-  image: "/static/index/egg.png",
-  title: "正宗农家散养谷饲土鸡蛋20枚",
-  price: '1.00' },
-
-{
-  image: "/static/index/ht.png",
-  title: "香甜核桃100kg",
-  price: '1.00' }];
-
-
-
-/* 购物车 */
-var cartList = [{
-  id: 1,
-  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553005139&di=3368549edf9eee769a9bcb3fbbed2504&imgtype=jpg&er=1&src=http%3A%2F%2Fimg002.hc360.cn%2Fy3%2FM01%2F5F%2FDB%2FwKhQh1T7iceEGRdWAAAAADQvqk8733.jpg',
-  attr_val: '春装款 L',
-  stock: 15,
-  title: 'OVBE 长袖风衣',
-  price: 278.00,
-  number: 1 },
-
-{
-  id: 3,
-  image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2319343996,1107396922&fm=26&gp=0.jpg',
-  attr_val: '激光导航 扫拖一体',
-  stock: 3,
-  title: '科沃斯 Ecovacs 扫地机器人',
-  price: 1348.00,
-  number: 5 },
-
-{
-  id: 4,
-  image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2668268226,1765897385&fm=26&gp=0.jpg',
-  attr_val: 'XL',
-  stock: 55,
-  title: '朵绒菲小西装',
-  price: 175.88,
-  number: 1 },
-
-{
-  id: 5,
-  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552410549432&di=06dd3758053fb6d6362516f30a42d055&imgtype=0&src=http%3A%2F%2Fimgcache.mysodao.com%2Fimg3%2FM0A%2F67%2F42%2FCgAPD1vNSsHNm-TnAAEy61txQb4543_400x400x2.JPG',
-  attr_val: '520 #粉红色',
-  stock: 15,
-  title: '迪奥（Dior）烈艳唇膏',
-  price: 1089.00,
-  number: 1 },
-
-{
-  id: 6,
-  image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1031875829,2994442603&fm=26&gp=0.jpg',
-  attr_val: '樱花味润手霜 30ml',
-  stock: 15,
-  title: "欧舒丹（L'OCCITANE）乳木果",
-  price: 128,
-  number: 1 },
-
-{
-  id: 7,
-  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553007107&di=390915aa8a022cf0b03c03340881b0e7&imgtype=jpg&er=1&src=http%3A%2F%2Fimg13.360buyimg.com%2Fn0%2Fjfs%2Ft646%2F285%2F736444951%2F480473%2Faa701c97%2F548176feN10c9ed7b.jpg',
-  attr_val: '特级 12个',
-  stock: 7,
-  title: '新疆阿克苏苹果 特级',
-  price: 58.8,
-  number: 10 },
-
-{
-  id: 8,
-  image: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2319343996,1107396922&fm=26&gp=0.jpg',
-  attr_val: '激光导航 扫拖一体',
-  stock: 15,
-  title: '科沃斯 Ecovacs 扫地机器人',
-  price: 1348.00,
-  number: 1 },
-
-{
-  id: 9,
-  image: 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2668268226,1765897385&fm=26&gp=0.jpg',
-  attr_val: 'XL',
-  stock: 55,
-  title: '朵绒菲小西装',
-  price: 175.88,
-  number: 1 },
-
-{
-  id: 10,
-  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552410549432&di=06dd3758053fb6d6362516f30a42d055&imgtype=0&src=http%3A%2F%2Fimgcache.mysodao.com%2Fimg3%2FM0A%2F67%2F42%2FCgAPD1vNSsHNm-TnAAEy61txQb4543_400x400x2.JPG',
-  attr_val: '520 #粉红色',
-  stock: 15,
-  title: '迪奥（Dior）烈艳唇膏',
-  price: 1089.00,
-  number: 1 },
-
-{
-  id: 11,
-  image: 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1031875829,2994442603&fm=26&gp=0.jpg',
-  attr_val: '樱花味润手霜 30ml',
-  stock: 15,
-  title: "欧舒丹（L'OCCITANE）乳木果",
-  price: 128,
-  number: 1 },
-
-{
-  id: 12,
-  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553007107&di=390915aa8a022cf0b03c03340881b0e7&imgtype=jpg&er=1&src=http%3A%2F%2Fimg13.360buyimg.com%2Fn0%2Fjfs%2Ft646%2F285%2F736444951%2F480473%2Faa701c97%2F548176feN10c9ed7b.jpg',
-  attr_val: '特级 12个',
-  stock: 7,
-  title: '新疆阿克苏苹果 特级',
-  price: 58.8,
-  number: 10 },
-
-{
-  id: 13,
-  image: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1552405266625&di=a703f2b2cdb0fe7f3f05f62dd91307ab&imgtype=0&src=http%3A%2F%2Fwww.78.cn%2Fzixun%2Fnews%2Fupload%2F20190214%2F1550114706486250.jpg',
-  attr_val: '春装款/m',
-  stock: 15,
-  title: '女装2019春秋新款',
-  price: 420.00,
-  number: 1 }];
-
-
-//详情展示页面
-var detailData = {
-  title: '纯种金毛幼犬活体有血统证书',
-  title2: '拆家小能手 你值得拥有',
-  favorite: true,
-  imgList: [{
-    src: '/static/missing-face.png' },
-
-  {
-    src: 'http://img.pconline.com.cn/images/upload/upc/tx/itbbs/1309/06/c4/25310541_1378426131583.jpg' },
-
-  {
-    src: 'http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1610/26/c4/28926240_1477451226577_mthumb.jpg' },
-
-  {
-    src: 'http://picture.ik123.com/uploads/allimg/190219/12-1Z219105139.jpg' }],
-
-
-  episodeList: [
-  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24],
-
-  guessList: [{
-    src: 'http://img.52z.com/upload/news/image/20180530/20180530081619_31029.jpg',
-    title: '猫眼指甲油',
-    title2: '独树一帜的免照灯猫眼指甲' },
-
-  {
-    src: 'http://m.china-7.net/uploads/14778449362891.jpg',
-    title: '创意屋',
-    title2: '创意屋形上下双层高低床' },
-
-  {
-    src: 'http://www.k73.com/up/allimg/130415/22-130415093527.jpg',
-    title: 'MissCandy 指甲油',
-    title2: '十分适合喜欢素净的妹纸，尽显淡雅的气质' },
-
-  {
-    src: 'http://img0.imgtn.bdimg.com/it/u=2108933440,2194129200&fm=214&gp=0.jpg	',
-    title: 'RMK 2017星空海蓝唇釉',
-    title2: '唇釉质地，上唇后很滋润。少女也会心动的蓝色，透明液体形状。' }],
-
-
-  evaList: [{
-    src: 'http://gss0.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/77c6a7efce1b9d1663174705fbdeb48f8d546486.jpg',
-    nickname: 'Ranth Allngal',
-    time: '09-20 12:54',
-    zan: '54',
-    content: '评论不要太苛刻，不管什么产品都会有瑕疵，客服也说了可以退货并且商家承担运费，我觉得至少态度就可以给五星。' },
-
-  {
-    src: 'http://img0.imgtn.bdimg.com/it/u=2396068252,4277062836&fm=26&gp=0.jpg',
-    nickname: 'Ranth Allngal',
-    time: '09-20 12:54',
-    zan: '54',
-    content: '楼上说的好有道理。' }] };
-
-
-
-var shareList = [{
-  type: 1,
-  icon: '/static/temp/share_wechat.png',
-  text: '微信好友' },
-
-{
-  type: 2,
-  icon: '/static/temp/share_moment.png',
-  text: '朋友圈' },
-
-{
-  type: 3,
-  icon: '/static/temp/share_qq.png',
-  text: 'QQ好友' },
-
-{
-  type: 4,
-  icon: '/static/temp/share_qqzone.png',
-  text: 'QQ空间' }];
-
-
-var lazyLoadList = [{
-  src: 'http://img0.imgtn.bdimg.com/it/u=2396068252,4277062836&fm=26&gp=0.jpg' },
-
-{
-  src: 'http://img.pconline.com.cn/images/upload/upc/tx/itbbs/1309/06/c4/25310541_1378426131583.jpg' },
-
-{
-  src: 'http://img.pconline.com.cn/images/upload/upc/tx/photoblog/1610/26/c4/28926240_1477451226577_mthumb.jpg' },
-
-{
-  src: 'http://picture.ik123.com/uploads/allimg/190219/12-1Z219105139.jpg' },
-
-{
-  src: 'http://img5.imgtn.bdimg.com/it/u=2904900134,438461613&fm=26&gp=0.jpg' },
-
-{
-  src: 'http://img1.imgtn.bdimg.com/it/u=1690475408,2565370337&fm=26&gp=0.jpg' },
-
-{
-  src: 'http://img.99114.com/group1/M00/7F/99/wKgGS1kVrPGAe5LmAAU2KrJmb3Q923_600_600.jpg' },
-
-{
-  src: 'http://img4.imgtn.bdimg.com/it/u=261047209,372231813&fm=26&gp=0.jpg' },
-
-{
-  src: 'http://i2.17173cdn.com/i7mz64/YWxqaGBf/tu17173com/20150107/eMyVMObjlbcvDEv.jpg' },
-
-{
-  src: 'http://img008.hc360.cn/m4/M02/E7/87/wKhQ6FSrfU6EfUoyAAAAAITAfyc280.jpg' },
-
-{
-  src: 'http://pic1.win4000.com/wallpaper/d/5991569950166.jpg' },
-
-{
-  src: 'http://gss0.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/zhidao/pic/item/6f061d950a7b0208f9fe945e60d9f2d3572cc85e.jpg' },
-
-{
-  src: 'http://pic41.nipic.com/20140429/18169759_125841756000_2.jpg' },
-
-{
-  src: 'http://www.k73.com/up/allimg/130415/22-130415093527.jpg' },
-
-{
-  src: 'http://img.52z.com/upload/news/image/20180530/20180530081619_31029.jpg' },
-
-{
-  src: 'http://b-ssl.duitang.com/uploads/item/201410/02/20141002111638_tXAzU.jpeg' },
-
-{
-  src: 'http://img2.ph.126.net/C4JW6f57QWSB21-8jh2UGQ==/1762596304262286698.jpg' },
-
-{
-  src: 'http://att.bbs.duowan.com/forum/201405/17/190257nzcvkkdg6w2e8226.jpg' },
-
-{
-  src: 'http://attach.bbs.miui.com/forum/201504/10/223644v3intigyvva0vgym.jpg' },
-
-{
-  src: 'http://pic1.win4000.com/mobile/3/57888a298d61d.jpg' }];
-
-
-
-var orderList = [{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 1,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 2,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' },
-
-  {
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 3,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' },
-
-  {
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 4,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 2,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 5,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 6,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 7,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] },
-
-
-
-{
-  time: '2019-04-06 11:37',
-  shopName: '麦田圈官网旗舰店',
-  state: 9,
-  goodsList: [{
-    title: '香辣牛肉干',
-    price: 88.88,
-    image: '/static/goods.png',
-    number: 1,
-    attr: '规格 10*200g' }] }];
-
-
-
-
-var deliverylist = [(_ref = {
-
-  state: 1,
-  time: '15:12',
-  countDown: '00:12:30',
-  shopName: '麦田圈官网旗舰店' }, _defineProperty(_ref, "state",
-5), _defineProperty(_ref, "steps",
-[
-{
-  text: '步骤一',
-  desc: '描述' }]), _defineProperty(_ref, "info",
-
-
-{
-  a: 20,
-  b: '麦田圈预单',
-  c: '预' }), _defineProperty(_ref, "msg",
-
-''), _ref)];
-
-
-var cateList = [{
-  id: 1,
-  name: '手机数码' },
-
-{
-  id: 2,
-  name: '礼品鲜花' },
-
-{
-  id: 3,
-  name: '男装女装' },
-
-{
-  id: 4,
-  name: '母婴用品' },
-
-{
-  id: 5,
-  pid: 1,
-  name: '手机通讯' },
-
-{
-  id: 6,
-  pid: 1,
-  name: '运营商' },
-
-{
-  id: 8,
-  pid: 5,
-  name: '全面屏手机',
-  picture: '/static/temp/cate2.jpg' },
-
-{
-  id: 9,
-  pid: 5,
-  name: '游戏手机',
-  picture: '/static/temp/cate3.jpg' },
-
-{
-  id: 10,
-  pid: 5,
-  name: '老人机',
-  picture: '/static/temp/cate1.jpg' },
-
-{
-  id: 11,
-  pid: 5,
-  name: '拍照手机',
-  picture: '/static/temp/cate4.jpg' },
-
-{
-  id: 12,
-  pid: 5,
-  name: '女性手机',
-  picture: '/static/temp/cate5.jpg' },
-
-{
-  id: 14,
-  pid: 6,
-  name: '合约机',
-  picture: '/static/temp/cate1.jpg' },
-
-{
-  id: 15,
-  pid: 6,
-  name: '选好卡',
-  picture: '/static/temp/cate4.jpg' },
-
-{
-  id: 16,
-  pid: 6,
-  name: '办套餐',
-  picture: '/static/temp/cate5.jpg' },
-
-{
-  id: 17,
-  pid: 2,
-  name: '礼品' },
-
-{
-  id: 18,
-  pid: 2,
-  name: '鲜花' },
-
-{
-  id: 19,
-  pid: 17,
-  name: '公益摆件',
-  picture: '/static/temp/cate7.jpg' },
-
-{
-  id: 20,
-  pid: 17,
-  name: '创意礼品',
-  picture: '/static/temp/cate8.jpg' },
-
-{
-  id: 21,
-  pid: 18,
-  name: '鲜花',
-  picture: '/static/temp/cate9.jpg' },
-
-{
-  id: 22,
-  pid: 18,
-  name: '每周一花',
-  picture: '/static/temp/cate10.jpg' },
-
-{
-  id: 23,
-  pid: 18,
-  name: '卡通花束',
-  picture: '/static/temp/cate11.jpg' },
-
-{
-  id: 24,
-  pid: 18,
-  name: '永生花',
-  picture: '/static/temp/cate12.jpg' },
-
-{
-  id: 25,
-  pid: 3,
-  name: '男装' },
-
-{
-  id: 26,
-  pid: 3,
-  name: '女装' },
-
-{
-  id: 27,
-  pid: 25,
-  name: '男士T恤',
-  picture: '/static/temp/cate13.jpg' },
-
-{
-  id: 28,
-  pid: 25,
-  name: '男士外套',
-  picture: '/static/temp/cate14.jpg' },
-
-{
-  id: 29,
-  pid: 26,
-  name: '裙装',
-  picture: '/static/temp/cate15.jpg' },
-
-{
-  id: 30,
-  pid: 26,
-  name: 'T恤',
-  picture: '/static/temp/cate16.jpg' },
-
-{
-  id: 31,
-  pid: 26,
-  name: '上装',
-  picture: '/static/temp/cate15.jpg' },
-
-{
-  id: 32,
-  pid: 26,
-  name: '下装',
-  picture: '/static/temp/cate16.jpg' },
-
-{
-  id: 33,
-  pid: 4,
-  name: '奶粉' },
-
-{
-  id: 34,
-  pid: 4,
-  name: '营养辅食' },
-
-{
-  id: 35,
-  pid: 4,
-  name: '童装' },
-
-{
-  id: 39,
-  pid: 4,
-  name: '喂养用品' },
-
-{
-  id: 36,
-  pid: 33,
-  name: '有机奶粉',
-  picture: '/static/temp/cate17.jpg' },
-
-{
-  id: 37,
-  pid: 34,
-  name: '果泥/果汁',
-  picture: '/static/temp/cate18.jpg' },
-
-{
-  id: 39,
-  pid: 34,
-  name: '面条/粥',
-  picture: '/static/temp/cate20.jpg' },
-
-{
-  id: 42,
-  pid: 35,
-  name: '婴童衣橱',
-  picture: '/static/temp/cate19.jpg' },
-
-{
-  id: 43,
-  pid: 39,
-  name: '吸奶器',
-  picture: '/static/temp/cate21.jpg' },
-
-{
-  id: 44,
-  pid: 39,
-  name: '儿童餐具',
-  picture: '/static/temp/cate22.jpg' },
-
-{
-  id: 45,
-  pid: 39,
-  name: '牙胶安抚',
-  picture: '/static/temp/cate23.jpg' },
-
-{
-  id: 46,
-  pid: 39,
-  name: '围兜',
-  picture: '/static/temp/cate24.jpg' }];var _default =
-
-
-
-{
-  carouselList: carouselList,
-  cartList: cartList,
-  detailData: detailData,
-  lazyLoadList: lazyLoadList,
-  userInfo: userInfo,
-  shareList: shareList,
-  goodsList: goodsList,
-  orderList: orderList,
-  cateList: cateList };exports.default = _default;
-
 /***/ })
-]]);
+
+}]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
