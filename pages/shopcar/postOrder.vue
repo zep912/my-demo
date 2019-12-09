@@ -136,7 +136,7 @@
 					address:orderAddress.province+orderAddress.city+orderAddress.region+orderAddress.detailAddress,
 				}
 			}
-		},
+		},	
 		methods: {
 			// 修改地址
 			toAddress(){
@@ -150,7 +150,6 @@
 			},
 			// 立即支付
 			payBtn(){
-				console.log(777)
 				uni.navigateTo({
 					url:'paySuccess'
 				})

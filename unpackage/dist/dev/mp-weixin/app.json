@@ -1,12 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/delivery/set",
-
-
-
     "pages/delivery/delivery",
-
+    "pages/delivery/set",
     "pages/delivery/deliverylist",
     "pages/delivery/statistics",
     "pages/delivery/myprofit",
@@ -44,7 +40,10 @@
     "pages/category/category",
     "pages/product/list",
     "pages/index/selectPosition",
-    "pages/index/search"
+    "pages/index/search",
+    "pages/message/center",
+    "pages/message/couponInfo",
+    "pages/message/orderWarn"
   ],
   "subPackages": [],
   "window": {
@@ -86,6 +85,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap.json"
+  "usingComponents": {}
 }

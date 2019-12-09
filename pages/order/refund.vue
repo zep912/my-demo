@@ -101,7 +101,7 @@
 						goodsList: [{
 							title: '香辣牛肉干',
 							price: 88.88,
-							image: '/static/goods.png',
+							image: '../static/goods.png',
 							number: 1,
 							attr: '规格 10*200g'
 						}]

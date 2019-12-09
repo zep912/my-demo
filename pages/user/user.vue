@@ -33,24 +33,20 @@
 				<view class="order-section">
 
 					<view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover" :hover-stay-time="50">
-
-						<img src="../../static/my/my-pending.png" alt="" style='width:64rpx;height:54rpx;margin-bottom: 18rpx;'>
+						<text class="iconfont icon-daifukuan" style="color: #F7B52C;font-size: 34px;"></text>
 						<text>待付款</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover" :hover-stay-time="50">
-
-						<img src="../../static/my/my-received.png" alt="" style='width:62rpx;height:54rpx;margin-bottom: 18rpx;'>
+						<text class="iconfont icon-daishouhuo" style="color: #F7B52C;font-size: 34px;"></text>
 						<text>待收货</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/order?state=3')" hover-class="common-hover" :hover-stay-time="50">
-
-						<img src="../../static/my/my-evaluated.png" alt="" style='width:66rpx;height:54rpx;margin-bottom: 18rpx;'>
+						<text class="iconfont icon-daipingjia" style="color: #F7B52C;font-size: 24px;"></text>
 						<text>待评价</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/aftersale?state=5')" hover-class="common-hover"
 					 :hover-stay-time="50">
-
-						<img src="../../static/my/my-refund.png" alt="" style='width:58rpx;height:60rpx;margin-bottom: 18rpx;'>
+						<text class="iconfont icon-huabancopy" style="color: #F7B52C;font-size: 28px;"></text>
 						<text>退款/售后</text>
 					</view>
 				</view>
@@ -72,21 +68,21 @@
 		<!-- 钱包 -->
 		<view class="wallet">
 			<view class="wallet-cell" @click="navTo('/pages/user/wallet')">
-				<img src="../../static/my/my-wallet.png" class="wallet-img"></image>
+				<text class="iconfont icon-- wallet-img"></text>
 				<text>钱包</text>
 			</view>
 			<view class="wallet-cell" @click="deliveryClick">
-				<img src="../../static/my/my-delivery.png" class="wallet-img"></image>
+				<text class="iconfont icon-peisong wallet-img"></text>
 				<text>麦吉配送</text>
 			</view>
 			<view class="wallet-cell" @click="navTo('/pages/user/feedback')">
-				<img src="../../static/my/my-feedback.png" class="wallet-img"></image>
+				<text class="iconfont icon-pen- wallet-img"></text>
 				<text>意见反馈</text>
 			</view>
 		</view>
 		<!-- ab -->
 		<!--<view class="ab">-->
-			<!--<img :src="abImg" alt="">-->
+		<!--<img :src="abImg" alt="">-->
 		<!--</view>-->
 		<!-- 好货推荐 -->
 		<view class="hot-goods">
@@ -245,14 +241,14 @@
 				}
 			},
 			// 麦吉配送
-			deliveryClick(){
-				if(uni.getStorageSync('deliveryPhone')){//已经登录过
+			deliveryClick() {
+				if (uni.getStorageSync('deliveryPhone')) { //已经登录过
 					uni.navigateTo({
-						url:'../delivery/set'
+						url: '../delivery/set'
 					})
-				}else{
+				} else {
 					uni.navigateTo({
-						url:'../delivery/delivery'
+						url: '../delivery/delivery'
 					})
 				}
 			},
@@ -260,17 +256,17 @@
 			loadData() {
 				// 优先使用微信登录
 				let hasLogin = this.$store.state.hasLogin;
-				if(hasLogin){
+				if (hasLogin) {
 					this.authShow = false;
 					// let setUserInfo = this.$store.state.userInfo;
 					return;
-				}else if(uni.getStorageSync('setPhone')){//使用手机号登陆
+				} else if (uni.getStorageSync('setPhone')) { //使用手机号登陆
 					axios.post('/sso/user/userInfo').then(res => {
 						if (res.data.code = '200') {
 							this.authShow = false;
 							this.userInfo.mobile = res.data.data.phone;
 							this.userInfo.id = res.data.data.id;
-					
+
 							this.$store.commit('login', this.userInfo)
 						}
 					})

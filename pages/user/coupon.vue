@@ -54,7 +54,8 @@
 									<text>{{timestampToTime(item.coupon.endTime)}}</text></text>
 							</view>
 							<!-- <button class="coupon-btn">立即使用</button> -->
-							<img src="../../static/my/used.png" alt="" class='couponImg'>
+							<!-- <img src="../../static/my/used.png" alt="" class='couponImg'> -->
+							<text class="iconfont icon-yishiyong couponImg"></text>
 						</view>
 					</view>
 				</view>
@@ -84,7 +85,8 @@
 									</text>
 							</view>
 							<!-- <button class="coupon-btn">立即使用</button> -->
-							<img src="../../static/my/Beoverdue.png" alt="" class='couponImg'>
+							<!-- <img src="../../static/my/Beoverdue.png" alt="" class='couponImg'> -->
+							<text class="iconfont icon-yiguoqi couponImg"></text>
 						</view>
 					</view>
 				</view>

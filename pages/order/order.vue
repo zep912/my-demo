@@ -194,21 +194,18 @@
 			//swiper 切换
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
-				this.loadData('tabChange');
+				console.log(this.tabCurrentIndex,777)
+				if(this.tabCurrentIndex==0||this.tabCurrentIndex==1){
+					this.loadData('tabChange',0);
+				}else{
+					this.loadData('tabChange',this.tabCurrentIndex-1);
+				}
+				
 			},
 			//顶部tab点击
 			tabClick(index) {
 				this.tabCurrentIndex = index;
-			},
-			//删除订单
-			deleteOrder(index) {
-				uni.showLoading({
-					title: '请稍后'
-				})
-				setTimeout(() => {
-					this.navList[this.tabCurrentIndex].orderList.splice(index, 1);
-					uni.hideLoading();
-				}, 600)
+				console.log(this.tabCurrentIndex,888)
 			},
 			// 评价
 			evaluate(item) {

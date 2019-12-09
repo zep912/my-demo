@@ -5,7 +5,8 @@
 			<text class="toBeShipped" v-if='order.status!=1&&order.status!=9&&order.status!=4' :style="{color:order.color}">{{order.statusMsg}}</text>
 			<text v-if='order.status==1' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
 			<text v-if='order.status==4' class="payClose"><text>交易关闭</text><text>订单取消</text></text>
-			<img :src="order.img" alt="">
+			<!-- <img :src="order.img" alt=""> -->
+			<text class="iconfont" :class="order.img" style="font-size: 32px;"></text>
 		</view>
 		<!-- 交易关闭退款 -->
 		<view class="close"  v-if='order.status==9'>
@@ -124,8 +125,7 @@
 					collect: [{
 						time: '2019-04-06 11:37',
 						shopName: '麦田圈官网旗舰店',
-						state: 5,
-
+						state: 0,
 						goodsList: [{
 							title: '香辣牛肉干',
 							price: 88.88,
@@ -150,12 +150,12 @@
 					}
 				},
 				img:[
-					'../../static/order/fahuo.png',
-					'../../static/order/fukuan.png',
-					'../../static/order/shouhuo.png',
-					'../../static/order/chenggong.png',
-					'../../static/order/guanbi.png',//关闭
-					'../../static/order/wancheng.png',
+					'icon-daifahuo1',
+					'icon-daifukuan1',
+					'icon-daishouhuo1',
+					'icon-chenggong',
+					'icon-dingdanguanbi',
+					'icon-dingdanwancheng'
 				],
 				order:{
 					status:'',
@@ -194,7 +194,7 @@
 			this.statuss = option.status;
 			this.id = option.id;
 			
-			this.getOrder()
+			// this.getOrder()
 		},
 		methods: {
 			// 获取订单详情
@@ -230,7 +230,6 @@
 						}else if(this.order.status==6){
 							//交易成功
 							this.show = true;
-					
 							this.order.statusMsg = '交易成功';
 							this.order.wuliu = '删除订单';
 							this.order.img=this.img[3];
@@ -244,7 +243,6 @@
 						}else if(this.order.status==3){
 							// 已完成
 							this.show = true;
-						
 							this.order.statusMsg = '已完成';
 							this.order.wuliu = '删除订单';
 							this.order.img=this.img[5];

@@ -6,15 +6,15 @@
 
 			<view class="info-box">
 				<text class="username">
-					<text class="name">快乐风男</text>
-					<text class="username-info">111212</text>
+					<text class="name">{{form.userName}}</text>
+					<text class="username-info">{{form.phone}}</text>
 				</text>
 			</view>
 			
 		</view>
 		<view class="list-cell b-b m-t" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">我的花名</text>
-			<text class="cell-tip">快乐风男</text>
+			<text class="cell-tip">{{form.userName}}</text>
 		</view>
 		
 		<view class="list-cell b-b" hover-class="cell-hover" :hover-stay-time="50" style="margin-top: 10rpx;">
@@ -58,8 +58,15 @@
 				songdan:'../../static/delivery/songdan2.png',
 				jiedan:'../../static/delivery/jiedanset.png',
 				daliveryData:2,
-				rorderStatus:''
+				rorderStatus:'',
+				form:{
+					userName:'',
+					phone:''
+				}
 			};
+		},
+		onLoad() {
+			this.getData()
 		},
 		methods: {
 			...mapMutations(['logout']),
@@ -68,6 +75,12 @@
 				uni.navigateTo({
 					url: `../delivery/${url}`
 				});
+			},
+			getData(){
+				let user = uni.getStorageSync('userInfo');
+				let userPhone = uni.getStorageSync('deliveryPhone');
+				this.form.userName = user.nickName;
+				this.form.phone = userPhone
 			},
 			// 接单状态的改变
 			onChange(e){

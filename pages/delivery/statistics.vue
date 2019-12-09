@@ -5,16 +5,16 @@
 			<image src="../../static/delivery/songdanbg.png" mode="" class="bg"></image>
 			<view class="sta-bg-top">
 				<text class="sta-bg-title sta-bgtitle">今日统计</text>
-				<text class="sta-bg-title"><text class="sta-bg-num">66</text>单</text>
+				<text class="sta-bg-title"><text class="sta-bg-num">{{form.gSendOrderTotal+form.sendedOrderTotal+form.sendSussOrderTotal+form.sendChangeOrderTotal}}</text>单</text>
 			</view>
 			<view class="sta-bg-price">
 				<view class="sta-bg-totalprice">
-					<text>986</text>
-					<text>订单总(元)</text>
+					<text>{{form.payAmount?form.payAmount:0}}</text>
+					<text>订单总价(元)</text>
 				</view>
 				<text style="width: 1px;height: 40rpx;background: #fff;"></text>
 				<view>
-					<text>986</text>
+					<text>{{form.orderAmount?form.orderAmount:0}}</text>
 					<text>配送收益(元)</text>
 				</view>
 			</view>
@@ -22,30 +22,30 @@
 		<!-- 信息 -->
 		<view class="list-cell b-b m-t" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">取单中</text>
-			<text class="cell-tip cell-color">12单</text>
+			<text class="cell-tip cell-color">{{form.gSendOrderTotal?form.gSendOrderTotal:0}}单</text>
 		</view>
 
 		<view class="list-cell b-b" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">配送中</text>
-			<text class="cell-tip cell-color">5单</text>
+			<text class="cell-tip cell-color">{{form.sendedOrderTotal?form.sendedOrderTotal:0}}单</text>
 
 		</view>
 
 		<view class="list-cell b-b" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">已送达</text>
-			<text class="cell-tip cell-color">5单</text>
+			<text class="cell-tip cell-color">{{form.sendSussOrderTotal?form.sendSussOrderTotal:0}}单</text>
 		</view>
 		<view class="list-cell" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">被转出</text>
-			<text class="cell-tip cell-color">5单</text>
+			<text class="cell-tip cell-color">{{form.sendChangeOrderTotal?form.sendChangeOrderTotal:0}}单</text>
 		</view>
 		<view class="list-cell" hover-class="cell-hover" :hover-stay-time="50" style="margin-top: 10rpx;">
 			<text class="cell-tit">订单总价</text>
-			<text class="cell-tip cell-color">326523.0元</text>
+			<text class="cell-tip cell-color">{{form.payAmount?form.payAmount:0}}元</text>
 		</view>
 		<view class="list-cell" hover-class="cell-hover" :hover-stay-time="50" style="margin-top: 10rpx;">
 			<text class="cell-tit">配送收益</text>
-			<text class="cell-tip cell-totalColor">565000元</text>
+			<text class="cell-tip cell-totalColor">{{form.orderAmount?form.orderAmount:0}}元</text>
 		</view>
 		<!-- 底部 -->
 		<view class="sta-foot">
@@ -66,14 +66,37 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
-				staActice:1
+				staActice:1,
+				form:{
+					todayCount:'',
+					AllOrderCount:'',
+					deliveryCount:''
+				}
 			}
 		},
+		onLoad() {
+			this.getData(0)
+		},
 		methods:{
+			// 初始化
+			getData(n){
+				let obj = {
+					dateType:n
+				}
+				axios.post('/sendInformation/querySendInformationTotal',obj).then(res=>{
+					this.form = res.data.data;
+				})
+			},
 			preClick(e){
+				if(e==1){//下一个日期
+					this.getData(2)
+				}else{
+					this.getData(1)
+				}
 				this.staActice = e;
 			}
 		}

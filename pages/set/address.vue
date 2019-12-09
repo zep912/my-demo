@@ -60,11 +60,10 @@
 			// 选择地址
 			select(e){
 				this.radio = e.detail;
-				console.log(JSON.stringify(this.addressList[this.radio]))
 				uni.setStorageSync('addressMsg',JSON.stringify(this.addressList[this.radio]))
 				
 				setTimeout(()=>{
-					uni.navigateTo({
+					uni.redirectTo({
 						url:'../shopcar/postOrder'
 					})
 				})
