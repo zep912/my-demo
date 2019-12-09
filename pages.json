@@ -393,6 +393,21 @@
             "style" : {
             	"navigationBarTitleText": "搜素商品"
             }
+        },{
+            "path" : "pages/message/center",
+            "style" : {
+            	"navigationBarTitleText": "消息中心"
+            }
+        },{
+            "path" : "pages/message/couponInfo",
+            "style" : {
+            	"navigationBarTitleText": "优惠券信息"
+            }
+        },{
+            "path" : "pages/message/orderWarn",
+            "style" : {
+            	"navigationBarTitleText": "订单提醒"
+            }
         }
     ],
 	"globalStyle": {

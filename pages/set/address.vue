@@ -181,15 +181,6 @@
 		}
 	}
 
-	.icon-bianji {
-		display: flex;
-		align-items: center;
-		height: 80upx;
-		font-size: 40upx;
-		color: $font-color-light;
-		padding-left: 30upx;
-	}
-
 	.add-btn {
 		display: flex;
 		align-items: center;

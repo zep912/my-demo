@@ -9,7 +9,7 @@
 		</view>
 		<view class="mp-search-box">
 			<input class="ser-input" type="text" value="输入关键字搜索" @click="navToSearch"/>
-			<uni-icons type="chat" size="30" color ='#ffffff99' @click="navToSearch()"></uni-icons>
+			<uni-icons type="chat" size="30" color ='#ffffff99' @click="navToMessage"></uni-icons>
 		</view>
 		<!-- #endif -->
 		<!-- 头部轮播 -->
@@ -32,7 +32,7 @@
 		</view>
 
 		<!-- 限时抢购 -->
-		<view class="seckill-section m-t">
+		<!-- <view class="seckill-section m-t">
 			<view class="s-header">
 				<text class="tip-title">限时抢购</text>
 				<text class="tip-timer">
@@ -57,7 +57,7 @@
 					</view>
 				</view>
 			</scroll-view>
-		</view>
+		</view> -->
 
 		<!-- 限量秒杀新品，比手快 -->
 		<!--<view class="hot-goods">-->
@@ -286,6 +286,11 @@
                     url: `/pages/index/selectPosition`
                 })
             },
+			navToMessage() {
+				uni.navigateTo({
+					url: '/pages/message/orderWarn'
+				})
+			},
             navToSearch() {
                 uni.navigateTo({
                     url: `/pages/index/search`
