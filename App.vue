@@ -10,18 +10,18 @@
 			...mapMutations(['login'])
 		},
 		onLaunch: function() {
-			let userInfo = uni.getStorageSync('userInfo') || '';
-			console.log(userInfo, 'userInfo')
-			if(userInfo){
-				//更新登陆状态
-				uni.getStorage({
-					key: 'userInfo',
-					success: (res) => {
-						console.log(res,77)
-						this.login(true, res.data);
-					}
-				});
-			}
+			// let userInfo = uni.getStorageSync('userInfo') || '';
+			// console.log(userInfo, 'userInfo')
+			// if(userInfo){
+			// 	//更新登陆状态
+			// 	uni.setStorage({
+			// 		key: 'userInfo',
+			// 		success: (res) => {
+			// 			console.log(res,77)
+			// 			this.login(true, res.data);
+			// 		}
+			// 	});
+			// }
 			
 		},
 		onShow: function() {

@@ -311,7 +311,9 @@
 			addCart() {
 				const {id, productCategoryId} = this.productInfo;
 				axios.post('/cart/add', {productId: id, productCategoryId}).then(({data}) => {
-					console.log(data);
+					if (data.code === 200) {
+						this.$api.msg('已成功加入购物车')
+					}
 				});
 			},
 			productInfoById(id) {

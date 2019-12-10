@@ -32,7 +32,7 @@
 		</view>
 
 		<!-- 美味坚果，等你来尝 -->
-		<view class="hot-goods">
+		<!-- <view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">美味坚果，等你来尝</view>
@@ -45,9 +45,9 @@
 			<view class="box-100" @click="navToCate">
 				<image src="/static/index/xxls4.jpg"></image>
 			</view>
-		</view>
+		</view> -->
 		<!-- 精选美味，等你来吃 -->
-		<view class="hot-goods">
+	<!-- 	<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">爽口饮品，激情畅饮</view>
@@ -61,9 +61,9 @@
 					<image class="img-50" src="/static/index/yp3.jpg"></image>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<!-- 花里胡哨的包包，等你来剁手 -->
-		<view class="hot-goods" @click="navToCate">
+		<!-- <view class="hot-goods" @click="navToCate">
 			<view class="hot-title" @click="navToCate">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">花里胡哨的包包，等你来剁手</view>
@@ -80,7 +80,7 @@
 			<view class="box-grid box-100">
 				<image src="/static/index/ls4.jpg"></image>
 			</view>
-		</view>
+		</view> -->
 		
 		<view class="hot-goods">
 			<view class="hot-title">
@@ -107,12 +107,14 @@
 			</view>
 		</view>
 		<!-- 微信登录  自动弹窗-->
-		<view class="weixinLogin" v-if="isCanUse">
-			<text class="weixinX" @click="close">X</text>
-			<image src="../../static/delivery/logo.png" mode=""></image>
-			<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
-			<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
-		</view>
+		<uni-popup ref="popup" type="center" :maskClick="false">
+			<view class="weixinLogin">
+				<text class="weixinX" @click="close">X</text>
+				<image src="../../static/delivery/logo.png" mode=""></image>
+				<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
+				<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -127,10 +129,14 @@
 	import {
 		uniIcons
 	} from "@/components/uni-icons/uni-icons.vue";
+	import {
+		uniPopup
+	} from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		components: {
 			uniSearchBar,
-			uniIcons
+			uniIcons,
+			uniPopup
 		},
 		data() {
 			return {
@@ -139,7 +145,7 @@
 				swiperLength: 0,
 				carouselList: [],
 				goodsList: [],
-				isCanUse: true, //默认为true
+				isCanUse: false, //默认为true
 				skuList:[],
 				productList: [],
 				homeFlashTime: '00',
@@ -151,114 +157,57 @@
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		onLoad() {
-			this.loadData();
-			this.login();
+			this.getHomeList();
+			if (!uni.getStorageSync('hasLogin')) {
+				this.$refs.popup.open();
+			} else {
+				this.wxGetUserInfo();
+			}
 		},
 		methods: {
 			//第一授权获取用户信息===》按钮触发
 			wxGetUserInfo() {
-				let _this = this;
 				uni.getUserInfo({
 					provider: 'weixin',
-					success: function(infoRes) {
-						let nickName = infoRes.userInfo.nickName; //昵称
-						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-						try {
-							uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
-							this.$store.commit('login', infoRes.userInfo);
-							_this.updateUserInfo();
-						} catch (e) {}
-					},
-					fail(res) {}
+					success: (infoRes) => {
+						this.login(infoRes.userInfo)
+					}
 				});
 			},
 
 			//登录
-			login() {
-				let _this = this;
+			login(userInfo) {
 				uni.showLoading({
 					title: '登录中...'
 				});
-
+				const {city, gender, avatarUrl, nickName, phone} = userInfo;
 				// 1.wx获取登录用户code
 				uni.login({
 					provider: 'weixin',
-					success: function(loginRes) {
+					success: (loginRes) => {
+						console.log(loginRes, 'loginRes');
 						let code = loginRes.code;
-						if (!_this.isCanUse) {
-							//非第一次授权获取用户信息
-							_this.wxGetUserInfo()
-							// uni.getUserInfo({
-							// 	provider: 'weixin',
-							// 	success: function(infoRes) {
-							// 		//获取用户信息后向调用信息更新方法
-							// 		let nickName = infoRes.userInfo.nickName; //昵称
-							// 		let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-							// 		// _this.updateUserInfo(); //调用更新信息方法
-							// 	}
-							// });
-						}
-
+						axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-						uni.request({
-							url: '/sso/user/miniLogin',
-							data: {
-								code: code,
-							},
-							method: 'POST',
-							header: {
-								'content-type': 'application/json'
-							},
-							success: (res) => {
-								console.log(res)
-								//openId、或SessionKdy存储//隐藏loading
-								uni.hideLoading();
-							}
-						});
-					},
+							axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: nickName,
+								  "wxAppid": "wx35cb9f6acb94bd15",
+								  "wxOpenid": data.data.openId
+								}).then((res) => {
+									const response = res.data;
+									console.log(response, 'response')
+									if (response.code == 200) {
+										this.$store.commit('login', userInfo);
+										uni.setStorageSync('hasLogin', true);
+										//openId、或SessionKdy存储//隐藏loading
+										uni.setStorageSync('gt', response.data.token);
+										uni.hideLoading();
+										this.close();
+									}
+								})
+						})
+					}
 				});
 			},
-			// // 授权用户信息
-			// wxGetUserInfo() {
-			// 	uni.getUserInfo({
-			// 		provider: 'weixin',
-			// 		success: (infoRes) => {
-			// 			this.$store.commit('login', infoRes.userInfo);
-			// 			this.isCanUse = false;
-			// 		},
-			// 		fail(res) {}
-			// 	})
-			// },
-			// login() {
-			// 	// 1.wx获取登录用户code
-			// 	uni.login({
-			// 		provider: 'weixin',
-			// 		success: (loginRes) => {
-			// 			let code = loginRes.code;
-			// 			console.log(this.$store.state.hasLogin, this.$store.state, loginRes, 'loginRes');
-			// 			this.isCanUse = !this.$store.state.hasLogin;
-			// 			if (!this.isCanUse) {
-			// 				//非第一次授权获取用户信息
-			// 				this.wxGetUserInfo()
-			// 			}
-			// 			// 2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-			// 			uni.request({
-			// 				url: '服务器地址',
-			// 				data: {
-			// 					code: code,
-			// 				},
-			// 				method: 'GET',
-			// 				header: {
-			// 					'content-type': 'application/json'
-			// 				},
-			// 				success: (res) => {
-			// 					//openId、或SessionKdy存储//隐藏loading
-			// 					uni.hideLoading();
-			// 				}
-			// 			})
-			// 		}
-			// 	})
-			// },
 			// 手机号登录
 			toPhone() {
 				uni.navigateTo({
@@ -266,21 +215,7 @@
 				})
 			},
 			close() {
-				this.isCanUse = false
-			},
-			/**
-			 * 请求静态数据只是为了代码不那么乱
-			 * 分次请求未作整合
-			 */
-			async loadData() {
-				let carouselList = await this.$api.json('carouselList');
-				this.titleNViewBackground = carouselList[0].background;
-				this.swiperLength = carouselList.length;
-				this.carouselList = carouselList;
-
-				let goodsList = await this.$api.json('goodsList');
-				this.goodsList = goodsList || [];
-				this.getHomeList();
+				this.$refs.popup.close();
 			},
 			//轮播图切换修改背景色
 			swiperChange(e) {
@@ -326,9 +261,8 @@
 						this.skuList = data.data.hotProductList || [];
 						this.newProductList = data.data.newProductList || [];
 						this.productList = data.data.homeFlashPromotion.productList || [];
-						if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime)
-							.getHours() - 8;
-						// this.dataRes = data.data;
+						// if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime)
+						// 	.getHours() - 8;
 					}
 				})
 			}
@@ -403,7 +337,7 @@
 		height: 80upx;
 		line-height: 80upx;
 		background-color: #fff;
-		z-index: 9999;
+		z-index: 2;
 
 		.position-text {
 			padding: 0 10upx;
@@ -416,7 +350,7 @@
 		position: absolute;
 		left: 0;
 		top: 100upx;
-		z-index: 999;
+		z-index: 1;
 		width: 100%;
 		padding: 0 20upx;
 
