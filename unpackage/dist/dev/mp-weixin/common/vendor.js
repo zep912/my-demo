@@ -255,7 +255,7 @@ function isSyncApi(name) {
 }
 
 function isCallbackApi(name) {
-  return CALLBACK_API_RE.test(name) && name !== 'onPush';
+  return CALLBACK_API_RE.test(name);
 }
 
 function handlePromise(promise) {
@@ -1285,20 +1285,11 @@ function parseBaseComponent(vueComponentOptions)
 {var _ref5 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},isPage = _ref5.isPage,initRelation = _ref5.initRelation;var _initVueComponent =
   initVueComponent(_vue.default, vueComponentOptions),_initVueComponent2 = _slicedToArray(_initVueComponent, 2),VueComponent = _initVueComponent2[0],vueOptions = _initVueComponent2[1];
 
-  var options = {
-    multipleSlots: true,
-    addGlobalClass: true };
-
-
-  {
-    // 微信multipleSlots  部分情况有 bug，导致内容顺序错乱 如 u-list，提供覆盖选项
-    if (vueOptions['mp-weixin'] && vueOptions['mp-weixin']['options']) {
-      Object.assign(options, vueOptions['mp-weixin']['options']);
-    }
-  }
-
   var componentOptions = {
-    options: options,
+    options: {
+      multipleSlots: true,
+      addGlobalClass: true },
+
     data: initData(vueOptions, _vue.default.prototype),
     behaviors: initBehaviors(vueOptions, initBehavior),
     properties: initProperties(vueOptions.props, false, vueOptions.__file),
@@ -2461,9 +2452,9 @@ var index_esm = {
 /***/ }),
 
 /***/ 170:
-/*!**************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/shop.png ***!
-  \**************************************************************/
+/*!*************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/shop.png ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2579,9 +2570,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 187:
-/*!******************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/title_01.png ***!
-  \******************************************************************/
+/*!*****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/title_01.png ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -2590,9 +2581,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUwAAAAZCAIAAADV
 /***/ }),
 
 /***/ 19:
-/*!******************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/Json.js ***!
-  \******************************************************/
+/*!*****************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/Json.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9251,9 +9242,9 @@ internalMixin(Vue);
 /***/ }),
 
 /***/ 204:
-/*!***************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/dizhi.png ***!
-  \***************************************************************/
+/*!**************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/dizhi.png ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9262,9 +9253,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAqCAIAAADE
 /***/ }),
 
 /***/ 229:
-/*!************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/couponPrice.png ***!
-  \************************************************************************/
+/*!***********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/couponPrice.png ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9273,9 +9264,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 /***/ }),
 
 /***/ 230:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/beuesed.png ***!
-  \********************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/beuesed.png ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9284,9 +9275,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAYAAACp
 /***/ }),
 
 /***/ 24:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/index/btbg.png ***!
-  \********************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/index/btbg.png ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9295,9 +9286,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUUAAAALCAYAAADo
 /***/ }),
 
 /***/ 253:
-/*!*****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/nogoods.png ***!
-  \*****************************************************************/
+/*!****************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/nogoods.png ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9306,9 +9297,9 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM8AAACzCAIAAACh
 /***/ }),
 
 /***/ 262:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/order/guanbi.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/order/guanbi.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9317,21 +9308,56 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4
 /***/ }),
 
 /***/ 27:
-/*!**********************************************************!*\
-  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
-  \**********************************************************/
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/utils/uniAxios.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! regenerator-runtime */ 28);
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {var _uniAxiosMin = _interopRequireDefault(__webpack_require__(/*! ./../dist/uni-axios.min.js */ 28));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
 
+_uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
+_uniAxiosMin.default.interceptors.first.use(function (config) {
+  var token = uni.getStorageSync('gt');
+  // console.log(token, 'Ftoken', config);
+  if (token) {
+    config.headers = { Authorization: token, ContentType: "application/json;charset=UTF-8" };
+  }
+  // console.log(config, 'configF');
+  var showLoading = config.showLoading;
+  if (showLoading) {
+    uni.showLoading({
+      mask: true,
+      title: showLoading === true ? '加载中...' : showLoading });
+
+  }
+  return config;
+}, function (err) {
+  return Promise.reject(err);
+});
+_uniAxiosMin.default.interceptors.response.use(function (response) {
+  // console.log(response)
+  return response;
+}, function (err) {
+  return Promise.reject(err);
+});
+_uniAxiosMin.default.interceptors.last.use(function (config) {
+  // console.log(config, 'last');
+  if (config.showLoading) {
+    uni.hideLoading();
+  }
+});
+
+module.exports = _uniAxiosMin.default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
 /***/ 279:
-/*!****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/upload.png ***!
-  \****************************************************************/
+/*!***************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/upload.png ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -9340,789 +9366,69 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/
 /***/ }),
 
 /***/ 28:
-/*!************************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
-  \************************************************************/
+/*!*******************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/dist/uni-axios.min.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-// This method of obtaining a reference to the global object needs to be
-// kept identical to the way it is obtained in runtime.js
-var g = (function() {
-  return this || (typeof self === "object" && self);
-})() || Function("return this")();
-
-// Use `getOwnPropertyNames` because not all browsers support calling
-// `hasOwnProperty` on the global `self` object in a worker. See #183.
-var hadRuntime = g.regeneratorRuntime &&
-  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
-
-// Save the old regeneratorRuntime in case it needs to be restored later.
-var oldRuntime = hadRuntime && g.regeneratorRuntime;
-
-// Force reevalutation of runtime.js.
-g.regeneratorRuntime = undefined;
-
-module.exports = __webpack_require__(/*! ./runtime */ 29);
-
-if (hadRuntime) {
-  // Restore the original runtime.
-  g.regeneratorRuntime = oldRuntime;
-} else {
-  // Remove the global property added by runtime.js.
-  try {
-    delete g.regeneratorRuntime;
-  } catch(e) {
-    g.regeneratorRuntime = undefined;
-  }
-}
-
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) { true ? module.exports = t() : undefined;}(void 0, function () {return function (e) {function t(n) {if (r[n]) return r[n].exports;var o = r[n] = { exports: {}, id: n, loaded: !1 };return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;}var r = {};return t.m = e, t.c = r, t.p = "", t(0);}([function (e, t, r) {e.exports = r(1);}, function (e, t, r) {function n(e) {var t = new c(e),r = i(c.prototype.request, t);return s.extend(r, c.prototype, t), s.extend(r, t), r;}var o = r(2),s = o.utils,i = o.bind,a = o.mergeConfig,u = r(24),c = r(26),f = n(u);f.Axios = c, f.create = function (e) {return n(a(f.defaults, e));}, e.exports = f, e.exports.default = f;}, function (e, t, r) {e.exports = { utils: r(3), bind: r(4), Axios: r(6), mergeConfig: r(23), dispatchRequest: r(9), buildURL: r(7), settle: r(15), InterceptorManager: r(8) };}, function (e, t, r) {"use strict";function n(e) {return "[object Array]" === j.call(e);}function o(e) {return "[object ArrayBuffer]" === j.call(e);}function s(e) {return "undefined" != typeof FormData && e instanceof FormData;}function i(e) {var t;return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;}function a(e) {return "string" == typeof e;}function u(e) {return "number" == typeof e;}function c(e) {return "undefined" == typeof e;}function f(e) {return null !== e && "object" == typeof e;}function p(e) {return "[object Date]" === j.call(e);}function d(e) {return "[object File]" === j.call(e);}function l(e) {return "[object Blob]" === j.call(e);}function h(e) {return "[object Function]" === j.call(e);}function m(e) {return f(e) && h(e.pipe);}function y(e) {return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;}function g(e) {return e.replace(/^\s*/, "").replace(/\s*$/, "");}function x() {return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;}function v(e, t) {if (null !== e && "undefined" != typeof e) if ("object" != typeof e && (e = [e]), n(e)) for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}}function b() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function w() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function E(e, t, r) {return v(t, function (t, n) {r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;}), e;}var R = r(4),S = r(5),j = Object.prototype.toString;e.exports = { isArray: n, isArrayBuffer: o, isBuffer: S, isFormData: s, isArrayBufferView: i, isString: a, isNumber: u, isObject: f, isUndefined: c, isDate: p, isFile: d, isBlob: l, isFunction: h, isStream: m, isURLSearchParams: y, isStandardBrowserEnv: x, forEach: v, merge: b, deepMerge: w, extend: E, trim: g };}, function (e, t) {"use strict";e.exports = function (e, t) {return function () {for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}return e.apply(t, r);};};}, function (e, t) {/*!
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Determine if an object is a Buffer
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author   Feross Aboukhadijeh <https://feross.org>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license  MIT
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
+    e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 29), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
 /***/ 29:
-/*!*****************************************************!*\
-  !*** ./node_modules/regenerator-runtime/runtime.js ***!
-  \*****************************************************/
+/*!********************************************************!*\
+  !*** ./node_modules/node-libs-browser/mock/process.js ***!
+  \********************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-/**
- * Copyright (c) 2014-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
+exports.nextTick = function nextTick(fn) {
+	setTimeout(fn, 0);
+};
 
-!(function(global) {
-  "use strict";
+exports.platform = exports.arch = 
+exports.execPath = exports.title = 'browser';
+exports.pid = 1;
+exports.browser = true;
+exports.env = {};
+exports.argv = [];
 
-  var Op = Object.prototype;
-  var hasOwn = Op.hasOwnProperty;
-  var undefined; // More compressible than void 0.
-  var $Symbol = typeof Symbol === "function" ? Symbol : {};
-  var iteratorSymbol = $Symbol.iterator || "@@iterator";
-  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
-  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+exports.binding = function (name) {
+	throw new Error('No such module. (Possibly not yet loaded)')
+};
 
-  var inModule = typeof module === "object";
-  var runtime = global.regeneratorRuntime;
-  if (runtime) {
-    if (inModule) {
-      // If regeneratorRuntime is defined globally and we're in a module,
-      // make the exports object identical to regeneratorRuntime.
-      module.exports = runtime;
-    }
-    // Don't bother evaluating the rest of this file if the runtime was
-    // already defined globally.
-    return;
-  }
-
-  // Define the runtime globally (as expected by generated code) as either
-  // module.exports (if we're in a module) or a new, empty object.
-  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
-
-  function wrap(innerFn, outerFn, self, tryLocsList) {
-    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
-    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
-    var generator = Object.create(protoGenerator.prototype);
-    var context = new Context(tryLocsList || []);
-
-    // The ._invoke method unifies the implementations of the .next,
-    // .throw, and .return methods.
-    generator._invoke = makeInvokeMethod(innerFn, self, context);
-
-    return generator;
-  }
-  runtime.wrap = wrap;
-
-  // Try/catch helper to minimize deoptimizations. Returns a completion
-  // record like context.tryEntries[i].completion. This interface could
-  // have been (and was previously) designed to take a closure to be
-  // invoked without arguments, but in all the cases we care about we
-  // already have an existing method we want to call, so there's no need
-  // to create a new function object. We can even get away with assuming
-  // the method takes exactly one argument, since that happens to be true
-  // in every case, so we don't have to touch the arguments object. The
-  // only additional allocation required is the completion record, which
-  // has a stable shape and so hopefully should be cheap to allocate.
-  function tryCatch(fn, obj, arg) {
-    try {
-      return { type: "normal", arg: fn.call(obj, arg) };
-    } catch (err) {
-      return { type: "throw", arg: err };
-    }
-  }
-
-  var GenStateSuspendedStart = "suspendedStart";
-  var GenStateSuspendedYield = "suspendedYield";
-  var GenStateExecuting = "executing";
-  var GenStateCompleted = "completed";
-
-  // Returning this object from the innerFn has the same effect as
-  // breaking out of the dispatch switch statement.
-  var ContinueSentinel = {};
-
-  // Dummy constructor functions that we use as the .constructor and
-  // .constructor.prototype properties for functions that return Generator
-  // objects. For full spec compliance, you may wish to configure your
-  // minifier not to mangle the names of these two functions.
-  function Generator() {}
-  function GeneratorFunction() {}
-  function GeneratorFunctionPrototype() {}
-
-  // This is a polyfill for %IteratorPrototype% for environments that
-  // don't natively support it.
-  var IteratorPrototype = {};
-  IteratorPrototype[iteratorSymbol] = function () {
-    return this;
-  };
-
-  var getProto = Object.getPrototypeOf;
-  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
-  if (NativeIteratorPrototype &&
-      NativeIteratorPrototype !== Op &&
-      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
-    // This environment has a native %IteratorPrototype%; use it instead
-    // of the polyfill.
-    IteratorPrototype = NativeIteratorPrototype;
-  }
-
-  var Gp = GeneratorFunctionPrototype.prototype =
-    Generator.prototype = Object.create(IteratorPrototype);
-  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
-  GeneratorFunctionPrototype.constructor = GeneratorFunction;
-  GeneratorFunctionPrototype[toStringTagSymbol] =
-    GeneratorFunction.displayName = "GeneratorFunction";
-
-  // Helper for defining the .next, .throw, and .return methods of the
-  // Iterator interface in terms of a single ._invoke method.
-  function defineIteratorMethods(prototype) {
-    ["next", "throw", "return"].forEach(function(method) {
-      prototype[method] = function(arg) {
-        return this._invoke(method, arg);
-      };
-    });
-  }
-
-  runtime.isGeneratorFunction = function(genFun) {
-    var ctor = typeof genFun === "function" && genFun.constructor;
-    return ctor
-      ? ctor === GeneratorFunction ||
-        // For the native GeneratorFunction constructor, the best we can
-        // do is to check its .name property.
-        (ctor.displayName || ctor.name) === "GeneratorFunction"
-      : false;
-  };
-
-  runtime.mark = function(genFun) {
-    if (Object.setPrototypeOf) {
-      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
-    } else {
-      genFun.__proto__ = GeneratorFunctionPrototype;
-      if (!(toStringTagSymbol in genFun)) {
-        genFun[toStringTagSymbol] = "GeneratorFunction";
-      }
-    }
-    genFun.prototype = Object.create(Gp);
-    return genFun;
-  };
-
-  // Within the body of any async function, `await x` is transformed to
-  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
-  // `hasOwn.call(value, "__await")` to determine if the yielded value is
-  // meant to be awaited.
-  runtime.awrap = function(arg) {
-    return { __await: arg };
-  };
-
-  function AsyncIterator(generator) {
-    function invoke(method, arg, resolve, reject) {
-      var record = tryCatch(generator[method], generator, arg);
-      if (record.type === "throw") {
-        reject(record.arg);
-      } else {
-        var result = record.arg;
-        var value = result.value;
-        if (value &&
-            typeof value === "object" &&
-            hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function(value) {
-            invoke("next", value, resolve, reject);
-          }, function(err) {
-            invoke("throw", err, resolve, reject);
-          });
-        }
-
-        return Promise.resolve(value).then(function(unwrapped) {
-          // When a yielded Promise is resolved, its final value becomes
-          // the .value of the Promise<{value,done}> result for the
-          // current iteration.
-          result.value = unwrapped;
-          resolve(result);
-        }, function(error) {
-          // If a rejected Promise was yielded, throw the rejection back
-          // into the async generator function so it can be handled there.
-          return invoke("throw", error, resolve, reject);
-        });
-      }
-    }
-
-    var previousPromise;
-
-    function enqueue(method, arg) {
-      function callInvokeWithMethodAndArg() {
-        return new Promise(function(resolve, reject) {
-          invoke(method, arg, resolve, reject);
-        });
-      }
-
-      return previousPromise =
-        // If enqueue has been called before, then we want to wait until
-        // all previous Promises have been resolved before calling invoke,
-        // so that results are always delivered in the correct order. If
-        // enqueue has not been called before, then it is important to
-        // call invoke immediately, without waiting on a callback to fire,
-        // so that the async generator function has the opportunity to do
-        // any necessary setup in a predictable way. This predictability
-        // is why the Promise constructor synchronously invokes its
-        // executor callback, and why async functions synchronously
-        // execute code before the first await. Since we implement simple
-        // async functions in terms of async generators, it is especially
-        // important to get this right, even though it requires care.
-        previousPromise ? previousPromise.then(
-          callInvokeWithMethodAndArg,
-          // Avoid propagating failures to Promises returned by later
-          // invocations of the iterator.
-          callInvokeWithMethodAndArg
-        ) : callInvokeWithMethodAndArg();
-    }
-
-    // Define the unified helper method that is used to implement .next,
-    // .throw, and .return (see defineIteratorMethods).
-    this._invoke = enqueue;
-  }
-
-  defineIteratorMethods(AsyncIterator.prototype);
-  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
-    return this;
-  };
-  runtime.AsyncIterator = AsyncIterator;
-
-  // Note that simple async functions are implemented on top of
-  // AsyncIterator objects; they just return a Promise for the value of
-  // the final result produced by the iterator.
-  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(
-      wrap(innerFn, outerFn, self, tryLocsList)
-    );
-
-    return runtime.isGeneratorFunction(outerFn)
-      ? iter // If outerFn is a generator, return the full iterator.
-      : iter.next().then(function(result) {
-          return result.done ? result.value : iter.next();
-        });
-  };
-
-  function makeInvokeMethod(innerFn, self, context) {
-    var state = GenStateSuspendedStart;
-
-    return function invoke(method, arg) {
-      if (state === GenStateExecuting) {
-        throw new Error("Generator is already running");
-      }
-
-      if (state === GenStateCompleted) {
-        if (method === "throw") {
-          throw arg;
-        }
-
-        // Be forgiving, per 25.3.3.3.3 of the spec:
-        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
-        return doneResult();
-      }
-
-      context.method = method;
-      context.arg = arg;
-
-      while (true) {
-        var delegate = context.delegate;
-        if (delegate) {
-          var delegateResult = maybeInvokeDelegate(delegate, context);
-          if (delegateResult) {
-            if (delegateResult === ContinueSentinel) continue;
-            return delegateResult;
-          }
-        }
-
-        if (context.method === "next") {
-          // Setting context._sent for legacy support of Babel's
-          // function.sent implementation.
-          context.sent = context._sent = context.arg;
-
-        } else if (context.method === "throw") {
-          if (state === GenStateSuspendedStart) {
-            state = GenStateCompleted;
-            throw context.arg;
-          }
-
-          context.dispatchException(context.arg);
-
-        } else if (context.method === "return") {
-          context.abrupt("return", context.arg);
-        }
-
-        state = GenStateExecuting;
-
-        var record = tryCatch(innerFn, self, context);
-        if (record.type === "normal") {
-          // If an exception is thrown from innerFn, we leave state ===
-          // GenStateExecuting and loop back for another invocation.
-          state = context.done
-            ? GenStateCompleted
-            : GenStateSuspendedYield;
-
-          if (record.arg === ContinueSentinel) {
-            continue;
-          }
-
-          return {
-            value: record.arg,
-            done: context.done
-          };
-
-        } else if (record.type === "throw") {
-          state = GenStateCompleted;
-          // Dispatch the exception by looping back around to the
-          // context.dispatchException(context.arg) call above.
-          context.method = "throw";
-          context.arg = record.arg;
-        }
-      }
+(function () {
+    var cwd = '/';
+    var path;
+    exports.cwd = function () { return cwd };
+    exports.chdir = function (dir) {
+        if (!path) path = __webpack_require__(/*! path */ 30);
+        cwd = path.resolve(dir, cwd);
     };
-  }
-
-  // Call delegate.iterator[context.method](context.arg) and handle the
-  // result, either by returning a { value, done } result from the
-  // delegate iterator, or by modifying context.method and context.arg,
-  // setting context.delegate to null, and returning the ContinueSentinel.
-  function maybeInvokeDelegate(delegate, context) {
-    var method = delegate.iterator[context.method];
-    if (method === undefined) {
-      // A .throw or .return when the delegate iterator has no .throw
-      // method always terminates the yield* loop.
-      context.delegate = null;
-
-      if (context.method === "throw") {
-        if (delegate.iterator.return) {
-          // If the delegate iterator has a return method, give it a
-          // chance to clean up.
-          context.method = "return";
-          context.arg = undefined;
-          maybeInvokeDelegate(delegate, context);
-
-          if (context.method === "throw") {
-            // If maybeInvokeDelegate(context) changed context.method from
-            // "return" to "throw", let that override the TypeError below.
-            return ContinueSentinel;
-          }
-        }
-
-        context.method = "throw";
-        context.arg = new TypeError(
-          "The iterator does not provide a 'throw' method");
-      }
-
-      return ContinueSentinel;
-    }
-
-    var record = tryCatch(method, delegate.iterator, context.arg);
-
-    if (record.type === "throw") {
-      context.method = "throw";
-      context.arg = record.arg;
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    var info = record.arg;
-
-    if (! info) {
-      context.method = "throw";
-      context.arg = new TypeError("iterator result is not an object");
-      context.delegate = null;
-      return ContinueSentinel;
-    }
-
-    if (info.done) {
-      // Assign the result of the finished delegate to the temporary
-      // variable specified by delegate.resultName (see delegateYield).
-      context[delegate.resultName] = info.value;
-
-      // Resume execution at the desired location (see delegateYield).
-      context.next = delegate.nextLoc;
-
-      // If context.method was "throw" but the delegate handled the
-      // exception, let the outer generator proceed normally. If
-      // context.method was "next", forget context.arg since it has been
-      // "consumed" by the delegate iterator. If context.method was
-      // "return", allow the original .return call to continue in the
-      // outer generator.
-      if (context.method !== "return") {
-        context.method = "next";
-        context.arg = undefined;
-      }
-
-    } else {
-      // Re-yield the result returned by the delegate method.
-      return info;
-    }
-
-    // The delegate iterator is finished, so forget it and continue with
-    // the outer generator.
-    context.delegate = null;
-    return ContinueSentinel;
-  }
-
-  // Define Generator.prototype.{next,throw,return} in terms of the
-  // unified ._invoke helper method.
-  defineIteratorMethods(Gp);
-
-  Gp[toStringTagSymbol] = "Generator";
-
-  // A Generator should always return itself as the iterator object when the
-  // @@iterator function is called on it. Some browsers' implementations of the
-  // iterator prototype chain incorrectly implement this, causing the Generator
-  // object to not be returned from this call. This ensures that doesn't happen.
-  // See https://github.com/facebook/regenerator/issues/274 for more details.
-  Gp[iteratorSymbol] = function() {
-    return this;
-  };
-
-  Gp.toString = function() {
-    return "[object Generator]";
-  };
-
-  function pushTryEntry(locs) {
-    var entry = { tryLoc: locs[0] };
-
-    if (1 in locs) {
-      entry.catchLoc = locs[1];
-    }
-
-    if (2 in locs) {
-      entry.finallyLoc = locs[2];
-      entry.afterLoc = locs[3];
-    }
-
-    this.tryEntries.push(entry);
-  }
-
-  function resetTryEntry(entry) {
-    var record = entry.completion || {};
-    record.type = "normal";
-    delete record.arg;
-    entry.completion = record;
-  }
-
-  function Context(tryLocsList) {
-    // The root entry object (effectively a try statement without a catch
-    // or a finally block) gives us a place to store values thrown from
-    // locations where there is no enclosing try statement.
-    this.tryEntries = [{ tryLoc: "root" }];
-    tryLocsList.forEach(pushTryEntry, this);
-    this.reset(true);
-  }
-
-  runtime.keys = function(object) {
-    var keys = [];
-    for (var key in object) {
-      keys.push(key);
-    }
-    keys.reverse();
-
-    // Rather than returning an object with a next method, we keep
-    // things simple and return the next function itself.
-    return function next() {
-      while (keys.length) {
-        var key = keys.pop();
-        if (key in object) {
-          next.value = key;
-          next.done = false;
-          return next;
-        }
-      }
-
-      // To avoid creating an additional object, we just hang the .value
-      // and .done properties off the next function object itself. This
-      // also ensures that the minifier will not anonymize the function.
-      next.done = true;
-      return next;
-    };
-  };
-
-  function values(iterable) {
-    if (iterable) {
-      var iteratorMethod = iterable[iteratorSymbol];
-      if (iteratorMethod) {
-        return iteratorMethod.call(iterable);
-      }
-
-      if (typeof iterable.next === "function") {
-        return iterable;
-      }
-
-      if (!isNaN(iterable.length)) {
-        var i = -1, next = function next() {
-          while (++i < iterable.length) {
-            if (hasOwn.call(iterable, i)) {
-              next.value = iterable[i];
-              next.done = false;
-              return next;
-            }
-          }
-
-          next.value = undefined;
-          next.done = true;
-
-          return next;
-        };
-
-        return next.next = next;
-      }
-    }
-
-    // Return an iterator with no values.
-    return { next: doneResult };
-  }
-  runtime.values = values;
-
-  function doneResult() {
-    return { value: undefined, done: true };
-  }
-
-  Context.prototype = {
-    constructor: Context,
-
-    reset: function(skipTempReset) {
-      this.prev = 0;
-      this.next = 0;
-      // Resetting context._sent for legacy support of Babel's
-      // function.sent implementation.
-      this.sent = this._sent = undefined;
-      this.done = false;
-      this.delegate = null;
-
-      this.method = "next";
-      this.arg = undefined;
-
-      this.tryEntries.forEach(resetTryEntry);
-
-      if (!skipTempReset) {
-        for (var name in this) {
-          // Not sure about the optimal order of these conditions:
-          if (name.charAt(0) === "t" &&
-              hasOwn.call(this, name) &&
-              !isNaN(+name.slice(1))) {
-            this[name] = undefined;
-          }
-        }
-      }
-    },
-
-    stop: function() {
-      this.done = true;
-
-      var rootEntry = this.tryEntries[0];
-      var rootRecord = rootEntry.completion;
-      if (rootRecord.type === "throw") {
-        throw rootRecord.arg;
-      }
-
-      return this.rval;
-    },
-
-    dispatchException: function(exception) {
-      if (this.done) {
-        throw exception;
-      }
-
-      var context = this;
-      function handle(loc, caught) {
-        record.type = "throw";
-        record.arg = exception;
-        context.next = loc;
-
-        if (caught) {
-          // If the dispatched exception was caught by a catch block,
-          // then let that catch block handle the exception normally.
-          context.method = "next";
-          context.arg = undefined;
-        }
-
-        return !! caught;
-      }
-
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        var record = entry.completion;
-
-        if (entry.tryLoc === "root") {
-          // Exception thrown outside of any try block that could handle
-          // it, so set the completion value of the entire function to
-          // throw the exception.
-          return handle("end");
-        }
-
-        if (entry.tryLoc <= this.prev) {
-          var hasCatch = hasOwn.call(entry, "catchLoc");
-          var hasFinally = hasOwn.call(entry, "finallyLoc");
-
-          if (hasCatch && hasFinally) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            } else if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else if (hasCatch) {
-            if (this.prev < entry.catchLoc) {
-              return handle(entry.catchLoc, true);
-            }
-
-          } else if (hasFinally) {
-            if (this.prev < entry.finallyLoc) {
-              return handle(entry.finallyLoc);
-            }
-
-          } else {
-            throw new Error("try statement without catch or finally");
-          }
-        }
-      }
-    },
-
-    abrupt: function(type, arg) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc <= this.prev &&
-            hasOwn.call(entry, "finallyLoc") &&
-            this.prev < entry.finallyLoc) {
-          var finallyEntry = entry;
-          break;
-        }
-      }
-
-      if (finallyEntry &&
-          (type === "break" ||
-           type === "continue") &&
-          finallyEntry.tryLoc <= arg &&
-          arg <= finallyEntry.finallyLoc) {
-        // Ignore the finally entry if control is not jumping to a
-        // location outside the try/catch block.
-        finallyEntry = null;
-      }
-
-      var record = finallyEntry ? finallyEntry.completion : {};
-      record.type = type;
-      record.arg = arg;
-
-      if (finallyEntry) {
-        this.method = "next";
-        this.next = finallyEntry.finallyLoc;
-        return ContinueSentinel;
-      }
-
-      return this.complete(record);
-    },
-
-    complete: function(record, afterLoc) {
-      if (record.type === "throw") {
-        throw record.arg;
-      }
-
-      if (record.type === "break" ||
-          record.type === "continue") {
-        this.next = record.arg;
-      } else if (record.type === "return") {
-        this.rval = this.arg = record.arg;
-        this.method = "return";
-        this.next = "end";
-      } else if (record.type === "normal" && afterLoc) {
-        this.next = afterLoc;
-      }
-
-      return ContinueSentinel;
-    },
-
-    finish: function(finallyLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.finallyLoc === finallyLoc) {
-          this.complete(entry.completion, entry.afterLoc);
-          resetTryEntry(entry);
-          return ContinueSentinel;
-        }
-      }
-    },
-
-    "catch": function(tryLoc) {
-      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
-        var entry = this.tryEntries[i];
-        if (entry.tryLoc === tryLoc) {
-          var record = entry.completion;
-          if (record.type === "throw") {
-            var thrown = record.arg;
-            resetTryEntry(entry);
-          }
-          return thrown;
-        }
-      }
-
-      // The context.catch method must only be called with a location
-      // argument that corresponds to a known catch block.
-      throw new Error("illegal catch attempt");
-    },
-
-    delegateYield: function(iterable, resultName, nextLoc) {
-      this.delegate = {
-        iterator: values(iterable),
-        resultName: resultName,
-        nextLoc: nextLoc
-      };
-
-      if (this.method === "next") {
-        // Deliberately forget the last sent value so that we don't
-        // accidentally pass it on to the delegate.
-        this.arg = undefined;
-      }
-
-      return ContinueSentinel;
-    }
-  };
-})(
-  // In sloppy mode, unbound `this` refers to the global object, fallback to
-  // Function constructor if we're in global strict mode. That is sadly a form
-  // of indirect eval which violates Content Security Policy.
-  (function() {
-    return this || (typeof self === "object" && self);
-  })() || Function("return this")()
-);
+})();
+
+exports.exit = exports.kill = 
+exports.umask = exports.dlopen = 
+exports.uptime = exports.memoryUsage = 
+exports.uvCounters = function() {};
+exports.features = {};
 
 
 /***/ }),
 
 /***/ 296:
-/*!**********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/my/toAddress.png ***!
-  \**********************************************************************/
+/*!*********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/my/toAddress.png ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10162,113 +9468,6 @@ module.exports = g;
 /***/ }),
 
 /***/ 30:
-/*!****************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/utils/uniAxios.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {var _uniAxiosMin = _interopRequireDefault(__webpack_require__(/*! ./../dist/uni-axios.min.js */ 31));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
-
-_uniAxiosMin.default.defaults.baseURL = 'http://39.98.122.62:8085';
-_uniAxiosMin.default.interceptors.first.use(function (config) {
-  var token = uni.getStorageSync('gt');
-  // console.log(token, 'Ftoken', config);
-  if (token) {
-    config.headers = { Authorization: token, ContentType: "application/json;charset=UTF-8" };
-  }
-  // console.log(config, 'configF');
-  var showLoading = config.showLoading;
-  if (showLoading) {
-    uni.showLoading({
-      mask: true,
-      title: showLoading === true ? '加载中...' : showLoading });
-
-  }
-  return config;
-}, function (err) {
-  return Promise.reject(err);
-});
-_uniAxiosMin.default.interceptors.response.use(function (response) {
-  // console.log(response)
-  return response;
-}, function (err) {
-  return Promise.reject(err);
-});
-_uniAxiosMin.default.interceptors.last.use(function (config) {
-  // console.log(config, 'last');
-  if (config.showLoading) {
-    uni.hideLoading();
-  }
-});
-
-module.exports = _uniAxiosMin.default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 31:
-/*!********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/dist/uni-axios.min.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process, uni) {!function (e, t) { true ? module.exports = t() : undefined;}(void 0, function () {return function (e) {function t(n) {if (r[n]) return r[n].exports;var o = r[n] = { exports: {}, id: n, loaded: !1 };return e[n].call(o.exports, o, o.exports, t), o.loaded = !0, o.exports;}var r = {};return t.m = e, t.c = r, t.p = "", t(0);}([function (e, t, r) {e.exports = r(1);}, function (e, t, r) {function n(e) {var t = new c(e),r = i(c.prototype.request, t);return s.extend(r, c.prototype, t), s.extend(r, t), r;}var o = r(2),s = o.utils,i = o.bind,a = o.mergeConfig,u = r(24),c = r(26),f = n(u);f.Axios = c, f.create = function (e) {return n(a(f.defaults, e));}, e.exports = f, e.exports.default = f;}, function (e, t, r) {e.exports = { utils: r(3), bind: r(4), Axios: r(6), mergeConfig: r(23), dispatchRequest: r(9), buildURL: r(7), settle: r(15), InterceptorManager: r(8) };}, function (e, t, r) {"use strict";function n(e) {return "[object Array]" === j.call(e);}function o(e) {return "[object ArrayBuffer]" === j.call(e);}function s(e) {return "undefined" != typeof FormData && e instanceof FormData;}function i(e) {var t;return t = "undefined" != typeof ArrayBuffer && ArrayBuffer.isView ? ArrayBuffer.isView(e) : e && e.buffer && e.buffer instanceof ArrayBuffer;}function a(e) {return "string" == typeof e;}function u(e) {return "number" == typeof e;}function c(e) {return "undefined" == typeof e;}function f(e) {return null !== e && "object" == typeof e;}function p(e) {return "[object Date]" === j.call(e);}function d(e) {return "[object File]" === j.call(e);}function l(e) {return "[object Blob]" === j.call(e);}function h(e) {return "[object Function]" === j.call(e);}function m(e) {return f(e) && h(e.pipe);}function y(e) {return "undefined" != typeof URLSearchParams && e instanceof URLSearchParams;}function g(e) {return e.replace(/^\s*/, "").replace(/\s*$/, "");}function x() {return ("undefined" == typeof navigator || "ReactNative" !== navigator.product && "NativeScript" !== navigator.product && "NS" !== navigator.product) && "undefined" != typeof window && "undefined" != typeof document;}function v(e, t) {if (null !== e && "undefined" != typeof e) if ("object" != typeof e && (e = [e]), n(e)) for (var r = 0, o = e.length; r < o; r++) {t.call(null, e[r], r, e);} else for (var s in e) {Object.prototype.hasOwnProperty.call(e, s) && t.call(null, e[s], s, e);}}function b() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = b(t[r], e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function w() {function e(e, r) {"object" == typeof t[r] && "object" == typeof e ? t[r] = w(t[r], e) : "object" == typeof e ? t[r] = w({}, e) : t[r] = e;}for (var t = {}, r = 0, n = arguments.length; r < n; r++) {v(arguments[r], e);}return t;}function E(e, t, r) {return v(t, function (t, n) {r && "function" == typeof t ? e[n] = R(t, r) : e[n] = t;}), e;}var R = r(4),S = r(5),j = Object.prototype.toString;e.exports = { isArray: n, isArrayBuffer: o, isBuffer: S, isFormData: s, isArrayBufferView: i, isString: a, isNumber: u, isObject: f, isUndefined: c, isDate: p, isFile: d, isBlob: l, isFunction: h, isStream: m, isURLSearchParams: y, isStandardBrowserEnv: x, forEach: v, merge: b, deepMerge: w, extend: E, trim: g };}, function (e, t) {"use strict";e.exports = function (e, t) {return function () {for (var r = new Array(arguments.length), n = 0; n < r.length; n++) {r[n] = arguments[n];}return e.apply(t, r);};};}, function (e, t) {/*!
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * Determine if an object is a Buffer
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      *
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @author   Feross Aboukhadijeh <https://feross.org>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      * @license  MIT
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      */
-    e.exports = function (e) {return null != e && null != e.constructor && "function" == typeof e.constructor.isBuffer && e.constructor.isBuffer(e);};}, function (e, t, r) {"use strict";function n(e) {this.defaults = e, this.interceptors = { request: new i(), response: new i() };}var o = r(3),s = r(7),i = r(8),a = r(9),u = r(23);n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {}, e = u(this.defaults, e), e.method = e.method ? e.method.toLowerCase() : "get";var t = [a, void 0],r = Promise.resolve(e);for (this.interceptors.request.forEach(function (e) {t.unshift(e.fulfilled, e.rejected);}), this.interceptors.response.forEach(function (e) {t.push(e.fulfilled, e.rejected);}); t.length;) {r = r.then(t.shift(), t.shift());}return r;}, n.prototype.getUri = function (e) {return e = u(this.defaults, e), s(e.url, e.params, e.paramsSerializer).replace(/^\?/, "");}, o.forEach(["delete", "get", "head", "options"], function (e) {n.prototype[e] = function (t, r) {return this.request(o.merge(r || {}, { method: e, url: t }));};}), o.forEach(["post", "put", "patch"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(o.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}, function (e, t, r) {"use strict";function n(e) {return encodeURIComponent(e).replace(/%40/gi, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");}var o = r(3);e.exports = function (e, t, r) {if (!t) return e;var s;if (r) s = r(t);else if (o.isURLSearchParams(t)) s = t.toString();else {var i = [];o.forEach(t, function (e, t) {null !== e && "undefined" != typeof e && (o.isArray(e) ? t += "[]" : e = [e], o.forEach(e, function (e) {o.isDate(e) ? e = e.toISOString() : o.isObject(e) && (e = JSON.stringify(e)), i.push(n(t) + "=" + n(e));}));}), s = i.join("&");}if (s) {var a = e.indexOf("#");a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;}return e;};}, function (e, t, r) {"use strict";function n() {this.handlers = [];}var o = r(3);n.prototype.use = function (e, t) {return this.handlers.push({ fulfilled: e, rejected: t }), this.handlers.length - 1;}, n.prototype.eject = function (e) {this.handlers[e] && (this.handlers[e] = null);}, n.prototype.forEach = function (e) {o.forEach(this.handlers, function (t) {null !== t && e(t);});}, e.exports = n;}, function (e, t, r) {"use strict";function n(e) {e.cancelToken && e.cancelToken.throwIfRequested();}var o = r(3),s = r(10),i = r(11),a = r(12),u = r(21),c = r(22);e.exports = function (e) {n(e), e.baseURL && !u(e.url) && (e.url = c(e.baseURL, e.url)), e.headers = e.headers || {}, e.data = s(e.data, e.headers, e.transformRequest), e.headers = o.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers || {}), o.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function (t) {delete e.headers[t];});var t = e.adapter || a.adapter;return t(e).then(function (t) {return n(e), t.data = s(t.data, t.headers, e.transformResponse), t;}, function (t) {return i(t) || (n(e), t && t.response && (t.response.data = s(t.response.data, t.response.headers, e.transformResponse))), Promise.reject(t);});};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t, r) {return n.forEach(r, function (r) {e = r(e, t);}), e;};}, function (e, t) {"use strict";e.exports = function (e) {return !(!e || !e.__CANCEL__);};}, function (e, t, r) {"use strict";function n(e, t) {!s.isUndefined(e) && s.isUndefined(e["Content-Type"]) && (e["Content-Type"] = t);}function o() {var e;return "undefined" != typeof process && "[object process]" === Object.prototype.toString.call(process) ? e = r(14) : "undefined" != typeof XMLHttpRequest && (e = r(14)), e;}var s = r(3),i = r(13),a = { "Content-Type": "application/x-www-form-urlencoded" },u = { adapter: o(), transformRequest: [function (e, t) {return i(t, "Accept"), i(t, "Content-Type"), s.isFormData(e) || s.isArrayBuffer(e) || s.isBuffer(e) || s.isStream(e) || s.isFile(e) || s.isBlob(e) ? e : s.isArrayBufferView(e) ? e.buffer : s.isURLSearchParams(e) ? (n(t, "application/x-www-form-urlencoded;charset=utf-8"), e.toString()) : s.isObject(e) ? (n(t, "application/json;charset=utf-8"), JSON.stringify(e)) : e;}], transformResponse: [function (e) {if ("string" == typeof e) try {e = JSON.parse(e);} catch (e) {}return e;}], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, validateStatus: function validateStatus(e) {return e >= 200 && e < 300;} };u.headers = { common: { Accept: "application/json, text/plain, */*" } }, s.forEach(["delete", "get", "head"], function (e) {u.headers[e] = {};}), s.forEach(["post", "put", "patch"], function (e) {u.headers[e] = s.merge(a);}), e.exports = u;}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {n.forEach(e, function (r, n) {n !== t && n.toUpperCase() === t.toUpperCase() && (e[t] = r, delete e[n]);});};}, function (e, t, r) {"use strict";var n = r(3),o = r(15),s = r(7),i = r(18),a = r(19),u = r(16);e.exports = function (e) {return new Promise(function (t, c) {var f = e.data,p = e.headers;n.isFormData(f) && delete p["Content-Type"];var d = new XMLHttpRequest();if (e.auth) {var l = e.auth.username || "",h = e.auth.password || "";p.Authorization = "Basic " + btoa(l + ":" + h);}if (d.open(e.method.toUpperCase(), s(e.url, e.params, e.paramsSerializer), !0), d.timeout = e.timeout, d.onreadystatechange = function () {if (d && 4 === d.readyState && (0 !== d.status || d.responseURL && 0 === d.responseURL.indexOf("file:"))) {var r = "getAllResponseHeaders" in d ? i(d.getAllResponseHeaders()) : null,n = e.responseType && "text" !== e.responseType ? d.response : d.responseText,s = { data: n, status: d.status, statusText: d.statusText, headers: r, config: e, request: d };o(t, c, s), d = null;}}, d.onabort = function () {d && (c(u("Request aborted", e, "ECONNABORTED", d)), d = null);}, d.onerror = function () {c(u("Network Error", e, null, d)), d = null;}, d.ontimeout = function () {c(u("timeout of " + e.timeout + "ms exceeded", e, "ECONNABORTED", d)), d = null;}, n.isStandardBrowserEnv()) {var m = r(20),y = (e.withCredentials || a(e.url)) && e.xsrfCookieName ? m.read(e.xsrfCookieName) : void 0;y && (p[e.xsrfHeaderName] = y);}if ("setRequestHeader" in d && n.forEach(p, function (e, t) {"undefined" == typeof f && "content-type" === t.toLowerCase() ? delete p[t] : d.setRequestHeader(t, e);}), e.withCredentials && (d.withCredentials = !0), e.responseType) try {d.responseType = e.responseType;} catch (t) {if ("json" !== e.responseType) throw t;}"function" == typeof e.onDownloadProgress && d.addEventListener("progress", e.onDownloadProgress), "function" == typeof e.onUploadProgress && d.upload && d.upload.addEventListener("progress", e.onUploadProgress), e.cancelToken && e.cancelToken.promise.then(function (e) {d && (d.abort(), c(e), d = null);}), void 0 === f && (f = null), d.send(f);});};}, function (e, t, r) {"use strict";var n = r(16);e.exports = function (e, t, r) {var o = r.config.validateStatus;!o || o(r.status) ? e(r) : t(n("Request failed with status code " + r.status, r.config, null, r.request, r));};}, function (e, t, r) {"use strict";var n = r(17);e.exports = function (e, t, r, o, s) {var i = new Error(e);return n(i, t, r, o, s);};}, function (e, t) {"use strict";e.exports = function (e, t, r, n, o) {return e.config = t, r && (e.code = r), e.request = n, e.response = o, e.isAxiosError = !0, e.toJSON = function () {return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code };}, e;};}, function (e, t, r) {"use strict";var n = r(3),o = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];e.exports = function (e) {var t,r,s,i = {};return e ? (n.forEach(e.split("\n"), function (e) {if (s = e.indexOf(":"), t = n.trim(e.substr(0, s)).toLowerCase(), r = n.trim(e.substr(s + 1)), t) {if (i[t] && o.indexOf(t) >= 0) return;"set-cookie" === t ? i[t] = (i[t] ? i[t] : []).concat([r]) : i[t] = i[t] ? i[t] + ", " + r : r;}}), i) : i;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {function e(e) {var t = e;return r && (o.setAttribute("href", t), t = o.href), o.setAttribute("href", t), { href: o.href, protocol: o.protocol ? o.protocol.replace(/:$/, "") : "", host: o.host, search: o.search ? o.search.replace(/^\?/, "") : "", hash: o.hash ? o.hash.replace(/^#/, "") : "", hostname: o.hostname, port: o.port, pathname: "/" === o.pathname.charAt(0) ? o.pathname : "/" + o.pathname };}var t,r = /(msie|trident)/i.test(navigator.userAgent),o = document.createElement("a");return t = e(window.location.href), function (r) {var o = n.isString(r) ? e(r) : r;return o.protocol === t.protocol && o.host === t.host;};}() : function () {return function () {return !0;};}();}, function (e, t, r) {"use strict";var n = r(3);e.exports = n.isStandardBrowserEnv() ? function () {return { write: function write(e, t, r, o, s, i) {var a = [];a.push(e + "=" + encodeURIComponent(t)), n.isNumber(r) && a.push("expires=" + new Date(r).toGMTString()), n.isString(o) && a.push("path=" + o), n.isString(s) && a.push("domain=" + s), i === !0 && a.push("secure"), document.cookie = a.join("; ");}, read: function read(e) {var t = document.cookie.match(new RegExp("(^|;\\s*)(" + e + ")=([^;]*)"));return t ? decodeURIComponent(t[3]) : null;}, remove: function remove(e) {this.write(e, "", Date.now() - 864e5);} };}() : function () {return { write: function write() {}, read: function read() {return null;}, remove: function remove() {} };}();}, function (e, t) {"use strict";e.exports = function (e) {return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(e);};}, function (e, t) {"use strict";e.exports = function (e, t) {return t ? e.replace(/\/+$/, "") + "/" + t.replace(/^\/+/, "") : e;};}, function (e, t, r) {"use strict";var n = r(3);e.exports = function (e, t) {t = t || {};var r = {};return n.forEach(["url", "method", "params", "data"], function (e) {"undefined" != typeof t[e] && (r[e] = t[e]);}), n.forEach(["headers", "auth", "proxy"], function (o) {n.isObject(t[o]) ? r[o] = n.deepMerge(e[o], t[o]) : "undefined" != typeof t[o] ? r[o] = t[o] : n.isObject(e[o]) ? r[o] = n.deepMerge(e[o]) : "undefined" != typeof e[o] && (r[o] = e[o]);}), n.forEach(["baseURL", "transformRequest", "transformResponse", "paramsSerializer", "timeout", "withCredentials", "adapter", "responseType", "xsrfCookieName", "xsrfHeaderName", "onUploadProgress", "onDownloadProgress", "maxContentLength", "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken", "socketPath"], function (n) {"undefined" != typeof t[n] ? r[n] = t[n] : "undefined" != typeof e[n] && (r[n] = e[n]);}), r;};}, function (e, t, r) {var n = { adapter: r(25), validateStatus: function validateStatus(e) {return e >= 200 && e < 300;}, dataType: "json", responseType: "text", sslVerify: !0 };e.exports = n;}, function (e, t, r) {var n = r(2),o = n.buildURL,s = n.settle;e.exports = function (e) {return new Promise(function (t, r) {uni.request({ method: e.method.toUpperCase(), url: o(e.url, e.params, e.paramsSerializer), header: e.headers, data: e.data, dataType: e.dataType, responseType: e.responseType, sslVerify: e.sslVerify, complete: function complete(n) {n = { data: n.data, status: n.statusCode, errMsg: n.errMsg, header: n.header, config: e }, s(t, r, n);} });});};}, function (e, t, r) {function n(e) {s.call(this, e), this.interceptors.first = new a(), this.interceptors.last = new a();}var o = r(2),s = o.Axios,i = o.utils,a = o.InterceptorManager;n.prototype.request = function (e) {"string" == typeof e ? (e = arguments[1] || {}, e.url = arguments[0]) : e = e || {};var t = Promise.resolve(e);this.interceptors.first.forEach(function (e) {t = t.then(e.fulfilled, e.rejected);});var r = this,t = t.then(function (e) {return s.prototype.request.call(r, e);});return this.interceptors.last.forEach(function (r) {t = t.then(function (t) {return r.fulfilled(e), t;}, function (t) {return r.fulfilled(e), Promise.reject(t);});}), t;}, i.forEach(["get", "delete", "connect", "head", "options", "trace"], function (e) {n.prototype[e] = function (t, r) {return this.request(i.merge(r || {}, { method: e, url: t }));};}), i.forEach(["post", "put"], function (e) {n.prototype[e] = function (t, r, n) {return this.request(i.merge(n || {}, { method: e, url: t, data: r }));};}), e.exports = n;}]);});
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/node-libs-browser/mock/process.js */ 32), __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
-
-/***/ }),
-
-/***/ 32:
-/*!********************************************************!*\
-  !*** ./node_modules/node-libs-browser/mock/process.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.nextTick = function nextTick(fn) {
-	setTimeout(fn, 0);
-};
-
-exports.platform = exports.arch = 
-exports.execPath = exports.title = 'browser';
-exports.pid = 1;
-exports.browser = true;
-exports.env = {};
-exports.argv = [];
-
-exports.binding = function (name) {
-	throw new Error('No such module. (Possibly not yet loaded)')
-};
-
-(function () {
-    var cwd = '/';
-    var path;
-    exports.cwd = function () { return cwd };
-    exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 33);
-        cwd = path.resolve(dir, cwd);
-    };
-})();
-
-exports.exit = exports.kill = 
-exports.umask = exports.dlopen = 
-exports.uptime = exports.memoryUsage = 
-exports.uvCounters = function() {};
-exports.features = {};
-
-
-/***/ }),
-
-/***/ 33:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -10500,14 +9699,25 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 32)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 29)))
+
+/***/ }),
+
+/***/ 37:
+/*!**********************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/logo.png ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAfSgeZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTg0NDYxMUIwMDQzMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTg0NDYxMUMwMDQzMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1ODQ0NjExOTAwNDMxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1ODQ0NjExQTAwNDMxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkV2CogAAB4ySURBVHja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"
 
 /***/ }),
 
 /***/ 4:
-/*!*********************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json ***!
-  \*********************************************************/
+/*!********************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10516,21 +9726,10 @@ var substr = 'ab'.substr(-1) === 'b'
 
 /***/ }),
 
-/***/ 40:
-/*!***********************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/logo.png ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAACJCAYAAAAfSgeZAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTg0NDYxMUIwMDQzMTFFQUEzRDJGM0RCQURFQzlCQjQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTg0NDYxMUMwMDQzMTFFQUEzRDJGM0RCQURFQzlCQjQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo1ODQ0NjExOTAwNDMxMUVBQTNEMkYzREJBREVDOUJCNCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo1ODQ0NjExQTAwNDMxMUVBQTNEMkYzREJBREVDOUJCNCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PkV2CogAAB4ySURBVHja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"
-
-/***/ }),
-
 /***/ 403:
-/*!****************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/components/uni-icons/icons.js ***!
-  \****************************************************************************/
+/*!***************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/components/uni-icons/icons.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11520,10 +10719,10 @@ main();
 
 /***/ }),
 
-/***/ 57:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/static/delivery/emptybg.png ***!
-  \**************************************************************************/
+/***/ 54:
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/static/delivery/emptybg.png ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11538,14 +10737,14 @@ module.exports = __webpack_require__.p + "static/img/emptybg.ccdbb797.png";
 /*! exports provided: _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _shasum, _spec, _where, author, bugs, bundleDependencies, deprecated, description, devDependencies, files, gitHead, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-24220191115004","_inBundle":false,"_integrity":"sha512-UKnpiHSP7h9c5IFpJFkWkpm1KyWz9iHj1hchrQSUxPhChx+KPOmunnQcKGiQvvBz9CeSi7Se/eauJYha5ch0kw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-24220191115004.tgz","_shasum":"5848f2204f37daaf8c340fb27d9f76b16fcbfdeb","_spec":"@dcloudio/uni-stat@next","_where":"/Users/guoshengqiang/Documents/dcloud-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"bcf65737c5111d47398695d3db8ed87305df346e","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-24220191115004"};
+module.exports = {"_from":"@dcloudio/uni-stat@next","_id":"@dcloudio/uni-stat@2.0.0-23720191024001","_inBundle":false,"_integrity":"sha512-vJEk493Vdb8KueNzR2otzDi23rfyRcQBo/t1R41MwNGPk+AUB94gh10+HVLo98DRcvMzkuVofz3KXTAfEx24iw==","_location":"/@dcloudio/uni-stat","_phantomChildren":{},"_requested":{"type":"tag","registry":true,"raw":"@dcloudio/uni-stat@next","name":"@dcloudio/uni-stat","escapedName":"@dcloudio%2funi-stat","scope":"@dcloudio","rawSpec":"next","saveSpec":null,"fetchSpec":"next"},"_requiredBy":["#USER","/","/@dcloudio/vue-cli-plugin-uni"],"_resolved":"https://registry.npmjs.org/@dcloudio/uni-stat/-/uni-stat-2.0.0-23720191024001.tgz","_shasum":"18272814446a9bc6053bc92666ec7064a1767588","_spec":"@dcloudio/uni-stat@next","_where":"/Users/fxy/Documents/DCloud/HbuilderX-plugins/release/uniapp-cli","author":"","bugs":{"url":"https://github.com/dcloudio/uni-app/issues"},"bundleDependencies":false,"deprecated":false,"description":"","devDependencies":{"@babel/core":"^7.5.5","@babel/preset-env":"^7.5.5","eslint":"^6.1.0","rollup":"^1.19.3","rollup-plugin-babel":"^4.3.3","rollup-plugin-clear":"^2.0.7","rollup-plugin-commonjs":"^10.0.2","rollup-plugin-copy":"^3.1.0","rollup-plugin-eslint":"^7.0.0","rollup-plugin-json":"^4.0.0","rollup-plugin-node-resolve":"^5.2.0","rollup-plugin-replace":"^2.2.0","rollup-plugin-uglify":"^6.0.2"},"files":["dist","package.json","LICENSE"],"gitHead":"a725c04ef762e5df78a9a69d140c2666e0de05fc","homepage":"https://github.com/dcloudio/uni-app#readme","license":"Apache-2.0","main":"dist/index.js","name":"@dcloudio/uni-stat","repository":{"type":"git","url":"git+https://github.com/dcloudio/uni-app.git","directory":"packages/uni-stat"},"scripts":{"build":"NODE_ENV=production rollup -c rollup.config.js","dev":"NODE_ENV=development rollup -w -c rollup.config.js"},"version":"2.0.0-23720191024001"};
 
 /***/ }),
 
 /***/ 7:
-/*!**************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"style"} ***!
-  \**************************************************************************/
+/*!*************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"style"} ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11555,9 +10754,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 8:
-/*!*************************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/pages.json?{"type":"stat"} ***!
-  \*************************************************************************/
+/*!************************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/pages.json?{"type":"stat"} ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11566,10 +10765,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
+/***/ 89:
+/*!**********************************************************!*\
+  !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! regenerator-runtime */ 90);
+
+
+/***/ }),
+
 /***/ 9:
-/*!*************************************************************!*\
-  !*** C:/Users/Administrator/Desktop/my-demo/store/index.js ***!
-  \*************************************************************/
+/*!************************************************!*\
+  !*** /Users/xuyi/dev/sh/m-demo/store/index.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11613,6 +10824,786 @@ var store = new _vuex.default.Store({
 
 store;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 90:
+/*!************************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime-module.js ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+// This method of obtaining a reference to the global object needs to be
+// kept identical to the way it is obtained in runtime.js
+var g = (function() {
+  return this || (typeof self === "object" && self);
+})() || Function("return this")();
+
+// Use `getOwnPropertyNames` because not all browsers support calling
+// `hasOwnProperty` on the global `self` object in a worker. See #183.
+var hadRuntime = g.regeneratorRuntime &&
+  Object.getOwnPropertyNames(g).indexOf("regeneratorRuntime") >= 0;
+
+// Save the old regeneratorRuntime in case it needs to be restored later.
+var oldRuntime = hadRuntime && g.regeneratorRuntime;
+
+// Force reevalutation of runtime.js.
+g.regeneratorRuntime = undefined;
+
+module.exports = __webpack_require__(/*! ./runtime */ 91);
+
+if (hadRuntime) {
+  // Restore the original runtime.
+  g.regeneratorRuntime = oldRuntime;
+} else {
+  // Remove the global property added by runtime.js.
+  try {
+    delete g.regeneratorRuntime;
+  } catch(e) {
+    g.regeneratorRuntime = undefined;
+  }
+}
+
+
+/***/ }),
+
+/***/ 91:
+/*!*****************************************************!*\
+  !*** ./node_modules/regenerator-runtime/runtime.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+!(function(global) {
+  "use strict";
+
+  var Op = Object.prototype;
+  var hasOwn = Op.hasOwnProperty;
+  var undefined; // More compressible than void 0.
+  var $Symbol = typeof Symbol === "function" ? Symbol : {};
+  var iteratorSymbol = $Symbol.iterator || "@@iterator";
+  var asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator";
+  var toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag";
+
+  var inModule = typeof module === "object";
+  var runtime = global.regeneratorRuntime;
+  if (runtime) {
+    if (inModule) {
+      // If regeneratorRuntime is defined globally and we're in a module,
+      // make the exports object identical to regeneratorRuntime.
+      module.exports = runtime;
+    }
+    // Don't bother evaluating the rest of this file if the runtime was
+    // already defined globally.
+    return;
+  }
+
+  // Define the runtime globally (as expected by generated code) as either
+  // module.exports (if we're in a module) or a new, empty object.
+  runtime = global.regeneratorRuntime = inModule ? module.exports : {};
+
+  function wrap(innerFn, outerFn, self, tryLocsList) {
+    // If outerFn provided and outerFn.prototype is a Generator, then outerFn.prototype instanceof Generator.
+    var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator;
+    var generator = Object.create(protoGenerator.prototype);
+    var context = new Context(tryLocsList || []);
+
+    // The ._invoke method unifies the implementations of the .next,
+    // .throw, and .return methods.
+    generator._invoke = makeInvokeMethod(innerFn, self, context);
+
+    return generator;
+  }
+  runtime.wrap = wrap;
+
+  // Try/catch helper to minimize deoptimizations. Returns a completion
+  // record like context.tryEntries[i].completion. This interface could
+  // have been (and was previously) designed to take a closure to be
+  // invoked without arguments, but in all the cases we care about we
+  // already have an existing method we want to call, so there's no need
+  // to create a new function object. We can even get away with assuming
+  // the method takes exactly one argument, since that happens to be true
+  // in every case, so we don't have to touch the arguments object. The
+  // only additional allocation required is the completion record, which
+  // has a stable shape and so hopefully should be cheap to allocate.
+  function tryCatch(fn, obj, arg) {
+    try {
+      return { type: "normal", arg: fn.call(obj, arg) };
+    } catch (err) {
+      return { type: "throw", arg: err };
+    }
+  }
+
+  var GenStateSuspendedStart = "suspendedStart";
+  var GenStateSuspendedYield = "suspendedYield";
+  var GenStateExecuting = "executing";
+  var GenStateCompleted = "completed";
+
+  // Returning this object from the innerFn has the same effect as
+  // breaking out of the dispatch switch statement.
+  var ContinueSentinel = {};
+
+  // Dummy constructor functions that we use as the .constructor and
+  // .constructor.prototype properties for functions that return Generator
+  // objects. For full spec compliance, you may wish to configure your
+  // minifier not to mangle the names of these two functions.
+  function Generator() {}
+  function GeneratorFunction() {}
+  function GeneratorFunctionPrototype() {}
+
+  // This is a polyfill for %IteratorPrototype% for environments that
+  // don't natively support it.
+  var IteratorPrototype = {};
+  IteratorPrototype[iteratorSymbol] = function () {
+    return this;
+  };
+
+  var getProto = Object.getPrototypeOf;
+  var NativeIteratorPrototype = getProto && getProto(getProto(values([])));
+  if (NativeIteratorPrototype &&
+      NativeIteratorPrototype !== Op &&
+      hasOwn.call(NativeIteratorPrototype, iteratorSymbol)) {
+    // This environment has a native %IteratorPrototype%; use it instead
+    // of the polyfill.
+    IteratorPrototype = NativeIteratorPrototype;
+  }
+
+  var Gp = GeneratorFunctionPrototype.prototype =
+    Generator.prototype = Object.create(IteratorPrototype);
+  GeneratorFunction.prototype = Gp.constructor = GeneratorFunctionPrototype;
+  GeneratorFunctionPrototype.constructor = GeneratorFunction;
+  GeneratorFunctionPrototype[toStringTagSymbol] =
+    GeneratorFunction.displayName = "GeneratorFunction";
+
+  // Helper for defining the .next, .throw, and .return methods of the
+  // Iterator interface in terms of a single ._invoke method.
+  function defineIteratorMethods(prototype) {
+    ["next", "throw", "return"].forEach(function(method) {
+      prototype[method] = function(arg) {
+        return this._invoke(method, arg);
+      };
+    });
+  }
+
+  runtime.isGeneratorFunction = function(genFun) {
+    var ctor = typeof genFun === "function" && genFun.constructor;
+    return ctor
+      ? ctor === GeneratorFunction ||
+        // For the native GeneratorFunction constructor, the best we can
+        // do is to check its .name property.
+        (ctor.displayName || ctor.name) === "GeneratorFunction"
+      : false;
+  };
+
+  runtime.mark = function(genFun) {
+    if (Object.setPrototypeOf) {
+      Object.setPrototypeOf(genFun, GeneratorFunctionPrototype);
+    } else {
+      genFun.__proto__ = GeneratorFunctionPrototype;
+      if (!(toStringTagSymbol in genFun)) {
+        genFun[toStringTagSymbol] = "GeneratorFunction";
+      }
+    }
+    genFun.prototype = Object.create(Gp);
+    return genFun;
+  };
+
+  // Within the body of any async function, `await x` is transformed to
+  // `yield regeneratorRuntime.awrap(x)`, so that the runtime can test
+  // `hasOwn.call(value, "__await")` to determine if the yielded value is
+  // meant to be awaited.
+  runtime.awrap = function(arg) {
+    return { __await: arg };
+  };
+
+  function AsyncIterator(generator) {
+    function invoke(method, arg, resolve, reject) {
+      var record = tryCatch(generator[method], generator, arg);
+      if (record.type === "throw") {
+        reject(record.arg);
+      } else {
+        var result = record.arg;
+        var value = result.value;
+        if (value &&
+            typeof value === "object" &&
+            hasOwn.call(value, "__await")) {
+          return Promise.resolve(value.__await).then(function(value) {
+            invoke("next", value, resolve, reject);
+          }, function(err) {
+            invoke("throw", err, resolve, reject);
+          });
+        }
+
+        return Promise.resolve(value).then(function(unwrapped) {
+          // When a yielded Promise is resolved, its final value becomes
+          // the .value of the Promise<{value,done}> result for the
+          // current iteration.
+          result.value = unwrapped;
+          resolve(result);
+        }, function(error) {
+          // If a rejected Promise was yielded, throw the rejection back
+          // into the async generator function so it can be handled there.
+          return invoke("throw", error, resolve, reject);
+        });
+      }
+    }
+
+    var previousPromise;
+
+    function enqueue(method, arg) {
+      function callInvokeWithMethodAndArg() {
+        return new Promise(function(resolve, reject) {
+          invoke(method, arg, resolve, reject);
+        });
+      }
+
+      return previousPromise =
+        // If enqueue has been called before, then we want to wait until
+        // all previous Promises have been resolved before calling invoke,
+        // so that results are always delivered in the correct order. If
+        // enqueue has not been called before, then it is important to
+        // call invoke immediately, without waiting on a callback to fire,
+        // so that the async generator function has the opportunity to do
+        // any necessary setup in a predictable way. This predictability
+        // is why the Promise constructor synchronously invokes its
+        // executor callback, and why async functions synchronously
+        // execute code before the first await. Since we implement simple
+        // async functions in terms of async generators, it is especially
+        // important to get this right, even though it requires care.
+        previousPromise ? previousPromise.then(
+          callInvokeWithMethodAndArg,
+          // Avoid propagating failures to Promises returned by later
+          // invocations of the iterator.
+          callInvokeWithMethodAndArg
+        ) : callInvokeWithMethodAndArg();
+    }
+
+    // Define the unified helper method that is used to implement .next,
+    // .throw, and .return (see defineIteratorMethods).
+    this._invoke = enqueue;
+  }
+
+  defineIteratorMethods(AsyncIterator.prototype);
+  AsyncIterator.prototype[asyncIteratorSymbol] = function () {
+    return this;
+  };
+  runtime.AsyncIterator = AsyncIterator;
+
+  // Note that simple async functions are implemented on top of
+  // AsyncIterator objects; they just return a Promise for the value of
+  // the final result produced by the iterator.
+  runtime.async = function(innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(
+      wrap(innerFn, outerFn, self, tryLocsList)
+    );
+
+    return runtime.isGeneratorFunction(outerFn)
+      ? iter // If outerFn is a generator, return the full iterator.
+      : iter.next().then(function(result) {
+          return result.done ? result.value : iter.next();
+        });
+  };
+
+  function makeInvokeMethod(innerFn, self, context) {
+    var state = GenStateSuspendedStart;
+
+    return function invoke(method, arg) {
+      if (state === GenStateExecuting) {
+        throw new Error("Generator is already running");
+      }
+
+      if (state === GenStateCompleted) {
+        if (method === "throw") {
+          throw arg;
+        }
+
+        // Be forgiving, per 25.3.3.3.3 of the spec:
+        // https://people.mozilla.org/~jorendorff/es6-draft.html#sec-generatorresume
+        return doneResult();
+      }
+
+      context.method = method;
+      context.arg = arg;
+
+      while (true) {
+        var delegate = context.delegate;
+        if (delegate) {
+          var delegateResult = maybeInvokeDelegate(delegate, context);
+          if (delegateResult) {
+            if (delegateResult === ContinueSentinel) continue;
+            return delegateResult;
+          }
+        }
+
+        if (context.method === "next") {
+          // Setting context._sent for legacy support of Babel's
+          // function.sent implementation.
+          context.sent = context._sent = context.arg;
+
+        } else if (context.method === "throw") {
+          if (state === GenStateSuspendedStart) {
+            state = GenStateCompleted;
+            throw context.arg;
+          }
+
+          context.dispatchException(context.arg);
+
+        } else if (context.method === "return") {
+          context.abrupt("return", context.arg);
+        }
+
+        state = GenStateExecuting;
+
+        var record = tryCatch(innerFn, self, context);
+        if (record.type === "normal") {
+          // If an exception is thrown from innerFn, we leave state ===
+          // GenStateExecuting and loop back for another invocation.
+          state = context.done
+            ? GenStateCompleted
+            : GenStateSuspendedYield;
+
+          if (record.arg === ContinueSentinel) {
+            continue;
+          }
+
+          return {
+            value: record.arg,
+            done: context.done
+          };
+
+        } else if (record.type === "throw") {
+          state = GenStateCompleted;
+          // Dispatch the exception by looping back around to the
+          // context.dispatchException(context.arg) call above.
+          context.method = "throw";
+          context.arg = record.arg;
+        }
+      }
+    };
+  }
+
+  // Call delegate.iterator[context.method](context.arg) and handle the
+  // result, either by returning a { value, done } result from the
+  // delegate iterator, or by modifying context.method and context.arg,
+  // setting context.delegate to null, and returning the ContinueSentinel.
+  function maybeInvokeDelegate(delegate, context) {
+    var method = delegate.iterator[context.method];
+    if (method === undefined) {
+      // A .throw or .return when the delegate iterator has no .throw
+      // method always terminates the yield* loop.
+      context.delegate = null;
+
+      if (context.method === "throw") {
+        if (delegate.iterator.return) {
+          // If the delegate iterator has a return method, give it a
+          // chance to clean up.
+          context.method = "return";
+          context.arg = undefined;
+          maybeInvokeDelegate(delegate, context);
+
+          if (context.method === "throw") {
+            // If maybeInvokeDelegate(context) changed context.method from
+            // "return" to "throw", let that override the TypeError below.
+            return ContinueSentinel;
+          }
+        }
+
+        context.method = "throw";
+        context.arg = new TypeError(
+          "The iterator does not provide a 'throw' method");
+      }
+
+      return ContinueSentinel;
+    }
+
+    var record = tryCatch(method, delegate.iterator, context.arg);
+
+    if (record.type === "throw") {
+      context.method = "throw";
+      context.arg = record.arg;
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    var info = record.arg;
+
+    if (! info) {
+      context.method = "throw";
+      context.arg = new TypeError("iterator result is not an object");
+      context.delegate = null;
+      return ContinueSentinel;
+    }
+
+    if (info.done) {
+      // Assign the result of the finished delegate to the temporary
+      // variable specified by delegate.resultName (see delegateYield).
+      context[delegate.resultName] = info.value;
+
+      // Resume execution at the desired location (see delegateYield).
+      context.next = delegate.nextLoc;
+
+      // If context.method was "throw" but the delegate handled the
+      // exception, let the outer generator proceed normally. If
+      // context.method was "next", forget context.arg since it has been
+      // "consumed" by the delegate iterator. If context.method was
+      // "return", allow the original .return call to continue in the
+      // outer generator.
+      if (context.method !== "return") {
+        context.method = "next";
+        context.arg = undefined;
+      }
+
+    } else {
+      // Re-yield the result returned by the delegate method.
+      return info;
+    }
+
+    // The delegate iterator is finished, so forget it and continue with
+    // the outer generator.
+    context.delegate = null;
+    return ContinueSentinel;
+  }
+
+  // Define Generator.prototype.{next,throw,return} in terms of the
+  // unified ._invoke helper method.
+  defineIteratorMethods(Gp);
+
+  Gp[toStringTagSymbol] = "Generator";
+
+  // A Generator should always return itself as the iterator object when the
+  // @@iterator function is called on it. Some browsers' implementations of the
+  // iterator prototype chain incorrectly implement this, causing the Generator
+  // object to not be returned from this call. This ensures that doesn't happen.
+  // See https://github.com/facebook/regenerator/issues/274 for more details.
+  Gp[iteratorSymbol] = function() {
+    return this;
+  };
+
+  Gp.toString = function() {
+    return "[object Generator]";
+  };
+
+  function pushTryEntry(locs) {
+    var entry = { tryLoc: locs[0] };
+
+    if (1 in locs) {
+      entry.catchLoc = locs[1];
+    }
+
+    if (2 in locs) {
+      entry.finallyLoc = locs[2];
+      entry.afterLoc = locs[3];
+    }
+
+    this.tryEntries.push(entry);
+  }
+
+  function resetTryEntry(entry) {
+    var record = entry.completion || {};
+    record.type = "normal";
+    delete record.arg;
+    entry.completion = record;
+  }
+
+  function Context(tryLocsList) {
+    // The root entry object (effectively a try statement without a catch
+    // or a finally block) gives us a place to store values thrown from
+    // locations where there is no enclosing try statement.
+    this.tryEntries = [{ tryLoc: "root" }];
+    tryLocsList.forEach(pushTryEntry, this);
+    this.reset(true);
+  }
+
+  runtime.keys = function(object) {
+    var keys = [];
+    for (var key in object) {
+      keys.push(key);
+    }
+    keys.reverse();
+
+    // Rather than returning an object with a next method, we keep
+    // things simple and return the next function itself.
+    return function next() {
+      while (keys.length) {
+        var key = keys.pop();
+        if (key in object) {
+          next.value = key;
+          next.done = false;
+          return next;
+        }
+      }
+
+      // To avoid creating an additional object, we just hang the .value
+      // and .done properties off the next function object itself. This
+      // also ensures that the minifier will not anonymize the function.
+      next.done = true;
+      return next;
+    };
+  };
+
+  function values(iterable) {
+    if (iterable) {
+      var iteratorMethod = iterable[iteratorSymbol];
+      if (iteratorMethod) {
+        return iteratorMethod.call(iterable);
+      }
+
+      if (typeof iterable.next === "function") {
+        return iterable;
+      }
+
+      if (!isNaN(iterable.length)) {
+        var i = -1, next = function next() {
+          while (++i < iterable.length) {
+            if (hasOwn.call(iterable, i)) {
+              next.value = iterable[i];
+              next.done = false;
+              return next;
+            }
+          }
+
+          next.value = undefined;
+          next.done = true;
+
+          return next;
+        };
+
+        return next.next = next;
+      }
+    }
+
+    // Return an iterator with no values.
+    return { next: doneResult };
+  }
+  runtime.values = values;
+
+  function doneResult() {
+    return { value: undefined, done: true };
+  }
+
+  Context.prototype = {
+    constructor: Context,
+
+    reset: function(skipTempReset) {
+      this.prev = 0;
+      this.next = 0;
+      // Resetting context._sent for legacy support of Babel's
+      // function.sent implementation.
+      this.sent = this._sent = undefined;
+      this.done = false;
+      this.delegate = null;
+
+      this.method = "next";
+      this.arg = undefined;
+
+      this.tryEntries.forEach(resetTryEntry);
+
+      if (!skipTempReset) {
+        for (var name in this) {
+          // Not sure about the optimal order of these conditions:
+          if (name.charAt(0) === "t" &&
+              hasOwn.call(this, name) &&
+              !isNaN(+name.slice(1))) {
+            this[name] = undefined;
+          }
+        }
+      }
+    },
+
+    stop: function() {
+      this.done = true;
+
+      var rootEntry = this.tryEntries[0];
+      var rootRecord = rootEntry.completion;
+      if (rootRecord.type === "throw") {
+        throw rootRecord.arg;
+      }
+
+      return this.rval;
+    },
+
+    dispatchException: function(exception) {
+      if (this.done) {
+        throw exception;
+      }
+
+      var context = this;
+      function handle(loc, caught) {
+        record.type = "throw";
+        record.arg = exception;
+        context.next = loc;
+
+        if (caught) {
+          // If the dispatched exception was caught by a catch block,
+          // then let that catch block handle the exception normally.
+          context.method = "next";
+          context.arg = undefined;
+        }
+
+        return !! caught;
+      }
+
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        var record = entry.completion;
+
+        if (entry.tryLoc === "root") {
+          // Exception thrown outside of any try block that could handle
+          // it, so set the completion value of the entire function to
+          // throw the exception.
+          return handle("end");
+        }
+
+        if (entry.tryLoc <= this.prev) {
+          var hasCatch = hasOwn.call(entry, "catchLoc");
+          var hasFinally = hasOwn.call(entry, "finallyLoc");
+
+          if (hasCatch && hasFinally) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            } else if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else if (hasCatch) {
+            if (this.prev < entry.catchLoc) {
+              return handle(entry.catchLoc, true);
+            }
+
+          } else if (hasFinally) {
+            if (this.prev < entry.finallyLoc) {
+              return handle(entry.finallyLoc);
+            }
+
+          } else {
+            throw new Error("try statement without catch or finally");
+          }
+        }
+      }
+    },
+
+    abrupt: function(type, arg) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc <= this.prev &&
+            hasOwn.call(entry, "finallyLoc") &&
+            this.prev < entry.finallyLoc) {
+          var finallyEntry = entry;
+          break;
+        }
+      }
+
+      if (finallyEntry &&
+          (type === "break" ||
+           type === "continue") &&
+          finallyEntry.tryLoc <= arg &&
+          arg <= finallyEntry.finallyLoc) {
+        // Ignore the finally entry if control is not jumping to a
+        // location outside the try/catch block.
+        finallyEntry = null;
+      }
+
+      var record = finallyEntry ? finallyEntry.completion : {};
+      record.type = type;
+      record.arg = arg;
+
+      if (finallyEntry) {
+        this.method = "next";
+        this.next = finallyEntry.finallyLoc;
+        return ContinueSentinel;
+      }
+
+      return this.complete(record);
+    },
+
+    complete: function(record, afterLoc) {
+      if (record.type === "throw") {
+        throw record.arg;
+      }
+
+      if (record.type === "break" ||
+          record.type === "continue") {
+        this.next = record.arg;
+      } else if (record.type === "return") {
+        this.rval = this.arg = record.arg;
+        this.method = "return";
+        this.next = "end";
+      } else if (record.type === "normal" && afterLoc) {
+        this.next = afterLoc;
+      }
+
+      return ContinueSentinel;
+    },
+
+    finish: function(finallyLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.finallyLoc === finallyLoc) {
+          this.complete(entry.completion, entry.afterLoc);
+          resetTryEntry(entry);
+          return ContinueSentinel;
+        }
+      }
+    },
+
+    "catch": function(tryLoc) {
+      for (var i = this.tryEntries.length - 1; i >= 0; --i) {
+        var entry = this.tryEntries[i];
+        if (entry.tryLoc === tryLoc) {
+          var record = entry.completion;
+          if (record.type === "throw") {
+            var thrown = record.arg;
+            resetTryEntry(entry);
+          }
+          return thrown;
+        }
+      }
+
+      // The context.catch method must only be called with a location
+      // argument that corresponds to a known catch block.
+      throw new Error("illegal catch attempt");
+    },
+
+    delegateYield: function(iterable, resultName, nextLoc) {
+      this.delegate = {
+        iterator: values(iterable),
+        resultName: resultName,
+        nextLoc: nextLoc
+      };
+
+      if (this.method === "next") {
+        // Deliberately forget the last sent value so that we don't
+        // accidentally pass it on to the delegate.
+        this.arg = undefined;
+      }
+
+      return ContinueSentinel;
+    }
+  };
+})(
+  // In sloppy mode, unbound `this` refers to the global object, fallback to
+  // Function constructor if we're in global strict mode. That is sadly a form
+  // of indirect eval which violates Content Security Policy.
+  (function() {
+    return this || (typeof self === "object" && self);
+  })() || Function("return this")()
+);
+
 
 /***/ })
 

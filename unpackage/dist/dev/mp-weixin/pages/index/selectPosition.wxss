@@ -10,7 +10,7 @@
           box-sizing: border-box;
   padding: 20rpx;
   width: 100vw;
-  height: 15vh;
+  height: 8vh;
 }
 .mp-search-box .select-item {
     position: relative;
@@ -30,7 +30,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   border-top: 1vh solid #f2f2f2;
-  height: 85vh;
+  height: 92vh;
 }
 .select-content .header {
     padding: 0 40rpx;

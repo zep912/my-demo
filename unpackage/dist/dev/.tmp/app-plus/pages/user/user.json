@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我的",
+  "bounce": "none",
+  "usingComponents": {
+    "uni-card": "/@dcloudio/uni-ui/lib/uni-card/uni-card"
+  }
+}

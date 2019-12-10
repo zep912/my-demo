@@ -189,7 +189,7 @@
 						let code = loginRes.code;
 						axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-							axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: nickName,
+							axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: 'nickName',
 								  "wxAppid": "wx35cb9f6acb94bd15",
 								  "wxOpenid": data.data.openId
 								}).then((res) => {

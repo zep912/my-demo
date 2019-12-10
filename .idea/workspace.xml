@@ -3,14 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3c7233d1-fab1-449a-8867-4b7d1fdecd08" name="Default Changelist" comment="分类及详情页面">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/selectPosition.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/selectPosition.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/product/list.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/product/list.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/product/product.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/product/product.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/iconfont.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/iconfont.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unpackage/dist/build/mp-weixin/pages/money/pay.js" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/build/mp-weixin/pages/money/pay.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/common/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/common/main.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/common/runtime.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/common/runtime.js.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/common/vendor.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/unpackage/dist/dev/.sourcemap/mp-weixin/common/vendor.js.map" afterDir="false" />
@@ -140,6 +133,16 @@
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/index/three.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/index/xptj.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/index/xsqg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/aboutus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/beuesed.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/couponPrice.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/footmark.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/missing-face.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/my-address.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/nocollet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/nocoupon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/toAddress.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/unpackage/dist/dev/mp-weixin/static/my/user-bg.png" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -155,11 +158,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/pages/index/index.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="173" column="21" selection-start-line="173" selection-start-column="21" selection-end-line="173" selection-end-column="21" />
+            <state relative-caret-position="-27">
+              <caret line="173" column="20" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="20" />
               <folding>
-                <element signature="e#4185#4220#0" expanded="true" />
-                <element signature="e#12381#14412#2" expanded="true" />
+                <element signature="e#4186#4221#0" expanded="true" />
+                <element signature="e#10823#12854#2" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -312,7 +315,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="1">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="822" />
@@ -401,11 +404,18 @@
       <option name="project" value="LOCAL" />
       <updated>1575907640014</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="登录和学校">
+      <created>1575985061198</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1575985061198</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24699000" />
+    <option name="totallyTimeSpent" value="25388000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="822" extended-state="1" />
@@ -449,7 +459,10 @@
     <MESSAGE value="分类及详情页面" />
     <MESSAGE value="index" />
     <MESSAGE value="分类及详情页面123" />
-    <option name="LAST_COMMIT_MESSAGE" value="分类及详情页面123" />
+    <MESSAGE value="登录等" />
+    <MESSAGE value="1233" />
+    <MESSAGE value="登录和学校" />
+    <option name="LAST_COMMIT_MESSAGE" value="登录和学校" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="editorHistoryManager">
@@ -574,11 +587,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/pages/index/index.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="173" column="21" selection-start-line="173" selection-start-column="21" selection-end-line="173" selection-end-column="21" />
+        <state relative-caret-position="-27">
+          <caret line="173" column="20" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="20" />
           <folding>
-            <element signature="e#4185#4220#0" expanded="true" />
-            <element signature="e#12381#14412#2" expanded="true" />
+            <element signature="e#4186#4221#0" expanded="true" />
+            <element signature="e#10823#12854#2" expanded="true" />
           </folding>
         </state>
       </provider>

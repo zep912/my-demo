@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "",
+  "usingComponents": {
+    "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
+    "van-radio": "/wxcomponents/vant/dist/radio/index",
+    "van-radio-group": "/wxcomponents/vant/dist/radio-group/index",
+    "van-popup": "/wxcomponents/vant/dist/popup/index",
+    "van-picker": "/wxcomponents/vant/dist/picker/index"
+  }
+}
