@@ -42,32 +42,40 @@
 		methods: {
 			login() {
 				var _this = this;
-				let obj = {
-					phone: _this.phone,
-					authCode: _this.authCode
-				};
-				axios.post('/sso/user/login',obj).then(res=>{
-					if(res.data.code=='200'){
-						var token = res.data.data.token;
-						uni.setStorageSync('gt',token);
-						uni.setStorageSync('setPhone',_this.phone);
-						uni.switchTab({
-							url:'../user/user?phone='+_this.phone,
-							success:(res)=> { 
-								 let page = getCurrentPages();  //跳转页面成功之后
-								 if (!page){
-									 return
-								 }else{
-									 page[page.length-1].data.loadData()
-									 // var beforePage = page[0].data;
-									 //  page.loadData(); //如果页面存在，则重新刷新页面
-								 };   
-							  }
-						});
+				if(_this.phone){
+					if(_this.authCode){
+						let obj = {
+							phone: _this.phone,
+							authCode: _this.authCode
+						};
+						axios.post('/sso/user/login',obj).then(res=>{
+							if(res.data.code=='200'){
+								var token = res.data.data.token;
+								uni.setStorageSync('gt',token);
+								uni.setStorageSync('setPhone',_this.phone);
+								uni.switchTab({
+									url:'../index/index',
+									success:(res)=> { 
+										 let page = getCurrentPages();  //跳转页面成功之后
+										 if (!page){
+											 return
+										 }else{
+											 page[page.length-1].data.getHomeList()
+											 // var beforePage = page[0].data;
+											 //  page.loadData(); //如果页面存在，则重新刷新页面
+										 };   
+									  }
+								});
+							}else{
+								this.$api.msg(res.data.message)
+							}
+						})
 					}else{
-						this.$api.msg(res.data.message)
+						_this.$api.msg('请输入验证码')
 					}
-				})
+				}else{
+					_this.$api.msg('请输入手机号码')
+				}
 		},
 		// 发送验证码
 		postCode() {
@@ -78,7 +86,6 @@
 				let obj = {
 					telephone: _this.phone
 				}
-				
 				axios.post('/sso/user/sendCode',obj).then(res=>{
 					console.log(res)
 					if(res.data.code=='200'){

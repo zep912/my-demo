@@ -10,9 +10,10 @@
 				<view class="info-box">
 					<text class="username" v-if='!authShow'>{{userInfo.nickName?userInfo.nickName:''}}</text>
 					<text class="info-mobile" v-if='!authShow'>{{userInfo.mobile}}</text>
-					<view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
+					<!-- <view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
-					</view>
+					</view> -->
+					<button class="weixin login-now authorize" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo" v-if='authShow'>点击授权登录</button>
 				</view>
 
 			</view>
@@ -23,10 +24,10 @@
 		<!-- 查看订单 -->
 		<view class="user-order">
 			<view class="list-cell b-b m-t" @click="navTo('/pages/order/order?state=0')" hover-class="cell-hover"
-			 :hover-stay-time="50">
+			 :hover-stay-time="50" style="display: flex;align-items: center;">
 				<text class="cell-tit">全部订单</text>
 				<text class="cell-tip" @click="lookOrder">查看全部订单</text>
-				<text class="cell-more yticon icon-you"></text>
+				<van-icon name="arrow" color='#909399'/>
 			</view>
 			<view class="cover-container">
 				<!-- 订单 -->
@@ -160,72 +161,71 @@
 		},
 		onLoad(option) {
 			this.loadData();
+			if (uni.getStorageSync('hasLogin')) {
+				this.authShow = false
+			} 
 		},
 		computed: {
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
-			// 授权用户信息
+			//第一授权获取用户信息===》按钮触发
 			wxGetUserInfo() {
-				let _this = this;
 				uni.getUserInfo({
 					provider: 'weixin',
-					success: function(infoRes) {
-						this.authShow = false
-						console.log(infoRes)
-						let nickName = infoRes.userInfo.nickName; //昵称
-						let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-						let mobile = infoRes.userInfo.mobile; //头像
-						_this.userInfo.nickname = nickName;
-						_this.userInfo.portrait = avatarUrl;
-						_this.userInfo.mobile = mobile ? mobile : '';
-						_this.userInfo.gender = infoRes.userInfo.gender;
-						// _this.userInfo = infoRes.userInfo;
-						_this.$store.commit('login', _this.userInfo)
-						try {
-							uni.setStorageSync('isCanUse', false); //记录是否第一次授权  false:表示不是第一次授权
-							_this.updateUserInfo();
-						} catch (e) {}
-					},
-					fail(res) {}
+					success: (infoRes) => {
+						this.login(infoRes.userInfo)
+					}
 				})
 			},
-			login() {
-				let _this = this;
+
+			//登录
+			login(userInfo) {
+				uni.showLoading({
+					title: '登录中...'
+				});
+				const {
+					city,
+					gender,
+					avatarUrl,
+					nickName,
+					phone
+				} = userInfo;
 				// 1.wx获取登录用户code
 				uni.login({
 					provider: 'weixin',
-					success: function(loginRes) {
+					success: (loginRes) => {
+						console.log(loginRes, 'loginRes');
 						let code = loginRes.code;
-						if (!_this.isCanUse) {
-							//非第一次授权获取用户信息
-							uni.getUserInfo({
-								provider: 'weixin',
-								success: function(infoRes) {
-									//获取用户信息后向调用信息更新方法
-									let nickName = infoRes.userInfo.nickName; //昵称
-									let avatarUrl = infoRes.userInfo.avatarUrl; //头像
-									_this.updateUserInfo(); //调用更新信息方法
+						axios.post('/sso/user/getOpenId', {
+							code
+						}).then(({
+							data
+						}) => {
+							//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+							axios.post('/sso/user/miniLogin', {
+								city,
+								gender,
+								icon: avatarUrl,
+								nickname: 'nickName',
+								"wxAppid": "wx35cb9f6acb94bd15",
+								"wxOpenid": data.data.openId
+							}).then((res) => {
+								const response = res.data;
+								console.log(response, 'response')
+								if (response.code == 200) {
+									this.authShow = false;
+									this.$store.commit('login', userInfo);
+									uni.setStorageSync('hasLogin', true);
+									//openId、或SessionKdy存储//隐藏loading
+									uni.setStorageSync('gt', response.data.token);
+									uni.hideLoading();
+									// this.close();
 								}
-							});
-						}
-						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-						// uni.request({
-						// 	url: '服务器地址',
-						// 	data: {
-						// 		code: code,
-						// 	},
-						// 	method: 'GET',
-						// 	header: {
-						// 		'content-type': 'application/json'
-						// 	},
-						// 	success: (res) => {
-						// 		//openId、或SessionKdy存储//隐藏loading
-						// 		uni.hideLoading();
-						// 	}
-						// })
+							})
+						})
 					}
-				})
+				});
 			},
 			// 账号管理-个人资料
 			accountManage() {
@@ -877,5 +877,10 @@
 		top: 38%;
 		text-align: center;
 		padding-left: 0;
+		display: flex;
+		justify-content: center;
+	}
+	.authorize:after{
+		border: 0;
 	}
 </style>
