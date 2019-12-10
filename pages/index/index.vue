@@ -3,13 +3,13 @@
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
 		<view class="mp-position-box" @click="navToPosition">
-			<uni-icons type="location-filled" color='#F7B62C' size="20"></uni-icons>
+			<uni-icons type="location-filled" color ='#F7B62C' size="20"></uni-icons>
 			<text class="position-text">华中农业大学</text>
-			<uni-icons type="arrowdown" color='#F7B62C' size="20"></uni-icons>
+			<uni-icons type="arrowdown" color ='#F7B62C' size="20"></uni-icons>
 		</view>
 		<view class="mp-search-box">
-			<input class="ser-input" type="text" value="输入关键字搜索" @click="navToSearch" />
-			<uni-icons type="chat" size="30" color='#ffffff99' @click="navToMessage"></uni-icons>
+			<input class="ser-input" type="text" value="输入关键字搜索" @click="navToSearch"/>
+			<uni-icons type="chat" size="30" color ='#ffffff99' @click="navToMessage"></uni-icons>
 		</view>
 		<!-- #endif -->
 		<!-- 头部轮播 -->
@@ -81,7 +81,7 @@
 				<image src="/static/index/ls4.jpg"></image>
 			</view>
 		</view> -->
-		
+
 		<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
@@ -101,7 +101,7 @@
 					</view>
 					<view class="goods-price">
 						<text>{{'¥'+item.originalPrice}}</text>
-						<uni-icons type="plus-filled" color='#F55641' size="30"></uni-icons>
+						<uni-icons type="plus-filled" color ='#F55641' size="30"></uni-icons>
 					</view>
 				</view>
 			</view>
@@ -308,8 +308,7 @@
 		.weixin {
 			margin-bottom: 40rpx;
 		}
-
-		.weixinX {
+		.weixinX{
 			position: absolute;
 			right: 5%;
 			top: 2%;
@@ -345,7 +344,6 @@
 			color: #F7B62C;
 		}
 	}
-
 	.mp-search-box {
 		position: absolute;
 		left: 0;
@@ -353,25 +351,22 @@
 		z-index: 1;
 		width: 100%;
 		padding: 0 20upx;
-
-		.ser-input {
-			flex: 1;
+		.ser-input{
+			flex:1;
 			height: 56upx;
 			line-height: 56upx;
 			font-size: 28upx;
-			color: $font-color-base;
+			color:$font-color-base;
 			border-radius: 20px;
 			margin-right: 80upx;
-			background: rgba(255, 255, 255, .6);
+			background: rgba(255,255,255,.6);
 			padding: 0 20upx;
 		}
-
 		uni-icons {
 			position: absolute;
 			top: 0;
 			right: 20upx;
 		}
-
 		// .ser-input {
 		// 	flex: 1;
 		// 	height: 56upx;
@@ -508,7 +503,6 @@
 		padding: 30upx 22upx;
 		background: #fff;
 		color: #454545;
-
 		.cate-item {
 			width: 20%;
 			display: flex;
@@ -840,7 +834,6 @@
 		color: $uni-color-primary;
 		line-height: 1;
 	}
-
 	.price-old {
 		font-size: $font-sm;
 		line-height: 1;
@@ -866,22 +859,19 @@
 	}
 
 	/* 好货推荐 */
-	.hot-goods {
+	.hot-goods{
 		margin-top: 28rpx;
-
-		.hot-title {
+		.hot-title{
 			width: 60%;
 			height: 40rpx;
 			margin: 0 auto;
 			text-align: center;
 			margin-bottom: 28rpx;
 			position: relative;
-
-			img {
+			img{
 				width: 100%;
 				height: 20upx;
 			}
-
 			.title {
 				position: absolute;
 				left: 50%;
@@ -890,64 +880,58 @@
 				width: 100vw;
 			}
 		}
-
-		.goodsList {
+		.goodsList{
 			width: 94%;
 			margin: 0 auto;
 			display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
 
-			.goodsList-list {
+			.goodsList-list{
 				width: 49%;
 				background: #fff;
 				margin-bottom: 20rpx;
 				border-radius: 20rpx;
 				box-sizing: border-box;
 				padding: 20rpx 20rpx 30rpx 20rpx;
-
-				img {
+				img{
 					width: 80%;
 					height: 240rpx;
 					margin: 0 auto;
 					display: block;
 				}
-
-				.goods-title {
-					font-size: 22rpx;
-					font-weight: 500;
-					color: rgba(69, 69, 69, 1);
+				.goods-title{
+					font-size:22rpx;
+					font-weight:500;
+					color:rgba(69,69,69,1);
 					margin-top: 20rpx;
 				}
-
-				.goods-subTitle {
-					font-size: 18rpx;
-					font-weight: 500;
-					color: rgba(169, 168, 168, 1);
+				.goods-subTitle{
+					font-size:18rpx;
+					font-weight:500;
+					color:rgba(169,168,168,1);
 					margin-top: 10rpx;
 				}
-
-				.goods-jifen {
-					width: 120rpx;
-					border: 1px solid rgba(245, 86, 65, 1);
-					border-radius: 14px;
+				.goods-jifen{
+					width:120rpx;
+					border:1px solid rgba(245,86,65,1);
+					border-radius:14px;
 					text-align: center;
-					font-size: 26rpx;
-					font-weight: 500;
-					color: rgba(245, 86, 65, 1);
-					line-height: 36rpx;
+					font-size:26rpx;
+					font-weight:500;
+					color:rgba(245,86,65,1);
+					line-height:36rpx;
 					margin-top: 16rpx;
 				}
-
-				.goods-price {
+				.goods-price{
 					width: 100%;
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
 					margin-top: 42rpx;
-					font-size: 20px;
-					font-weight: 500;
-					color: rgba(245, 86, 65, 1);
+					font-size:20px;
+					font-weight:500;
+					color:rgba(245,86,65,1);
 				}
 			}
 		}
