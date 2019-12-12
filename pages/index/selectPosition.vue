@@ -46,7 +46,7 @@
 <style lang="scss">
 .mp-search-box {
 	box-sizing: border-box;
-	padding: 20upx;
+	padding: 0 20upx;
 	width: 100vw;
 	// height: 15vh;
 	height: 8vh;

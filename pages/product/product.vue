@@ -80,17 +80,13 @@
 		<!-- 底部操作菜单 -->
 		<view class="page-bottom">
 			<navigator url="/pages/index/index" open-type="switchTab" class="p-b-btn">
-				<text class="yticon icon-xiatubiao--copy"></text>
-				<text>首页</text>
+				<text class="iconfont icon-kefu"></text>
+				<text>客服</text>
 			</navigator>
 			<navigator url="/pages/shopcar/shopcar" open-type="switchTab" class="p-b-btn">
-				<text class="yticon icon-gouwuche"></text>
+				<text class="iconfont icon-gouwuche"></text>
 				<text>购物车</text>
 			</navigator>
-			<view class="p-b-btn" :class="{active: favorite}" @click="toFavorite">
-				<text class="yticon icon-shoucang"></text>
-				<text>收藏</text>
-			</view>
 			
 			<view class="action-btn-group">
 				<button type="primary" class="action-btn no-border buy-now-btn" @click="buy">立即购买</button>
@@ -298,10 +294,6 @@
 			//分享
 			share(){
 				this.$refs.share.toggleMask();	
-			},
-			//收藏
-			toFavorite(){
-				this.favorite = !this.favorite;
 			},
 			buy(){
 				uni.navigateTo({
@@ -712,7 +704,7 @@
 			justify-content: center;
 			font-size: $font-sm;
 			color: $font-color-base;
-			width: 96upx;
+			width: 120upx;
 			height: 80upx;
 			.yticon{
 				font-size: 40upx;

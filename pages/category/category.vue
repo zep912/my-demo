@@ -33,24 +33,10 @@
 				tlist: []
 			}
 		},
-		onLoad(){
-			// this.loadData();
+		onShow() {
 			this.withChildren();
 		},
 		methods: {
-			async loadData(){
-				let list = await this.$api.json('cateList');
-				console.log(list);
-				list.forEach(item=>{
-					if(!item.pid){
-						this.flist.push(item);  //pid为父级id, 没有pid或者pid=0是一级分类
-					}else if(!item.picture){
-						this.slist.push(item); //没有图的是2级分类
-					}else{
-						this.tlist.push(item); //3级分类
-					}
-				}) 
-			},
 			//一级分类点击
 			tabtap(item){
 				if(!this.sizeCalcState){
@@ -71,6 +57,7 @@
 				console.log(scrollTop);
 				let tabs = this.slist.filter(item => item.top <= scrollTop).reverse();
 				if(tabs.length > 0){
+					console.log(this.currentId);
 					this.currentId = tabs[0].id;
 				}
 			},
@@ -91,18 +78,23 @@
 			},
 			navToList(sid, tid){
 				uni.navigateTo({
-					url: `/pages/product/list?fid=${this.currentId}&sid=${sid}&tid=${tid}`
+					url: `/pages/product/list?tid=${tid}`
 				})
 			},
 			withChildren() {
 				axios.post('/home/list/withChildren', {}).then(({data})=>{
 					// console.log(data);
 					if (data.code === 200) {
+						const categoryId = uni.getStorageSync('categoryId');
 						const dataList = data.data;
 						this.flist = dataList.map(({id, name}) => {
 							return {id, name}
 						});
 						this.currentId = this.flist && this.flist.length && this.flist[0].id;
+						console.log(categoryId);
+						if (categoryId) {
+							this.currentId = categoryId;
+						}
 						this.slist = dataList.reduce((res, item) => {
 							item.productTypeList.forEach(val => val.id = item.id);
 							res = res.concat(item.productTypeList);

@@ -3,7 +3,7 @@
 		<view class="mp-search-box">
 			<uni-search-bar :radius="10" placeholder="请输入商品名称"/>
 		</view>
-		<view class="history-goods">
+		<!-- <view class="history-goods">
 			<view class="title">历史搜索</view>
 			<view class="content-box">
 				<view v-for="item in historyGoods" :key='item'>
@@ -18,7 +18,7 @@
 					{{item}}
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="content">
 			<view class="navbar">
 				<view class="nav-item" :class="{current: filterIndex === 0}" @click="tabClick(0)">
@@ -38,27 +38,27 @@
 				<text class="cate-item iconfont icon-leimupinleifenleileibie"></text>
 			</view>
 			<view class="goods-list">
-				<view 
-					v-for="(item, index) in goodsList" :key="index"
-					class="goods-item"
-					@click="navToDetailPage(item)"
-				>
+				<view v-for="(item, index) in goodsList" :key="index"
+					class="goods-item" @click="navToDetailPage(item)">
 					<view class="image-wrapper">
-						<image :src="item.image" mode="aspectFill"></image>
+						<image :src="item.pic" mode="aspectFill"></image>
 					</view>
-					<text class="title clamp">{{item.title}}</text>
+					<text class="title clamp">{{item.name}}</text>
 					<view class="price-box">
 						<text class="price">{{item.price}}</text>
-						<text>已售 {{item.sales}}</text>
+						<text>已售 {{item.sale}}</text>
 					</view>
 				</view>
+				<view class="loadmore">
+					<uni-load-more :status="loadingType"></uni-load-more>
+				</view>
 			</view>
-			<uni-load-more :status="loadingType"></uni-load-more>
 		</view>
 	</view>
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import {uniSearchBar} from "@/components/uni-search-bar/uni-search-bar.vue";
 	export default {
@@ -69,9 +69,13 @@
 			return {
 				historyGoods: ['窝窝头', '大闸蟹', '红烧肉', '西班牙大龙虾', '热干面', '牛肉面', '炸酱面'],
 				cateMaskState: 0, //分类面板展开状态
-				loadingType: 'more', //加载更多状态
+				loadingType: 'nomore', //加载更多状态
 				filterIndex: 0, 
-				cateId: 0, //已选三级分类id
+				productRequest: {
+					productCategoryId: '',
+					pageSize: 10,
+					pageNum: 1,
+				}, //已选三级分类id
 				priceOrder: 0, //1 价格从低到高 2价格从高到低
 				cateList: [],
 				goodsList: []
@@ -82,9 +86,9 @@
 			// #ifdef H5
 			this.headerTop = document.getElementsByTagName('uni-page-head')[0].offsetHeight+'px';
 			// #endif
-			this.cateId = options.tid;
-			this.loadCateList(options.fid,options.sid);
-			this.loadData();
+			this.productRequest.productCategoryId = options.tid;
+			// if (options.tid)
+			this.loadData('refresh');
 		},
 		//下拉刷新
 		onPullDownRefresh(){
@@ -96,53 +100,32 @@
 		},
 		methods: {
 			//加载分类
-			async loadCateList(fid, sid){
-				let list = await this.$api.json('cateList');
-				let cateList = list.filter(item=>item.pid == fid);
-				
-				cateList.forEach(item=>{
-					let tempList = list.filter(val=>val.pid == item.id);
-					item.child = tempList;
-				})
-				this.cateList = cateList;
+			async search() {
+				return await axios.post('/product/search', this.productRequest);
 			},
 			//加载商品 ，带下拉刷新和上滑加载
 			async loadData(type='add', loading) {
 				//没有更多直接返回
-				if(type === 'add'){
+				if (type === 'add') {
 					if(this.loadingType === 'nomore'){
 						return;
 					}
 					this.loadingType = 'loading';
-				}else{
+				} else {
 					this.loadingType = 'more'
 				}
-				
-				let goodsList = await this.$api.json('goodsList');
-				if(type === 'refresh'){
+				const {data} = await this.search();
+				let goodsList = data.code === 200 ? data.data.list : [];
+				if (type === 'refresh') {
 					this.goodsList = [];
 				}
-				//筛选，测试数据直接前端筛选了
-				if(this.filterIndex === 1){
-					goodsList.sort((a,b)=>b.sales - a.sales)
-				}
-				if(this.filterIndex === 2){
-					goodsList.sort((a,b)=>{
-						if(this.priceOrder == 1){
-							return a.price - b.price;
-						}
-						return b.price - a.price;
-					})
-				}
-				
 				this.goodsList = this.goodsList.concat(goodsList);
-				
-				//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
-				this.loadingType  = this.goodsList.length > 20 ? 'nomore' : 'more';
+				//判断是否还有下一页，有是more  没有是nomore
+				this.loadingType  = this.goodsList.length >= data.data.total - data.data.pageNum ? 'nomore' : 'more';
 				if(type === 'refresh'){
-					if(loading == 1){
+					if (loading == 1) {
 						uni.hideLoading()
-					}else{
+					} else {
 						uni.stopPullDownRefresh();
 					}
 				}
@@ -153,33 +136,11 @@
 					return;
 				}
 				this.filterIndex = index;
-				if(index === 2){
+				if (index === 2) {
 					this.priceOrder = this.priceOrder === 1 ? 2: 1;
-				}else{
+				} else {
 					this.priceOrder = 0;
 				}
-				uni.pageScrollTo({
-					duration: 300,
-					scrollTop: 0
-				})
-				this.loadData('refresh', 1);
-				uni.showLoading({
-					title: '正在加载'
-				})
-			},
-			//显示分类面板
-			toggleCateMask(type){
-				let timer = type === 'show' ? 10 : 300;
-				let	state = type === 'show' ? 1 : 0;
-				this.cateMaskState = 2;
-				setTimeout(()=>{
-					this.cateMaskState = state;
-				}, timer)
-			},
-			//分类点击
-			changeCate(item){
-				this.cateId = item.id;
-				this.toggleCateMask();
 				uni.pageScrollTo({
 					duration: 300,
 					scrollTop: 0
@@ -308,6 +269,7 @@
 				background: #fff;
 				height: 87vh;
 				overflow-y: auto;
+				position: relative;
 				.goods-item{
 					display:flex;
 					flex-direction: column;
@@ -349,6 +311,9 @@
 						content: '￥';
 						font-size: 26upx;
 					}
+				}
+				.loadmore {
+					width: 100%; 
 				}
 			}
 		}

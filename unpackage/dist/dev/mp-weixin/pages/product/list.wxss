@@ -162,6 +162,7 @@
     background: #fff;
     height: 87vh;
     overflow-y: auto;
+    position: relative;
 }
 .container .content .goods-list .goods-item {
       display: -webkit-box;
@@ -220,5 +221,8 @@
 .container .content .goods-list .price:before {
         content: '\FFE5';
         font-size: 26rpx;
+}
+.container .content .goods-list .loadmore {
+      width: 100%;
 }
 

@@ -26,7 +26,7 @@
 .container .content .item .center {
       font-size: 24rpx;
       color: #787878;
-      height: 70rpx;
+      height: 90rpx;
 }
 .container .content .item .bottom {
       border-top: 2rpx solid #f2f2f2;

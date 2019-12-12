@@ -8,7 +8,7 @@
 .mp-search-box {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding: 20rpx;
+  padding: 0 20rpx;
   width: 100vw;
   height: 8vh;
 }

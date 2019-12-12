@@ -558,7 +558,7 @@ page {
             justify-content: center;
     font-size: 24rpx;
     color: #606266;
-    width: 96rpx;
+    width: 120rpx;
     height: 80rpx;
 }
 .page-bottom .p-b-btn .yticon {

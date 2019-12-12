@@ -25,34 +25,34 @@
 		</view>
 		<!-- 分类 -->
 		<view class="cate-section">
-			<view class="cate-item" v-for="(item, index) in productCategoryList" :key="index">
+			<view class="cate-item" v-for="(item, index) in productCategoryList" :key="index" @click="navToCate(item.id)">
 				<image :src="item.icon"></image>
 				<view>{{item.name}}</view>
 			</view>
 		</view>
 
 		<!-- 美味坚果，等你来尝 -->
-		<!-- <view class="hot-goods">
+		<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">美味坚果，等你来尝</view>
 			</view>
-			<view class="box-grid" @click="navToCate">
+			<view class="box-grid" @click="navToCate()">
 				<image src="/static/index/xxls1.jpg"></image>
 				<image src="/static/index/xxls2.jpg"></image>
 				<image src="/static/index/xxls3.jpg"></image>
 			</view>
-			<view class="box-100" @click="navToCate">
+			<view class="box-100" @click="navToCate()">
 				<image src="/static/index/xxls4.jpg"></image>
 			</view>
-		</view> -->
+		</view>
 		<!-- 精选美味，等你来吃 -->
-	<!-- 	<view class="hot-goods">
+		<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">爽口饮品，激情畅饮</view>
 			</view>
-			<view class="poster-content" @click="navToCate">
+			<view class="poster-content" @click="navToCate()">
 				<view class="content-item">
 					<image src="/static/index/yp1.jpg"></image>
 				</view>
@@ -61,26 +61,26 @@
 					<image class="img-50" src="/static/index/yp3.jpg"></image>
 				</view>
 			</view>
-		</view> -->
+		</view>
 		<!-- 花里胡哨的包包，等你来剁手 -->
-		<!-- <view class="hot-goods" @click="navToCate">
-			<view class="hot-title" @click="navToCate">
+		<view class="hot-goods">
+			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
 				<view class="title">花里胡哨的包包，等你来剁手</view>
 			</view>
-			<view class="poster-content" @click="navToCate">
+			<view class="poster-content" @click="navToCate()">
 				<view class="content-item">
-					<image src="/static/index/ls1.jpg"></image>
+					<image src="/static/index/xxls1.jpg"></image>
 				</view>
 				<view class="content-item">
-					<image class="img-50" src="/static/index/ls2.jpg"></image>
-					<image class="img-50" src="/static/index/ls3.jpg"></image>
+					<image class="img-50" src="/static/index/xxls2.jpg"></image>
+					<image class="img-50" src="/static/index/xxls3.jpg"></image>
 				</view>
 			</view>
 			<view class="box-grid box-100">
-				<image src="/static/index/ls4.jpg"></image>
+				<image src="/static/index/xxls4.jpg"></image>
 			</view>
-		</view> -->
+		</view>
 
 		<view class="hot-goods">
 			<view class="hot-title">
@@ -157,13 +157,15 @@
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		onLoad() {
-			this.getHomeList();
 			if (!uni.getStorageSync('hasLogin')) {
 				this.$refs.popup.open();
 			} else {
 				this.wxGetUserInfo();
 			}
 		},
+		onShow() {
+			this.getHomeList();
+		},		
 		methods: {
 			//第一授权获取用户信息===》按钮触发
 			wxGetUserInfo() {
@@ -211,7 +213,7 @@
 			},
 			// 手机号登录
 			toPhone() {
-				uni.navigateTo({
+				uni.redirectTo({
 					url: '/pages/public/login'
 				})
 			},
@@ -239,7 +241,7 @@
 			},
 			navToMessage() {
 				uni.navigateTo({
-					url: '/pages/message/orderWarn'
+					url: '/pages/message/center'
 				})
 			},
 			navToSearch() {
@@ -247,7 +249,8 @@
 					url: `/pages/index/search`
 				})
 			},
-			navToCate() {
+			navToCate(categoryId = '') {
+				uni.setStorageSync('categoryId', categoryId);
 				uni.switchTab({
 					url: `/pages/category/category`
 				})
@@ -650,7 +653,7 @@
 
 		.content-item {
 			width: 49%;
-			margin-right: 1%;
+			margin-right: 2%;
 
 			&:last-of-type {
 				margin-right: 0;

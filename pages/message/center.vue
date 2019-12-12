@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="content-item" v-for="item in messageList" :key="item.type">
+		<view class="content-item" v-for="item in messageList" :key="item.type" @click="goto(item.type)">
 			<view class="left iconfont icon-youhui1" v-if="item.type === 1"></view>
 			<view class="left iconfont icon-kefu" v-else-if="item.type === 2"></view>
 			<view class="left iconfont icon-youhui" v-else-if="item.type === 3"></view>
@@ -26,6 +26,19 @@
 					{type: 4, title: '订单状态提醒', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
 					{type: 0, title: '系统消息', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
 				]
+			}
+		},
+		methods: {
+			goto(type) {
+				if (type === 3) {
+					uni.navigateTo({
+						url: '/pages/message/couponInfo'
+					})
+				} else if (type === 4) {
+					uni.navigateTo({
+						url: '/pages/message/orderWarn'
+					})
+				}
 			}
 		}
 	}

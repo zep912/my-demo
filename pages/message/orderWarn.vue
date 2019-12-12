@@ -45,7 +45,7 @@
 			.center {
 				font-size: 24upx;
 				color: #787878;
-				height: 70upx;
+				height: 90upx;
 			}
 			.bottom {
 				border-top: 2upx solid #f2f2f2;
