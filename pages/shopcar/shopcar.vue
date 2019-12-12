@@ -134,14 +134,18 @@
 		onLoad(option) {
 			this.getShopCar();
 		},
+		onShow() {
+			this.getShopCar();
+		},
 		methods: {
 			// 结算
 			payGoods(){
+				console.log(this.deleIds)//数组
 				if(this.allNum==0){
 					this.$api.msg('请选择商品')
 				}else{
 					uni.navigateTo({
-						url:'postOrder'
+						url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
 					})
 				}
 				
@@ -195,6 +199,7 @@
 			},
 			// 最终的全选
 			allSlect(e) {
+				// 全选，加入所有商品的ID
 				this.checkeds = e.detail;
 				if (this.checkeds) { //全部选择
 					this.total = 0;
@@ -205,12 +210,17 @@
 						this.total += totalPrices;
 					})
 					this.allNum = this.list.length;
+					
+					this.list.forEach((el, index) => {
+						this.deleIds.push(el.id)
+					})
 				} else { //全不选中
 					this.total = 0;
 					this.list.forEach((el, index) => {
 						el.deleteStatus = 0;
 					});
 					this.allNum = 0;
+					this.deleIds = []
 				}
 
 			},
@@ -238,6 +248,13 @@
 			},
 			// 单个商品的选择
 			singleOnChange(status, index, id) {
+				this.list.forEach(el=>{
+					if(el.deleteStatus==1){
+						this.checkeds = false
+					}else{
+						this.checkeds = true
+					}
+				})
 				// 首选判断是否处于删除状态
 				if (this.deleShow) { //表示删除状态
 					if (status == 1) {
@@ -259,7 +276,8 @@
 						let price = this.list[index].price * this.list[index].quantity;
 						this.total -= price;
 						this.allNum--;
-
+						// this.deleIds.push(id)
+						this.deleIds.splice(this.deleIds.findIndex(item=>item==index),1)
 					} else {
 						this.list[index].deleteStatus = 1;
 						let price = this.list[index].price * this.list[index].quantity;

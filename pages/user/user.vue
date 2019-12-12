@@ -46,7 +46,7 @@
 						<text>待评价</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/aftersale?state=5')" hover-class="common-hover"
-					 :hover-stay-time="50">
+					 :hover-stay-time="50">	
 						<text class="iconfont icon-huabancopy" style="color: #F7B52C;font-size: 28px;"></text>
 						<text>退款/售后</text>
 					</view>

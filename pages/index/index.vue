@@ -187,6 +187,7 @@
 					success: (loginRes) => {
 						console.log(loginRes, 'loginRes');
 						let code = loginRes.code;
+						uni.setStorageSync('code', code);
 						axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
 							axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: 'nickName',

@@ -135,161 +135,175 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      form: {
-        collect: [{
-          time: '2019-04-06 11:37',
-          shopName: '麦田圈官网旗舰店',
-          state: 5,
-
-          goodsList: [{
-            title: '香辣牛肉干',
-            price: 88.88,
-            image: '/static/goods.png',
-            number: 1,
-            attr: '规格 10*200g' }] }],
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
-        goodsObj: {
-          remarks: '香辣味的',
-          allPay: '120',
-          jifen: '100',
-          preferential: '20.00',
-          total: '880' },
-
-        orderMsg: {
-          number: '13245679851354664',
-          num: '3212313213213213132',
-          creatTime: '2019-11-05 11:12:12',
-          payTime: '2019-11-05 11:12:12',
-          payWay: '微信支付' } },
 
 
-      order: {
-        status: '',
-        img: '',
-        wuliu: '',
-        pay: '',
-        statusMsg: '',
-        color: '' },
-
-      statuss: '',
-      show: false,
-      marginBottom: '',
-      checked: true,
-      orderList: {
-        name: '',
-        phoneNumber: '',
-        address: '' } };
 
 
-  },
-  onLoad: function onLoad(option) {
-    if (uni.getStorageSync('addressMsg')) {//从地址跳转回来
-      var orderAddress = JSON.parse(uni.getStorageSync('addressMsg'));
-      // 地址更新
-      this.orderList = {
-        name: orderAddress.name,
-        phoneNumber: orderAddress.phoneNumber,
-        address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };
 
-    }
-  },
-  methods: {
-    // 修改地址
-    toAddress: function toAddress() {
-      uni.navigateTo({
-        url: '../set/address?postOrder=1' });
 
-    },
-    //使用积分
-    swithChange: function swithChange(_ref) {var detail = _ref.detail;
-      this.checked = detail;
-    },
-    // 立即支付
-    payBtn: function payBtn() {
-      uni.navigateTo({
-        url: 'paySuccess' });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5 }] }, order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', checked: true, orderList: { name: '', phoneNumber: '', address: '' }, ids: [], orderItemList: [], totalCount: '' };}, onLoad: function onLoad(option) {console.log(option);this.ids = JSON.parse(option.deleIds);if (uni.getStorageSync('addressMsg')) {//从地址跳转回来
+      var orderAddress = JSON.parse(uni.getStorageSync('addressMsg')); // 地址更新
+      this.orderList = { name: orderAddress.name, phoneNumber: orderAddress.phoneNumber, address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };}this.getOrder();}, methods: { // 数据初始化
+    getOrder: function getOrder() {var _this = this;var obj = { cartItemIds: this.ids };_uniAxios.default.post('/order/generateOrder', obj).then(function (res) {console.log(res);_this.orderList = res.data.data.order;_this.orderItemList = res.data.data.orderItemList;});}, // 修改地址
+    toAddress: function toAddress() {uni.navigateTo({ url: '../set/address?postOrder=1' });}, //使用积分
+    swithChange: function swithChange(_ref) {var detail = _ref.detail; // 计算实付金额
+      this.checked = detail;if (this.checked) {//true，表示抵扣
+        this.totalCount = this.orderList.totalAmount - 1 - this.orderList.preferential;} else {}}, // 立即支付
+    payBtn: function payBtn() {var code = uni.getStorageSync('code');var obj = { code: code, //code
+        orderSn: this.orderList.orderSn, //订单编号orderSn
+        payType: 0, //支付类型
+        rechargeMoney: 0.1, //支付金额
+        userId: 16 //用户id
+      };_uniAxios.default.post('/pay/payOrder', obj).then(function (res) {console.log(res);}); // uni.navigateTo({
+      // 	url:'paySuccess'
+      // })
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

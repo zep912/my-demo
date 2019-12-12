@@ -202,6 +202,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 413));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 420));};var _default =
 {
@@ -259,7 +260,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                                      * 替换onLoad下代码即可
                                      */
     this.tabCurrentIndex = +options.state;
-    this.loadData('tabChange', 0);
+    this.loadData('tabChange', '');
     if (options.state == 0) {
       this.loadData();
     }
@@ -271,7 +272,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       //这里是将订单挂载到tab列表下
       var index = this.tabCurrentIndex;
       var navItem = this.navList[index];
-      var state = navItem.status;
+      var state = navItem.status; //每个状态的值
       if (source === 'tabChange' && navItem.loaded === true) {
         //tab切换只有第一次需要加载数据
         return;
@@ -296,19 +297,18 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           _this.orderList = result.filter(function (item) {
             //添加不同状态下订单的表现形式
             item = Object.assign(item, _this.orderStateExp(item.status));
-            //演示数据所以自己进行状态筛选
+            // //演示数据所以自己进行状态筛选
             if (state === 0) {
               //0为全部订单
               return item;
             }
-            return item.status === status;
+            return item.status === state;
           });
 
           _this.orderList.forEach(function (item) {
             navItem.orderList.push(item);
           });
           _this.$set(navItem, 'loaded', true);
-          console.log(_this.navList, 77);
         }
       });
       // let orderList = Json.orderList.filter(item => {
@@ -335,7 +335,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     //swiper 切换
     changeTab: function changeTab(e) {
       this.tabCurrentIndex = e.target.current;
-      console.log(this.tabCurrentIndex, 777);
+
       if (this.tabCurrentIndex == 0 || this.tabCurrentIndex == 1) {
         this.loadData('tabChange', 0);
       } else {

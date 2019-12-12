@@ -376,15 +376,20 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 0, goodsList: [{ title: '香辣牛肉干', price: 88.88, image: '/static/goods.png', number: 1, attr: '规格 10*200g' }] }], goodsObj: { remarks: '香辣味的', allPay: '120', jifen: '100', preferential: '20.00', total: '880' }, orderMsg: { number: '13245679851354664', num: '3212313213213213132', creatTime: '2019-11-05 11:12:12', payTime: '2019-11-05 11:12:12', payWay: '微信支付' } }, img: ['icon-daifahuo1', 'icon-daifukuan1', 'icon-daishouhuo1', 'icon-chenggong', 'icon-dingdanguanbi', 'icon-dingdanwancheng'], order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', steps: [{ text: '步骤一', desc: '描述信息' }, { text: '步骤二', desc: '描述信息' }, { text: '步骤三', desc: '描述信息' }, { text: '步骤四', desc: '描述信息' }], id: '' };}, onLoad: function onLoad(option) {console.log(option);this.statuss = option.status;this.id = option.id; // this.getOrder()
-  }, methods: { // 获取订单详情
-    getOrder: function getOrder() {var _this = this;_uniAxios.default.post('/order/getDetailByOrderId', { id: this.id }).then(function (res) {if (res.data.code == '200') {_this.order = res.data.data;if (_this.order.status == 0) {// 待支付
+var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 0, goodsList: [{ title: '香辣牛肉干', price: 88.88, image: '/static/goods.png', number: 1, attr: '规格 10*200g' }] }], goodsObj: { remarks: '香辣味的', allPay: '120', jifen: '100', preferential: '20.00', total: '880' }, orderMsg: { number: '13245679851354664', num: '3212313213213213132', creatTime: '2019-11-05 11:12:12', payTime: '2019-11-05 11:12:12', payWay: '微信支付' } }, img: ['icon-daifahuo', 'icon-daifukuan1', 'icon-daishouhuo1', 'icon-chenggong', 'icon-dingdanguanbi', 'icon-dingdanwancheng'], order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', steps: [{ text: '步骤一', desc: '描述信息' }, { text: '步骤二', desc: '描述信息' }, { text: '步骤三', desc: '描述信息' }, { text: '步骤四', desc: '描述信息' }], id: '' };}, onLoad: function onLoad(option) {console.log(option);this.statuss = option.status;this.id = option.id;this.getOrder();}, methods: { // 获取订单详情
+    getOrder: function getOrder() {var _this = this;var obj = { cartItemIds: [this.id] };_uniAxios.default.post('/order/getDetailByOrderId', { id: this.id }).then(function (res) {if (res.data.code == '200') {_this.order = res.data.data;console.log(_this.order);if (_this.order.status == 0) {// 待支付
             _this.order.statusMsg = '';_this.order.wuliu = '取消订单';_this.order.img = _this.img[1];_this.order.pay = '立即支付';_this.order.color = '';} else if (_this.order.status == 1) {//待发货	
             _this.show = false;_this.order.statusMsg = '待发货';_this.order.wuliu = '';_this.order.img = _this.img[0];_this.order.pay = '';_this.order.color = '#F7B62C';} else if (_this.order.status == 2) {//待收货
             _this.show = true;_this.order.statusMsg = '待收货';_this.order.wuliu = '查看物流';_this.order.img = _this.img[2];_this.order.pay = '确认收货';_this.order.color = '#515151';} else if (_this.order.status == 6) {//交易成功
-            _this.show = true;_this.order.statusMsg = '交易成功';_this.order.wuliu = '删除订单';_this.order.img = _this.img[3];_this.order.pay = '去评价';_this.order.color = '#01B300';} else if (_this.order.status == 4) {// 交易关闭
-            _this.show = true;_this.order.wuliu = '删除订单';_this.order.img = _this.img[4];} else if (_this.order.status == 3) {// 已完成
-            _this.show = true;_this.order.statusMsg = '已完成';
+            _this.show = true;_this.order.statusMsg = '交易成功';_this.order.wuliu = '删除订单';_this.order.img = _this.img[3];_this.order.pay = '去评价';_this.order.color = '#01B300';} else if (_this.order.status == 4) {
+            // 交易关闭
+            _this.show = true;
+            _this.order.wuliu = '删除订单';
+            _this.order.img = _this.img[4];
+          } else if (_this.order.status == 3) {
+            // 已完成
+            _this.show = true;
+            _this.order.statusMsg = '已完成';
             _this.order.wuliu = '删除订单';
             _this.order.img = _this.img[5];
             _this.order.pay = '再次购买';

@@ -279,14 +279,18 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
   onLoad: function onLoad(option) {
     this.getShopCar();
   },
+  onShow: function onShow() {
+    this.getShopCar();
+  },
   methods: {
     // 结算
     payGoods: function payGoods() {
+      console.log(this.deleIds); //数组
       if (this.allNum == 0) {
         this.$api.msg('请选择商品');
       } else {
         uni.navigateTo({
-          url: 'postOrder' });
+          url: 'postOrder?deleIds=' + JSON.stringify(this.deleIds) });
 
       }
 
@@ -340,6 +344,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 最终的全选
     allSlect: function allSlect(e) {var _this2 = this;
+      // 全选，加入所有商品的ID
       this.checkeds = e.detail;
       if (this.checkeds) {//全部选择
         this.total = 0;
@@ -350,12 +355,17 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           _this2.total += totalPrices;
         });
         this.allNum = this.list.length;
+
+        this.list.forEach(function (el, index) {
+          _this2.deleIds.push(el.id);
+        });
       } else {//全不选中
         this.total = 0;
         this.list.forEach(function (el, index) {
           el.deleteStatus = 0;
         });
         this.allNum = 0;
+        this.deleIds = [];
       }
 
     },
@@ -383,6 +393,13 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 单个商品的选择
     singleOnChange: function singleOnChange(status, index, id) {var _this4 = this;
+      this.list.forEach(function (el) {
+        if (el.deleteStatus == 1) {
+          _this4.checkeds = false;
+        } else {
+          _this4.checkeds = true;
+        }
+      });
       // 首选判断是否处于删除状态
       if (this.deleShow) {//表示删除状态
         if (status == 1) {
@@ -404,7 +421,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           var price = this.list[index].price * this.list[index].quantity;
           this.total -= price;
           this.allNum--;
-
+          // this.deleIds.push(id)
+          this.deleIds.splice(this.deleIds.findIndex(function (item) {return item == index;}), 1);
         } else {
           this.list[index].deleteStatus = 1;
           var _price = this.list[index].price * this.list[index].quantity;

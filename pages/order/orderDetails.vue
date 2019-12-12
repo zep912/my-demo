@@ -2,8 +2,8 @@
 	<view class="order-details">
 		<!-- 订单状态 -->
 		<view class="order-state">
-			<text class="toBeShipped" v-if='order.status!=1&&order.status!=9&&order.status!=4' :style="{color:order.color}">{{order.statusMsg}}</text>
-			<text v-if='order.status==1' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
+			<text class="toBeShipped" v-if='order.status!=0&&order.status!=9&&order.status!=4' :style="{color:order.color}">{{order.statusMsg}}</text>
+			<text v-if='order.status==0' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
 			<text v-if='order.status==4' class="payClose"><text>交易关闭</text><text>订单取消</text></text>
 			<!-- <img :src="order.img" alt=""> -->
 			<text class="iconfont" :class="order.img" style="font-size: 32px;"></text>
@@ -150,7 +150,7 @@
 					}
 				},
 				img:[
-					'icon-daifahuo1',
+					'icon-daifahuo',
 					'icon-daifukuan1',
 					'icon-daishouhuo1',
 					'icon-chenggong',
@@ -194,14 +194,19 @@
 			this.statuss = option.status;
 			this.id = option.id;
 			
-			// this.getOrder()
+			this.getOrder()
 		},
 		methods: {
 			// 获取订单详情
 			getOrder(){
+				
+				let obj = {
+					cartItemIds :[this.id]
+				}
 				axios.post('/order/getDetailByOrderId',{id:this.id}).then(res=>{
 					if(res.data.code=='200'){
 						this.order = res.data.data;
+						console.log(this.order)
 						if(this.order.status==0){
 							// 待支付
 							this.order.statusMsg = '';

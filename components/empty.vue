@@ -3,7 +3,7 @@
 		<view class="noCollect">
 			<img :src="src" alt="">
 			<view class="noCollect-word">{{msg}}</view>
-			<button type="primary">去逛逛</button>
+			<button type="primary" @click="btn">去逛逛</button>
 		</view>	
 	</view>
 	
@@ -27,7 +27,11 @@
 			}
 		},
 		methods:{
-			
+			btn(){
+				uni.navigateTo({
+					url:'../pages/index/index'
+				})
+			}
 		}
 	}
 </script>

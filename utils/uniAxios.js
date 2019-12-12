@@ -1,6 +1,6 @@
 import axios from './../dist/uni-axios.min.js';
 
-axios.defaults.baseURL = 'http://39.98.122.62:8085';
+axios.defaults.baseURL = 'https://mini.cropcircle.com.cn';
 axios.interceptors.first.use((config) => {
 	const token = uni.getStorageSync('gt');
 	// console.log(token, 'Ftoken', config);

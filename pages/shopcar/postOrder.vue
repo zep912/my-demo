@@ -4,30 +4,30 @@
 		<view class="order-address b-b i-top" @click="toAddress">
 			<img src="../../static/dizhi.png" />
 			<view class="order-ad-user">
-				<text class="phone"><text>{{orderList.name}}</text><text>{{orderList.phoneNumber}}</text></text>
-				<text class="address">{{orderList.address}}</text>
+				<text class="phone"><text>{{orderList.receiverName}}</text><text>{{orderList.receiverPhone}}</text></text>
+				<text class="address">{{orderList.receiverProvince+orderList.receiverCity+orderList.receiverRegion+orderList.receiverDetailAddress}}</text>
 			</view>
 			<text class="cell-more yticon icon-you"></text>	
 		</view>
 		<!-- 商品信息 -->
 		<view class="order-goods">
-			<view v-for="(item,index) in form.collect" :key="index" class="order-item">
+			<view class="order-item">
 				<view class="i-top b-b">
 					<img src="../../static/shop.png" alt="" class='shopLogo'>
-					<text class="time">{{item.shopName}}</text>
-					<text class="cell-more yticon icon-you"></text>
+					<text class="time">麦田圈官方旗舰店</text>
+					<!-- <text class="cell-more yticon icon-you"></text> -->
 				</view>
 
-				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
-					<image class="goods-img" :src="goodsItem.image" mode="aspectFill"></image>
+				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in orderItemList" :key="goodsIndex">
+					<image class="goods-img" :src="goodsItem.productPic" mode="aspectFill"></image>
 
 					<view class="right">
-						<text class="title ellipsis">{{goodsItem.title}}</text>
+						<text class="title ellipsis">{{goodsItem.productName}}</text>
 						<text class="attr-box">{{goodsItem.attr}}</text>
-						<text class="price">{{'￥'+goodsItem.price}}</text>
+						<text class="price">{{'￥'+goodsItem.productPrice}}</text>
 					</view>
 					<view class="goods-right">
-						<text class="number">X{{goodsItem.number}}</text>
+						<text class="number">X{{goodsItem.productQuantity}}</text>
 					</view>
 				</view>
 			</view>
@@ -37,7 +37,7 @@
 			<ul>
 				<li>
 					<text>订单备注</text>
-					<text>{{form.goodsObj.remarks}}</text>
+					<text>{{orderList.nots}}</text>
 				</li>
 				<li>
 					<text>预计送达时间</text>
@@ -45,7 +45,7 @@
 				</li>
 				<li>
 					<text>商品总价</text>
-					<text class="order-list-bold">{{'￥'+form.goodsObj.allPay}}</text>
+					<text class="order-list-bold">{{'￥'+orderList.totalAmount}}</text>
 				</li>
 				<li>
 					<text>抵扣积分<text style="font-size: 24rpx;color: #C9C9C9;margin-left: 30rpx;">使用100积分抵扣1元钱</text></text>
@@ -54,11 +54,11 @@
 				</li>
 				<li>
 					<text>商品优惠</text>
-					<text class="order-list-bold">{{'-￥'+form.goodsObj.preferential}}</text>
+					<text class="order-list-bold">{{orderList.preferential?'-￥'+orderList.preferential:0}}</text>
 				</li>
 				<li>
 					<text>实付合计</text>
-					<text class="order-list-bold">{{'￥'+form.goodsObj.total}}</text>
+					<text class="order-list-bold">{{'￥'+totalCount}}</text>
 				</li>
 			</ul>
 		</view>
@@ -66,7 +66,7 @@
 		<view class="foot">
 			<view class="foot-word">
 				<text class='foot-heji'>合计:</text>
-				<text class='foot-price'>￥998.90</text>
+				<text class='foot-price'>{{'￥'+orderList.totalAmount}}</text>
 				<text class='foot-youhui'>已优惠: <text>￥998.90</text></text>
 			</view>
 			<button class="footBtn" @click="payBtn">立即支付</button>
@@ -75,6 +75,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
@@ -83,29 +84,7 @@
 						time: '2019-04-06 11:37',
 						shopName: '麦田圈官网旗舰店',
 						state: 5,
-
-						goodsList: [{
-							title: '香辣牛肉干',
-							price: 88.88,
-							image: '/static/goods.png',
-							number: 1,
-							attr: '规格 10*200g'
-						}]
 					}],
-					goodsObj: {
-						remarks: '香辣味的',
-						allPay: '120',
-						jifen: '100',
-						preferential: '20.00',
-						total: '880'
-					},
-					orderMsg:{
-						number:'13245679851354664',
-						num:'3212313213213213132',
-						creatTime:'2019-11-05 11:12:12',
-						payTime:'2019-11-05 11:12:12',
-						payWay:'微信支付'
-					}
 				},
 				order:{
 					status:'',
@@ -123,10 +102,15 @@
 					name:'',
 					phoneNumber:'',
 					address:''
-				}
+				},
+				ids:[],
+				orderItemList:[],
+				totalCount:''
 			}
 		},
 		onLoad(option){
+			console.log(option);
+			this.ids = JSON.parse(option.deleIds)
 			if(uni.getStorageSync('addressMsg')){//从地址跳转回来
 				let orderAddress = JSON.parse(uni.getStorageSync('addressMsg'));
 				// 地址更新
@@ -136,8 +120,21 @@
 					address:orderAddress.province+orderAddress.city+orderAddress.region+orderAddress.detailAddress,
 				}
 			}
+			
+			this.getOrder()
 		},	
 		methods: {
+			// 数据初始化
+			getOrder(){
+				let obj = {
+					cartItemIds:this.ids
+				}
+				axios.post('/order/generateOrder',obj).then(res=>{
+					console.log(res)
+					this.orderList = res.data.data.order;
+					this.orderItemList = res.data.data.orderItemList;
+				})
+			},
 			// 修改地址
 			toAddress(){
 				uni.navigateTo({
@@ -146,13 +143,30 @@
 			},
 			//使用积分
 			swithChange({detail}){
-				this.checked = detail
+				// 计算实付金额
+				this.checked = detail;
+				if(this.checked){//true，表示抵扣
+					this.totalCount = this.orderList.totalAmount-1-this.orderList.preferential
+				}else{
+					
+				}
 			},
 			// 立即支付
 			payBtn(){
-				uni.navigateTo({
-					url:'paySuccess'
+				let code = uni.getStorageSync('code')
+				let obj = {
+					code: code,//code
+				    orderSn: this.orderList.orderSn,//订单编号orderSn
+				    payType: 0,//支付类型
+					rechargeMoney: 0.1,//支付金额
+					userId: 16//用户id
+				}
+				axios.post('/pay/payOrder',obj).then(res=>{
+					console.log(res)
 				})
+				// uni.navigateTo({
+				// 	url:'paySuccess'
+				// })
 			}
 		}
 	}

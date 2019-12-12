@@ -321,6 +321,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         success: function success(loginRes) {
           console.log(loginRes, 'loginRes');
           var code = loginRes.code;
+          uni.setStorageSync('code', code);
           _uniAxios.default.post('/sso/user/getOpenId', { code: code }).then(function (_ref) {var data = _ref.data;
             //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
             _uniAxios.default.post('/sso/user/miniLogin', { city: city, gender: gender, icon: avatarUrl, nickname: 'nickName',

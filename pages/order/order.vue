@@ -42,11 +42,12 @@
 								<text class="price">{{item.payAmount}}</text>
 							</view>
 							<view class="action-box-buttom">
-								<button class="action-btn" @click="evaluate(item)" v-show='item.state==3'>评价</button>
-								<button class="action-btn" @click="againBuy(item)" v-show='item.state==3'>再次购买</button>
-								<button class="action-btn" @click="cancelOrder(item)" v-show='item.state==1'>取消订单</button>
-								<button class="action-btn recom" v-show='item.state==1'>立即支付</button>
-								<button class="action-btn recom" v-show='item.state==2' @click="logisticsTap">查看物流</button>
+								<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
+								<button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button>
+								<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
+								<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
+								<button class="action-btn recom" v-show='item.status==0'>立即支付</button>
+								<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap">查看物流</button>
 							</view>
 						</view>
 					</view>
@@ -118,7 +119,7 @@
 			 * 替换onLoad下代码即可
 			 */
 			this.tabCurrentIndex = +options.state;
-			this.loadData('tabChange',0);
+			this.loadData('tabChange','');
 			if (options.state == 0) {
 				this.loadData()
 			}
@@ -130,7 +131,7 @@
 				//这里是将订单挂载到tab列表下
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
-				let state = navItem.status;
+				let state = navItem.status;//每个状态的值
 				if (source === 'tabChange' && navItem.loaded === true) {
 					//tab切换只有第一次需要加载数据
 					return;
@@ -155,19 +156,18 @@
 						this.orderList = result.filter(item => {
 							//添加不同状态下订单的表现形式
 							item = Object.assign(item, this.orderStateExp(item.status));
-							//演示数据所以自己进行状态筛选
+							// //演示数据所以自己进行状态筛选
 							if (state === 0) {
 								//0为全部订单
 								return item;
 							}
-							return item.status === status
+							return item.status === state
 						});
 						
 						this.orderList.forEach(item => {
 							navItem.orderList.push(item);
 						})
 						this.$set(navItem, 'loaded', true);
-						console.log(this.navList,77)
 					}
 				})
 				// let orderList = Json.orderList.filter(item => {
@@ -194,7 +194,7 @@
 			//swiper 切换
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
-				console.log(this.tabCurrentIndex,777)
+				
 				if(this.tabCurrentIndex==0||this.tabCurrentIndex==1){
 					this.loadData('tabChange',0);
 				}else{
