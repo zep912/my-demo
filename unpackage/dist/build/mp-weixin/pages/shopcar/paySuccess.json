@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "购物车",
-  "usingComponents": {
-    "van-switch": "/wxcomponents/vant/dist/switch/index"
-  }
-}

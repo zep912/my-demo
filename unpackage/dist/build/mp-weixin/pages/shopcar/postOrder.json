@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "提交订单",
-  "usingComponents": {
-    "van-switch": "/wxcomponents/vant/dist/switch/index"
-  }
-}

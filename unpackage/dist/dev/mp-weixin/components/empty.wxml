@@ -1,1 +1,0 @@
-<view class="empty"><view class="noCollect"><image src="{{src}}" alt class="_img"></image><view class="noCollect-word">{{msg}}</view><button type="primary" data-event-opts="{{[['tap',[['btn',['$event']]]]]}}" bindtap="__e">去逛逛</button></view></view>

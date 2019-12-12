@@ -7,7 +7,7 @@
 				<text class="phone"><text>{{orderList.receiverName}}</text><text>{{orderList.receiverPhone}}</text></text>
 				<text class="address">{{orderList.receiverProvince+orderList.receiverCity+orderList.receiverRegion+orderList.receiverDetailAddress}}</text>
 			</view>
-			<text class="cell-more yticon icon-you"></text>	
+			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<!-- 商品信息 -->
 		<view class="order-goods">
@@ -49,12 +49,11 @@
 				</li>
 				<li>
 					<text>抵扣积分<text style="font-size: 24rpx;color: #C9C9C9;margin-left: 30rpx;">使用100积分抵扣1元钱</text></text>
-					<van-switch :checked="checked" @change="swithChange" active-color="#07c160"
-  inactive-color="#f7572c" />
+					<van-switch :checked="checked" @change="swithChange" active-color="#07c160" inactive-color="#f7572c" />
 				</li>
 				<li>
 					<text>商品优惠</text>
-					<text class="order-list-bold">{{orderList.preferential?'-￥'+orderList.preferential:0}}</text>
+					<text class="order-list-bold">{{orderList.preferential?'-￥'+orderList.preferential:'￥'+0}}</text>
 				</li>
 				<li>
 					<text>实付合计</text>
@@ -66,7 +65,7 @@
 		<view class="foot">
 			<view class="foot-word">
 				<text class='foot-heji'>合计:</text>
-				<text class='foot-price'>{{'￥'+orderList.totalAmount}}</text>
+				<text class='foot-price'>{{'￥'+totalCount}}</text>
 				<text class='foot-youhui'>已优惠: <text>￥998.90</text></text>
 			</view>
 			<button class="footBtn" @click="payBtn">立即支付</button>
@@ -86,108 +85,129 @@
 						state: 5,
 					}],
 				},
-				order:{
-					status:'',
-					img:'',
-					wuliu:'',
-					pay:'',
-					statusMsg:'',
-					color:''
+				order: {
+					status: '',
+					img: '',
+					wuliu: '',
+					pay: '',
+					statusMsg: '',
+					color: ''
 				},
-				statuss:'',
-				show:false,
-				marginBottom:'',
-				checked:true,
-				orderList:{
-					name:'',
-					phoneNumber:'',
-					address:''
+				statuss: '',
+				show: false,
+				marginBottom: '',
+				checked: true,
+				orderList: {
+					name: '',
+					phoneNumber: '',
+					address: ''
 				},
-				ids:[],
-				orderItemList:[],
-				totalCount:''
+				ids: [],
+				orderItemList: [],
+				totalCount: ''
 			}
 		},
-		onLoad(option){
-			console.log(option);
+		onLoad(option) {
 			this.ids = JSON.parse(option.deleIds)
-			if(uni.getStorageSync('addressMsg')){//从地址跳转回来
+			if (uni.getStorageSync('addressMsg')) { //从地址跳转回来
 				let orderAddress = JSON.parse(uni.getStorageSync('addressMsg'));
 				// 地址更新
 				this.orderList = {
-					name:orderAddress.name,
-					phoneNumber:orderAddress.phoneNumber,
-					address:orderAddress.province+orderAddress.city+orderAddress.region+orderAddress.detailAddress,
+					name: orderAddress.name,
+					phoneNumber: orderAddress.phoneNumber,
+					address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress,
 				}
 			}
-			
-			this.getOrder()
-		},	
+
+			this.getOrder();
+
+		},
 		methods: {
 			// 数据初始化
-			getOrder(){
+			getOrder() {
 				let obj = {
-					cartItemIds:this.ids
+					cartItemIds: this.ids
 				}
-				axios.post('/order/generateOrder',obj).then(res=>{
-					console.log(res)
+				axios.post('/order/generateOrder', obj).then(res => {
 					this.orderList = res.data.data.order;
 					this.orderItemList = res.data.data.orderItemList;
-				})
+					if (this.orderList.preferential) {
+						this.totalCount = this.orderList.totalAmount - 1 - this.orderList.preferential;
+						console.log(11111)
+					} else {
+						this.totalCount = this.orderList.totalAmount - 1
+						console.log(5555)
+					}
+
+				});
+
 			},
 			// 修改地址
-			toAddress(){
+			toAddress() {
 				uni.navigateTo({
-					url:'../set/address?postOrder=1'
+					url: '../set/address?postOrder=1'
 				})
 			},
 			//使用积分
-			swithChange({detail}){
+			swithChange({
+				detail
+			}) {
 				// 计算实付金额
 				this.checked = detail;
-				if(this.checked){//true，表示抵扣
-					this.totalCount = this.orderList.totalAmount-1-this.orderList.preferential
-				}else{
-					
+				if (this.checked) { //true，表示抵扣
+					if (this.orderList.preferential) {
+						this.totalCount = this.orderList.totalAmount - 1 - this.orderList.preferential
+					} else {
+						this.totalCount = this.orderList.totalAmount - 1
+					}
+
+				} else {
+					if (this.orderList.preferential) {
+						this.totalCount = this.orderList.totalAmount - this.orderList.preferential
+					} else {
+						this.totalCount = this.orderList.totalAmount 
+					}
 				}
 			},
 			// 立即支付
-			payBtn(){
+			payBtn() {
 				let code = uni.getStorageSync('code')
 				let obj = {
-					code: code,//code
-				    orderSn: this.orderList.orderSn,//订单编号orderSn
-				    payType: 0,//支付类型
-					rechargeMoney: 0.1,//支付金额
-					userId: 16//用户id
+					code: code, //code
+					orderSn: this.orderList.orderSn, //订单编号orderSn
+					payType: 0, //支付类型
+					rechargeMoney: 0.1, //支付金额
+					userId: 16 //用户id
 				}
-				axios.post('/pay/payOrder',obj).then(res=>{
-					console.log(res)
-				})
-				// uni.navigateTo({
-				// 	url:'paySuccess'
+				// axios.post('/pay/payOrder',obj).then(res=>{
+				// 	// console.log(res)
 				// })
+				// 提交成功
+				uni.navigateTo({
+					url: 'paySuccess?totalCount='+this.totalCount
+				})
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.footBtn{
-		width:210rpx;
-		height:74rpx;
-		background:rgba(247,87,44,1);
-		border-radius:37rpx;
-		font-size:28rpx;
-		font-weight:bold;
-		color:rgba(255,255,255,1);
+	.footBtn {
+		width: 210rpx;
+		height: 74rpx;
+		background: rgba(247, 87, 44, 1);
+		border-radius: 37rpx;
+		font-size: 28rpx;
+		font-weight: bold;
+		color: rgba(255, 255, 255, 1);
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		margin-right: 0;
 		margin-left: 0;
 	}
-	.close{
+
+	.close {
 		width: 94%;
 		margin: 0 auto;
 		border-radius: 20rpx;
@@ -196,9 +216,11 @@
 		background: #fff;
 		margin-top: 20rpx;
 		color: #585858;
-		ul{
+
+		ul {
 			width: 100%;
-			li{
+
+			li {
 				width: 100%;
 				height: 90rpx;
 				box-sizing: border-box;
@@ -209,36 +231,49 @@
 				align-items: center;
 				color: #585858;
 				border-bottom: 1px solid #EDEDED;
-				font-size:26rpx;
-				font-weight:400;
-				color:rgba(88,88,88,1);
-				.order-list-bold{
-					font-weight:bold;
+				font-size: 26rpx;
+				font-weight: 400;
+				color: rgba(88, 88, 88, 1);
+
+				.order-list-bold {
+					font-weight: bold;
 				}
 			}
 		}
-		.closePrice{
+
+		.closePrice {
 			color: #FF3434;
 		}
-		.i-top{
-			    display: flex;
-			    align-items: center;
-			    height: 40px;
-			    padding-right: 15px;
-			    font-size: 14px;
-			    position: relative;
-			    padding-left: 15px;
-				justify-content: space-between;
+
+		.i-top {
+			display: flex;
+			align-items: center;
+			height: 40px;
+			padding-right: 15px;
+			font-size: 14px;
+			position: relative;
+			padding-left: 15px;
+			justify-content: space-between;
 		}
 	}
-	.order-details .marginBottom{
-		margin-bottom: 	140rpx;
+
+	.order-details .marginBottom {
+		margin-bottom: 140rpx;
 	}
+
 	page {
 		background: #F2F2F2;
 	}
-	ul{margin: 0;padding: 0;}
-	li{list-style: none;}
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		list-style: none;
+	}
+
 	.order-goods {
 		margin-top: 16upx;
 	}
@@ -445,9 +480,11 @@
 		padding-left: 30rpx;
 		display: flex;
 		align-items: center;
-		.cell-more{
+
+		.cell-more {
 			margin-left: 26%;
 		}
+
 		img {
 			width: 31rpx;
 			height: 42rpx;
@@ -455,7 +492,9 @@
 		}
 
 		.order-ad-user {
-			.phone,.address {
+
+			.phone,
+			.address {
 				display: block;
 			}
 
@@ -464,7 +503,8 @@
 				font-weight: bold;
 				color: rgba(81, 81, 81, 1);
 				margin-bottom: 14rpx;
-				text:nth-of-type(1){
+
+				text:nth-of-type(1) {
 					margin-right: 10rpx;
 				}
 			}
@@ -477,120 +517,134 @@
 		}
 	}
 
-.order-list{
-	width: 95%;
-	margin: 0 auto;
-	margin-top: 20rpx;
-	background:rgba(255,255,255,1);
-	border-radius:20rpx;
-	ul{
-		width: 100%;
-		li{
+	.order-list {
+		width: 95%;
+		margin: 0 auto;
+		margin-top: 20rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 20rpx;
+
+		ul {
 			width: 100%;
-			height: 90rpx;
-			box-sizing: border-box;
-			padding-right: 30rpx;
-			padding-left: 30rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			color: #585858;
-			border-bottom: 1px solid #EDEDED;
-			font-size:26rpx;
-			font-weight:400;
-			color:rgba(88,88,88,1);
-			.order-list-bold{
-				font-weight:bold;
+
+			li {
+				width: 100%;
+				height: 90rpx;
+				box-sizing: border-box;
+				padding-right: 30rpx;
+				padding-left: 30rpx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				color: #585858;
+				border-bottom: 1px solid #EDEDED;
+				font-size: 26rpx;
+				font-weight: 400;
+				color: rgba(88, 88, 88, 1);
+
+				.order-list-bold {
+					font-weight: bold;
+				}
 			}
 		}
 	}
-}
-.order-pay{
-	width: 95%;
-	margin: 0 auto;
-	margin-top: 20rpx;
-	background:rgba(255,255,255,1);
-	border-radius:20rpx;
-	box-sizing: border-box;
-	padding-top: 30rpx;
-	padding-left: 28rpx;
-	padding-bottom: 22rpx;
-	font-size:26rpx;
-	font-weight:400;
-	color:rgba(88,88,88,1);
-	line-height:28px;
-	margin-bottom: 20rpx;
-}
-.toBeFinish{
-	.toBeFinishBlock{
-		display: block;
-	}
-	.toBeFinishBlockFirst{
-		font-size:32rpx;
-		font-weight:bold;
-		color:rgba(255,62,61,1);
-		margin-bottom: 18rpx;
-	}
-	.toBeFinishBlockSecond{
-		font-size:24rpx;
-		font-weight:500;
-		color:rgba(84,84,84,1);
-	}
-}
-.payClose{
-	text{
-		display: block;
-	}
-	text:nth-of-type(1){
-		font-size:32rpx;
-		font-weight:bold;
-		color:rgba(84,84,84,1);
-		margin-bottom: 18rpx;
-	}
-	text:nth-of-type(2){
-		font-size:24rpx;
-		font-weight:500;
-		color:rgba(84,84,84,1);
-	}
-}
-.foot{
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width:100%;
-	height:120rpx;
-	background:rgba(255,255,255,1);
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	box-sizing: border-box;
-	padding-left: 20rpx;
-	padding-right: 20rpx;
-	.payBtn{
-		width:211rpx;
-		height:74rpx;
-		background:rgba(247,87,44,1);
-		border-radius:37rpx;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 28rpx;
-		color: #fff;
-	}
-	.foot-heji{
-		font-size: 24rpx;
-		color: #1f1f1f;
-	}
-	.foot-price{
-		font-size: 26rpx;
-		color: #f55641;
-		display: inline-block;
-		margin-right: 34rpx;
-	}
-	.foot-youhui{
-		font-size: 22rpx;
-		color:rgba(158,158,158,1);
-	}
-}
 
+	.order-pay {
+		width: 95%;
+		margin: 0 auto;
+		margin-top: 20rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 20rpx;
+		box-sizing: border-box;
+		padding-top: 30rpx;
+		padding-left: 28rpx;
+		padding-bottom: 22rpx;
+		font-size: 26rpx;
+		font-weight: 400;
+		color: rgba(88, 88, 88, 1);
+		line-height: 28px;
+		margin-bottom: 20rpx;
+	}
+
+	.toBeFinish {
+		.toBeFinishBlock {
+			display: block;
+		}
+
+		.toBeFinishBlockFirst {
+			font-size: 32rpx;
+			font-weight: bold;
+			color: rgba(255, 62, 61, 1);
+			margin-bottom: 18rpx;
+		}
+
+		.toBeFinishBlockSecond {
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(84, 84, 84, 1);
+		}
+	}
+
+	.payClose {
+		text {
+			display: block;
+		}
+
+		text:nth-of-type(1) {
+			font-size: 32rpx;
+			font-weight: bold;
+			color: rgba(84, 84, 84, 1);
+			margin-bottom: 18rpx;
+		}
+
+		text:nth-of-type(2) {
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(84, 84, 84, 1);
+		}
+	}
+
+	.foot {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 120rpx;
+		background: rgba(255, 255, 255, 1);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		box-sizing: border-box;
+		padding-left: 20rpx;
+		padding-right: 20rpx;
+
+		.payBtn {
+			width: 211rpx;
+			height: 74rpx;
+			background: rgba(247, 87, 44, 1);
+			border-radius: 37rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 28rpx;
+			color: #fff;
+		}
+
+		.foot-heji {
+			font-size: 24rpx;
+			color: #1f1f1f;
+		}
+
+		.foot-price {
+			font-size: 26rpx;
+			color: #f55641;
+			display: inline-block;
+			margin-right: 34rpx;
+		}
+
+		.foot-youhui {
+			font-size: 22rpx;
+			color: rgba(158, 158, 158, 1);
+		}
+	}
 </style>

@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我的足迹",
-  "usingComponents": {
-    "van-icon": "/wxcomponents/vant/dist/icon/index",
-    "van-checkbox": "/wxcomponents/vant/dist/checkbox/index",
-    "empty": "/components/empty"
-  }
-}

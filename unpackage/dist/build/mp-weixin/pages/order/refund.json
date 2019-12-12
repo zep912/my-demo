@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "申请退款",
-  "usingComponents": {
-    "van-cell": "/wxcomponents/vant/dist/cell/index",
-    "van-uploader": "/wxcomponents/vant/dist/uploader/index",
-    "van-popup": "/wxcomponents/vant/dist/popup/index",
-    "van-picker": "/wxcomponents/vant/dist/picker/index"
-  }
-}

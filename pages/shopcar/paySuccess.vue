@@ -27,14 +27,14 @@
 				money:''
 			}
 		},
-		onLoad() {
-			
+		onLoad(option) {
+			this.money = option.totalCount
 		},
 		methods:{
 			// 查看已经完成的订单
 			lookOrder(){
 				uni.navigateTo({
-					url:'../order/orderDetails?status=7'
+					url:'../order/orderDetails?status=1'
 				})
 			},
 			// 跳转到首页

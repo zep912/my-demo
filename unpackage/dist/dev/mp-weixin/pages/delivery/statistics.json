@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "送单统计",
-  "usingComponents": {
-    "van-switch": "/wxcomponents/vant/dist/switch/index",
-    "van-icon": "/wxcomponents/vant/dist/icon/index"
-  }
-}
