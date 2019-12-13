@@ -24,17 +24,19 @@
 	export default {
 		data(){
 			return{
-				money:''
+				money:'',
+				id:''
 			}
 		},
 		onLoad(option) {
-			this.money = option.totalCount
+			this.money = option.totalCount;
+			this.id = option.id
 		},
 		methods:{
 			// 查看已经完成的订单
 			lookOrder(){
 				uni.navigateTo({
-					url:'../order/orderDetails?status=1'
+					url:'../order/orderDetails?status=1&id='+this.id
 				})
 			},
 			// 跳转到首页

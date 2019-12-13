@@ -104,7 +104,15 @@
 				},
 				ids: [],
 				orderItemList: [],
-				totalCount: ''
+				totalCount: '',
+				payCode:{
+					appId: "",
+					nonceStr: "",
+					package: "",
+					paySign: "",
+					signType: "MD5",
+					timeStamp: ""
+				}
 			}
 		},
 		onLoad(option) {
@@ -175,16 +183,38 @@
 				let obj = {
 					code: code, //code
 					orderSn: this.orderList.orderSn, //订单编号orderSn
-					payType: 0, //支付类型
-					rechargeMoney: 0.1, //支付金额
+					payType: 3, //支付类型
+					rechargeMoney: 0.01, //支付金额s
 					userId: 16 //用户id
 				}
-				// axios.post('/pay/payOrder',obj).then(res=>{
-				// 	// console.log(res)
-				// })
-				// 提交成功
-				uni.navigateTo({
-					url: 'paySuccess?totalCount='+this.totalCount
+				let _this = this;
+				axios.post('/pay/payOrder',obj).then(res=>{
+					console.log(res)
+					_this.payCode={
+						appId: res.data.data.appId,
+						nonceStr: res.data.data.nonceStr,
+						package: res.data.data.package,
+						paySign: res.data.data.paySign,
+						signType: "MD5",
+						timeStamp:res.data.data.timeStamp,
+					}
+					uni.requestPayment({
+					    provider: 'wxpay',
+					    timeStamp: _this.payCode.timeStamp,
+					    nonceStr: _this.payCode.nonceStr,
+					    package: _this.payCode.package,
+					    signType: 'MD5',
+					    paySign: _this.payCode.paySign,
+					    success: function (res) {
+					        console.log('success:' + JSON.stringify(res));
+							uni.reLaunch({
+								url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.order.id
+							})
+					    },
+					    fail: function (err) {
+					        console.log('fail:' + JSON.stringify(err));
+					    }
+					})
 				})
 			}
 		}

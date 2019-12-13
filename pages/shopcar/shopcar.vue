@@ -144,7 +144,7 @@
 				if(this.allNum==0){
 					this.$api.msg('请选择商品')
 				}else{
-					uni.navigateTo({
+					uni.reLaunch({
 						url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
 					})
 				}

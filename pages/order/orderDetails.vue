@@ -193,13 +193,11 @@
 			console.log(option)
 			this.statuss = option.status;
 			this.id = option.id;
-			
 			this.getOrder()
 		},
 		methods: {
 			// 获取订单详情
 			getOrder(){
-				
 				let obj = {
 					cartItemIds :[this.id]
 				}

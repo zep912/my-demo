@@ -10,7 +10,7 @@
 		"postcss": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
+	"libVersion": "2.9.2",
 	"appid": "wx35cb9f6acb94bd15",
 	"projectname": "麦田圈",
 	"simulatorType": "wechat",
