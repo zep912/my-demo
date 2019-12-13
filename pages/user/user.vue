@@ -2,7 +2,7 @@
 	<view class="container">
 
 		<view class="user-section">
-			<image class="bg" src="../../static/my/user-bg.png"></image>
+			<image class="bg" src="../../static/my/user-bg.jpg"></image>
 			<view class="user-info-box">
 				<view class="portrait-box">
 					<image class="portrait" :src="userInfo.avatarUrl || '../../static/my/missing-face.png'"></image>
