@@ -237,7 +237,10 @@
 			},
 			// 再次购买
 			againBuy(item) {
-				console.log(item)
+				let id = item.id;
+				uni.navigateTo({
+					url: `/pages/product/product?id=${id}`
+				})
 			},
 			//取消订单
 			cancelOrder(item) {
@@ -322,43 +325,6 @@
 				uni.navigateTo({
 					url:'../shopcar/postOrder?deleIds='+JSON.stringify(ids)
 				})
-				// console.log(n)
-				// let code = uni.getStorageSync('code')
-				// let obj = {
-				// 	code: code, //code
-				// 	orderSn: item.orderSn, //订单编号orderSn
-				// 	payType: 3, //支付类型
-				// 	rechargeMoney: item.realAmount, //支付金额s
-				// }
-				// let _this = this;
-				// axios.post('/pay/payOrder',obj).then(res=>{
-				// 	console.log(res)
-				// 	_this.payCode={
-				// 		appId: res.data.data.appId,
-				// 		nonceStr: res.data.data.nonceStr,
-				// 		package: res.data.data.package,
-				// 		paySign: res.data.data.paySign,
-				// 		signType: "MD5",
-				// 		timeStamp:res.data.data.timeStamp,
-				// 	}
-				// 	uni.requestPayment({
-				// 	    provider: 'wxpay',
-				// 	    timeStamp: _this.payCode.timeStamp,
-				// 	    nonceStr: _this.payCode.nonceStr,
-				// 	    package: _this.payCode.package,
-				// 	    signType: 'MD5',
-				// 	    paySign: _this.payCode.paySign,
-				// 	    success: function (res) {
-				// 	        console.log('success:' + JSON.stringify(res));
-				// 			uni.reLaunch({
-				// 				url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.orderList.id
-				// 			})
-				// 	    },
-				// 	    fail: function (err) {
-				// 	        console.log('fail:' + JSON.stringify(err));
-				// 	    }
-				// 	})
-				// })
 			}
 		},
 	}

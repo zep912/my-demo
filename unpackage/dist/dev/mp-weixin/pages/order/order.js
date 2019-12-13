@@ -378,7 +378,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 再次购买
     againBuy: function againBuy(item) {
-      console.log(item);
+      var id = item.id;
+      uni.navigateTo({
+        url: "/pages/product/product?id=".concat(id) });
+
     },
     //取消订单
     cancelOrder: function cancelOrder(item) {var _this2 = this;
@@ -463,43 +466,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       uni.navigateTo({
         url: '../shopcar/postOrder?deleIds=' + JSON.stringify(ids) });
 
-      // console.log(n)
-      // let code = uni.getStorageSync('code')
-      // let obj = {
-      // 	code: code, //code
-      // 	orderSn: item.orderSn, //订单编号orderSn
-      // 	payType: 3, //支付类型
-      // 	rechargeMoney: item.realAmount, //支付金额s
-      // }
-      // let _this = this;
-      // axios.post('/pay/payOrder',obj).then(res=>{
-      // 	console.log(res)
-      // 	_this.payCode={
-      // 		appId: res.data.data.appId,
-      // 		nonceStr: res.data.data.nonceStr,
-      // 		package: res.data.data.package,
-      // 		paySign: res.data.data.paySign,
-      // 		signType: "MD5",
-      // 		timeStamp:res.data.data.timeStamp,
-      // 	}
-      // 	uni.requestPayment({
-      // 	    provider: 'wxpay',
-      // 	    timeStamp: _this.payCode.timeStamp,
-      // 	    nonceStr: _this.payCode.nonceStr,
-      // 	    package: _this.payCode.package,
-      // 	    signType: 'MD5',
-      // 	    paySign: _this.payCode.paySign,
-      // 	    success: function (res) {
-      // 	        console.log('success:' + JSON.stringify(res));
-      // 			uni.reLaunch({
-      // 				url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.orderList.id
-      // 			})
-      // 	    },
-      // 	    fail: function (err) {
-      // 	        console.log('fail:' + JSON.stringify(err));
-      // 	    }
-      // 	})
-      // })
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

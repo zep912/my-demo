@@ -183,7 +183,6 @@
 			// 好货推荐
 			hotList(){
 				axios.post('/home/list').then(res=>{
-					console.log(res)
 					this.goodsList = res.data.data.hotProductList
 				})
 			},

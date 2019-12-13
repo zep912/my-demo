@@ -317,7 +317,6 @@ pageAtTop = true;var _default =
     // 好货推荐
     hotList: function hotList() {var _this = this;
       _uniAxios.default.post('/home/list').then(function (res) {
-        console.log(res);
         _this.goodsList = res.data.data.hotProductList;
       });
     },
