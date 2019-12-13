@@ -13,9 +13,8 @@
 			<text class="input inputAddress">
 				{{address}}
 			</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 			<!-- 跳转地图 -->
-			<!-- <text class="yticon icon-shouhuodizhi" @click="chooseLocation"></text> -->
 		</view>
 		<view class="row b-b rowTextArea">
 			<text class="tit">详细地址</text>
@@ -89,7 +88,8 @@
 				key:'GOUBZ-B3U3R-WEAWX-WE266-WZBW5-JIFUR',//腾讯地图key
 				userId:'',
 				show:false,
-				columns:['荟园1栋','荟园2栋','荟园3栋','荟园4栋','荟园5栋','荟园6栋']
+				columns:[
+				]
 			}
 		},
 		computed: {
@@ -120,8 +120,23 @@
 			// qqmapsdk = new amap.QQMapWX({
 			// 	key: this.key
 			// });
+			
+			this.getAddress()
 		},
 		methods: {
+			getAddress(){
+				axios.post('/address/list').then(res=>{
+					if (res.data.code == 200) {
+						let result = res.data.data;
+						let obj = result.map(function (item) {
+						    return{
+								'text': item.address,
+						    }
+						})
+						this.columns = obj
+					}
+				})
+			},
 			// 选择下拉
 			addressClick(){
 				this.show = true;
@@ -132,8 +147,7 @@
 			},
 			// 弹窗确认
 			onConfirm(e){
-				console.log(e)
-				this.address =e.detail.value;
+				this.address =e.detail.value.text;
 				this.show = false;
 			},
 			// 地址标签，

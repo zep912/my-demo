@@ -37,4 +37,13 @@
 .container .content .item .bottom .icon-gengduo {
         float: right;
 }
+.container .null-class {
+    color: #C9C9C9;
+    text-align: center;
+    margin-top: 40%;
+}
+.container .null-class .iconfont {
+      font-size: 140rpx;
+      margin-bottom: 80rpx;
+}
 

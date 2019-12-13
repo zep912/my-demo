@@ -24,12 +24,12 @@
 
 		<view class="list-cell" @click="navTo('statistics')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">送单统计</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		
 		<view class="list-cell" @click="navTo('myprofit')" hover-class="cell-hover" :hover-stay-time="50"  style="margin-top: 10rpx;">
 			<text class="cell-tit">我的收益</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		<!-- 底部 -->
 		<view class="de-foot">

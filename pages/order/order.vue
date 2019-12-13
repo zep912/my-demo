@@ -11,13 +11,22 @@
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
 				<scroll-view class="list-scroll-content" scroll-y>
 					<!-- 空白页 -->
-					<empty v-if="tabItem.orderList.length === 0" :src='src' :msg='msg'></empty>
+					
+					<view class="empty" v-if='tabItem.orderList.length==0'>
+						<view class="noCollect">
+							<text class="iconfont icon-zanwudingdan" style="font-size: 60px;"></text>
+							<view class="noCollect-word">{{msg}}</view>
+							<button type="primary" @click="btn">去逛逛</button>
+						</view>	
+					</view>
+					
+					<!-- <empty v-if="tabItem.orderList.length === 0" :src='src' :msg='msg'></empty> -->
 					<!-- 订单列表 -->
 					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
 						<view class="i-top b-b">
 							<img src="../../static/shop.png" alt="" class='shopLogo'>
 							<text class="time">麦田圈官方旗舰店</text>
-							<text class="state"  @click="orderDetails(item,item.id)">{{item.status==0?'代付款':item.status==1?'待发货':item.status==2?'待收货':item.status==3?'待评价':item.status==4?'已关闭':'无效订单'}}</text>
+							<text class="state"  @click="orderDetails(item,item.id)">{{item.status==0?'待付款':item.status==1?'待发货':item.status==2?'待收货':item.status==3?'待评价':item.status==4?'已关闭':'无效订单'}}</text>
 						</view>
 
 						<view class="goods-box-single b-b">
@@ -46,7 +55,7 @@
 								<button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button>
 								<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
 								<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
-								<button class="action-btn recom" v-show='item.status==0'>立即支付</button>
+								<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item)">立即支付</button>
 								<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap">查看物流</button>
 							</view>
 						</view>
@@ -75,7 +84,7 @@
 				msg:'你还没有任何订单，看看其他的吧',
 				tabCurrentIndex: 0,
 				navList: [{
-						status: 0,
+						status: '',
 						text: '全部',
 						loadingType: 'more',
 						orderList: []
@@ -109,7 +118,15 @@
 					current:1,
 					pageSize:10
 				},
-				orderList:[]
+				orderList:[],
+				payCode:{
+					appId: "",
+					nonceStr: "",
+					package: "",
+					paySign: "",
+					signType: "MD5",
+					timeStamp: ""
+				}
 			};
 		},
 
@@ -118,10 +135,14 @@
 			 * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
 			 * 替换onLoad下代码即可
 			 */
+			console.log(options)
 			this.tabCurrentIndex = +options.state;
-			this.loadData('tabChange','');
-			if (options.state == 0) {
-				this.loadData()
+			if(options.state===''){//全部订单
+				this.loadData('tabChange','');
+			}else if(options.state===0){//待付款
+				this.loadData('tabChange',options.state);
+			}else{
+				this.loadData('tabChange',options.state);
 			}
 		},
 
@@ -149,15 +170,14 @@
 				  "sourceType":1,//订单来源
 				  "status": n//订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
 				}
-				// let orderList=[]
+
 				axios.post('/order/list',obj).then(res=>{
 					if(res.data.code=='200'){
 						let result = res.data.data.list;
 						this.orderList = result.filter(item => {
 							//添加不同状态下订单的表现形式
 							item = Object.assign(item, this.orderStateExp(item.status));
-							// //演示数据所以自己进行状态筛选
-							if (state === 0) {
+							if (state === '') {
 								//0为全部订单
 								return item;
 							}
@@ -193,13 +213,17 @@
 
 			//swiper 切换
 			changeTab(e) {
-				this.tabCurrentIndex = e.target.current;
-				
-				if(this.tabCurrentIndex==0||this.tabCurrentIndex==1){
-					this.loadData('tabChange',0);
-				}else{
+				if(e.target){//在本页面点击tab切换
+					this.tabCurrentIndex = e.target.current;
+					if(this.tabCurrentIndex==0){//全部
+						this.loadData('tabChange','');
+					}else{
+						this.loadData('tabChange',this.tabCurrentIndex-1);
+					}
+				}else{//从我的页面进入
 					this.loadData('tabChange',this.tabCurrentIndex-1);
 				}
+				
 				
 			},
 			//顶部tab点击
@@ -291,6 +315,50 @@
 				uni.navigateTo({
 					url:'logistics'
 				})
+			},
+			payGoods(item){
+				let ids = [item.id];
+				console.log(item)
+				uni.navigateTo({
+					url:'../shopcar/postOrder?deleIds='+JSON.stringify(ids)
+				})
+				// console.log(n)
+				// let code = uni.getStorageSync('code')
+				// let obj = {
+				// 	code: code, //code
+				// 	orderSn: item.orderSn, //订单编号orderSn
+				// 	payType: 3, //支付类型
+				// 	rechargeMoney: item.realAmount, //支付金额s
+				// }
+				// let _this = this;
+				// axios.post('/pay/payOrder',obj).then(res=>{
+				// 	console.log(res)
+				// 	_this.payCode={
+				// 		appId: res.data.data.appId,
+				// 		nonceStr: res.data.data.nonceStr,
+				// 		package: res.data.data.package,
+				// 		paySign: res.data.data.paySign,
+				// 		signType: "MD5",
+				// 		timeStamp:res.data.data.timeStamp,
+				// 	}
+				// 	uni.requestPayment({
+				// 	    provider: 'wxpay',
+				// 	    timeStamp: _this.payCode.timeStamp,
+				// 	    nonceStr: _this.payCode.nonceStr,
+				// 	    package: _this.payCode.package,
+				// 	    signType: 'MD5',
+				// 	    paySign: _this.payCode.paySign,
+				// 	    success: function (res) {
+				// 	        console.log('success:' + JSON.stringify(res));
+				// 			uni.reLaunch({
+				// 				url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.orderList.id
+				// 			})
+				// 	    },
+				// 	    fail: function (err) {
+				// 	        console.log('fail:' + JSON.stringify(err));
+				// 	    }
+				// 	})
+				// })
 			}
 		},
 	}

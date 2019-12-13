@@ -1,6 +1,14 @@
 <template>
 	<view class="collect">
-		<empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty>
+		<!-- <empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty> -->
+		<view class="empty" v-if='collectGoods.length==0'>
+			<view class="noCollect">
+				<!-- <text class="iconfont icon-wudizhi"></text> -->
+				<image src="../static/my/nocollet.png" mode=""></image>
+				<view class="noCollect-word">{{msg}}</view>
+				<button type="primary" @click="btn">去逛逛</button>
+			</view>	
+		</view>
 		<view  v-if='collectGoods.length!=0'>
 		
 		<!-- 没有收藏 -->
@@ -97,6 +105,11 @@
 			},
 			allOnChange(){
 				
+			},
+			btn(){
+				uni.reLaunch({
+					url:'../index/index'
+				})
 			}
 		}
 	}

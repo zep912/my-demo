@@ -47,31 +47,38 @@
 					phone: _this.phone,
 					authCode: _this.authCode
 				};
-				axios.post('/sso/user/login',obj).then(res=>{
-					if(res.data.code=='200'){
-						var token = res.data.data.token;
-						uni.setStorageSync('gt',token);
-						uni.setStorageSync('deliveryPhone',_this.phone);
-						uni.redirectTo({
-							url:'set'
-						})
-						// uni.switchTab({
-						// 	url:'set',
-						// 	success:(res)=> { 
-						// 		 let page = getCurrentPages();  //跳转页面成功之后
-						// 		 if (!page){
-						// 			 return
-						// 		 }else{
-						// 			 page[page.length-1].data.loadData()
-						// 			 // var beforePage = page[0].data;
-						// 			 //  page.loadData(); //如果页面存在，则重新刷新页面
-						// 		 };   
-						// 	  }
-						// });
-					}else{
-						this.$api.msg(res.data.message)
-					}
-				})
+				if(!_this.phone){
+					_this.$api.msg('请输入手机号')
+				}else if(!_this.authCode){
+					_this.$api.msg('请输入验证码')
+				}else {
+					axios.post('/sso/user/login',obj).then(res=>{
+						if(res.data.code=='200'){
+							var token = res.data.data.token;
+							uni.setStorageSync('gt',token);
+							uni.setStorageSync('deliveryPhone',_this.phone);
+							uni.redirectTo({
+								url:'set'
+							})
+							// uni.switchTab({
+							// 	url:'set',
+							// 	success:(res)=> { 
+							// 		 let page = getCurrentPages();  //跳转页面成功之后
+							// 		 if (!page){
+							// 			 return
+							// 		 }else{
+							// 			 page[page.length-1].data.loadData()
+							// 			 // var beforePage = page[0].data;
+							// 			 //  page.loadData(); //如果页面存在，则重新刷新页面
+							// 		 };   
+							// 	  }
+							// });
+						}else{
+							this.$api.msg(res.data.message)
+						}
+					})
+				}
+				
 			},
 			// 发送验证码
 			postCode(){

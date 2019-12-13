@@ -1,7 +1,17 @@
 <template>
 	<view class="collect">
-		<!-- 没有收藏 -->
-		<empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty>
+		
+		<view class="empty" v-if='collectGoods.length==0'>
+			<view class="noCollect">
+				<!-- <image src="../static/my/footmark.png" mode=""></image> -->
+				<text class="iconfont icon-zuji" style="color: #909399;font-size: 70px;"></text>
+				<view class="noCollect-word">{{msg}}</view>
+				<button type="primary" @click="btn">去逛逛</button>
+			</view>	
+		</view>
+		<!-- <empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty> -->
+		
+		
 		<view  v-if='collectGoods.length!=0'>
 		<view class="collect-wrap">
 			<text>共<text class="collect-num">10</text>条,<text>最多为您保存<text>40</text>条</text></text>
@@ -98,6 +108,11 @@
 			},
 			around(){
 				
+			},
+			btn(){
+				uni.reLaunch({
+					url:'../index/index'
+				})
 			}
 		}
 	}

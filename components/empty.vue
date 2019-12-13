@@ -1,7 +1,8 @@
 <template>
 	<view class="empty">
 		<view class="noCollect">
-			<img :src="src" alt="">
+			<!-- <img :src="src" alt=""> -->
+			<text class="iconfont" :class="{iconCss}"></text>
 			<view class="noCollect-word">{{msg}}</view>
 			<button type="primary" @click="btn">去逛逛</button>
 		</view>	
@@ -22,6 +23,10 @@
 				default: ''
 			},
 			msg:{
+				type:String,
+				default:''
+			},
+			iconCss:{
 				type:String,
 				default:''
 			}

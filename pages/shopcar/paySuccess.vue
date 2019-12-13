@@ -30,7 +30,8 @@
 		},
 		onLoad(option) {
 			this.money = option.totalCount;
-			this.id = option.id
+			this.id = option.id;
+			console.log(option)
 		},
 		methods:{
 			// 查看已经完成的订单

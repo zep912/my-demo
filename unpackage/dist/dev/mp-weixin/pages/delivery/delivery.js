@@ -183,29 +183,36 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var _default = { data: function data() {return { username: '', leftIcon: '../../static/delivery/phone.png', code: '发送验证码', disabled: false, num: 60, phone: '', authCode: '' };}, mounted: function mounted() {}, methods: { login: function login() {var _this2 = this;var _this = this;var obj = { phone: _this.phone, authCode: _this.authCode };_uniAxios.default.post('/sso/user/login', obj).then(function (res) {if (res.data.code == '200') {var token = res.data.data.token;
-          uni.setStorageSync('gt', token);
-          uni.setStorageSync('deliveryPhone', _this.phone);
-          uni.redirectTo({
-            url: 'set' });
+var _default = { data: function data() {return { username: '', leftIcon: '../../static/delivery/phone.png', code: '发送验证码', disabled: false, num: 60, phone: '', authCode: '' };}, mounted: function mounted() {}, methods: { login: function login() {var _this2 = this;var _this = this;var obj = { phone: _this.phone, authCode: _this.authCode };if (!_this.phone) {_this.$api.msg('请输入手机号');} else if (!_this.authCode) {
+        _this.$api.msg('请输入验证码');
+      } else {
+        _uniAxios.default.post('/sso/user/login', obj).then(function (res) {
+          if (res.data.code == '200') {
+            var token = res.data.data.token;
+            uni.setStorageSync('gt', token);
+            uni.setStorageSync('deliveryPhone', _this.phone);
+            uni.redirectTo({
+              url: 'set' });
 
-          // uni.switchTab({
-          // 	url:'set',
-          // 	success:(res)=> { 
-          // 		 let page = getCurrentPages();  //跳转页面成功之后
-          // 		 if (!page){
-          // 			 return
-          // 		 }else{
-          // 			 page[page.length-1].data.loadData()
-          // 			 // var beforePage = page[0].data;
-          // 			 //  page.loadData(); //如果页面存在，则重新刷新页面
-          // 		 };   
-          // 	  }
-          // });
-        } else {
-          _this2.$api.msg(res.data.message);
-        }
-      });
+            // uni.switchTab({
+            // 	url:'set',
+            // 	success:(res)=> { 
+            // 		 let page = getCurrentPages();  //跳转页面成功之后
+            // 		 if (!page){
+            // 			 return
+            // 		 }else{
+            // 			 page[page.length-1].data.loadData()
+            // 			 // var beforePage = page[0].data;
+            // 			 //  page.loadData(); //如果页面存在，则重新刷新页面
+            // 		 };   
+            // 	  }
+            // });
+          } else {
+            _this2.$api.msg(res.data.message);
+          }
+        });
+      }
+
     },
     // 发送验证码
     postCode: function postCode() {

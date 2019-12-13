@@ -1,6 +1,14 @@
 <template>
 	<view class="shopCar">
-		<empty :src='src' :msg='msg' v-if='list.length==0'></empty>
+		<view class="empty" v-if='list.length==0'>
+			<view class="noCollect">
+				<!-- <text class="iconfont icon-wudizhi" style="font-size: 70px;"></text> -->
+				<img src="../../static/shopcarempty.png" mode="" />
+				<view class="noCollect-word">{{msg}}</view>
+				<button type="primary" @click="btn">去逛逛</button>
+			</view>	
+		</view>
+		<!-- <empty :src='src' :msg='msg' v-if='list.length==0'></empty> -->
 		<!-- 商品 -->
 		<view class="shopcar-goods" v-if='list.length!=0'>
 			<view class="shopcar-title">
@@ -138,6 +146,11 @@
 			this.getShopCar();
 		},
 		methods: {
+			btn(){
+				uni.reLaunch({
+					url:'../index/index'
+				})
+			},
 			// 结算
 			payGoods(){
 				console.log(this.deleIds)//数组

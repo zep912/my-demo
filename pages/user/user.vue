@@ -27,27 +27,29 @@
 			 :hover-stay-time="50" style="display: flex;align-items: center;">
 				<text class="cell-tit">全部订单</text>
 				<text class="cell-tip" @click="lookOrder">查看全部订单</text>
-				<van-icon name="arrow" color='#909399'/>
+				<text class="iconfont icon-you" style="color: #909399;"></text>
+				
 			</view>
 			<view class="cover-container">
 				<!-- 订单 -->
 				<view class="order-section">
 
 					<view class="order-item" @click="navTo('/pages/order/order?state=1')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="iconfont icon-daifukuan" style="color: #F7B52C;font-size: 34px;"></text>
+						<text class="iconfont icon-daifukuan" style="color: #F7B52C;font-size: 28px;"></text>
 						<text>待付款</text>
 					</view>
-					<view class="order-item" @click="navTo('/pages/order/order?state=2')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="iconfont icon-daishouhuo" style="color: #F7B52C;font-size: 34px;"></text>
+					<view class="order-item" @click="navTo('/pages/order/order?state=3')" hover-class="common-hover" :hover-stay-time="50">
+						<text class="iconfont icon-daishouhuo" style="color: #F7B52C;font-size: 28px;"></text>
 						<text>待收货</text>
 					</view>
-					<view class="order-item" @click="navTo('/pages/order/order?state=3')" hover-class="common-hover" :hover-stay-time="50">
-						<text class="iconfont icon-daipingjia" style="color: #F7B52C;font-size: 24px;"></text>
+					<view class="order-item" @click="navTo('/pages/order/order?state=4')" hover-class="common-hover" :hover-stay-time="50">
+						<text class="iconfont icon-daipingjia" style="color: #F7B52C;font-size: 28px;"></text>
+						
 						<text>待评价</text>
 					</view>
 					<view class="order-item" @click="navTo('/pages/order/aftersale?state=5')" hover-class="common-hover"
 					 :hover-stay-time="50">	
-						<text class="iconfont icon-huabancopy" style="color: #F7B52C;font-size: 28px;"></text>
+						<text class="iconfont icon-tuikuan_shouhou" style="color: #F7B52C;font-size: 28px;"></text>
 						<text>退款/售后</text>
 					</view>
 				</view>
@@ -91,20 +93,20 @@
 				<img src="../../static/title_01.png" alt="">
 			</view>
 			<view class="goodsList">
-				<view v-for='(item,index) in goodsList' class="goodsList-list">
-					<img :src="item.img" alt="">
+				<view v-for='(item,index) in goodsList' class="goodsList-list" @click="navToDetailPage(item)">
+					<img :src="item.pic" alt="">
 					<view class="goods-title">
-						<text>{{item.title}}</text>
+						<text>{{item.name}}</text>
 					</view>
 					<view class="goods-subTitle">
 						<text>{{item.subTitle}}</text>
 					</view>
 					<view class="goods-jifen">
-						<text>{{item.jifen+'积分'}}</text>
+						<text>{{item.jifen?item.jifen+'积分':'0积分'}}</text>
 					</view>
 					<view class="goods-price">
 						<text>{{'$'+item.price}}</text>
-						<van-icon name="add" color='#F55641' size='38px' />
+						<van-icon name="add" color='#F55641' size='26px' />
 					</view>
 				</view>
 			</view>
@@ -164,11 +166,27 @@
 			if (uni.getStorageSync('hasLogin')) {
 				this.authShow = false
 			} 
+			this.hotList()
 		},
 		computed: {
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
+			//详情页
+			navToDetailPage(item) {
+				//测试数据没有写id，用title代替
+				let id = item.id;
+				uni.navigateTo({
+					url: `/pages/product/product?id=${id}`
+				})
+			},
+			// 好货推荐
+			hotList(){
+				axios.post('/home/list').then(res=>{
+					console.log(res)
+					this.goodsList = res.data.data.hotProductList
+				})
+			},
 			//第一授权获取用户信息===》按钮触发
 			wxGetUserInfo() {
 				uni.getUserInfo({
@@ -276,7 +294,7 @@
 			// 查看更多订单
 			lookOrder() {
 				uni.navigateTo({
-					url: '../order/order?state=0'
+					url: '../order/order?state='
 				});
 			},
 			/**

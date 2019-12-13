@@ -2,12 +2,15 @@
 	<view class="order-details">
 		<!-- 地址 -->
 		<view class="order-address b-b i-top" @click="toAddress">
-			<img src="../../static/dizhi.png" />
-			<view class="order-ad-user">
-				<text class="phone"><text>{{orderList.receiverName}}</text><text>{{orderList.receiverPhone}}</text></text>
-				<text class="address">{{orderList.receiverProvince+orderList.receiverCity+orderList.receiverRegion+orderList.receiverDetailAddress}}</text>
+			<view class="" style="display: flex;align-items: center;">
+				<text class="iconfont icon-dizhi1"></text>
+				<view class="order-ad-user">
+					<text class="phone"><text>{{orderList.receiverName}}</text><text>{{orderList.receiverPhone}}</text></text>
+					<text class="address">{{orderList.receiverProvince+orderList.receiverCity+orderList.receiverRegion+orderList.receiverDetailAddress}}</text>
+				</view>
 			</view>
-			<text class="cell-more yticon icon-you"></text>
+			
+			<text class="iconfont icon-you"></text>
 		</view>
 		<!-- 商品信息 -->
 		<view class="order-goods">
@@ -208,7 +211,7 @@
 					    success: function (res) {
 					        console.log('success:' + JSON.stringify(res));
 							uni.reLaunch({
-								url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.order.id
+								url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.orderList.id
 							})
 					    },
 					    fail: function (err) {
@@ -508,9 +511,10 @@
 		border-radius: 20rpx;
 		box-sizing: border-box;
 		padding-left: 30rpx;
+		padding-right: 30rpx;
 		display: flex;
 		align-items: center;
-
+		justify-content: space-between;
 		.cell-more {
 			margin-left: 26%;
 		}

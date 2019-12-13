@@ -15,7 +15,7 @@
 		<view class="myprofit-sta">
 			<view class="list-cell" hover-class="cell-hover" :hover-stay-time="50" @click="next">
 				<text class="cell-tit">账单统计</text>
-				<text class="cell-more yticon icon-you"></text>
+				<text class="iconfont icon-you" style="color: #909399;"></text>
 			</view>
 		</view>
 	</view>

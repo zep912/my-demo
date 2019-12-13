@@ -3,27 +3,27 @@
 		<view class="list-cell b-b m-t" @click="navTo('头像')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">头像</text>
 			<img :src="person.avatarUrl||'../../static/my/missing-face.png'" class='cell-tip-img' />
-			<text class="cell-more yticon icon-you cell-more-middle"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('用户名')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">用户名</text>
 			<text class="cell-tip">{{person.nickName}}</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('性别')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">性别</text>
 			<text class="cell-tip">{{gender}}</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('生日')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">生日</text>
 			<text class="cell-tip">{{person.birthday?person.birthday:''}}</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('体重')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">体重</text>
 			<text class="cell-tip">{{person.weight?person.weight:''}}</text>
-			<text class="cell-more yticon icon-you"></text>
+			<text class="iconfont icon-you" style="color: #909399;"></text>
 		</view>
 		<view class="list-cell log-out-btn log-save" @click="save" id='log-save'>
 			<text class="cell-tit">保存</text>

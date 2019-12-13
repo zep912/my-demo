@@ -1,7 +1,16 @@
 <template>
 	<view class="content b-t adress">
 		<!-- 缺省 -->
-		<empty :src='src' :msg='msg' v-if='addressList.length==0'></empty>
+		<!-- <empty :src='src' :msg='msg' v-if='addressList.length==0'></empty> -->
+		
+		<view class="empty" v-if='addressList.length==0'>
+			<view class="noCollect">
+				<text class="iconfont icon-wudizhi" style="font-size: 70px;"></text>
+				<view class="noCollect-word">{{msg}}</view>
+				<button type="primary" @click="btn">去逛逛</button>
+			</view>	
+		</view>
+		
 		<van-radio-group :value="radio" @change="select">
 			<view class="list b-b" v-for="(item, index) in addressList" :key="index" @click="checkAddress(item)"  v-if='addressList.length!=0'>
 				<view class="wrapper">
@@ -15,6 +24,7 @@
 					</view>
 				</view>
 				<view style="display: flex;justify-content: center;align-items: center;" class="address_checkd">
+					
 					<img src="../../static/my/toAddress.png" alt="" style='width:50rpx;height:50rpx;'  @click.stop="addAddress('edit', item)">
 					<!-- <van-checkbox :value="checked" @change="select(item,index)"
 					 custom-class='checkbox-sp' checked-color="#F7B62C" v-if='isToAddress'></van-checkbox> -->

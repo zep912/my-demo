@@ -93,7 +93,7 @@ var render = function() {
   var m0 = __webpack_require__(/*! ../../static/nogoods.png */ 253)
 
   var l0 = _vm.__map(_vm.navList, function(tabItem, tabIndex) {
-    var m1 = __webpack_require__(/*! ../../static/shop.png */ 170)
+    var m1 = __webpack_require__(/*! ../../static/shop.png */ 171)
 
     return {
       $orig: _vm.__get_orig(tabItem),
@@ -191,7 +191,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 413));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 420));};var _default =
+var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 414));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 421));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
