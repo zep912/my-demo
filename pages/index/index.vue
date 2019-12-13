@@ -100,7 +100,7 @@
 						<text>{{item.giftPoint+'积分'}}</text>
 					</view>
 					<view class="goods-price">
-						<text>{{'¥'+item.originalPrice}}</text>
+						<text>{{'¥'+item.price}}</text>
 						<uni-icons type="plus-filled" color ='#F55641' size="30"></uni-icons>
 					</view>
 				</view>
@@ -181,35 +181,33 @@
 			login(userInfo) {
 				uni.showLoading({
 					title: '登录中...',
-					success: () => {
-						const {city, gender, avatarUrl, nickName, phone} = userInfo;
-						// 1.wx获取登录用户code
-						uni.login({
-							provider: 'weixin',
-							success: (loginRes) => {
-								let code = loginRes.code;
-								uni.setStorageSync('code', code);
-								axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
-								//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-									axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: 'nickName',
-										  "wxAppid": "wx35cb9f6acb94bd15",
-										  "wxOpenid": data.data.openId
-										}).then((res) => {
-											const response = res.data;
-											if (response.code == 200) {
-												this.$store.commit('login', userInfo);
-												uni.setStorageSync('hasLogin', true);
-												//openId、或SessionKdy存储//隐藏loading
-												uni.setStorageSync('gt', response.data.token);
-												uni.hideLoading();
-												this.close();
-											}
-										})
-								})
-							}
-						});
-					},
 				});
+				const {city, gender, avatarUrl, nickName, phone} = userInfo;
+				// 1.wx获取登录用户code
+				uni.login({
+					provider: 'weixin',
+					success: (loginRes) => {
+						let code = loginRes.code;
+						uni.setStorageSync('code', code);
+						axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
+						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+							axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: 'nickName',
+								  "wxAppid": "wx35cb9f6acb94bd15",
+								  "wxOpenid": data.data.openId
+								}).then((res) => {
+									const response = res.data;
+									if (response.code == 200) {
+										this.$store.commit('login', userInfo);
+										uni.setStorageSync('hasLogin', true);
+										//openId、或SessionKdy存储//隐藏loading
+										uni.setStorageSync('gt', response.data.token);
+										setTimeout(() => {uni.hideLoading()}, 200);
+										this.close();
+									}
+								})
+						})
+					}
+				})
 			},
 			// 手机号登录
 			toPhone() {

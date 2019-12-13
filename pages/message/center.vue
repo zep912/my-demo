@@ -1,10 +1,10 @@
 <template>
 	<view class="container">
-		<view class="content-item" v-for="item in messageList" :key="item.type" @click="goto(item.type)">
-			<view class="left iconfont icon-youhui1" v-if="item.type === 1"></view>
-			<view class="left iconfont icon-kefu" v-else-if="item.type === 2"></view>
-			<view class="left iconfont icon-youhui" v-else-if="item.type === 3"></view>
-			<view class="left iconfont icon-dingdan" v-else-if="item.type === 4"></view>
+		<view class="content-item" v-for="item in messageList" :key="item.messageType" @click="goto(item.messageType)">
+			<view class="left iconfont icon-youhui1" v-if="item.messageType === 1"></view>
+			<view class="left iconfont icon-kefu" v-else-if="item.messageType === 2"></view>
+			<view class="left iconfont icon-youhui" v-else-if="item.messageType === 3"></view>
+			<view class="left iconfont icon-dingdan" v-else-if="item.messageType === 4"></view>
 			<view class="left iconfont icon-xitong-copy" v-else></view>
 			<view class="center">
 				<view>{{item.title}}</view>
@@ -21,11 +21,11 @@
 		data() {
 			return {
 				messageList: [
-					{type: 1, title: '优惠促销', content: '暂无促销相关消息', hasread: false, sendTime: '23:30'},
-					{type: 2, title: '客户咨询', content: '暂无客服咨询类消息', hasread: false, sendTime: '23:30'},
-					{type: 3, title: '优惠券信息', content: '暂无优惠券消息', hasread: false, sendTime: '23:30'},
-					{type: 4, title: '订单状态提醒', content: '暂无订单状态提醒', hasread: false, sendTime: '23:30'},
-					{type: 0, title: '系统消息', content: '暂无系统消息', hasread: false, sendTime: '23:30'},
+					{messageType: 1, title: '优惠促销', content: '暂无促销相关消息', hasread: false, sendTime: '23:30'},
+					{messageType: 2, title: '客户咨询', content: '暂无客服咨询类消息', hasread: false, sendTime: '23:30'},
+					{messageType: 3, title: '优惠券信息', content: '暂无优惠券消息', hasread: false, sendTime: '23:30'},
+					{messageType: 4, title: '订单状态提醒', content: '暂无订单状态提醒', hasread: false, sendTime: '23:30'},
+					{messageType: 0, title: '系统消息', content: '暂无系统消息', hasread: false, sendTime: '23:30'},
 				]
 			}
 		},
@@ -45,10 +45,13 @@
 				}
 			},
 			list() {
-				axios.post('/message/list', {type: 0}).then(({data}) => {
-					console.log(data);
+				const titleList = ['系统消息', '优惠促销', '客户咨询', '优惠券信息', '订单状态提醒'];
+				axios.post('/message/newMessage', {}).then(({data}) => {
 					if (data.code === 200) {
-						if (data.data.length) this.messageList = data.data;
+						if (data.data.length) this.messageList = data.data.map(item => {
+							item.title = titleList[+item.messageType];
+							return item;
+						});
 					}
 				});
 			}

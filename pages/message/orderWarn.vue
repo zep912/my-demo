@@ -1,10 +1,10 @@
 <template>
-	<view class="container">
-		<view class="content">
-			<view class="top-time">2019-10-28 10:21:33</view>
+	<view class="container" v-if="messageList.length">
+		<view class="content" v-for="item in messageList" :key="item.id">
+			<view class="top-time">{{item.sendTime}}</view>
 			<view class="item">
-				<view class="top">订单未支付</view>
-				<view class="center">您有1笔未支付订单即将失效，再晚一点就被别人抢走啦， 快去看看吧！</view>
+				<view class="top">{{item.title}}</view>
+				<view class="center">{{item.content}}</view>
 				<view class="bottom">
 					查看详情
 					<text class="iconfont icon-gengduo"></text>
@@ -12,14 +12,33 @@
 			</view>
 		</view>
 	</view>
+	<view class="container" v-else>
+		<view class="null-class">
+			<view class="iconfont icon-zanwuxiaoxi"></view>
+			<view>您还没有任何消息，看看其他的吧</view>
+		</view>
+	</view>
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
-				
+				messageList: []
 			};
+		},
+		onShow() {
+			this.list();
+		},
+		methods: {
+			list() {
+				axios.post('/message/list', {type: 4}).then(({data}) => {
+					if (data.code === 200) {
+						if (data.data.length) this.messageList = data.data;
+					}
+				});
+			}
 		}
 	}
 </script>
@@ -56,6 +75,15 @@
 					float: right;
 				}
 			}
+		}
+	}
+	.null-class {
+		color: #C9C9C9;
+		text-align: center;
+		margin-top: 40%;
+		.iconfont {
+			font-size: 140upx;
+			margin-bottom: 80upx;
 		}
 	}
 }
