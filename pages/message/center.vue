@@ -16,17 +16,21 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
 				messageList: [
-					{type: 1, title: '优惠促销', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
-					{type: 2, title: '客户咨询', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
-					{type: 3, title: '优惠券信息', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
-					{type: 4, title: '订单状态提醒', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
-					{type: 0, title: '系统消息', content: '促销内容促销内容，促销内容', hasread: false, sendTime: '23:30'},
+					{type: 1, title: '优惠促销', content: '暂无促销相关消息', hasread: false, sendTime: '23:30'},
+					{type: 2, title: '客户咨询', content: '暂无客服咨询类消息', hasread: false, sendTime: '23:30'},
+					{type: 3, title: '优惠券信息', content: '暂无优惠券消息', hasread: false, sendTime: '23:30'},
+					{type: 4, title: '订单状态提醒', content: '暂无订单状态提醒', hasread: false, sendTime: '23:30'},
+					{type: 0, title: '系统消息', content: '暂无系统消息', hasread: false, sendTime: '23:30'},
 				]
 			}
+		},
+		onShow() {
+			this.list();	
 		},
 		methods: {
 			goto(type) {
@@ -39,6 +43,14 @@
 						url: '/pages/message/orderWarn'
 					})
 				}
+			},
+			list() {
+				axios.post('/message/list', {type: 0}).then(({data}) => {
+					console.log(data);
+					if (data.code === 200) {
+						if (data.data.length) this.messageList = data.data;
+					}
+				});
 			}
 		}
 	}

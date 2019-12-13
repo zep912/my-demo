@@ -63,8 +63,8 @@
             "minified" : true,
             "postcss" : true
         },
-        "optimization": {
-            "subPackages": true
+        "optimization" : {
+            "subPackages" : true
         },
         "permission" : {}
     }
