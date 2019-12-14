@@ -192,6 +192,11 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
   onLoad: function onLoad() {
     this.getData();
   },
+  onShow: function onShow() {
+    this.songdan = '../../static/delivery/songdan2.png';
+    this.jiedan = '../../static/delivery/jiedanset.png';
+    this.daliveryData = 2;
+  },
   methods: _objectSpread({},
   (0, _vuex.mapMutations)(['logout']), {
     // 跳转路由

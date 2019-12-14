@@ -183,7 +183,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var _default = { data: function data() {return { username: '', leftIcon: '../../static/delivery/phone.png', code: '发送验证码', disabled: false, num: 60, phone: '', authCode: '' };}, mounted: function mounted() {}, methods: { login: function login() {var _this2 = this;var _this = this;var obj = { phone: _this.phone, authCode: _this.authCode };if (!_this.phone) {_this.$api.msg('请输入手机号');} else if (!_this.authCode) {
+var _default = { data: function data() {return { username: '', leftIcon: '../../static/delivery/phone.png', code: '发送验证码', disabled: false, num: 60, phone: '', authCode: '' };}, mounted: function mounted() {}, methods: { login: function login() {var _this2 = this;var _this = this;var obj = { phone: _this.phone, authCode: _this.authCode, useType: 1 };if (!_this.phone) {_this.$api.msg('请输入手机号');
+      } else if (!_this.authCode) {
         _this.$api.msg('请输入验证码');
       } else {
         _uniAxios.default.post('/sso/user/login', obj).then(function (res) {

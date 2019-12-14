@@ -68,6 +68,11 @@
 		onLoad() {
 			this.getData()
 		},
+		onShow() {
+			this.songdan = '../../static/delivery/songdan2.png';
+			this.jiedan = '../../static/delivery/jiedanset.png';
+			this.daliveryData = 2
+		},
 		methods: {
 			...mapMutations(['logout']),
 			// 跳转路由

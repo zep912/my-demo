@@ -21,13 +21,13 @@
 			</view>
 		</view>
 		<view class="bill-list">
-			<view class="bill-list-box" v-for='(item,index) in list.incomeList'>
+			<view class="bill-list-box" v-for='(item,index) in form.incomeList'>
 				<view class="bill-list-title">
 					<text class="bill-list-shop">{{item.incomeName}}</text>
-					<text class="bill-list-time">{{item.createTime}}</text>
+					<text class="bill-list-time">{{timestampToTime(item.createTime)}}</text>
 				</view>
 				<view class="bill-list-number">
-					<text>相当单号：<text>{{item.orderId}}</text></text>
+					<text>相当单号：<text>{{item.orderSn}}</text></text>
 					<text class="bill-list-price">+<text>{{item.orderAmount}}</text>元</text>
 				</view>
 			</view>
@@ -56,7 +56,7 @@
 			}
 		},
 		onLoad(){
-			this.getData()
+			this.getData();
 		},
 		methods:{
 			getData(){
@@ -67,7 +67,17 @@
 				axios.post('/income/list',obj).then(res=>{
 					this.form = res.data.data
 				})
-			}
+			},
+			timestampToTime (time) {
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear()
+				var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
+				var D = date.getDate()
+				var h = date.getHours() + ':'
+				var m = date.getMinutes()
+				var s = date.getSeconds();
+				return M+'-'+D+' '+h+m
+			},
 		}
 	}
 </script>

@@ -5,7 +5,7 @@
 			<image src="../../static/delivery/songdanbg.png" mode="" class="bg"></image>
 			<view class="sta-bg-top">
 				<text class="sta-bg-title sta-bgtitle">今日统计</text>
-				<text class="sta-bg-title"><text class="sta-bg-num">{{form.gSendOrderTotal+form.sendedOrderTotal+form.sendSussOrderTotal+form.sendChangeOrderTotal}}</text>单</text>
+				<text class="sta-bg-title"><text class="sta-bg-num">{{parseInt(form.gSendOrderTotal)+parseInt(form.sendedOrderTotal)+parseInt(form.sendSussOrderTotal)+parseInt(form.sendChangeOrderTotal)}}</text>单</text>
 			</view>
 			<view class="sta-bg-price">
 				<view class="sta-bg-totalprice">

@@ -45,7 +45,8 @@
 				var _this = this;
 				let obj = {
 					phone: _this.phone,
-					authCode: _this.authCode
+					authCode: _this.authCode,
+					useType:1
 				};
 				if(!_this.phone){
 					_this.$api.msg('请输入手机号')

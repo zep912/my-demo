@@ -92,11 +92,27 @@ var render = function() {
   var _c = _vm._self._c || _h
   var m0 = __webpack_require__(/*! ../../static/delivery/emptybg.png */ 54)
 
+  var l1 = _vm.__map(_vm.navList, function(tabItem, tabIndex) {
+    var l0 = _vm.__map(_vm.deliverylist, function(item, index) {
+      var m1 = _vm.timestampToTime(item.createTime)
+      return {
+        $orig: _vm.__get_orig(item),
+        m1: m1
+      }
+    })
+
+    return {
+      $orig: _vm.__get_orig(tabItem),
+      l0: l0
+    }
+  })
+
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        m0: m0
+        m0: m0,
+        l1: l1
       }
     }
   )
@@ -224,6 +240,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 414));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 421));};var _default =
 {
@@ -233,6 +251,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
   data: function data() {var _ref;
     return {
+      nowModel: '现在是收单模式',
       iconName: 'arrow-down',
       tabLook: '查看',
       tabInfoShow: false,
@@ -300,8 +319,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       sendStatus: 0,
       page: {
         current: 1,
-        pageSize: 10 } };
+        pageSize: 10 },
 
+      step: {},
+      stepa: [],
+      stepArrr: [] };
 
   },
 
@@ -311,12 +333,13 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                                      * 替换onLoad下代码即可
                                      */
     this.tabCurrentIndex = 0;
-    this.loadData('tabChange', 0);
-    if (options.state == 1) {
-      // this.loadData()
-    }
+    this.loadData('tabChange', 3);
   },
   methods: {
+    newDate: function newDate(time) {
+      var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      return date;
+    },
     look: function look() {
       if (!this.tabInfoShow) {
         this.tabInfoShow = true;
@@ -331,9 +354,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 跳转页面
     sd: function sd(e) {
-      if (e == 2) {
-        this.songdan = '../../static/delivery/songdan2.png';
+      if (e == 1) {
+        this.songdan = '../../static/delivery/songdan.png';
         this.jiedan = '../../static/delivery/jiedanset1.png';
+        this.daliveryData = 1;
+        uni.navigateTo({
+          url: 'deliverylist' });
+
+      } else if (e == 2) {
+        this.songdan = '../../static/delivery/songdan2.png';
+        this.jiedan = '../../static/delivery/jiedanset.png';
         this.daliveryData = 2;
         uni.navigateTo({
           url: 'set' });
@@ -341,45 +371,41 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
     },
     //获取订单列表
-    loadData: function loadData(source, n) {
-      //这里是将订单挂载到tab列表下
-      var index = this.tabCurrentIndex;
-      var navItem = this.navList[index];
-      var state = navItem.state;
-      if (source === 'tabChange' && navItem.loaded === true) {
-        //tab切换只有第一次需要加载数据
-        return;
-      }
-      if (navItem.loadingType === 'loading') {
-        //防止重复加载
-        return;
-      }
+    loadData: function loadData(source, n) {var _this = this;
 
-      // navItem.loadingType = 'loading';
-
-      // let orderList = Json.deliverylist.filter(item => {
-      // 	//添加不同状态下订单的表现形式
-      // 	item = Object.assign(item, this.orderStateExp(item.state));
-      // 	//演示数据所以自己进行状态筛选
-      // 	if (state === 0) {
-      // 		//0为全部订单
-      // 		return item;
-      // 	}
-      // 	return item.state === state
-      // });
       var obj = {
         pageNum: this.page.current,
         pageSize: this.page.pageSize,
         sendStatus: n };
 
       _uniAxios.default.post('/sendInformation/list', obj).then(function (res) {
-        console.log(res);
+        var result = res.data.data;
+        _this.deliverylist = res.data.data;
+
+        result.forEach(function (el) {
+          _this.stepArrr = [];
+          _this.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
+        });
+        _this.stepa = [];
+
+        for (var i = 0; i < _this.stepArrr.length; i++) {
+          _this.step = {};
+          _this.step['text'] = _this.stepArrr[i];
+          _this.step['desc'] = '';
+          _this.stepa.push(_this.step);
+
+        }
+
+        console.log(_this.stepa);
+        _this.deliverylist.forEach(function (el) {
+          el['steps'] = _this.stepa;
+        });
       });
       // orderList.forEach(item => {
       // 	navItem.orderList.push(item);
       // })
       //loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-      this.$set(navItem, 'loaded', true);
+      // this.$set(navItem, 'loaded', true);
 
       //判断是否还有数据， 有改为 more， 没有改为noMore 
       // navItem.loadingType = 'more';
@@ -389,11 +415,32 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     //swiper 切换
     changeTab: function changeTab(e) {
       this.tabCurrentIndex = e.target.current;
-      this.loadData('tabChange');
+      if (this.tabCurrentIndex == 0) {//已转出
+        this.loadData('tabChange', 3);
+      } else if (this.tabCurrentIndex == 1) {
+        this.nowModel = '现在是取单模式';
+        this.loadData('tabChange', 0);
+      } else if (this.tabCurrentIndex == 2) {
+        this.loadData('tabChange', 1);
+        this.nowModel = '正在配送';
+      } else if (this.tabCurrentIndex == 3) {
+        this.loadData('tabChange', 2);
+        this.nowModel = '已送达';
+      }
     },
     //顶部tab点击
     tabClick: function tabClick(index) {
       this.tabCurrentIndex = index;
+    },
+    timestampToTime: function timestampToTime(time) {
+      var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear();
+      var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+      var D = date.getDate();
+      var h = date.getHours() + ':';
+      var m = date.getMinutes() + ':';
+      var s = date.getSeconds();
+      return Y + '-' + M + '-' + D + ' ' + h + m + s;
     },
     //订单状态文字和颜色
     orderStateExp: function orderStateExp(state) {

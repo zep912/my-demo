@@ -90,6 +90,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var m0 = parseInt(_vm.form.gSendOrderTotal)
+  var m1 = parseInt(_vm.form.sendedOrderTotal)
+  var m2 = parseInt(_vm.form.sendSussOrderTotal)
+  var m3 = parseInt(_vm.form.sendChangeOrderTotal)
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        m0: m0,
+        m1: m1,
+        m2: m2,
+        m3: m3
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

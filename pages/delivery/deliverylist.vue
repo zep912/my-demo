@@ -11,31 +11,33 @@
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
 				<scroll-view class="list-scroll-content" scroll-y>
 					<!-- 空白页 -->
-					<!-- 空白页 -->
 					<view class="delivery-empty" v-if="deliverylist.length === 0">
 						<img src="../../static/delivery/emptybg.png" alt="">
 						<view class="">啥都没有~</view>
 					</view>
 					<!-- 订单列表 -->
-					<view class="tab-tips">
-						<text>提示:现在是收单模式</text>
+					<view class="tab-tips"  v-if="deliverylist.length !== 0">
+						<text>提示:{{nowModel}}</text>
 					</view>
 					<view v-for="(item,index) in deliverylist" :key="index" class="order-item">
 						<view class="delivery-list-tab">
 							<!-- 时间 -->
 							<view class="tab-time">
-								<view>送达: <text>今天 </text><text> {{item.time}}</text></view>
-								<view class="tab-time-countDown">
+								<view>送达: <text>今天 </text><text> {{item.sendRemark}}</text></view>
+								<view class="tab-time-countDown" v-show='item.sendStatus!=2'>
 									<image src="../../static/delivery/shalou.png" alt="" class="tab-time-img">
-									<van-count-down :time="item.countDown" format="DD天HH:mm:ss"></van-count-down>
+									<van-count-down :time="time" format="DD天HH:mm:ss"></van-count-down>
 								</view>
 							</view>
 							<!-- 步骤 -->
 							<view class="tab-step">
 								<view class="tab-step-top">
-									<text class="tips">{{'#'+item.info.a}}</text>
+									<!-- <text class="tips">{{'#'+item.info.a}}</text>
 									<text class="tips">{{'#'+item.info.b}}</text>
-									<text class="tips">{{'#'+item.info.c}}</text>
+									<text class="tips">{{'#'+item.info.c}}</text> -->
+									<text class="tips">{{'#'+20}}</text>
+									<text class="tips">{{'#'+'麦田圈预单'}}</text>
+									<text class="tips">{{'#'+'预'}}</text>
 								</view>
 								<!-- 步骤 -->
 								<van-steps
@@ -51,11 +53,11 @@
 							<!-- <van-transition :show="tabInfoShow" custom-class="block" name="fade-down"> -->
 							  <view class="tab-info" v-if='tabInfoShow'>
 							  	<text class="block">内容: <text>{{item.msg.content}}</text></text>
-							  	<text class="block">单号: <text>{{item.msg.oddNum}}</text></text>
-							  	<text class="block">来源: <text>{{item.msg.sorce}}</text></text>
+							  	<text class="block">单号: <text>{{item.orderSn}}</text></text>
+							  	<text class="block">来源: <text>{{item.detailAddress}}</text></text>
 							  	<text class="block">备注: <text>{{item.msg.beizhu}}</text></text>
 							  	<text class="block">标识: <text>{{item.msg.biaoshi}}</text></text>
-							  	<text class="block">下单: <text>{{item.msg.time}}</text></text>
+							  	<text class="block">下单: <text>{{timestampToTime(item.createTime)}}</text></text>
 							  </view>
 							<!-- </van-transition> -->
 							
@@ -66,7 +68,7 @@
 									<van-icon :name="iconName" />
 								</view>
 								
-								<button class="tab-btn">去取单</button>
+								<button class="tab-btn" :disabled="item.sendStatus==2">{{item.sendStatus==1?'配送中':item.sendStatus==2?'已送达':item.sendStatus==3?'转出':'去取件'}}</button>
 							</view>
 						</view>
 					</view>
@@ -99,6 +101,7 @@
 		},
 		data() {
 			return {
+				nowModel:'现在是收单模式',
 				iconName:'arrow-down',
 				tabLook:'查看',
 				tabInfoShow:false,
@@ -167,7 +170,10 @@
 				page:{
 					current:1,
 					pageSize:10
-				}
+				},
+				step:{},
+				stepa:[],
+				stepArrr:[]
 			};
 		},
 
@@ -177,12 +183,13 @@
 			 * 替换onLoad下代码即可
 			 */
 			this.tabCurrentIndex = 0;
-			this.loadData('tabChange',0);
-			if (options.state == 1) {
-				// this.loadData()
-			}
+			this.loadData('tabChange',3);
 		},
 		methods: {
+			newDate(time){
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				return date
+			},
 			look(){
 				if(!this.tabInfoShow){
 					this.tabInfoShow = true;
@@ -197,10 +204,17 @@
 			},
 			// 跳转页面
 			sd(e) {
-				if (e == 2) {
-					this.songdan = '../../static/delivery/songdan2.png';
+				if(e==1){
+					this.songdan = '../../static/delivery/songdan.png';
 					this.jiedan = '../../static/delivery/jiedanset1.png';
-					this.daliveryData = 2;
+					this.daliveryData = 1;
+					uni.navigateTo({
+						url:'deliverylist'
+					})
+				}else if(e==2){
+					this.songdan = '../../static/delivery/songdan2.png';
+					this.jiedan = '../../static/delivery/jiedanset.png';
+					this.daliveryData = 2
 					uni.navigateTo({
 						url: 'set'
 					})
@@ -208,44 +222,40 @@
 			},
 			//获取订单列表
 			loadData(source,n) {
-				//这里是将订单挂载到tab列表下
-				let index = this.tabCurrentIndex;
-				let navItem = this.navList[index];
-				let state = navItem.state;
-				if (source === 'tabChange' && navItem.loaded === true) {
-					//tab切换只有第一次需要加载数据
-					return;
-				}
-				if (navItem.loadingType === 'loading') {
-					//防止重复加载
-					return;
-				}
-
-				// navItem.loadingType = 'loading';
-
-				// let orderList = Json.deliverylist.filter(item => {
-				// 	//添加不同状态下订单的表现形式
-				// 	item = Object.assign(item, this.orderStateExp(item.state));
-				// 	//演示数据所以自己进行状态筛选
-				// 	if (state === 0) {
-				// 		//0为全部订单
-				// 		return item;
-				// 	}
-				// 	return item.state === state
-				// });
+				
 				let obj = {
 					pageNum:this.page.current,
 					pageSize:this.page.pageSize,
 					sendStatus:n
 				}
 				axios.post('/sendInformation/list',obj).then(res=>{
-					console.log(res)
+					let result = res.data.data;
+					this.deliverylist = res.data.data;
+					
+					result.forEach(el=>{
+						this.stepArrr = [];
+						this.stepArrr.push(el.detailAddress,el.receiverDetailAddress)
+					})
+					this.stepa = []
+	
+					for(let i=0;i<this.stepArrr.length;i++){
+						this.step = {}
+						this.step['text'] = this.stepArrr[i]
+						this.step['desc'] = '';
+						this.stepa.push(this.step);
+						
+					}
+					
+					console.log(this.stepa)
+					this.deliverylist.forEach(el=>{
+						el['steps'] = this.stepa
+					})
 				})
 				// orderList.forEach(item => {
 				// 	navItem.orderList.push(item);
 				// })
 				//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-				this.$set(navItem, 'loaded', true);
+				// this.$set(navItem, 'loaded', true);
 
 				//判断是否还有数据， 有改为 more， 没有改为noMore 
 				// navItem.loadingType = 'more';
@@ -255,11 +265,32 @@
 			//swiper 切换
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
-				this.loadData('tabChange');
+				if(this.tabCurrentIndex==0){//已转出
+					this.loadData('tabChange',3);
+				}else if(this.tabCurrentIndex==1){
+					this.nowModel = '现在是取单模式'
+					this.loadData('tabChange',0);
+				}else if(this.tabCurrentIndex==2){
+					this.loadData('tabChange',1);
+					this.nowModel = '正在配送'
+				}else if(this.tabCurrentIndex==3){
+					this.loadData('tabChange',2);
+					this.nowModel = '已送达'
+				}
 			},
 			//顶部tab点击
 			tabClick(index) {
 				this.tabCurrentIndex = index;
+			},
+			timestampToTime (time) {
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear()
+				var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
+				var D = date.getDate()
+				var h = date.getHours() + ':'
+				var m = date.getMinutes() + ':'
+				var s = date.getSeconds();
+				return Y+'-'+M+'-'+D+' '+h+m+s
 			},
 			//订单状态文字和颜色
 			orderStateExp(state) {
@@ -327,6 +358,7 @@
 
 	.swiper-box {
 		height: calc(100% - 20px);
+		margin-bottom: 100px;
 		// margin-top: 40px;
 	}
 

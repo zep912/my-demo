@@ -277,7 +277,7 @@
 							})
 						}
 					})
-				}else if(this.statuss==1){//待支付，取消订单
+				}else if(this.statuss==1){//待发货，取消订单
 					
 				}
 			},

@@ -90,6 +90,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.form.incomeList, function(item, index) {
+    var m0 = _vm.timestampToTime(item.createTime)
+    return {
+      $orig: _vm.__get_orig(item),
+      m0: m0
+    }
+  })
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -203,7 +219,8 @@ var _default = { data: function data() {return { form: { incomeList: [], // 收�
         notRecordedAmount: '', totalAmount: '', //累计收入
         totalactulAmount: '', //累计实际提现
         yyAmount: '' //账户余额
-      }, page: { current: 1, pageSize: 10 } };}, onLoad: function onLoad() {this.getData();}, methods: { getData: function getData() {var _this = this;var obj = { pageNum: this.page.current, pageSize: this.page.pageSize };_uniAxios.default.post('/income/list', obj).then(function (res) {_this.form = res.data.data;});} } };exports.default = _default;
+      }, page: { current: 1, pageSize: 10 } };}, onLoad: function onLoad() {this.getData();}, methods: { getData: function getData() {var _this = this;var obj = { pageNum: this.page.current, pageSize: this.page.pageSize };_uniAxios.default.post('/income/list', obj).then(function (res) {_this.form = res.data.data;});}, timestampToTime: function timestampToTime(time) {var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear();var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;var D = date.getDate();var h = date.getHours() + ':';var m = date.getMinutes();var s = date.getSeconds();return M + '-' + D + ' ' + h + m;} } };exports.default = _default;
 
 /***/ }),
 
