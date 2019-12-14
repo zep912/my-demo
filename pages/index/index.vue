@@ -4,7 +4,7 @@
 		<!-- #ifdef MP -->
 		<view class="mp-position-box" @click="navToPosition">
 			<uni-icons type="location-filled" color ='#F7B62C' size="20"></uni-icons>
-			<text class="position-text">华中农业大学</text>
+			<text class="position-text">{{school.address ? school.address : '请选择配送范围'}}</text>
 			<uni-icons type="arrowdown" color ='#F7B62C' size="20"></uni-icons>
 		</view>
 		<view class="mp-search-box">
@@ -150,7 +150,8 @@
 				productList: [],
 				homeFlashTime: '00',
 				newProductList: [],
-				productCategoryList: []
+				productCategoryList: [],
+				school: {}
 			};
 		},
 		computed: {
@@ -164,6 +165,7 @@
 			}
 		},
 		onShow() {
+			this.school = uni.getStorageSync('school') || {};
 			this.getHomeList();
 		},		
 		methods: {
@@ -181,8 +183,9 @@
 			login(userInfo) {
 				uni.showLoading({
 					title: '登录中...',
+					mask: true
 				});
-				const {city, gender, avatarUrl, nickName, phone} = userInfo;
+				const {city, gender, avatarUrl, nickName = 'user', phone} = userInfo;
 				// 1.wx获取登录用户code
 				uni.login({
 					provider: 'weixin',
@@ -191,7 +194,7 @@
 						uni.setStorageSync('code', code);
 						axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
 						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-							axios.post('/sso/user/miniLogin', {city, gender, icon: avatarUrl, nickname: 'nickName',
+							axios.post('/sso/user/miniLogin', {city: city || '武汉', gender, icon: avatarUrl, nickname: nickName,
 								  "wxAppid": "wx35cb9f6acb94bd15",
 								  "wxOpenid": data.data.openId
 								}).then((res) => {
@@ -201,7 +204,7 @@
 										uni.setStorageSync('hasLogin', true);
 										//openId、或SessionKdy存储//隐藏loading
 										uni.setStorageSync('gt', response.data.token);
-										setTimeout(() => {uni.hideLoading()}, 200);
+										uni.hideLoading();
 										this.close();
 									}
 								})

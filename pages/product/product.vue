@@ -313,7 +313,7 @@
 					console.log(data);
 					if (data.code === 200) {
 						this.productInfo = data.data;
-						this.productInfo.albumPics = this.productInfo.albumPics.split(',');
+						this.productInfo.albumPics = (this.productInfo.albumPics ? this.productInfo.albumPics : this.productInfo.albumPics).split(',');
 					}
 				})
 			},

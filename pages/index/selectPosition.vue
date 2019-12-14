@@ -10,7 +10,7 @@
 		<view class="select-content">
 			<view class="header">附近学校</view>
 			<view class="body">
-				<view v-for="item in list" :key="item.id" class="item-list">
+				<view v-for="item in list" :key="item.id" class="item-list" @click="setSchool(item)">
 					{{item.address}}
 				</view>
 			</view>
@@ -38,6 +38,10 @@
 						this.list = data.data;
 					}
 				})
+			},
+			setSchool(item) {
+				uni.setStorageSync('school', item);
+				uni.switchTab({url: '/pages/index/index'})
 			}
 		}
 	}
