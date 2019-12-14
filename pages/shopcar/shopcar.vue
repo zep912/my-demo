@@ -75,14 +75,14 @@
 
 							</view>
 							<!-- 赠品 -->
-							<view class="shopcar-gift">
+							<!-- <view class="shopcar-gift">
 								<text>[赠品]直升飞机一台</text>
 								<van-icon name="arrow" />
-							</view>
+							</view> -->
 							<!-- 修改优惠 -->
-							<view class="shopcar-discount" @click="editPrefe">
+							<!-- <view class="shopcar-discount" @click="editPrefe">
 								修改优惠
-							</view>
+							</view> -->
 						</view>
 
 					</view>
