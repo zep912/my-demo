@@ -48,10 +48,16 @@
 				const titleList = ['系统消息', '优惠促销', '客户咨询', '优惠券信息', '订单状态提醒'];
 				axios.post('/message/newMessage', {}).then(({data}) => {
 					if (data.code === 200) {
-						if (data.data.length) this.messageList = data.data.map(item => {
-							item.title = titleList[+item.messageType];
-							return item;
-						});
+						if (data.data.length) {
+							this.messageList = this.messageList.map(item => {
+								let findIndex = data.data.findIndex(val => val.messageType === item.messageType);
+								if (findIndex > -1) {
+									item = Object.assign(item, data.data[findIndex]);
+								}
+								return item;
+							});
+							
+						}
 					}
 				});
 			}
@@ -92,14 +98,14 @@
 			}
 			.center {
 				flex: 1;
-				padding: 20upx;
+				padding: 10upx 20upx;
 				color: #181818;
 				font-size: 28upx;
-				line-height: 15upx;
+				line-height: 24upx;
 				.bottom {
-					font-size: 24upx;
+					font-size: 20upx;
 					color: #9f9f9f;
-					margin-top: 20upx;
+					margin-top: 16upx;
 				}
 			}
 			.right {

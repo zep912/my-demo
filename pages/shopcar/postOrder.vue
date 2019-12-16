@@ -133,6 +133,15 @@
 			this.getOrder();
 
 		},
+		onShow() {
+			uni.login({
+				provider: 'weixin',
+				success: (loginRes) => {
+					let code = loginRes.code;	
+					uni.setStorageSync('code', code)
+				}
+			})
+		},
 		methods: {
 			// 数据初始化
 			getOrder() {

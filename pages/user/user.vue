@@ -105,8 +105,8 @@
 						<text>{{item.jifen?item.jifen+'积分':'0积分'}}</text>
 					</view>
 					<view class="goods-price">
-						<text>{{'$'+item.price}}</text>
-						<van-icon name="add" color='#F55641' size='26px' />
+						<text>{{'¥'+item.price}}</text>
+						<text class="iconfont icon-iconfontxinzeng"></text>
 					</view>
 				</view>
 			</view>
@@ -494,10 +494,10 @@
 		}
 
 		.login-now {
-			width: 184rpx;
+			width: 160rpx;
 			height: 40rpx;
 			background: rgba(254, 201, 89, 1);
-			border-radius: 20rpx;
+			border-radius: 20rpx 0 0 20rpx;
 			font-size: 24rpx;
 			font-weight: bold;
 			color: rgba(255, 255, 255, 1);
@@ -505,7 +505,7 @@
 			padding-left: 40rpx;
 			line-height: 40rpx;
 			position: absolute;
-			right: -26rpx;
+			right: 0;
 			top: 26rpx;
 			z-index: 900;
 		}
@@ -825,67 +825,65 @@
 			}
 		}
 
-		.goodsList {
-			width: 94%;
+		.goodsList{
+			width: 710upx;
 			margin: 0 auto;
 			display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
-
-			.goodsList-list {
+		
+			.goodsList-list{
 				width: 49%;
 				background: #fff;
 				margin-bottom: 20rpx;
 				border-radius: 20rpx;
 				box-sizing: border-box;
 				padding: 20rpx 20rpx 30rpx 20rpx;
-
-				img {
-					width: 80%;
-					height: 240rpx;
+				img{
+					width: 210upx;
+					height: 260upx;
 					margin: 0 auto;
 					display: block;
 				}
-
-				.goods-title {
-					font-size: 22rpx;
-					font-weight: 500;
-					color: rgba(69, 69, 69, 1);
+				.goods-title{
+					font-size:22rpx;
+					font-weight:500;
+					color:rgba(69,69,69,1);
 					margin-top: 20rpx;
 				}
-
-				.goods-subTitle {
-					font-size: 18rpx;
-					font-weight: 500;
-					color: rgba(169, 168, 168, 1);
-					margin-top: 10rpx;
+				.goods-subTitle{
+					font-size: 18upx;
+					font-weight:500;
+					color:rgba(169,168,168,1);
+					margin-top: 10upx;
 				}
-
-				.goods-jifen {
-					width: 120rpx;
-					border: 1px solid rgba(245, 86, 65, 1);
-					border-radius: 14px;
+				.goods-jifen{
+					max-width: 100upx;
+					border: 2upx solid rgba(245,86,65,1);
+					border-radius:14upx;
 					text-align: center;
-					font-size: 26rpx;
-					font-weight: 500;
-					color: rgba(245, 86, 65, 1);
-					line-height: 36rpx;
-					margin-top: 16rpx;
+					font-size: 18upx;
+					font-weight:500;
+					color:rgba(245,86,65,1);
+					line-height: 32upx;
+					margin-top: 16upx;
 				}
-
-				.goods-price {
+				.goods-price{
 					width: 100%;
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					margin-top: 42rpx;
-					font-size: 20px;
-					font-weight: 500;
-					color: rgba(245, 86, 65, 1);
+					margin-top: 20upx;
+					font-size: 28upx;
+					font-weight:500;
+					color: rgba(245,86,65,1);
+					.iconfont {
+						font-size: 45upx;
+						color: #F55641;
+					}
 				}
 			}
 		}
-
 	}
 
 	.info-box .authorize {

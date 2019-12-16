@@ -66,7 +66,7 @@
 		<view class="hot-goods">
 			<view class="hot-title">
 				<img src="../../static/index/btbg.png" alt="">
-				<view class="title">花里胡哨的包包，等你来剁手</view>
+				<view class="title">精选美味，等你来吃</view>
 			</view>
 			<view class="poster-content" @click="navToCate()">
 				<view class="content-item">
@@ -101,7 +101,7 @@
 					</view>
 					<view class="goods-price">
 						<text>{{'¥'+item.price}}</text>
-						<uni-icons type="plus-filled" color ='#F55641' size="30"></uni-icons>
+						<text class="iconfont icon-iconfontxinzeng"></text>
 					</view>
 				</view>
 			</view>
@@ -127,15 +127,11 @@
 		uniSearchBar
 	} from "@/components/uni-search-bar/uni-search-bar.vue";
 	import {
-		uniIcons
-	} from "@/components/uni-icons/uni-icons.vue";
-	import {
 		uniPopup
 	} from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		components: {
 			uniSearchBar,
-			uniIcons,
 			uniPopup
 		},
 		data() {
@@ -582,7 +578,7 @@
 				margin: 0 20upx;
 			}
 
-			.yticon {
+			.iconfont {
 				flex: 1;
 				text-align: right;
 				font-size: $font-sm+2upx;
@@ -653,30 +649,40 @@
 		margin: 0 20upx;
 
 		.content-item {
-			width: 49%;
-			margin-right: 2%;
+			width: 350upx;
+			margin-right: 10upx;
 
 			&:last-of-type {
 				margin-right: 0;
 			}
 
 			image {
-				width: 100%;
-				height: 250upx;
+				width: 350upx;
+				height: 260upx;
+				border-radius: 16upx 0 0 16upx;
 			}
 
 			.img-50 {
-				height: 120upx;
+				width: 350upx;
+				height: 125upx;
+				border-radius: 0 16upx 16upx 0;
 			}
 		}
 	}
 
 	.box-grid {
-		margin: 20upx 20upx 0 20upx;
-
+		margin: 20upx 20upx 10upx 20upx;
+		width: 710upx;
+		height: 220upx;
 		image {
-			width: 33.33%;
-			height: 210upx;
+			width: 236upx;
+			height: 220upx;
+			&:first-of-type {
+				border-radius: 16upx 0 0 16upx;
+			}
+			&:last-of-type {
+				border-radius: 0 16upx 16upx 0;
+			}
 		}
 	}
 
@@ -684,8 +690,9 @@
 		margin: 0 20upx;
 
 		image {
-			width: 100%;
+			width: 710upx;
 			height: 210upx;
+			border-radius: 16upx;
 		}
 	}
 
@@ -732,7 +739,7 @@
 				margin-top: 20upx;
 			}
 
-			.yticon {
+			.iconfont {
 				height: 40upx;
 				border-radius: 40upx;
 				line-height: 40upx;
@@ -846,23 +853,6 @@
 		color: #999;
 	}
 
-	/* 好物推荐 */
-	.good-sku {
-		.guess-item {
-			width: 32%;
-			margin-right: 2%;
-
-			&:nth-child(3n) {
-				margin-right: 0;
-			}
-		}
-
-		.image-wrapper {
-			width: 100%;
-			height: 210upx;
-		}
-	}
-
 	/* 好货推荐 */
 	.hot-goods{
 		margin-top: 28rpx;
@@ -886,7 +876,7 @@
 			}
 		}
 		.goodsList{
-			width: 94%;
+			width: 710upx;
 			margin: 0 auto;
 			display: flex;
 			justify-content: space-between;
@@ -900,8 +890,8 @@
 				box-sizing: border-box;
 				padding: 20rpx 20rpx 30rpx 20rpx;
 				img{
-					width: 80%;
-					height: 240rpx;
+					width: 210upx;
+					height: 260upx;
 					margin: 0 auto;
 					display: block;
 				}
@@ -912,31 +902,35 @@
 					margin-top: 20rpx;
 				}
 				.goods-subTitle{
-					font-size:18rpx;
+					font-size: 18upx;
 					font-weight:500;
 					color:rgba(169,168,168,1);
-					margin-top: 10rpx;
+					margin-top: 10upx;
 				}
 				.goods-jifen{
-					width:120rpx;
-					border:1px solid rgba(245,86,65,1);
-					border-radius:14px;
+					max-width: 100upx;
+					border: 2upx solid rgba(245,86,65,1);
+					border-radius:14upx;
 					text-align: center;
-					font-size:26rpx;
+					font-size: 18upx;
 					font-weight:500;
 					color:rgba(245,86,65,1);
-					line-height:36rpx;
-					margin-top: 16rpx;
+					line-height: 32upx;
+					margin-top: 16upx;
 				}
 				.goods-price{
 					width: 100%;
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					margin-top: 42rpx;
-					font-size:20px;
+					margin-top: 20upx;
+					font-size: 28upx;
 					font-weight:500;
-					color:rgba(245,86,65,1);
+					color: rgba(245,86,65,1);
+					.iconfont {
+						font-size: 45upx;
+						color: #F55641;
+					}
 				}
 			}
 		}

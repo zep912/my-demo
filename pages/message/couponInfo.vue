@@ -46,7 +46,7 @@
 <style lang="scss">
 .container {
 	padding: 20upx;
-	height: 100vh;
+	// height: 100vh;
 	background: #F2F2F2;
 	.content {
 		.top-time {
@@ -81,6 +81,7 @@
 		color: #C9C9C9;
 		text-align: center;
 		margin-top: 40%;
+		height: 100vh;
 		.iconfont {
 			font-size: 140upx;
 			margin-bottom: 80upx;

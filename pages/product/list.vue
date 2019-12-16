@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<view class="mp-search-box">
-			<uni-search-bar :radius="10" placeholder="请输入商品名称"/>
+			<uni-search-bar :radius="10" placeholder="请输入商品名称" @cancel="search"/>
 		</view>
 		<!-- <view class="history-goods">
 			<view class="title">历史搜索</view>
@@ -45,13 +45,16 @@
 					</view>
 					<text class="title clamp">{{item.name}}</text>
 					<view class="price-box">
-						<text class="price">{{item.price}}</text>
-						<text>已售 {{item.sale}}</text>
+						<view class="price">
+							{{item.price}}
+							<text>已售 {{item.sale}}</text>
+						</view>
+						<text class="iconfont icon-iconfontxinzeng"></text>
 					</view>
 				</view>
-				<view class="loadmore">
-					<uni-load-more :status="loadingType"></uni-load-more>
-				</view>
+				<!-- <view class="loadmore"> -->
+					<uni-load-more class="loadmore" :status="loadingType"></uni-load-more>
+				<!-- </view> -->
 			</view>
 		</view>
 	</view>
@@ -100,7 +103,8 @@
 		},
 		methods: {
 			//加载分类
-			async search() {
+			async search(e) {
+				this.productRequest.keywords = e ? e.value : '';
 				return await axios.post('/product/search', this.productRequest);
 			},
 			//加载商品 ，带下拉刷新和上滑加载
@@ -194,8 +198,8 @@
 			.navbar{
 				display: flex;
 				width: 100%;
-				height: 6vh;
-				background: #fff;
+				height: 7vh;
+				background: #F5F5F5;
 				box-shadow: 0 2upx 10upx rgba(0,0,0,.06);
 				.nav-item{
 					flex: 1;
@@ -223,7 +227,7 @@
 				.p-box{
 					display: flex;
 					flex-direction: column;
-					.yticon{
+					.iconfont{
 						display: flex;
 						align-items: center;
 						justify-content: center;
@@ -265,18 +269,21 @@
 			.goods-list{
 				display:flex;
 				flex-wrap:wrap;
-				padding: 0 30upx;
+				padding: 20upx;
 				background: #fff;
-				height: 87vh;
+				height: 86vh;
 				overflow-y: auto;
 				position: relative;
 				.goods-item{
 					display:flex;
 					flex-direction: column;
-					width: 48%;
-					padding-bottom: 40upx;
+					width: 345upx;
+					height: 440upx;
+					margin-bottom: 20upx;
+					padding: 20upx;
+					background: #FAFAFA;
 					&:nth-child(2n+1){
-						margin-right: 4%;
+						margin-right: 20upx;
 					}
 				}
 				.image-wrapper{
@@ -311,9 +318,19 @@
 						content: '￥';
 						font-size: 26upx;
 					}
+					text {
+						font-size: $font-sm;
+						color: #000;
+						margin-left: 20upx;
+					}
+				}
+				.iconfont {
+					font-size: 45upx;
+					color: #F55641;
 				}
 				.loadmore {
 					width: 100%; 
+					height: 80upx;
 				}
 			}
 		}
