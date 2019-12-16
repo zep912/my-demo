@@ -43,7 +43,8 @@
 				<view class="i-top b-b">
 					<img src="../../static/shop.png" alt="" class='shopLogo'>
 					<text class="time">麦田圈官网旗舰店</text>
-					<text class="cell-more yticon icon-you"></text>
+					<text class="iconfont icon-you"></text>
+					
 				</view>
 
 				<view class="goods-box-single b-b">
@@ -77,7 +78,7 @@
 				</li>
 				<li>
 					<text>商品优惠</text>
-					<text class="order-list-bold">{{'-￥'+order.promotionAmount }}</text>
+					<text class="order-list-bold">{{'-￥'+order.promotionAmountTotal }}</text>
 				</li>
 				<li>
 					<text>实付合计</text>

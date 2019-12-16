@@ -258,7 +258,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
 //
 //
 //
@@ -382,8 +384,7 @@ var _default = { data: function data() {return { form: { collect: [{ time: '2019
             _this.show = false;_this.order.statusMsg = '待发货';_this.order.wuliu = '';_this.order.img = _this.img[0];_this.order.pay = '';_this.order.color = '#F7B62C';} else if (_this.order.status == 2) {//待收货
             _this.show = true;_this.order.statusMsg = '待收货';_this.order.wuliu = '查看物流';_this.order.img = _this.img[2];_this.order.pay = '确认收货';_this.order.color = '#515151';} else if (_this.order.status == 6) {//交易成功
             _this.show = true;_this.order.statusMsg = '交易成功';_this.order.wuliu = '删除订单';_this.order.img = _this.img[3];_this.order.pay = '去评价';_this.order.color = '#01B300';} else if (_this.order.status == 4) {// 交易关闭
-            _this.show = true;_this.order.wuliu = '删除订单';
-            _this.order.img = _this.img[4];
+            _this.show = true;_this.order.wuliu = '删除订单';_this.order.img = _this.img[4];
           } else if (_this.order.status == 3) {
             // 已完成
             _this.show = true;

@@ -2,8 +2,9 @@
 	<view class="order-details">
 		<!-- 地址 -->
 		<view class="order-address">
-			<img src="../../static/dizhi.png" />
-			<view class="order-ad-user">
+			<!-- <img src="../../static/dizhi.png" /> -->
+			<text class="iconfont icon-dizhi1"></text>
+			<view class="order-ad-user" style="margin-left: 10rpx;">
 				<text class="phone">涂志奇15692124707</text>
 				<text class="address">湖北省武汉市江夏市光谷智慧园7栋4楼</text>
 			</view>
@@ -12,9 +13,10 @@
 		<view class="order-goods">
 			<view v-for="(item,index) in form.collect" :key="index" class="order-item">
 				<view class="i-top b-b">
-					<img src="../../static/shop.png" alt="" class='shopLogo'>
+					<!-- <img src="../../static/shop.png" alt="" class='shopLogo'> -->
+					<text class="iconfont icon-dizhi1 shopLogo"></text>
 					<text class="time">{{item.shopName}}</text>
-					<text class="cell-more yticon icon-you"></text>
+					<text class="iconfont icon-you"></text>
 				</view>
 
 				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
@@ -563,12 +565,6 @@
 		padding-left: 30rpx;
 		display: flex;
 		align-items: center;
-
-		img {
-			width: 31rpx;
-			height: 42rpx;
-			margin-right: 30rpx;
-		}
 
 		.order-ad-user {
 			text {

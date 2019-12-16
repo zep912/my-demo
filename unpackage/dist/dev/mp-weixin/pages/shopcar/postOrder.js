@@ -291,9 +291,18 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5 }] }, order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', checked: true, orderList: { name: '', phoneNumber: '', address: '' }, ids: [], orderItemList: [], totalCount: '', payCode: { appId: "", nonceStr: "", package: "", paySign: "", signType: "MD5", timeStamp: "" } };}, onLoad: function onLoad(option) {this.ids = JSON.parse(option.deleIds);if (uni.getStorageSync('addressMsg')) {//从地址跳转回来
       var orderAddress = JSON.parse(uni.getStorageSync('addressMsg')); // 地址更新
-      this.orderList = { name: orderAddress.name, phoneNumber: orderAddress.phoneNumber, address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };}this.getOrder();}, methods: { // 数据初始化
-    getOrder: function getOrder() {var _this2 = this;var obj = { cartItemIds: this.ids };_uniAxios.default.post('/order/generateOrder', obj).then(function (res) {_this2.orderList = res.data.data.order;_this2.orderItemList = res.data.data.orderItemList;if (_this2.orderList.preferential) {_this2.totalCount = _this2.orderList.totalAmount - 1 - _this2.orderList.preferential;console.log(11111);} else {_this2.totalCount = _this2.orderList.totalAmount - 1;console.log(5555);}});}, // 修改地址
-    toAddress: function toAddress() {uni.navigateTo({ url: '../set/address?postOrder=1' });}, //使用积分
+      this.orderList = { name: orderAddress.name, phoneNumber: orderAddress.phoneNumber, address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };}this.getOrder();}, onShow: function onShow() {uni.login({ provider: 'weixin', success: function success(loginRes) {var code = loginRes.code;uni.setStorageSync('code', code);} });}, methods: { // 数据初始化
+    getOrder: function getOrder() {var _this2 = this;var obj = { cartItemIds: this.ids };_uniAxios.default.post('/order/generateOrder', obj).then(function (res) {_this2.orderList = res.data.data.order;_this2.orderItemList = res.data.data.orderItemList;if (_this2.orderList.preferential) {_this2.totalCount = _this2.orderList.totalAmount - 1 - _this2.orderList.preferential;console.log(11111);} else {_this2.totalCount = _this2.orderList.totalAmount - 1;console.log(5555);}
+      });
+
+    },
+    // 修改地址
+    toAddress: function toAddress() {
+      uni.navigateTo({
+        url: '../set/address?postOrder=1' });
+
+    },
+    //使用积分
     swithChange: function swithChange(_ref)
 
     {var detail = _ref.detail;

@@ -90,6 +90,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var g0 = _vm.productInfo.productFullReductionList
+    .map(function(item) {
+      return "满" + item.fullPrice + "减" + item.reducePrice
+    })
+    .join("，")
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        g0: g0
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -122,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 89));
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 89));
 
 
 
@@ -235,41 +248,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var share = function share() {return __webpack_require__.e(/*! import() | components/share */ "components/share").then(__webpack_require__.bind(null, /*! @/components/share */ 428));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var share = function share() {return __webpack_require__.e(/*! import() | components/share */ "components/share").then(__webpack_require__.bind(null, /*! @/components/share */ 420));};var _default =
 
 {
   components: {
@@ -283,13 +262,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         albumPics: [
         'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg',
         'https://gd3.alicdn.com/imgextra/i3/TB1RPFPPFXXXXcNXpXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg',
-        'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'] },
+        'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'],
 
-
-      favorite: true,
-      shareList: [],
-
-      desc: "\n\t\t\t\t<div style=\"width:100%\">\n\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd3.alicdn.com/imgextra/i4/479184430/O1CN01nCpuLc1iaz4bcSN17_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd2.alicdn.com/imgextra/i2/479184430/O1CN01gwbN931iaz4TzqzmG_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd3.alicdn.com/imgextra/i3/479184430/O1CN018wVjQh1iaz4aupv1A_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd4.alicdn.com/imgextra/i4/479184430/O1CN01tWg4Us1iaz4auqelt_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd1.alicdn.com/imgextra/i1/479184430/O1CN01Tnm1rU1iaz4aVKcwP_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t</div>\n\t\t\t",
+        desc: "\n\t\t\t\t\t<div style=\"width:100%\">\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd3.alicdn.com/imgextra/i4/479184430/O1CN01nCpuLc1iaz4bcSN17_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd2.alicdn.com/imgextra/i2/479184430/O1CN01gwbN931iaz4TzqzmG_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd3.alicdn.com/imgextra/i3/479184430/O1CN018wVjQh1iaz4aupv1A_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd4.alicdn.com/imgextra/i4/479184430/O1CN01tWg4Us1iaz4auqelt_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd1.alicdn.com/imgextra/i1/479184430/O1CN01Tnm1rU1iaz4aVKcwP_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t</div>\n\t\t\t\t",
 
 
 
@@ -298,151 +273,58 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
 
 
-      specList: [
-      {
-        id: 1,
-        name: '尺寸' },
-
-      {
-        id: 2,
-        name: '颜色' }],
+        productFullReductionList: [
+        { id: 144, productId: 46, fullPrice: 39, reducePrice: 10 },
+        { id: 145, productId: 46, fullPrice: 69, reducePrice: 20 }] },
 
 
-      specChildList: [
-      {
-        id: 1,
-        pid: 1,
-        name: 'XS' },
-
-      {
-        id: 2,
-        pid: 1,
-        name: 'S' },
-
-      {
-        id: 3,
-        pid: 1,
-        name: 'M' },
-
-      {
-        id: 4,
-        pid: 1,
-        name: 'L' },
-
-      {
-        id: 5,
-        pid: 1,
-        name: 'XL' },
-
-      {
-        id: 6,
-        pid: 1,
-        name: 'XXL' },
-
-      {
-        id: 7,
-        pid: 2,
-        name: '白色' },
-
-      {
-        id: 8,
-        pid: 2,
-        name: '珊瑚粉' },
-
-      {
-        id: 9,
-        pid: 2,
-        name: '草木绿' }] };
-
-
+      favorite: false,
+      ids: '' };
 
   },
-  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(options) {var _this = this;var id;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+  onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(options) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
 
               //接收传值,id里面放的是标题，因为测试数据并没写id 
-              id = options.id;
-              if (id) {
-                this.productInfoById(id);
-                this.$api.msg("\u70B9\u51FB\u4E86".concat(id));
-              }
-
-
-              //规格 默认选中第一条
-              this.specList.forEach(function (item) {var _iteratorNormalCompletion = true;var _didIteratorError = false;var _iteratorError = undefined;try {
-                  for (var _iterator = _this.specChildList[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {var cItem = _step.value;
-                    if (cItem.pid === item.id) {
-                      _this.$set(cItem, 'selected', true);
-                      _this.specSelected.push(cItem);
-                      break; //forEach不能使用break
-                    }
-                  }} catch (err) {_didIteratorError = true;_iteratorError = err;} finally {try {if (!_iteratorNormalCompletion && _iterator.return != null) {_iterator.return();}} finally {if (_didIteratorError) {throw _iteratorError;}}}
-              });_context.next = 5;return (
-                this.$api.json('shareList'));case 5:this.shareList = _context.sent;case 6:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
+              this.id = options.id;
+              if (this.id) {
+                this.productInfoById(this.id);
+                // this.$api.msg(`点击了${this.id}`);
+              }case 2:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
 
   methods: {
-    //规格弹窗开关
-    toggleSpec: function toggleSpec() {var _this2 = this;
-      if (this.specClass === 'show') {
-        this.specClass = 'hide';
-        setTimeout(function () {
-          _this2.specClass = 'none';
-        }, 250);
-      } else if (this.specClass === 'none') {
-        this.specClass = 'show';
-      }
-    },
-    //选择规格
-    selectSpec: function selectSpec(index, pid) {var _this3 = this;
-      var list = this.specChildList;
-      list.forEach(function (item) {
-        if (item.pid === pid) {
-          _this3.$set(item, 'selected', false);
-        }
-      });
-
-      this.$set(list[index], 'selected', true);
-      //存储已选择
-      /**
-       * 修复选择规格存储错误
-       * 将这几行代码替换即可
-       * 选择的规格存放在specSelected中
-       */
-      this.specSelected = [];
-      list.forEach(function (item) {
-        if (item.selected === true) {
-          _this3.specSelected.push(item);
-        }
-      });
-
+    //收藏
+    toFavorite: function toFavorite() {
+      this.favorite = !this.favorite;
     },
     //分享
-    share: function share() {
-      this.$refs.share.toggleMask();
-    },
+    // share(){
+    // 	this.$refs.share.toggleMask();	
+    // },
     buy: function buy() {
-      uni.navigateTo({
-        url: "/pages/order/createOrder" });
-
+      // uni.navigateTo({
+      // 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([this.id])}`
+      // })
     },
-    addCart: function addCart() {var _this4 = this;var _this$productInfo =
+    addCart: function addCart() {var _this = this;var _this$productInfo =
       this.productInfo,id = _this$productInfo.id,productCategoryId = _this$productInfo.productCategoryId;
       _uniAxios.default.post('/cart/add', { productId: id, productCategoryId: productCategoryId }).then(function (_ref) {var data = _ref.data;
         if (data.code === 200) {
-          _this4.$api.msg('已成功加入购物车');
+          _this.$api.msg('已成功加入购物车');
+        } else {
+          _this.$api.msg(data.message);
         }
       });
     },
-    productInfoById: function productInfoById(id) {var _this5 = this;
+    productInfoById: function productInfoById(id) {var _this2 = this;
       _uniAxios.default.post('/product/productInfoById', { id: id }).then(function (_ref2) {var data = _ref2.data;
         console.log(data);
         if (data.code === 200) {
-          _this5.productInfo = data.data;
-          _this5.productInfo.albumPics = _this5.productInfo.albumPics.split(',');
+          _this2.productInfo = data.data;
+          _this2.productInfo.albumPics = _this2.productInfo.albumPics ? _this2.productInfo.albumPics.split(',') : [_this2.productInfo.pic];
         }
       });
     },
     stopPrevent: function stopPrevent() {} } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

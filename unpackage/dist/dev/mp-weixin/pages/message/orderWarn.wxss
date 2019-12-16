@@ -7,7 +7,6 @@
 /* 行为相关颜色 */
 .container {
   padding: 20rpx;
-  height: 100vh;
   background: #F2F2F2;
 }
 .container .content .top-time {
@@ -41,6 +40,7 @@
     color: #C9C9C9;
     text-align: center;
     margin-top: 40%;
+    height: 100vh;
 }
 .container .null-class .iconfont {
       font-size: 140rpx;

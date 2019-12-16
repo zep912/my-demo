@@ -265,10 +265,7 @@ __webpack_require__.r(__webpack_exports__);
 var _vuex = __webpack_require__(/*! vuex */ 10);
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 392));};var uniIcons = function uniIcons() {return Promise.all(/*! import() | components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/components/uni-icons/uni-icons.vue */ 399));};var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 407));};var _default =
-
-
-
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 392));};var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 399));};var _default =
 
 
 
@@ -278,7 +275,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 {
   components: {
     uniSearchBar: uniSearchBar,
-    uniIcons: uniIcons,
     uniPopup: uniPopup },
 
   data: function data() {
@@ -293,7 +289,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       productList: [],
       homeFlashTime: '00',
       newProductList: [],
-      productCategoryList: [] };
+      productCategoryList: [],
+      school: {} };
 
   },
   computed: _objectSpread({},
@@ -307,6 +304,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     }
   },
   onShow: function onShow() {
+    this.school = uni.getStorageSync('school') || {};
     this.getHomeList();
   },
   methods: {
@@ -323,9 +321,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     //登录
     login: function login(userInfo) {var _this2 = this;
       uni.showLoading({
-        title: '登录中...' });var
+        title: '登录中...',
+        mask: true });var
 
-      city = userInfo.city,gender = userInfo.gender,avatarUrl = userInfo.avatarUrl,nickName = userInfo.nickName,phone = userInfo.phone;
+      city = userInfo.city,gender = userInfo.gender,avatarUrl = userInfo.avatarUrl,_userInfo$nickName = userInfo.nickName,nickName = _userInfo$nickName === void 0 ? 'user' : _userInfo$nickName,phone = userInfo.phone;
       // 1.wx获取登录用户code
       uni.login({
         provider: 'weixin',
@@ -334,7 +333,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           uni.setStorageSync('code', code);
           _uniAxios.default.post('/sso/user/getOpenId', { code: code }).then(function (_ref) {var data = _ref.data;
             //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-            _uniAxios.default.post('/sso/user/miniLogin', { city: city, gender: gender, icon: avatarUrl, nickname: 'nickName',
+            _uniAxios.default.post('/sso/user/miniLogin', { city: city || '武汉', gender: gender, icon: avatarUrl, nickname: nickName,
               "wxAppid": "wx35cb9f6acb94bd15",
               "wxOpenid": data.data.openId }).
             then(function (res) {
@@ -344,7 +343,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                 uni.setStorageSync('hasLogin', true);
                 //openId、或SessionKdy存储//隐藏loading
                 uni.setStorageSync('gt', response.data.token);
-                setTimeout(function () {uni.hideLoading();}, 200);
+                uni.hideLoading();
                 _this2.close();
               }
             });

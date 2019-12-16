@@ -172,10 +172,16 @@ var _default = { data: function data() {return { messageList: [{ messageType: 1,
       var titleList = ['系统消息', '优惠促销', '客户咨询', '优惠券信息', '订单状态提醒'];
       _uniAxios.default.post('/message/newMessage', {}).then(function (_ref) {var data = _ref.data;
         if (data.code === 200) {
-          if (data.data.length) _this.messageList = data.data.map(function (item) {
-            item.title = titleList[+item.messageType];
-            return item;
-          });
+          if (data.data.length) {
+            _this.messageList = _this.messageList.map(function (item) {
+              var findIndex = data.data.findIndex(function (val) {return val.messageType === item.messageType;});
+              if (findIndex > -1) {
+                item = Object.assign(item, data.data[findIndex]);
+              }
+              return item;
+            });
+
+          }
         }
       });
     } } };exports.default = _default;
