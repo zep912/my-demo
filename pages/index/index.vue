@@ -3,13 +3,13 @@
 		<!-- 小程序头部兼容 -->
 		<!-- #ifdef MP -->
 		<view class="mp-position-box" @click="navToPosition">
-			<uni-icons type="location-filled" color ='#F7B62C' size="20"></uni-icons>
+			<text class="iconfont icon-icon6"></text>
 			<text class="position-text">{{school.address ? school.address : '请选择配送范围'}}</text>
-			<uni-icons type="arrowdown" color ='#F7B62C' size="20"></uni-icons>
+			<text class="iconfont icon-xia"></text>
 		</view>
 		<view class="mp-search-box">
-			<input class="ser-input" type="text" value="输入关键字搜索" @click="navToSearch"/>
-			<uni-icons type="chat" size="30" color ='#ffffff99' @click="navToMessage"></uni-icons>
+			<input class="ser-input" type="text" disabled value="输入关键字搜索" @click="navToSearch"/>
+			<text class="iconfont icon-xinxi" @click="navToMessage"></text>
 		</view>
 		<!-- #endif -->
 		<!-- 头部轮播 -->
@@ -109,7 +109,7 @@
 		<!-- 微信登录  自动弹窗-->
 		<uni-popup ref="popup" type="center" :maskClick="false">
 			<view class="weixinLogin">
-				<text class="weixinX" @click="close">X</text>
+				<!-- <text class="weixinX" @click="close">X</text> -->
 				<image src="../../static/delivery/logo.png" mode=""></image>
 				<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
 				<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
@@ -155,8 +155,10 @@
 		},
 		onLoad() {
 			if (!uni.getStorageSync('hasLogin')) {
+				uni.hideTabBar();
 				this.$refs.popup.open();
 			} else {
+				uni.showTabBar();
 				this.wxGetUserInfo();
 			}
 		},
@@ -201,6 +203,7 @@
 										//openId、或SessionKdy存储//隐藏loading
 										uni.setStorageSync('gt', response.data.token);
 										uni.hideLoading();
+										uni.showTabBar();
 										this.close();
 									}
 								})
@@ -243,8 +246,11 @@
 			},
 			navToSearch() {
 				uni.navigateTo({
-					url: `/pages/index/search`
+					url: `/pages/product/list`
 				})
+				// uni.navigateTo({
+				// 	url: `/pages/index/search`
+				// })
 			},
 			navToCate(categoryId = '') {
 				uni.setStorageSync('categoryId', categoryId);
@@ -344,6 +350,11 @@
 			font-size: $font-lg;
 			color: #F7B62C;
 		}
+		
+		.iconfont {
+			color: #F7B62C;
+			font-size: $font-lg;
+		}
 	}
 	.mp-search-box {
 		position: absolute;
@@ -363,10 +374,12 @@
 			background: rgba(255,255,255,.6);
 			padding: 0 20upx;
 		}
-		uni-icons {
+		.iconfont {
 			position: absolute;
 			top: 0;
 			right: 20upx;
+			color: #fff;
+			font-size: 50upx;
 		}
 		// .ser-input {
 		// 	flex: 1;

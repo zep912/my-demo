@@ -51,6 +51,7 @@
 						axios.post('/sso/user/login',obj).then(res=>{
 							if(res.data.code=='200'){
 								var token = res.data.data.token;
+								uni.setStorageSync('hasLogin', true);
 								uni.setStorageSync('gt',token);
 								uni.setStorageSync('setPhone',_this.phone);
 								uni.switchTab({
@@ -60,7 +61,8 @@
 										 if (!page){
 											 return
 										 }else{
-											 page[page.length-1].data.getHomeList()
+											 console.log(page);
+											 // page[page.length-1].data.getHomeList()
 											 // var beforePage = page[0].data;
 											 //  page.loadData(); //如果页面存在，则重新刷新页面
 										 };   

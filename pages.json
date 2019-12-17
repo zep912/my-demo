@@ -378,7 +378,7 @@
 		}, {
 			"path": "pages/product/list",
 			"style": {
-				// "enablePullDownRefresh": true,
+				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "商品列表"
 			}
 		}
