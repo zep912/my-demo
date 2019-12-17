@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 413));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -172,7 +172,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 413));};var _default =
 {
   components: {
     empty: empty },
@@ -184,50 +184,90 @@ __webpack_require__.r(__webpack_exports__);
       checked: false,
       edit: '编辑',
       isShow: false,
-      collectGoods: [
-        // {
-        // 	title:'香辣牛肉干',
-        // 	img:'/static/goods.png',
-        // 	attr:'规格 10*200g',
-        // 	price:'999.99',
-        // 	name:'麦田圈官网旗舰店'
-        // },
-        // {
-        // 	title:'香辣牛肉干',
-        // 	img:'/static/goods.png',
-        // 	attr:'规格 10*200g',
-        // 	price:'999.99',
-        // 	name:'麦田圈官网旗舰店'
-        // },
-        // {
-        // 	title:'香辣牛肉干',
-        // 	img:'/static/goods.png',
-        // 	attr:'规格 10*200g',
-        // 	price:'999.99',
-        // 	name:'麦田圈官网旗舰店'
-        // }
-      ] };
+      collectGoods: [],
+      checkNum: 0,
+      checkedes: false,
+      ids: [] };
 
   },
   onLoad: function onLoad() {
+    this.getData();
   },
   methods: {
-    onChange: function onChange(e) {
-      this.checked = e.detail;
+    toProductDetails: function toProductDetails(id) {
+      uni.navigateTo({
+        url: "/pages/product/product?id=".concat(id) });
+
+    },
+    add: function add(id) {var _this = this;
+      _uniAxios.default.post('/cart/add', { productId: id }).then(function (res) {
+        if (res.data.code === 200) {
+          _this.$api.msg('添加购物车成功');
+        }
+      });
+    },
+    getData: function getData() {var _this2 = this;
+      _uniAxios.default.post('/member/collection/productCollectionList').then(function (res) {
+        if (res.data.code === 200) {
+          _this2.collectGoods = res.data.data;
+        }
+      });
+    },
+    onChange: function onChange(status, index, id) {
+      console.log(status, index, id);
+      if (status == 1) {//表示选中
+        this.collectGoods[index].recommandStatus = 0;
+        this.checkNum++;
+        if (this.checkNum == this.collectGoods.length) {
+          this.checkedes = true;
+        }
+        this.ids.push(id);
+      } else {
+        this.collectGoods[index].recommandStatus = 1;
+        this.checkNum--;
+        this.checkedes = false;
+        this.ids.splice(this.ids.findIndex(function (item) {return item == index;}), 1);
+      }
     },
     editClick: function editClick() {
       if (this.edit == '编辑') {
         this.edit = '完成';
         this.isShow = true;
+        this.collectGoods.forEach(function (el) {
+          el.recommandStatus = 1;
+        });
+        this.checkedes = false;
+        this.checkNum = 0;
       } else {
         this.edit = '编辑';
         this.isShow = false;
+
       }
     },
-    dele: function dele() {
-
+    dele: function dele() {var _this3 = this;
+      if (this.ids.length == 0) {
+        this.$api.msg('请选择商品');
+      } else {
+        _uniAxios.default.post('/member/collection/deleteProductCollection', { productId: this.ids }).then(function (res) {
+          if (res.data.code === 200) {
+            _this3.$api.msg('删除成功');
+          }
+        });
+      }
     },
-    allOnChange: function allOnChange() {
+    allOnChange: function allOnChange() {var _this4 = this;
+      this.checkedes = !this.checkedes;
+      if (this.checkedes) {
+        this.collectGoods.forEach(function (el) {
+          el.recommandStatus = 0;
+          _this4.ids.push(el.id);
+        });
+      } else {
+        this.collectGoods.forEach(function (el) {
+          el.recommandStatus = 1;
+        });
+        this.ids = [];
+      }
 
     },
     btn: function btn() {

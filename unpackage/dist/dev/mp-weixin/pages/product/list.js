@@ -90,6 +90,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.isCross = !_vm.isCross
+    }
+  }
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -185,6 +190,42 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 406));};var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 392));};var _default =
 
 
@@ -196,16 +237,19 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     return {
       historyGoods: ['窝窝头', '大闸蟹', '红烧肉', '西班牙大龙虾', '热干面', '牛肉面', '炸酱面'],
       cateMaskState: 0, //分类面板展开状态
-      loadingType: 'nomore', //加载更多状态
-      filterIndex: 0,
+      loadingType: 'more', //加载更多状态
+      filterIndex: null,
       productRequest: {
         productCategoryId: '',
         pageSize: 10,
-        pageNum: 1 },
+        pageNum: 1,
+        orderByType: '' },
       //已选三级分类id
       priceOrder: 0, //1 价格从低到高 2价格从高到低
-      cateList: [],
-      goodsList: [] };
+      listCategory: [],
+      goodsList: [],
+      isCross: false,
+      isErr: false };
 
   },
 
@@ -213,12 +257,23 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
 
 
-    this.productRequest.productCategoryId = options.tid;
+    this.productRequest.productCategoryId = +options.tid;
     // if (options.tid)
+    this.listWithChildren();
     this.loadData('refresh');
+  },
+  onPageScroll: function onPageScroll(e) {
+    //兼容iOS端下拉时顶部漂移
+    if (e.scrollTop >= 0) {
+      this.headerPosition = "fixed";
+    } else {
+      this.headerPosition = "absolute";
+    }
   },
   //下拉刷新
   onPullDownRefresh: function onPullDownRefresh() {
+    this.goodsList = [];
+    this.loadingType = 'more';
     this.loadData('refresh');
   },
   //加载更多
@@ -226,57 +281,81 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.loadData();
   },
   methods: {
-    //加载分类
-    search: function () {var _search = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                this.productRequest.keywords = e ? e.value : '';_context.next = 3;return (
-                  _uniAxios.default.post('/product/search', this.productRequest));case 3:return _context.abrupt("return", _context.sent);case 4:case "end":return _context.stop();}}}, _callee, this);}));function search(_x) {return _search.apply(this, arguments);}return search;}(),
+    // 加载分类
+    listWithChildren: function listWithChildren() {var _this = this;
+      _uniAxios.default.post('home/list/withChildren', {}).then(function (_ref) {var data = _ref.data;
+        _this.listCategory = data.data.reduce(function (res, item) {
+          res = res.concat(item.productTypeList.reduce(function (r, val) {
+            r = r.concat(val.children);
+            return r;
+          }, []));
+          return res;
+        }, []);
+      });
+    },
+    // 搜索商品列表
+    search: function () {var _search = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var _this2 = this;var request, key;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+                this.isErr = false;
+                this.productRequest.keywords = e ? e.value : '';
+                request = Object.assign({}, this.productRequest);
+                for (key in request) {
+                  if (!request[key]) delete request[key];
+                }
+                _uniAxios.default.post('/product/search', request).then(function (_ref2) {var data = _ref2.data;
+                  var goodsList = data.code === 200 ? data.data.list : [];
+                  _this2.goodsList = _this2.goodsList.concat(goodsList);
+                  //判断是否还有下一页，有是more  没有是nomore
+                  _this2.loadingType = _this2.goodsList.length >= data.data.total - data.data.pageNum ? 'nomore' : 'more';
+                  uni.hideLoading();
+                }).catch(function () {
+                  _this2.isErr = true;
+                  uni.hideLoading();
+                });case 5:case "end":return _context.stop();}}}, _callee, this);}));function search(_x) {return _search.apply(this, arguments);}return search;}(),
 
     //加载商品 ，带下拉刷新和上滑加载
-    loadData: function () {var _loadData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var type,loading,_ref,data,goodsList,_args2 = arguments;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:type = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 'add';loading = _args2.length > 1 ? _args2[1] : undefined;if (!(
+    loadData: function () {var _loadData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var type,_args2 = arguments;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:type = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 'add';if (!(
+                this.loadingType === 'nomore')) {_context2.next = 3;break;}return _context2.abrupt("return");case 3:
+                uni.pageScrollTo({
+                  duration: 300,
+                  scrollTop: 0 });
 
-                type === 'add')) {_context2.next = 8;break;}if (!(
-                this.loadingType === 'nomore')) {_context2.next = 5;break;}return _context2.abrupt("return");case 5:
+                uni.showLoading({
+                  title: '正在加载' });
+
+                //没有更多直接返回
+                if (!(type === 'add')) {_context2.next = 11;break;}if (!(
+                this.loadingType === 'nomore')) {_context2.next = 8;break;}return _context2.abrupt("return");case 8:
 
 
-                this.loadingType = 'loading';_context2.next = 9;break;case 8:
+                this.loadingType = 'loading';_context2.next = 12;break;case 11:
 
-                this.loadingType = 'more';case 9:_context2.next = 11;return (
+                this.loadingType = 'more';case 12:
 
-                  this.search());case 11:_ref = _context2.sent;data = _ref.data;
-                goodsList = data.code === 200 ? data.data.list : [];
                 if (type === 'refresh') {
                   this.goodsList = [];
                 }
-                this.goodsList = this.goodsList.concat(goodsList);
-                //判断是否还有下一页，有是more  没有是nomore
-                this.loadingType = this.goodsList.length >= data.data.total - data.data.pageNum ? 'nomore' : 'more';
+                this.search();
                 if (type === 'refresh') {
-                  if (loading == 1) {
-                    uni.hideLoading();
-                  } else {
-                    uni.stopPullDownRefresh();
-                  }
-                }case 18:case "end":return _context2.stop();}}}, _callee2, this);}));function loadData() {return _loadData.apply(this, arguments);}return loadData;}(),
+                  uni.stopPullDownRefresh();
+                }case 15:case "end":return _context2.stop();}}}, _callee2, this);}));function loadData() {return _loadData.apply(this, arguments);}return loadData;}(),
 
     //筛选点击
     tabClick: function tabClick(index) {
-      if (this.filterIndex === index && index !== 2) {
+      if (this.filterIndex === index) {
+        this.filterIndex = null;
         return;
       }
       this.filterIndex = index;
-      if (index === 2) {
-        this.priceOrder = this.priceOrder === 1 ? 2 : 1;
-      } else {
-        this.priceOrder = 0;
-      }
-      uni.pageScrollTo({
-        duration: 300,
-        scrollTop: 0 });
-
-      this.loadData('refresh', 1);
-      uni.showLoading({
-        title: '正在加载' });
-
+    },
+    tabItemClick: function tabItemClick(value) {
+      this.filterIndex = null;
+      this.productRequest.orderByType = value;
+      this.loadData('refresh');
+    },
+    tabICateClick: function tabICateClick(value) {
+      this.filterIndex = null;
+      this.productRequest.productCategoryId = value;
+      this.loadData('refresh');
     },
     //详情
     navToDetailPage: function navToDetailPage(item) {
@@ -286,7 +365,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         url: "/pages/product/product?id=".concat(item.id) });
 
     },
-    stopPrevent: function stopPrevent() {} } };exports.default = _default;
+    gotoIndex: function gotoIndex() {
+      uni.switchTab({
+        url: '/pages/index/index' });
+
+    } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

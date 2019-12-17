@@ -3,7 +3,6 @@
 		<!-- <empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty> -->
 		<view class="empty" v-if='collectGoods.length==0'>
 			<view class="noCollect">
-				<!-- <text class="iconfont icon-wudizhi"></text> -->
 				<image src="../static/my/nocollet.png" mode=""></image>
 				<view class="noCollect-word">{{msg}}</view>
 				<button type="primary" @click="btn">去逛逛</button>
@@ -13,34 +12,34 @@
 		
 		<!-- 没有收藏 -->
 		<view class="collect-wrap">
-			<text>您收藏了<text class="collect-num">10</text>件商品</text>
+			<text>您收藏了<text class="collect-num">{{collectGoods.length}}</text>件商品</text>
 			<text @click="editClick">{{edit}}</text>
 		</view>
 		<view class="collect-goods">
 			<view class="collect-goods-list" v-for="(item,index) in collectGoods">
 				<view class="collect-vanCheck" v-if='isShow'>
-					<van-checkbox :value="checked" @change="onChange" checked-color="#F7B52C" :name='index' ></van-checkbox>
+					<van-checkbox :value="item.recommandStatus==0?true:false" @change="onChange(item.recommandStatus,index,item.id)" checked-color="#F7B52C" :name='index' ></van-checkbox>
 				</view>
-				<img :src="item.img" alt="">
+				<img :src="item.pic" alt="" @click='toProductDetails(item.id)'>
 				<view class="collectGoodsContent">
 					<view class="collect-attr">
 						<text class="ziyin">自营</text>
-						<text class="title">{{item.title}}</text>
-						<text class="attr">{{item.attr}}</text>
+						<text class="title">{{item.name}}</text>
+						<text class="attr">{{item.subTitle}}</text>
 					</view>
 					<view class="collect-price">
-						<text class="price">{{item.price}}</text>
-						<text class="name">{{item.name}}</text>
+						<text class="price">{{item.price?item.price:'暂无报价'}}</text>
+						<text class="name">{{item.brandName}}</text>
 					</view>
 				</view>
 				<view class="icon">
-					<van-icon name="add" color ='#F55641' size='30px' />
+					<van-icon name="add" color ='#F55641' size='30px' @click='add(item.id)'/>
 				</view>
 			</view>
 		</view>
 		<!-- 底部信息 -->
 		<view class="foot" v-if='isShow'>
-			<van-checkbox :value="checked" @change="allOnChange" checked-color="#F7B52C" icon-size='26' label-class='labelClass'>全选</van-checkbox>
+			<van-checkbox :value="checkedes" @change="allOnChange" checked-color="#F7B52C" icon-size='26' label-class='labelClass'>全选</van-checkbox>
 			<view @click="dele" class="dele-collect">删除收藏</view>
 		</view>
 		</view>
@@ -49,6 +48,7 @@
 
 <script>
 	import empty from "@/components/empty";
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components:{
 			empty
@@ -60,50 +60,90 @@
 				checked:false,
 				edit:'编辑',
 				isShow:false,
-				collectGoods:[
-					// {
-					// 	title:'香辣牛肉干',
-					// 	img:'/static/goods.png',
-					// 	attr:'规格 10*200g',
-					// 	price:'999.99',
-					// 	name:'麦田圈官网旗舰店'
-					// },
-					// {
-					// 	title:'香辣牛肉干',
-					// 	img:'/static/goods.png',
-					// 	attr:'规格 10*200g',
-					// 	price:'999.99',
-					// 	name:'麦田圈官网旗舰店'
-					// },
-					// {
-					// 	title:'香辣牛肉干',
-					// 	img:'/static/goods.png',
-					// 	attr:'规格 10*200g',
-					// 	price:'999.99',
-					// 	name:'麦田圈官网旗舰店'
-					// }
-				]
+				collectGoods:[],
+				checkNum:0,
+				checkedes:false,
+				ids:[]
 			}
 		},
 		onLoad(){
+			this.getData()
 		},
 		methods:{
-			onChange(e){
-				this.checked = e.detail;
+			toProductDetails(id){
+				uni.navigateTo({
+					url: `/pages/product/product?id=${id}`
+				})
+			},
+			add(id){
+				axios.post('/cart/add',{productId:id}).then(res=>{
+					if(res.data.code===200){
+						this.$api.msg('添加购物车成功')
+					}
+				})
+			},
+			getData(){
+				axios.post('/member/collection/productCollectionList').then(res=>{
+					if(res.data.code===200){
+						this.collectGoods = res.data.data;
+					}
+				})
+			},
+			onChange(status,index,id){
+				console.log(status,index,id)
+				if(status==1){//表示选中
+					this.collectGoods[index].recommandStatus = 0;
+					this.checkNum++;
+					if(this.checkNum == this.collectGoods.length){
+						this.checkedes = true
+					}
+					this.ids.push(id)
+				}else{
+					this.collectGoods[index].recommandStatus = 1;
+					this.checkNum--;
+					this.checkedes = false;
+					this.ids.splice(this.ids.findIndex(item=>item==index),1);
+				}
 			},
 			editClick(){
 				if(this.edit=='编辑'){
 					this.edit ='完成';
 					this.isShow = true;
+					this.collectGoods.forEach(el=>{
+						el.recommandStatus = 1;
+					})
+					this.checkedes = false;
+					this.checkNum = 0
 				}else{
 					this.edit = '编辑';
 					this.isShow = false;
+					
 				}
 			},
 			dele(){
-				
+				if(this.ids.length==0){
+					this.$api.msg('请选择商品')
+				}else{
+					axios.post('/member/collection/deleteProductCollection',{productId:this.ids}).then(res=>{
+						if(res.data.code===200){
+							this.$api.msg('删除成功')
+						}
+					})
+				}
 			},
 			allOnChange(){
+				this.checkedes = !this.checkedes;
+				if(this.checkedes){
+					this.collectGoods.forEach(el=>{
+						el.recommandStatus = 0;
+						this.ids.push(el.id)
+					})
+				}else{
+					this.collectGoods.forEach(el=>{
+						el.recommandStatus = 1;
+					})
+					this.ids=[]
+				}
 				
 			},
 			btn(){
@@ -149,6 +189,7 @@
 		margin: 0 auto;
 		background: #fff;
 		padding-bottom: 10rpx;
+		border-top: 1px solid #ccc;
 		.collect-goods-list{
 			display: flex;
 			justify-content: flex-start;
@@ -200,7 +241,7 @@
 					}
 				}
 				.collect-price{
-					margin-top: 65rpx;
+					margin-top: 22rpx;
 					text{
 						display: block;
 					}

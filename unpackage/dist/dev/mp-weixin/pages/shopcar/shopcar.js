@@ -284,7 +284,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     false), _defineProperty(_ref, "total",
     0), _defineProperty(_ref, "allNum",
     0), _defineProperty(_ref, "deleIds",
-    []), _ref;
+    []), _defineProperty(_ref, "checkNum",
+    0), _ref;
 
   },
   onLoad: function onLoad(option) {
@@ -366,14 +367,15 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         var totalPrices = '';
         this.list.forEach(function (el, index) {
           el.deleteStatus = 1;
-          totalPrices = el.price * el.quantity;
+          totalPrices = Number((el.price * 100).toFixed(2) * el.quantity);
           _this2.total += totalPrices;
         });
+        this.total = (this.total / 100).toFixed(2);
         this.allNum = this.list.length;
-
         this.list.forEach(function (el, index) {
           _this2.deleIds.push(el.id);
         });
+        this.checkNum = this.list.length;
       } else {//全不选中
         this.total = 0;
         this.list.forEach(function (el, index) {
@@ -381,6 +383,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         });
         this.allNum = 0;
         this.deleIds = [];
+        this.checkNum = 0;
       }
 
     },
@@ -398,23 +401,14 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       } else {
         _uniAxios.default.post('/cart/delete', obj).then(function (res) {
           if (res.data.code == 200) {
-            console.log(res);
             _this3.$api.msg('删除成功');
             _this3.getShopCar();
           }
         });
       }
-
     },
     // 单个商品的选择
     singleOnChange: function singleOnChange(status, index, id) {var _this4 = this;
-      this.list.forEach(function (el) {
-        if (el.deleteStatus == 1) {
-          _this4.checkeds = false;
-        } else {
-          _this4.checkeds = true;
-        }
-      });
       // 首选判断是否处于删除状态
       if (this.deleShow) {//表示删除状态
         if (status == 1) {
@@ -425,33 +419,47 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
               _this4.deleIds.splice(index, 1);
             }
           });
+          this.checkNum--;
+          this.checkeds = false;
         } else {//选中
           this.list[index].deleteStatus = 1;
           this.deleIds.push(id);
+          this.checkNum++;
+          if (this.checkNum == this.list.length) {
+            this.checkeds = true;
+          }
         }
-        console.log(this.deleIds);
       } else {//表示订单状态时
         if (status == 1) {//表示取消选中
           this.list[index].deleteStatus = 0;
-          var price = this.list[index].price * this.list[index].quantity;
-          this.total -= price;
+          var price = Number((this.list[index].price * 100).toFixed(2) * this.list[index].quantity);
+          var totalShortTime = Number((this.total * 100).toFixed(2));
+          totalShortTime -= price;
+          this.total = (totalShortTime / 100).toFixed(2);
           this.allNum--;
-          // this.deleIds.push(id)
           this.deleIds.splice(this.deleIds.findIndex(function (item) {return item == index;}), 1);
+          this.checkNum--;
+          this.checkeds = false;
         } else {
+          this.checkNum++;
           this.list[index].deleteStatus = 1;
-          var _price = this.list[index].price * this.list[index].quantity;
-          this.total += _price;
+          var _price = Number((this.list[index].price * 100).toFixed(2) * this.list[index].quantity);
+          var _totalShortTime = Number((this.total * 100).toFixed(2));
+          _totalShortTime += _price;
+          this.total = (_totalShortTime / 100).toFixed(2);
           this.$store.commit('totalMoney', _price);
           this.allNum++;
           this.deleIds.push(id);
+          console.log(this.checkNum);
+          if (this.checkNum == this.list.length) {
+            this.checkeds = true;
+          }
         }
       }
     },
     // 减少商品数量
     // 同时判断总价
     minus: function minus(item, index, id, realStock) {
-      console.log(item);
       if (item.quantity == 1) {
         item.quantity = 1;
       } else {
@@ -459,7 +467,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         this.list[index].realStock++;
         realStock++;
         if (item.deleteStatus == 1) {//表示选中
-          this.total -= item.price * 1;
+          var totalShortTime = (this.total * 100).toFixed(2);
+          var oriceShortTime = (item.price * 100).toFixed(2);
+          totalShortTime -= oriceShortTime;
+          this.total = (totalShortTime / 100).toFixed(2);
         }
       }
       var obj = {
@@ -476,7 +487,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       realStock--;
       this.list[index].realStock--;
       if (item.deleteStatus == 1) {//表示选中
-        this.total += item.price * 1;
+        var addTotalShortTime = Number((this.total * 100).toFixed(2));
+        var addPiceShortTime = Number((item.price * 100 * 1).toFixed(2));
+        addTotalShortTime += addPiceShortTime;
+        this.total = (addTotalShortTime / 100).toFixed(2);
       }
       // 请求接口
       var obj = {

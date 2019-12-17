@@ -298,8 +298,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
   onLoad: function onLoad() {
     if (!uni.getStorageSync('hasLogin')) {
+      uni.hideTabBar();
       this.$refs.popup.open();
     } else {
+      uni.showTabBar();
       this.wxGetUserInfo();
     }
   },
@@ -344,6 +346,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                 //openId、或SessionKdy存储//隐藏loading
                 uni.setStorageSync('gt', response.data.token);
                 uni.hideLoading();
+                uni.showTabBar();
                 _this2.close();
               }
             });
@@ -386,8 +389,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     navToSearch: function navToSearch() {
       uni.navigateTo({
-        url: "/pages/index/search" });
+        url: "/pages/product/list" });
 
+      // uni.navigateTo({
+      // 	url: `/pages/index/search`
+      // })
     },
     navToCate: function navToCate() {var categoryId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       uni.setStorageSync('categoryId', categoryId);

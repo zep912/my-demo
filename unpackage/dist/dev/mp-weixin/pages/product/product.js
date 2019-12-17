@@ -293,8 +293,14 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
   methods: {
     //收藏
-    toFavorite: function toFavorite() {
-      this.favorite = !this.favorite;
+    toFavorite: function toFavorite() {var _this = this;
+      this.favorite = !this.favorite;var
+      id = this.productInfo.id;
+      _uniAxios.default.post('/member/collection/addProductCollection', { productId: id }).then(function (res) {
+        if (res.data.code === 200) {
+          _this.$api.msg('收藏成功');
+        }
+      });
     },
     //分享
     // share(){
@@ -305,22 +311,22 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       // 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([this.id])}`
       // })
     },
-    addCart: function addCart() {var _this = this;var _this$productInfo =
+    addCart: function addCart() {var _this2 = this;var _this$productInfo =
       this.productInfo,id = _this$productInfo.id,productCategoryId = _this$productInfo.productCategoryId;
       _uniAxios.default.post('/cart/add', { productId: id, productCategoryId: productCategoryId }).then(function (_ref) {var data = _ref.data;
         if (data.code === 200) {
-          _this.$api.msg('已成功加入购物车');
+          _this2.$api.msg('已成功加入购物车');
         } else {
-          _this.$api.msg(data.message);
+          _this2.$api.msg(data.message);
         }
       });
     },
-    productInfoById: function productInfoById(id) {var _this2 = this;
+    productInfoById: function productInfoById(id) {var _this3 = this;
       _uniAxios.default.post('/product/productInfoById', { id: id }).then(function (_ref2) {var data = _ref2.data;
         console.log(data);
         if (data.code === 200) {
-          _this2.productInfo = data.data;
-          _this2.productInfo.albumPics = _this2.productInfo.albumPics ? _this2.productInfo.albumPics.split(',') : [_this2.productInfo.pic];
+          _this3.productInfo = data.data;
+          _this3.productInfo.albumPics = _this3.productInfo.albumPics ? _this3.productInfo.albumPics.split(',') : [_this3.productInfo.pic];
         }
       });
     },

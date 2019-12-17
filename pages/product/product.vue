@@ -158,6 +158,12 @@
 			//收藏
 			toFavorite() {
 				this.favorite = !this.favorite;
+				const {id} = this.productInfo;
+				axios.post('/member/collection/addProductCollection',{productId:id}).then(res=>{
+					if(res.data.code===200){
+						this.$api.msg('收藏成功')
+					}
+				})
 			},
 			//分享
 			// share(){

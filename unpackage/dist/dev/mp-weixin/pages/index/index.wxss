@@ -80,6 +80,10 @@
     font-size: 32rpx;
     color: #F7B62C;
 }
+.mp-position-box .iconfont {
+    color: #F7B62C;
+    font-size: 32rpx;
+}
 .mp-search-box {
   position: absolute;
   left: 0;
@@ -102,10 +106,12 @@
     background: rgba(255, 255, 255, 0.6);
     padding: 0 20rpx;
 }
-.mp-search-box uni-icons {
+.mp-search-box .iconfont {
     position: absolute;
     top: 0;
     right: 20rpx;
+    color: #fff;
+    font-size: 50rpx;
 }
 page .cate-section {
   position: relative;

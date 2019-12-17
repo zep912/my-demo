@@ -136,7 +136,8 @@
 				checkeds: false,
 				total: 0,
 				allNum: 0, //总的数量
-				deleIds: []
+				deleIds: [],
+				checkNum:0
 			}
 		},
 		onLoad(option) {
@@ -218,21 +219,23 @@
 					let totalPrices = '';
 					this.list.forEach((el, index) => {
 						el.deleteStatus = 1;
-						totalPrices = el.price * el.quantity;
+						totalPrices = Number(((el.price*100).toFixed(2))* el.quantity);
 						this.total += totalPrices;
 					})
+					this.total = (this.total/100).toFixed(2)
 					this.allNum = this.list.length;
-					
 					this.list.forEach((el, index) => {
 						this.deleIds.push(el.id)
 					})
+					this.checkNum = this.list.length;
 				} else { //全不选中
 					this.total = 0;
 					this.list.forEach((el, index) => {
 						el.deleteStatus = 0;
 					});
 					this.allNum = 0;
-					this.deleIds = []
+					this.deleIds = [];
+					this.checkNum = 0
 				}
 
 			},
@@ -250,23 +253,14 @@
 				} else {
 					axios.post('/cart/delete',obj).then(res => {
 						if (res.data.code == 200) {
-							console.log(res)
 							this.$api.msg('删除成功');
 							this.getShopCar();
 						}
 					})
 				}
-
 			},
 			// 单个商品的选择
-			singleOnChange(status, index, id) {
-				this.list.forEach(el=>{
-					if(el.deleteStatus==1){
-						this.checkeds = false
-					}else{
-						this.checkeds = true
-					}
-				})
+			singleOnChange(status, index, id) {			
 				// 首选判断是否处于删除状态
 				if (this.deleShow) { //表示删除状态
 					if (status == 1) {
@@ -277,33 +271,47 @@
 								this.deleIds.splice(index, 1)
 							}
 						})
+						this.checkNum--;
+						this.checkeds = false
 					} else { //选中
 						this.list[index].deleteStatus = 1;
-						this.deleIds.push(id)
+						this.deleIds.push(id);
+						this.checkNum++;
+						if(this.checkNum==this.list.length){
+							this.checkeds = true;
+						}
 					}
-					console.log(this.deleIds)
 				} else { //表示订单状态时
 					if (status == 1) { //表示取消选中
 						this.list[index].deleteStatus = 0;
-						let price = this.list[index].price * this.list[index].quantity;
-						this.total -= price;
+						let price = Number(((this.list[index].price*100).toFixed(2)) * this.list[index].quantity);
+						let totalShortTime = Number((this.total*100).toFixed(2))
+						totalShortTime -= price
+						this.total = (totalShortTime/100).toFixed(2)
 						this.allNum--;
-						// this.deleIds.push(id)
-						this.deleIds.splice(this.deleIds.findIndex(item=>item==index),1)
+						this.deleIds.splice(this.deleIds.findIndex(item=>item==index),1);
+						this.checkNum--;
+						this.checkeds = false
 					} else {
+						this.checkNum++;
 						this.list[index].deleteStatus = 1;
-						let price = this.list[index].price * this.list[index].quantity;
-						this.total += price;
+						let price = Number(((this.list[index].price*100).toFixed(2)) * this.list[index].quantity);
+						let totalShortTime = Number((this.total*100).toFixed(2));
+						totalShortTime += price;
+						this.total = (totalShortTime/100).toFixed(2);
 						this.$store.commit('totalMoney', price);
 						this.allNum++;
 						this.deleIds.push(id)
+						console.log(this.checkNum)
+						if(this.checkNum==this.list.length){
+							this.checkeds = true
+						}
 					}
 				}
 			},
 			// 减少商品数量
 			// 同时判断总价
 			minus(item, index, id, realStock) {
-				console.log(item)
 				if (item.quantity == 1) {
 					item.quantity = 1;
 				} else {
@@ -311,7 +319,10 @@
 					this.list[index].realStock++;
 					realStock++;
 					if (item.deleteStatus == 1) { //表示选中
-						this.total -= item.price * 1
+						let totalShortTime = (this.total*100).toFixed(2);
+						let oriceShortTime = (item.price*100).toFixed(2);
+						totalShortTime -= oriceShortTime;
+						this.total = (totalShortTime/100).toFixed(2)
 					}
 				}
 				let obj = {
@@ -328,7 +339,10 @@
 				realStock--;
 				this.list[index].realStock--;
 				if (item.deleteStatus == 1) { //表示选中
-					this.total += item.price * 1
+					let addTotalShortTime = Number((this.total*100).toFixed(2));
+					let addPiceShortTime = Number((item.price*100*1).toFixed(2));
+					addTotalShortTime += addPiceShortTime;
+					this.total = (addTotalShortTime/100).toFixed(2)
 				}
 				// 请求接口
 				let obj = {
@@ -479,7 +493,7 @@
 				margin-left: 24rpx;
 				box-sizing: border-box;
 				border-bottom: 1px solid #E3E3E3;
-
+				padding-bottom: 10rpx;
 				.shopcar-sp-mj {
 					margin-top: 20rpx;
 

@@ -269,28 +269,7 @@ pageAtTop = true;var _default =
       coverTransition: '0s',
       moving: false,
       // abImg: '../../static/banner_01.png',
-      goodsList: [{
-        img: '',
-        title: '正宗农家散养谷饲土鸡蛋20枚',
-        subTitle: '宇宙无敌巨好吃的鸡蛋',
-        jifen: '200',
-        price: 999.90 },
-
-      {
-        img: '',
-        title: '正宗农家散养谷饲土鸡蛋20枚',
-        subTitle: '宇宙无敌巨好吃的鸡蛋',
-        jifen: '200',
-        price: 999.90 },
-
-      {
-        img: '',
-        title: '正宗农家散养谷饲土鸡蛋20枚',
-        subTitle: '宇宙无敌巨好吃的鸡蛋',
-        jifen: '200',
-        price: 999.90 }],
-
-
+      goodsList: [],
       authShow: true,
       isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
     };
@@ -409,11 +388,24 @@ pageAtTop = true;var _default =
       var hasLogin = this.$store.state.hasLogin;
       if (hasLogin) {
         this.authShow = false;
+        console.log(7777);
+        var id = '';
+        _uniAxios.default.post('/sso/user/userInfo').then(function (res) {
+          if (res.data.code == '200') {
+            console.log(res);
+            id = res.data.data.id;
+            console.log(id);
+            _uniAxios.default.post('/sso/user/' + id).then(function (response) {
+              console.log(response);
+            });
+          }
+        });
+
         // let setUserInfo = this.$store.state.userInfo;
         return;
       } else if (uni.getStorageSync('setPhone')) {//使用手机号登陆
         _uniAxios.default.post('/sso/user/userInfo').then(function (res) {
-          if (res.data.code = '200') {
+          if (res.data.code == '200') {
             _this4.authShow = false;
             _this4.userInfo.mobile = res.data.data.phone;
             _this4.userInfo.id = res.data.data.id;
