@@ -261,23 +261,23 @@
         -webkit-justify-content: space-between;
             -ms-flex-pack: justify;
                 justify-content: space-between;
-        padding-right: 10rpx;
         font-size: 24rpx;
         color: #909399;
 }
 .container .content .goods-list .goods-item .price {
         font-size: 32rpx;
         color: #fa436a;
-        line-height: 1;
 }
 .container .content .goods-list .goods-item .price:before {
           content: '\FFE5';
           font-size: 24rpx;
 }
 .container .content .goods-list .goods-item .price text {
-          font-size: 24rpx;
+          height: 30rpx;
+          line-height: 30rpx;
+          font-size: 20rpx;
           color: #9E9E9E;
-          margin-left: 20rpx;
+          margin-left: 10rpx;
 }
 .container .content .goods-list .goods-item .iconfont {
         font-size: 45rpx;

@@ -18,22 +18,22 @@
 		<view class="list-cell b-b m-t" @click="navTo('person')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">个人资料</text>
 			<text class="cell-tip">管理我的个人资料</text>
-			<text class="iconfont icon-you" style="color: #909399;"></text>
+			<text class="iconfont icon-you" style="color: #DEDEDE;"></text>
 		</view>
 		<view class="list-cell b-b" @click="navTo('address')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">我的收货地址</text>
 			<text class="cell-tip">管理我的收货地址</text>
-			<text class="iconfont icon-you" style="color: #909399;"></text>
+			<text class="iconfont icon-you" style="color: #DEDEDE;"></text>
 		</view>
 
-		<view class="list-cell" @click="mobileClick" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell b-b" @click="mobileClick" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">修改手机号</text>
 			<text class="cell-tip">{{phone}}</text>
-			<text class="iconfont icon-you" style="color: #909399;"></text>
+			<text class="iconfont icon-you" style="color: #DEDEDE;"></text>
 		</view>
 		<view class="list-cell" @click="navTo('aboutus')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">关于我们</text>
-			<text class="iconfont icon-you" style="color: #909399;"></text>
+			<text class="iconfont icon-you" style="color: #DEDEDE;"></text>
 		</view>
 	</view>
 </template>
@@ -248,6 +248,7 @@
 		.cell-tip {
 			font-size: $font-base;
 			color: $font-color-light;
+			margin-right: 20rpx;
 		}
 
 		switch {

@@ -122,10 +122,12 @@
 		font-size:26rpx;
 		font-weight:500;
 		color:rgba(88,88,88,1);
+		z-index: 1000;
 	}
 	.myprofit-sta{
 		padding-top: 80rpx;
 		background: #fff;
+		z-index: 99;
 	}
 	.list-cell {
 		display: flex;

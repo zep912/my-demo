@@ -14,7 +14,8 @@
 					
 					<view class="empty" v-if='tabItem.orderList.length==0'>
 						<view class="noCollect">
-							<text class="iconfont icon-zanwudingdan" style="font-size: 60px;"></text>
+							<!-- <text class="iconfont icon-zanwudingdan" style="font-size: 60px;"></text> -->
+							<image src="../../static/nogoods.png" mode="" style="width: 189rpx;height: 170rpx;"></image>
 							<view class="noCollect-word">{{msg}}</view>
 							<button type="primary" @click="btn">去逛逛</button>
 						</view>	
@@ -331,6 +332,17 @@
 </script>
 
 <style lang="scss">
+	.noCollect .noCollect-word{
+		color: #1F1F1F;
+		margin-top: 52rpx;
+		font-weight: 600;
+	}
+	.noCollect button{
+		width:670rpx;
+		height:90rpx;
+		background:rgba(247,181,44,1);
+		border-radius:45rpx;
+	}
 	.order .noCollect img {
 		width: 200rpx;
 		height: 180rpx;

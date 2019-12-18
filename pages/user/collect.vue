@@ -3,8 +3,8 @@
 		<!-- <empty :src="src" :msg='msg' v-if='collectGoods.length==0'></empty> -->
 		<view class="empty" v-if='collectGoods.length==0'>
 			<view class="noCollect">
-				<image src="../static/my/nocollet.png" mode=""></image>
-				<view class="noCollect-word">{{msg}}</view>
+				<image src="../../static/my/nocollet.png" mode="" style="width: 167rpx;height: 199rpx;margin-bottom: 73rpx;"></image>
+				<view class="noCollect-word" style="color: #333333;">{{msg}}</view>
 				<button type="primary" @click="btn">去逛逛</button>
 			</view>	
 		</view>

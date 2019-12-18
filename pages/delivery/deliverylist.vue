@@ -339,7 +339,7 @@
 		padding-top: 128rpx;
 
 		img {
-			width: 100%;
+			width: 566rpx;
 		}
 
 		view {
