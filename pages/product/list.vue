@@ -50,12 +50,15 @@
 				</view>
 				<view class="collapse" v-if="filterIndex === 2">
 					<view class="title">库存状态</view>
-					<view class="view-list-search current"
-					:class="{current: productRequest.productCategoryId === item.id}" 
-					@click="tabICateClick(item.id)">仅看有货</view>
 					<view class="view-list-search"
-					:class="{current: productRequest.productCategoryId === item.id}" 
-					@click="tabICateClick(item.id)">仅看无货</view>
+					:class="{current: !productRequest.stockType}" 
+					@click="stockTypeClick('')">全部</view>
+					<view class="view-list-search"
+					:class="{current: productRequest.stockType === 1}" 
+					@click="stockTypeClick(1)">仅看有货</view>
+					<view class="view-list-search"
+					:class="{current: productRequest.stockType === 2}" 
+					@click="stockTypeClick(2)">仅看无货</view>
 					<view class="title">品牌</view>
 					<view class="view-list-search" v-for="item in listCategory" :key="item.id"
 					:class="{current: productRequest.productCategoryId === item.id}" 
@@ -75,6 +78,7 @@
 							<view class="price">
 								{{item.price}}
 								<text>已售 {{item.sale}}</text>
+								<text>库存 {{item.stock}}</text>
 							</view>
 							<text class="iconfont icon-iconfontxinzeng"></text>
 						</view>
@@ -114,7 +118,8 @@
 					productCategoryId: '',
 					pageSize: 10,
 					pageNum: 1,
-					orderByType: ''
+					orderByType: '',
+					stockType: ''
 				}, //已选三级分类id
 				priceOrder: 0, //1 价格从低到高 2价格从高到低
 				listCategory: [],
@@ -227,6 +232,11 @@
 				this.filterIndex = null;
 				this.productRequest.productCategoryId = value;
 				this.loadData('refresh');	
+			},
+			stockTypeClick(value) {
+				this.filterIndex = null;
+				this.productRequest.stockType = value;
+				this.loadData('refresh');
 			},
 			//详情
 			navToDetailPage(item){
@@ -432,22 +442,22 @@
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
-						padding-right: 10upx;
 						font-size: 24upx;
 						color: $font-color-light;
 					}
 					.price{
 						font-size: $font-lg;
 						color: $uni-color-primary;
-						line-height: 1;
 						&:before{
 							content: '￥';
 							font-size: 24upx;
 						}
 						text {
-							font-size: $font-sm;
+							height: 30upx;
+							line-height: 30upx;
+							font-size: 20upx;
 							color: #9E9E9E;
-							margin-left: 20upx;
+							margin-left: 10upx;
 						}
 					}
 					.iconfont {
