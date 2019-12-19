@@ -20,18 +20,18 @@
 		<view class="collect-goods">
 			<view class="collect-goods-list" v-for="(item,index) in collectGoods">
 				<view class="collect-vanCheck" v-if='isShow'>
-					<van-checkbox :value="checked" @change="onChange" checked-color="#F7B52C" :name='index' ></van-checkbox>
+					<van-checkbox :value="checked" checked-color="#F7B52C" :name='index' @change="onChange(item.recommandStatus,index,item.id)"></van-checkbox>
 				</view>
-				<img :src="item.img" alt="">
+				<img :src="item.img" alt="" @click='toProductDetails(item.id)'>
 				<view class="collectGoodsContent">
 					<view class="collect-attr">
 						<text class="ziyin">自营</text>
-						<text class="title">{{item.title}}</text>
-						<text class="attr">{{item.attr}}</text>
+						<text class="title">{{item.name}}</text>
+						<text class="attr">{{item.subTitle}}</text>
 					</view>
 					<view class="collect-price">
-						<text class="price">{{item.price}}</text>
-						<text class="name">{{item.name}}</text>
+						<text class="price">{{item.price?item.price:'暂无报价'}}</text>
+						<text class="name">{{item.brandName}}</text>
 					</view>
 				</view>
 			</view>
@@ -47,6 +47,7 @@
 
 <script>
 	import empty from '@/components/empty.vue'
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components:{
 			empty
@@ -58,41 +59,51 @@
 				checked:false,
 				edit:'编辑',
 				isShow:false,
-				collectGoods:[
-					// {
-					// 	title:'香辣牛肉干',
-					// 	img:'/static/goods.png',
-					// 	attr:'规格 10*200g',
-					// 	price:'999.99',
-					// 	name:'麦田圈官网旗舰店'
-					// },
-					// {
-					// 	title:'香辣牛肉干',
-					// 	img:'/static/goods.png',
-					// 	attr:'规格 10*200g',
-					// 	price:'999.99',
-					// 	name:'麦田圈官网旗舰店'
-					// },
-					// {
-					// 	title:'香辣牛肉干',
-					// 	img:'/static/goods.png',
-					// 	attr:'规格 10*200g',
-					// 	price:'999.99',
-					// 	name:'麦田圈官网旗舰店'
-					// }
-				]
+				collectGoods:[],
+				ids:[]
 			}
 		},
 		onLoad(){
+			this.getFeedbackData()
 		},
 		methods:{
-			onChange(e){
-				this.checked = e.detail;
+			toProductDetails(id){
+				uni.navigateTo({
+					url: `/pages/product/product?id=${id}`
+				})
+			},
+			getFeedbackData(){
+				axios.post('/member/readHistory/list').then(res=>{
+					if(res.data.code===200&&res.data.data.length>0){
+						this.collectGoods = res.data.data.length;
+					}
+				})
+			},
+			onChange(status,index,id){
+				console.log(status,index,id)
+				if(status==1){//表示选中
+					this.collectGoods[index].recommandStatus = 0;
+					this.checkNum++;
+					if(this.checkNum == this.collectGoods.length){
+						this.checkedes = true
+					}
+					this.ids.push(id)
+				}else{
+					this.collectGoods[index].recommandStatus = 1;
+					this.checkNum--;
+					this.checkedes = false;
+					this.ids.splice(this.ids.findIndex(item=>item==index),1);
+				}
 			},
 			editClick(){
 				if(this.edit=='编辑'){
 					this.edit ='完成';
 					this.isShow = true;
+					this.collectGoods.forEach(el=>{
+						el.recommandStatus = 1;
+					})
+					this.checkedes = false;
+					this.checkNum = 0
 				}else{
 					this.edit = '编辑';
 					this.isShow = false;
@@ -100,14 +111,30 @@
 			},
 			// 删除
 			dele(){
-				
+				if(this.ids.length==0){
+					this.$api.msg('请选择商品')
+				}else{
+					axios.post('/member/readHistory/delete',{productId:this.ids}).then(res=>{
+						if(res.data.code===200){
+							this.$api.msg('删除成功')
+						}
+					})
+				}
 			},
 			// 全选
 			allOnChange(){
-				
-			},
-			around(){
-				
+				this.checkedes = !this.checkedes;
+				if(this.checkedes){
+					this.collectGoods.forEach(el=>{
+						el.recommandStatus = 0;
+						this.ids.push(el.id)
+					})
+				}else{
+					this.collectGoods.forEach(el=>{
+						el.recommandStatus = 1;
+					})
+					this.ids=[]
+				}
 			},
 			btn(){
 				uni.reLaunch({

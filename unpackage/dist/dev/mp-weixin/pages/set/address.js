@@ -175,6 +175,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 413));};var _default =
 {
   components: {
@@ -186,41 +187,39 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       msg: '你还没有任何地址，赶紧添加吧',
       source: 0,
       addressList: [],
-      id: '',
       checked: false,
       isToAddress: false,
-      radio: '' };
+      radio: '',
+      deleIds: [] };
 
   },
   onLoad: function onLoad(option) {
-    this.id = option.id;
     this.source = option.source;
     this.getAddress();
     if (option.postOrder) {//标明是从提交订单页面进入的
       this.isToAddress = true;
+      this.deleIds = JSON.parse(option.ids);
     }
   },
   methods: {
     // 选择地址
-    select: function select(e) {
+    select: function select(e) {var _this = this;
+      console.log(e);
       this.radio = e.detail;
       uni.setStorageSync('addressMsg', JSON.stringify(this.addressList[this.radio]));
 
       setTimeout(function () {
-        uni.redirectTo({
-          url: '../shopcar/postOrder' });
+        uni.reLaunch({
+          url: '../shopcar/postOrder?deleIds=' + JSON.stringify(_this.deleIds) });
 
-      });
+      }, 300);
 
     },
     // 获取所有地址列表
-    getAddress: function getAddress() {var _this = this;
-      var obj = {
-        id: this.id };
-
+    getAddress: function getAddress() {var _this2 = this;
       _uniAxios.default.post('/member/address/list').then(function (res) {
         if (res.data.code == 200) {
-          _this.addressList = res.data.data;
+          _this2.addressList = res.data.data;
         }
       });
     },
@@ -243,6 +242,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       //添加或修改后事件，这里直接在最前面添加了一条数据，实际应用中直接刷新地址列表即可
       this.getAddress();
       // this.addressList.unshift(data);
+    },
+    btn: function btn() {
+      uni.navigateTo({
+        url: '../index/index' });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

@@ -90,11 +90,48 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  var l0 = _vm.__map(_vm.listBrand, function(item, __i1__) {
+    var g0 = _vm.productRequest.brandIds.includes(item.id)
+    return {
+      $orig: _vm.__get_orig(item),
+      g0: g0
+    }
+  })
+
+  var l2 = _vm.__map(_vm.listBrandAll, function(item, index) {
+    var l1 = _vm.__map(item, function(val, __i2__) {
+      var g1 = _vm.productRequest.brandIds.includes(val.id)
+      return {
+        $orig: _vm.__get_orig(val),
+        g1: g1
+      }
+    })
+
+    return {
+      $orig: _vm.__get_orig(item),
+      l1: l1
+    }
+  })
+
   if (!_vm._isMounted) {
     _vm.e0 = function($event) {
       _vm.isCross = !_vm.isCross
     }
+
+    _vm.e1 = function($event) {
+      return _vm.$refs.popup.close()
+    }
   }
+
+  _vm.$mp.data = Object.assign(
+    {},
+    {
+      $root: {
+        l0: l0,
+        l2: l2
+      }
+    }
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -230,12 +267,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 406));};var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 392));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 406));};var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 392));};var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 399));};var _default =
+
 
 
 {
   components: {
-    uniLoadMore: uniLoadMore, uniSearchBar: uniSearchBar },
+    uniLoadMore: uniLoadMore, uniSearchBar: uniSearchBar, uniPopup: uniPopup },
 
   data: function data() {
     return {
@@ -248,10 +303,13 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         pageSize: 10,
         pageNum: 1,
         orderByType: '',
-        stockType: '' },
+        stockType: '',
+        brandIds: [] },
       //已选三级分类id
       priceOrder: 0, //1 价格从低到高 2价格从高到低
       listCategory: [],
+      listBrand: [],
+      listBrandAll: {},
       goodsList: [],
       isCross: false,
       isErr: false };
@@ -265,6 +323,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.productRequest.productCategoryId = +options.tid;
     // if (options.tid)
     this.listWithChildren();
+    this.brandListAll();
     this.loadData('refresh');
   },
   onPageScroll: function onPageScroll(e) {
@@ -298,28 +357,46 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         }, []);
       });
     },
+    brandListAll: function brandListAll() {var _this2 = this;
+      _uniAxios.default.post('brand/listAll', {}).then(function (_ref2) {var data = _ref2.data;
+        if (data.code === 200) {
+          var list = data.data;
+          _this2.listBrand = list.slice(0, 7).concat([{ 'id': '', 'name': '全部品牌 >' }]);
+          _this2.listBrandAll = list.reduce(function (res, item) {
+            if (!res[item.firstLetter]) {
+              res[item.firstLetter] = [];
+            }
+            res[item.firstLetter].push(item);
+            return res;
+          }, {});
+        }
+      });
+    },
     // 搜索商品列表
-    search: function () {var _search = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(e) {var _this2 = this;var request, key;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
-                this.isErr = false;
-                this.productRequest.keywords = e ? e.value : '';
-                request = Object.assign({}, this.productRequest);
-                for (key in request) {
-                  if (!request[key]) delete request[key];
-                }
-                _uniAxios.default.post('/product/search', request).then(function (_ref2) {var data = _ref2.data;
-                  var goodsList = data.code === 200 ? data.data.list : [];
-                  _this2.goodsList = _this2.goodsList.concat(goodsList);
-                  //判断是否还有下一页，有是more  没有是nomore
-                  _this2.loadingType = _this2.goodsList.length >= data.data.total - data.data.pageNum ? 'nomore' : 'more';
-                  uni.hideLoading();
-                }).catch(function () {
-                  _this2.isErr = true;
-                  uni.hideLoading();
-                });case 5:case "end":return _context.stop();}}}, _callee, this);}));function search(_x) {return _search.apply(this, arguments);}return search;}(),
-
+    search: function search(e) {var _this3 = this;
+      this.isErr = false;
+      if (e) {
+        this.goodsList = [];
+      }
+      this.productRequest.productName = e ? e.value : '';
+      var request = Object.assign({}, this.productRequest);
+      for (var key in request) {
+        if (!request[key]) delete request[key];
+      }
+      _uniAxios.default.post('product/search', request).then(function (_ref3) {var data = _ref3.data;
+        var goodsList = data.code === 200 ? data.data.list : [];
+        _this3.goodsList = _this3.goodsList.concat(goodsList);
+        //判断是否还有下一页，有是more  没有是nomore
+        _this3.loadingType = _this3.goodsList.length >= data.data.total - data.data.pageNum ? 'nomore' : 'more';
+        uni.hideLoading();
+      }).catch(function () {
+        _this3.isErr = true;
+        uni.hideLoading();
+      });
+    },
     //加载商品 ，带下拉刷新和上滑加载
-    loadData: function () {var _loadData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee2() {var type,_args2 = arguments;return _regenerator.default.wrap(function _callee2$(_context2) {while (1) {switch (_context2.prev = _context2.next) {case 0:type = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : 'add';if (!(
-                this.loadingType === 'nomore')) {_context2.next = 3;break;}return _context2.abrupt("return");case 3:
+    loadData: function () {var _loadData = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee() {var type,_args = arguments;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:type = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'add';if (!(
+                this.loadingType === 'nomore' && type !== 'refresh')) {_context.next = 3;break;}return _context.abrupt("return");case 3:
                 uni.pageScrollTo({
                   duration: 300,
                   scrollTop: 0 });
@@ -328,11 +405,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                   title: '正在加载' });
 
                 //没有更多直接返回
-                if (!(type === 'add')) {_context2.next = 11;break;}if (!(
-                this.loadingType === 'nomore')) {_context2.next = 8;break;}return _context2.abrupt("return");case 8:
+                if (!(type === 'add')) {_context.next = 11;break;}if (!(
+                this.loadingType === 'nomore')) {_context.next = 8;break;}return _context.abrupt("return");case 8:
 
 
-                this.loadingType = 'loading';_context2.next = 12;break;case 11:
+                this.loadingType = 'loading';_context.next = 12;break;case 11:
 
                 this.loadingType = 'more';case 12:
 
@@ -342,7 +419,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                 this.search();
                 if (type === 'refresh') {
                   uni.stopPullDownRefresh();
-                }case 15:case "end":return _context2.stop();}}}, _callee2, this);}));function loadData() {return _loadData.apply(this, arguments);}return loadData;}(),
+                }case 15:case "end":return _context.stop();}}}, _callee, this);}));function loadData() {return _loadData.apply(this, arguments);}return loadData;}(),
 
     //筛选点击
     tabClick: function tabClick(index) {
@@ -363,8 +440,33 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       this.loadData('refresh');
     },
     stockTypeClick: function stockTypeClick(value) {
+      if (this.productRequest.stockType === value) {
+        this.productRequest.stockType = '';
+      } else {
+        this.productRequest.stockType = value;
+      }
+    },
+    brandClick: function brandClick(value) {
+      if (!value) {
+        this.filterIndex = null;
+        this.$refs.popup.open();
+        return;
+      }
+      var findIndex = this.productRequest.brandIds.findIndex(function (item) {return item === value;});
+      if (findIndex === -1) {
+        this.productRequest.brandIds.push(value);
+      } else {
+        this.productRequest.brandIds.splice(findIndex, 1);
+      }
+    },
+    confirm: function confirm() {
+      this.$refs.popup.close();
       this.filterIndex = null;
-      this.productRequest.stockType = value;
+      this.loadData('refresh');
+    },
+    reset: function reset() {
+      this.productRequest.brandIds = [];
+      this.productRequest.stockType = '';
       this.loadData('refresh');
     },
     //详情

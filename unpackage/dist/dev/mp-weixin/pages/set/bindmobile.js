@@ -205,7 +205,7 @@ var _default = { data: function data() {return { newMobile: '', newCode: '', cod
         } else {
           var obj = {
             authCode: this.newCode,
-            oldPhone: uni.getStorageSync('setPhone') || this.$store.state.userInfo.mobile,
+            oldPhone: uni.getStorageSync('setPhone') || this.$store.state.userInfo.phone,
             phone: this.newMobile };
 
           _uniAxios.default.post('/sso/user/bindNewPhone', obj).then(function (res) {

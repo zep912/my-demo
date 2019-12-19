@@ -89,8 +89,8 @@
 				key:'GOUBZ-B3U3R-WEAWX-WE266-WZBW5-JIFUR',//腾讯地图key
 				userId:'',
 				show:false,
-				columns:[
-				]
+				columns:[],
+				addressId:''
 			}
 		},
 		computed: {
@@ -108,7 +108,6 @@
 					}
 				})
 				// 默认
-				console.log(this.addressData,777)
 			}
 			this.manageType = option.type;
 			uni.setNavigationBarTitle({
@@ -122,16 +121,18 @@
 			// 	key: this.key
 			// });
 			
-			this.getAddress()
+			this.getAddress();
 		},
 		methods: {
 			getAddress(){
-				axios.post('/address/list').then(res=>{
+				let schoolAddress = uni.getStorageSync('school');
+				this.addressId = schoolAddress.id
+				axios.post('/address/floorAddressById',{addressId:this.addressId}).then(res=>{
 					if (res.data.code == 200) {
 						let result = res.data.data;
 						let obj = result.map(function (item) {
 						    return{
-								'text': item.address,
+								'text': item.floorAddress,
 						    }
 						})
 						this.columns = obj

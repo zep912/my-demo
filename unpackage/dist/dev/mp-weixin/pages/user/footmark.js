@@ -122,7 +122,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 413));};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
 
@@ -171,6 +171,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 413));};var _default =
 {
   components: {
     empty: empty },
@@ -182,56 +183,82 @@ __webpack_require__.r(__webpack_exports__);
       checked: false,
       edit: '编辑',
       isShow: false,
-      collectGoods: [
-        // {
-        // 	title:'香辣牛肉干',
-        // 	img:'/static/goods.png',
-        // 	attr:'规格 10*200g',
-        // 	price:'999.99',
-        // 	name:'麦田圈官网旗舰店'
-        // },
-        // {
-        // 	title:'香辣牛肉干',
-        // 	img:'/static/goods.png',
-        // 	attr:'规格 10*200g',
-        // 	price:'999.99',
-        // 	name:'麦田圈官网旗舰店'
-        // },
-        // {
-        // 	title:'香辣牛肉干',
-        // 	img:'/static/goods.png',
-        // 	attr:'规格 10*200g',
-        // 	price:'999.99',
-        // 	name:'麦田圈官网旗舰店'
-        // }
-      ] };
+      collectGoods: [],
+      ids: [] };
 
   },
   onLoad: function onLoad() {
+    this.getFeedbackData();
   },
   methods: {
-    onChange: function onChange(e) {
-      this.checked = e.detail;
+    toProductDetails: function toProductDetails(id) {
+      uni.navigateTo({
+        url: "/pages/product/product?id=".concat(id) });
+
+    },
+    getFeedbackData: function getFeedbackData() {var _this = this;
+      _uniAxios.default.post('/member/readHistory/list').then(function (res) {
+        if (res.data.code === 200 && res.data.data.length > 0) {
+          _this.collectGoods = res.data.data.length;
+        }
+      });
+    },
+    onChange: function onChange(status, index, id) {
+      console.log(status, index, id);
+      if (status == 1) {//表示选中
+        this.collectGoods[index].recommandStatus = 0;
+        this.checkNum++;
+        if (this.checkNum == this.collectGoods.length) {
+          this.checkedes = true;
+        }
+        this.ids.push(id);
+      } else {
+        this.collectGoods[index].recommandStatus = 1;
+        this.checkNum--;
+        this.checkedes = false;
+        this.ids.splice(this.ids.findIndex(function (item) {return item == index;}), 1);
+      }
     },
     editClick: function editClick() {
       if (this.edit == '编辑') {
         this.edit = '完成';
         this.isShow = true;
+        this.collectGoods.forEach(function (el) {
+          el.recommandStatus = 1;
+        });
+        this.checkedes = false;
+        this.checkNum = 0;
       } else {
         this.edit = '编辑';
         this.isShow = false;
       }
     },
     // 删除
-    dele: function dele() {
-
+    dele: function dele() {var _this2 = this;
+      if (this.ids.length == 0) {
+        this.$api.msg('请选择商品');
+      } else {
+        _uniAxios.default.post('/member/readHistory/delete', { productId: this.ids }).then(function (res) {
+          if (res.data.code === 200) {
+            _this2.$api.msg('删除成功');
+          }
+        });
+      }
     },
     // 全选
-    allOnChange: function allOnChange() {
-
-    },
-    around: function around() {
-
+    allOnChange: function allOnChange() {var _this3 = this;
+      this.checkedes = !this.checkedes;
+      if (this.checkedes) {
+        this.collectGoods.forEach(function (el) {
+          el.recommandStatus = 0;
+          _this3.ids.push(el.id);
+        });
+      } else {
+        this.collectGoods.forEach(function (el) {
+          el.recommandStatus = 1;
+        });
+        this.ids = [];
+      }
     },
     btn: function btn() {
       uni.reLaunch({

@@ -144,6 +144,8 @@
 			this.getShopCar();
 		},
 		onShow() {
+			this.checkeds = false;
+			this.allNum = 0;
 			this.getShopCar();
 		},
 		methods: {
@@ -157,9 +159,19 @@
 				if(this.allNum==0){
 					this.$api.msg('请选择商品')
 				}else{
-					uni.reLaunch({	
+					uni.reLaunch({
 						url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
 					})
+					// axios.post('/order/generateOrder',{cartItemIds:this.deleIds}).then(res=>{
+					// 	if(res.data.code==200){
+					// 		uni.reLaunch({
+					// 			url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
+					// 		})
+					// 	}else{
+					// 		this.$api.msg(res.data.message)
+					// 	}
+					// })
+					
 				}
 				
 			},
@@ -302,7 +314,6 @@
 						this.$store.commit('totalMoney', price);
 						this.allNum++;
 						this.deleIds.push(id)
-						console.log(this.checkNum)
 						if(this.checkNum==this.list.length){
 							this.checkeds = true
 						}

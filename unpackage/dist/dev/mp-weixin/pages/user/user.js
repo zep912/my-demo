@@ -268,7 +268,6 @@ pageAtTop = true;var _default =
       coverTransform: 'translateY(0px)',
       coverTransition: '0s',
       moving: false,
-      // abImg: '../../static/banner_01.png',
       goodsList: [],
       authShow: true,
       isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
@@ -366,7 +365,6 @@ pageAtTop = true;var _default =
                 //openId、或SessionKdy存储//隐藏loading
                 uni.setStorageSync('gt', response.data.token);
                 uni.hideLoading();
-                // this.close();
               }
             });
           });
@@ -404,16 +402,15 @@ pageAtTop = true;var _default =
       var hasLogin = this.$store.state.hasLogin;
       if (hasLogin) {
         this.authShow = false;
-        console.log(7777);
         var id = '';
         _uniAxios.default.post('/sso/user/userInfo').then(function (res) {
           if (res.data.code == '200') {
             console.log(res);
             id = res.data.data.id;
             console.log(id);
-            _uniAxios.default.post('/sso/user/' + id).then(function (response) {
-              console.log(response);
-            });
+            // axios.post('/sso/user/'+id).then(response=>{
+            // 	console.log(response)
+            // })
           }
         });
 

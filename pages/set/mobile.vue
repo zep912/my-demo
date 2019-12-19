@@ -34,7 +34,7 @@
 		},
 		onLoad(option) {
 			this.id = option.id;
-			let getMobile = uni.getStorageSync('setPhone')||this.$store.state.userInfo.mobile;
+			let getMobile = uni.getStorageSync('setPhone')||this.$store.state.userInfo.phone;
 			this.phone = getMobile;
 			this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(7);
 			// axios.post('/sso/user/id',{id:this.id}).then(res=>{

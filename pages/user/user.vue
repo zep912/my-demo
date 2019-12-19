@@ -9,7 +9,7 @@
 				</view>
 				<view class="info-box">
 					<text class="username" v-if='!authShow'>{{userInfo.nickName?userInfo.nickName:''}}</text>
-					<text class="info-mobile" v-if='!authShow'>{{userInfo.mobile}}</text>
+					<text class="info-mobile" v-if='!authShow'>{{userInfo.phone}}</text>
 					<!-- <view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
 					</view> -->
@@ -134,7 +134,6 @@
 				coverTransform: 'translateY(0px)',
 				coverTransition: '0s',
 				moving: false,
-				// abImg: '../../static/banner_01.png',
 				goodsList: [],
 				authShow: true,
 				isCanUse: uni.getStorageSync('isCanUse') || true //默认为true
@@ -232,7 +231,6 @@
 									//openId、或SessionKdy存储//隐藏loading
 									uni.setStorageSync('gt', response.data.token);
 									uni.hideLoading();
-									// this.close();
 								}
 							})
 						})
@@ -270,16 +268,15 @@
 				let hasLogin = this.$store.state.hasLogin;
 				if (hasLogin) {
 					this.authShow = false;
-					console.log(7777)
 					let id = ''
 					axios.post('/sso/user/userInfo').then(res => {
 						if (res.data.code == '200') {
 							console.log(res)
 							id = res.data.data.id;
 							console.log(id)
-							axios.post('/sso/user/'+id).then(response=>{
-								console.log(response)
-							})
+							// axios.post('/sso/user/'+id).then(response=>{
+							// 	console.log(response)
+							// })
 						}
 					})
 					

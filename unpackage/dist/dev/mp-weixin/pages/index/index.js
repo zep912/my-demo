@@ -262,6 +262,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _vuex = __webpack_require__(/*! vuex */ 10);
 
 
@@ -279,6 +280,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
   data: function data() {
     return {
+      code: null,
       titleNViewBackground: '',
       swiperCurrent: 0,
       swiperLength: 0,
@@ -306,6 +308,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     }
   },
   onShow: function onShow() {
+    this.code = uni.getStorageSync('code');
     this.school = uni.getStorageSync('school') || {};
     this.getHomeList();
   },
@@ -315,44 +318,62 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       uni.getUserInfo({
         provider: 'weixin',
         success: function success(infoRes) {
-          _this.login(infoRes.userInfo);
+          _this.login();
+          if (uni.getStorageSync('userPhone')) {
+            infoRes.userInfo.phone = uni.getStorageSync('userPhone');
+          }
+          _this.$store.commit('login', infoRes.userInfo);
         } });
 
     },
-
     //登录
-    login: function login(userInfo) {var _this2 = this;
-      uni.showLoading({
-        title: '登录中...',
-        mask: true });var
-
-      city = userInfo.city,gender = userInfo.gender,avatarUrl = userInfo.avatarUrl,_userInfo$nickName = userInfo.nickName,nickName = _userInfo$nickName === void 0 ? 'user' : _userInfo$nickName,phone = userInfo.phone;
+    login: function login() {var _this2 = this;
       // 1.wx获取登录用户code
       uni.login({
         provider: 'weixin',
         success: function success(loginRes) {
           var code = loginRes.code;
+          _this2.code = code;
           uni.setStorageSync('code', code);
-          _uniAxios.default.post('/sso/user/getOpenId', { code: code }).then(function (_ref) {var data = _ref.data;
-            //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-            _uniAxios.default.post('/sso/user/miniLogin', { city: city || '武汉', gender: gender, icon: avatarUrl, nickname: nickName,
-              "wxAppid": "wx35cb9f6acb94bd15",
-              "wxOpenid": data.data.openId }).
-            then(function (res) {
-              var response = res.data;
-              if (response.code == 200) {
-                _this2.$store.commit('login', userInfo);
-                uni.setStorageSync('hasLogin', true);
-                //openId、或SessionKdy存储//隐藏loading
-                uni.setStorageSync('gt', response.data.token);
-                uni.hideLoading();
-                uni.showTabBar();
-                _this2.close();
-              }
-            });
-          });
         } });
 
+    },
+    getPhoneNum: function getPhoneNum(e) {var _this3 = this;
+      uni.showLoading({
+        title: '登录中...',
+        mask: true });var _e$detail =
+
+      e.detail,encryptedData = _e$detail.encryptedData,iv = _e$detail.iv;
+      _uniAxios.default.post('/sso/user/getOpenId', { code: this.code }).then(function (_ref) {var data = _ref.data;var _this3$userInfo =
+        _this3.userInfo,city = _this3$userInfo.city,gender = _this3$userInfo.gender,avatarUrl = _this3$userInfo.avatarUrl,_this3$userInfo$nickN = _this3$userInfo.nickName,nickName = _this3$userInfo$nickN === void 0 ? 'user' : _this3$userInfo$nickN;var _data$data =
+        data.data,openId = _data$data.openId,session_key = _data$data.session_key;
+        //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+        _uniAxios.default.post('sso/user/getPhoneNum', { encrypdata: encryptedData, ivdata: iv, openId: openId, sessionKey: session_key }).then(function (resp) {
+          console.log(resp, 'resp');
+          var phone;
+          if (resp.data.code === 200) {
+            phone = resp.data.data && resp.data.data.phone;
+            _this3.userInfo.phone = phone;
+            _this3.$store.commit('login', _this3.userInfo);
+            uni.setStorageSync('userPhone', phone);
+          }
+          _uniAxios.default.post('/sso/user/miniLogin', { city: city || '武汉', gender: gender, icon: avatarUrl, nickname: nickName,
+            "wxAppid": "wx35cb9f6acb94bd15", phone: phone,
+            "wxOpenid": openId }).
+          then(function (res) {
+            var response = res.data;
+            if (response.code == 200) {
+              uni.setStorageSync('hasLogin', true);
+              //openId、或SessionKdy存储//隐藏loading
+              uni.setStorageSync('gt', response.data.token);
+              uni.hideLoading();
+              uni.showTabBar();
+              _this3.close();
+            }
+          });
+        });
+
+      });
     },
     // 手机号登录
     toPhone: function toPhone() {
@@ -401,16 +422,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         url: "/pages/category/category" });
 
     },
-    getHomeList: function getHomeList() {var _this3 = this;
+    getHomeList: function getHomeList() {var _this4 = this;
       _uniAxios.default.post('/home/list', {}).then(function (_ref2)
 
       {var data = _ref2.data;
         if (data.code === 200) {
-          _this3.carouselList = data.data.advertiseList || [];
-          _this3.productCategoryList = data.data.productCategoryList || [];
-          _this3.skuList = data.data.hotProductList || [];
-          _this3.newProductList = data.data.newProductList || [];
-          _this3.productList = data.data.homeFlashPromotion.productList || [];
+          _this4.carouselList = data.data.advertiseList || [];
+          _this4.productCategoryList = data.data.productCategoryList || [];
+          _this4.skuList = data.data.hotProductList || [];
+          _this4.newProductList = data.data.newProductList || [];
+          _this4.productList = data.data.homeFlashPromotion.productList || [];
           // if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime)
           // 	.getHours() - 8;
         }

@@ -211,6 +211,7 @@ var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(
   onLoad: function onLoad(option) {
     this.id = option.id;
     this.getData();
+    this.phone = uni.getStorageSync('userPhone');
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)(['hasLogin', 'userInfo'])),

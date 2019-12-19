@@ -29,7 +29,14 @@
 					</view>
 				</view>
 				<!-- 没有优惠券的状态 -->
-				<empty :src="src" :msg='msg' v-if='conponList.length==0'></empty>
+				<!-- <empty :src="src" :msg='msg' v-if='conponList.length==0'></empty> -->
+				<view class="empty" v-if='conponList.length==0'>
+					<view class="noCollect">
+						<image src="../../static/my/nocoupon.png" mode="" style="width: 167rpx;height: 120rpx;margin-bottom: 73rpx;"></image>
+						<view class="noCollect-word" style="color: #333333;">{{msg}}</view>
+						<button type="primary" @click="btn">去逛逛</button>
+					</view>	
+				</view>
 			</van-tab>
 			<van-tab title="已使用"  class='tab2'>
 				<!-- 实现优惠券 -->
@@ -59,7 +66,14 @@
 						</view>
 					</view>
 				</view>
-				<empty :src="src" :msg='msg' v-if='conponList.length==0'></empty>
+				<!-- <empty :src="src" :msg='msg' v-if='conponList.length==0'></empty> -->
+				<view class="empty" v-if='conponList.length==0'>
+					<view class="noCollect">
+						<image src="../../static/my/nocoupon.png" mode="" style="width: 167rpx;height: 120rpx;margin-bottom: 73rpx;"></image>
+						<view class="noCollect-word" style="color: #333333;">{{msg}}</view>
+						<button type="primary" @click="btn">去逛逛</button>
+					</view>	
+				</view>
 			</van-tab>
 			<van-tab title="已过期"  class='tab3'>
 				<!-- 实现优惠券 -->
@@ -90,7 +104,14 @@
 						</view>
 					</view>
 				</view>
-				<empty :src="src" :msg='msg' v-if='conponList.length==0'></empty>
+				<!-- <empty :src="src" :msg='msg' v-if='conponList.length==0'></empty> -->
+				<view class="empty" v-if='conponList.length==0'>
+					<view class="noCollect">
+						<image src="../../static/my/nocoupon.png" mode="" style="width: 167rpx;height: 120rpx;margin-bottom: 73rpx;"></image>
+						<view class="noCollect-word" style="color: #333333;">{{msg}}</view>
+						<button type="primary" @click="btn">去逛逛</button>
+					</view>	
+				</view>
 			</van-tab>
 		</van-tabs>
 	</view>
@@ -115,7 +136,13 @@
 			this.getCoupon(0)
 		},
 		methods: {
-			// 获取用户的优惠券列表
+			btn(){
+				uni.navigateTo({
+					url:'../index/index'
+				})
+			},
+				
+			// 获取，用户的优惠券列表
 			getCoupon(n){
 				axios.post('/member/coupon/list/cart/'+n,{type:n}).then(res=>{
 					if(res.data.code==200){

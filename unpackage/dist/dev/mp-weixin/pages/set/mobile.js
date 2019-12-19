@@ -164,7 +164,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 var _default = { data: function data() {return { oldMobile: '', code: '获取验证码', disabled: false, msgCode: '', //短信验证码
-      num: 60, id: '', phone: '' };}, onLoad: function onLoad(option) {this.id = option.id;var getMobile = uni.getStorageSync('setPhone') || this.$store.state.userInfo.mobile;this.phone = getMobile;this.oldMobile = this.phone.substring(0, 3) + '****' + this.phone.substring(7); // axios.post('/sso/user/id',{id:this.id}).then(res=>{
+      num: 60, id: '', phone: '' };}, onLoad: function onLoad(option) {this.id = option.id;var getMobile = uni.getStorageSync('setPhone') || this.$store.state.userInfo.phone;this.phone = getMobile;this.oldMobile = this.phone.substring(0, 3) + '****' + this.phone.substring(7); // axios.post('/sso/user/id',{id:this.id}).then(res=>{
     // 	console.log(res)
     //     this.phone = res.data.data.phone;
     // 	this.oldMobile = this.phone.substring(0,3)+'****'+this.phone.substring(7);

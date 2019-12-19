@@ -3,8 +3,8 @@
 		<!-- 地址 -->
 		<view class="order-address b-b i-top" @click="toAddress">
 			<view class="" style="display: flex;align-items: center;">
-				<text class="iconfont icon-dizhi1"></text>
-				<view class="order-ad-user">
+				<text class="iconfont icon-dizhi1" style="font-size: 20px;"></text>
+				<view class="order-ad-user" style="margin-left: 8px;">
 					<text class="phone"><text>{{orderList.receiverName}}</text><text>{{orderList.receiverPhone}}</text></text>
 					<text class="address">{{orderList.receiverProvince+orderList.receiverCity+orderList.receiverRegion+orderList.receiverDetailAddress}}</text>
 				</view>
@@ -119,6 +119,7 @@
 			}
 		},
 		onLoad(option) {
+			console.log(option)
 			this.ids = JSON.parse(option.deleIds)
 			if (uni.getStorageSync('addressMsg')) { //从地址跳转回来
 				let orderAddress = JSON.parse(uni.getStorageSync('addressMsg'));
@@ -141,6 +142,7 @@
 					uni.setStorageSync('code', code)
 				}
 			})
+			// this.getOrder();
 		},
 		methods: {
 			// 数据初始化
@@ -165,7 +167,7 @@
 			// 修改地址
 			toAddress() {
 				uni.navigateTo({
-					url: '../set/address?postOrder=1'
+					url: '../set/address?postOrder=1&ids='+JSON.stringify(this.ids)
 				})
 			},
 			//使用积分

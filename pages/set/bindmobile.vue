@@ -81,7 +81,7 @@
 					}else{
 						let obj ={
 							  authCode: this.newCode,
-							  oldPhone: uni.getStorageSync('setPhone')||this.$store.state.userInfo.mobile,
+							  oldPhone: uni.getStorageSync('setPhone')||this.$store.state.userInfo.phone,
 							  phone: this.newMobile
 						}
 						axios.post('/sso/user/bindNewPhone',obj).then(res=>{

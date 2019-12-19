@@ -215,8 +215,8 @@ var qqmapsdk;var _default =
       key: 'GOUBZ-B3U3R-WEAWX-WE266-WZBW5-JIFUR', //腾讯地图key
       userId: '',
       show: false,
-      columns: [] };
-
+      columns: [],
+      addressId: '' };
 
   },
   computed: _objectSpread({},
@@ -234,7 +234,6 @@ var qqmapsdk;var _default =
         }
       });
       // 默认
-      console.log(this.addressData, 777);
     }
     this.manageType = option.type;
     uni.setNavigationBarTitle({
@@ -252,12 +251,14 @@ var qqmapsdk;var _default =
   },
   methods: {
     getAddress: function getAddress() {var _this2 = this;
-      _uniAxios.default.post('/address/list').then(function (res) {
+      var schoolAddress = uni.getStorageSync('school');
+      this.addressId = schoolAddress.id;
+      _uniAxios.default.post('/address/floorAddressById', { addressId: this.addressId }).then(function (res) {
         if (res.data.code == 200) {
           var result = res.data.data;
           var obj = result.map(function (item) {
             return {
-              'text': item.address };
+              'text': item.floorAddress };
 
           });
           _this2.columns = obj;

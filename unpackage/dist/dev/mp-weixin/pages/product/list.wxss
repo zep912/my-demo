@@ -198,6 +198,28 @@
 .container .content .navbar .collapse .view-list-search.current {
           background-color: #F7B62C;
 }
+.container .content .navbar .collapse .view-list-search.allClass {
+          background-color: #F5F5F5;
+          color: #f7b62c;
+}
+.container .content .navbar .collapse .btn-box {
+        width: 100%;
+}
+.container .content .navbar .collapse .btn-box .btn {
+          height: 80rpx;
+          line-height: 80rpx;
+          width: 280rpx;
+          border-radius: 40rpx;
+          font-size: 30rpx;
+}
+.container .content .navbar .collapse .btn-box .btn:first-of-type {
+            background: #DBDBDB;
+            color: #000;
+}
+.container .content .navbar .collapse .btn-box .btn:last-of-type {
+            margin-left: 85rpx;
+            background: #F7B52C;
+}
 .container .content .goods-list {
     display: -webkit-box;
     display: -webkit-flex;
@@ -337,5 +359,63 @@
 }
 .container .content .cross .goods-item .text-box .price-box {
           margin-top: 100rpx;
+}
+.container .content .cross .goods-item .text-box .price text {
+          height: 30rpx;
+          line-height: 30rpx;
+          font-size: 20rpx;
+          color: #9E9E9E;
+          margin-left: 30rpx;
+}
+.container .popup-content {
+  background: #fff;
+  width: 64vw;
+  height: 100vh;
+  margin-left: 36vw;
+}
+.container .popup-content .header {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    padding: 0 20rpx;
+    height: 5vh;
+    line-height: 5vh;
+}
+.container .popup-content .header .iconfont {
+      width: 60rpx;
+      font-size: 30rpx;
+}
+.container .popup-content .header .text {
+      font-size: 36rpx;
+      font-weight: 700;
+      -webkit-box-flex: 1;
+      -webkit-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      text-align: center;
+}
+.container .popup-content .header .btn {
+      font-size: 30rpx;
+      font-weight: 300;
+      width: 80rpx;
+      width: 80rpx;
+      text-align: right;
+}
+.container .popup-content .body {
+    height: 95vh;
+    overflow-y: auto;
+}
+.container .popup-content .body .title {
+      padding: 0 20rpx;
+      background-color: #EDEDED;
+      height: 80rpx;
+      line-height: 80rpx;
+}
+.container .popup-content .body .item {
+      background-color: #fff;
+}
+.container .popup-content .body .item.current {
+        color: #EBA91D;
 }
 

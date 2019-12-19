@@ -60,6 +60,7 @@
 		onLoad(option) {
 			this.id = option.id;
 			this.getData();
+			this.phone = uni.getStorageSync('userPhone')
 		},
 		computed: {
 			...mapState(['hasLogin', 'userInfo'])

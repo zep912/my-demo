@@ -292,6 +292,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.getShopCar();
   },
   onShow: function onShow() {
+    this.checkeds = false;
+    this.allNum = 0;
     this.getShopCar();
   },
   methods: {
@@ -307,6 +309,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       } else {
         uni.reLaunch({
           url: 'postOrder?deleIds=' + JSON.stringify(this.deleIds) });
+
+        // axios.post('/order/generateOrder',{cartItemIds:this.deleIds}).then(res=>{
+        // 	if(res.data.code==200){
+        // 		uni.reLaunch({
+        // 			url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
+        // 		})
+        // 	}else{
+        // 		this.$api.msg(res.data.message)
+        // 	}
+        // })
 
       }
 
@@ -450,7 +462,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           this.$store.commit('totalMoney', _price);
           this.allNum++;
           this.deleIds.push(id);
-          console.log(this.checkNum);
           if (this.checkNum == this.list.length) {
             this.checkeds = true;
           }

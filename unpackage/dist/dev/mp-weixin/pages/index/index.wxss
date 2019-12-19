@@ -7,7 +7,6 @@
 /* 行为相关颜色 */
 .weixinLogin {
   width: 550rpx;
-  height: 530rpx;
   background: white;
   border-radius: 30rpx;
   position: fixed;
@@ -18,9 +17,7 @@
           transform: translate(-50%, -50%);
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  padding-top: 46rpx;
-  padding-left: 30rpx;
-  padding-right: 30rpx;
+  padding: 40rpx 30rpx;
   text-align: center;
 }
 .weixinLogin image {

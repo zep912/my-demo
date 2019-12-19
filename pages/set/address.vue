@@ -5,8 +5,9 @@
 		
 		<view class="empty" v-if='addressList.length==0'>
 			<view class="noCollect">
-				<text class="iconfont icon-wudizhi" style="font-size: 70px;"></text>
-				<view class="noCollect-word">{{msg}}</view>
+				<!-- <text class="iconfont icon-wudizhi" style="font-size: 70px;"></text> -->
+				<image src="../../static/my/my-address.png" mode="" style="width: 146rpx;height: 153rpx;"></image>
+				<view class="noCollect-word" style="margin-top: 56rpx;">{{msg}}</view>
 				<button type="primary" @click="btn">去逛逛</button>
 			</view>	
 		</view>
@@ -52,38 +53,36 @@
 				msg:'你还没有任何地址，赶紧添加吧',
 				source: 0,
 				addressList: [],
-				id:'',
 				checked:false,
 				isToAddress:false,
-				radio:''
+				radio:'',
+				deleIds:[]
 			}
 		},
 		onLoad(option) {
-			this.id = option.id;
 			this.source = option.source;
 			this.getAddress();
 			if(option.postOrder){//标明是从提交订单页面进入的
 				this.isToAddress = true;
+				this.deleIds = JSON.parse(option.ids)
 			}
 		},
 		methods: {
 			// 选择地址
 			select(e){
+				console.log(e)
 				this.radio = e.detail;
 				uni.setStorageSync('addressMsg',JSON.stringify(this.addressList[this.radio]))
 				
 				setTimeout(()=>{
-					uni.redirectTo({
-						url:'../shopcar/postOrder'
+					uni.reLaunch({
+						url:'../shopcar/postOrder?deleIds='+JSON.stringify(this.deleIds)
 					})
-				})
+				},300)
 				
 			},
 			// 获取所有地址列表
 			getAddress(){
-				let obj = {
-					id:this.id
-				}
 				axios.post('/member/address/list').then(res=>{
 					if(res.data.code==200){
 						this.addressList = res.data.data;
@@ -109,6 +108,11 @@
 				//添加或修改后事件，这里直接在最前面添加了一条数据，实际应用中直接刷新地址列表即可
 				this.getAddress()
 				// this.addressList.unshift(data);
+			},
+			btn(){
+				uni.navigateTo({
+					url:'../index/index'
+				})
 			}
 		}
 	}

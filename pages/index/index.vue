@@ -176,6 +176,9 @@
 					provider: 'weixin',
 					success: (infoRes) => {
 						this.login();
+						if(uni.getStorageSync('userPhone')){
+							infoRes.userInfo.phone = uni.getStorageSync('userPhone')
+						}
 						this.$store.commit('login', infoRes.userInfo);
 					}
 				});
@@ -207,6 +210,9 @@
 						let phone;
 						if (resp.data.code === 200) {
 							phone = resp.data.data && resp.data.data.phone;
+							this.userInfo.phone = phone;
+							this.$store.commit('login', this.userInfo);
+							uni.setStorageSync('userPhone',phone)
 						}
 						axios.post('/sso/user/miniLogin', {city: city || '武汉', gender, icon: avatarUrl, nickname: nickName,
 							  "wxAppid": "wx35cb9f6acb94bd15", phone,
