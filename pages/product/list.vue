@@ -51,18 +51,19 @@
 				<view class="collapse" v-if="filterIndex === 2">
 					<view class="title">库存状态</view>
 					<view class="view-list-search"
-					:class="{current: !productRequest.stockType}" 
-					@click="stockTypeClick('')">全部</view>
-					<view class="view-list-search"
 					:class="{current: productRequest.stockType === 1}" 
 					@click="stockTypeClick(1)">仅看有货</view>
 					<view class="view-list-search"
 					:class="{current: productRequest.stockType === 2}" 
 					@click="stockTypeClick(2)">仅看无货</view>
 					<view class="title">品牌</view>
-					<view class="view-list-search" v-for="item in listCategory" :key="item.id"
-					:class="{current: productRequest.productCategoryId === item.id}" 
-					@click="tabICateClick(item.id)">{{item.name}}</view>
+					<view class="view-list-search" v-for="item in listBrand" :key="item.id"
+					:class="{current: productRequest.brandIds.includes(item.id), allClass: item.id === ''}"
+					@click="brandClick(item.id)">{{item.name}}</view>
+					<view class="btn-box">
+						<button type="primary" size="mini" class="btn" @click="reset">重置</button>
+						<button type="primary" size="mini" class="btn" @click="confirm">确定</button>
+					</view>
 				</view>
 			</view>
 			<view class="goods-list" :class="{cross: isCross}" v-if="goodsList && goodsList.length">
@@ -97,6 +98,22 @@
 				<button type="primary" class="btn" @click="loadData('refresh')">刷新</button>
 			</view>
 		</view>
+		<uni-popup ref="popup" type="center" :maskClick="false">
+			<view class="popup-content">
+				<view class="header">
+					<text class="iconfont icon-zuo" @click="$refs.popup.close()"></text>
+					<text class="text">品牌</text>
+					<text class="btn" @click="confirm">确定</text>
+				</view>
+				<view class="body">
+					<block v-for="(item, index) in listBrandAll" :key="item">
+						<view class="title">{{index}}</view>
+						<view class="title item" :class="{current: productRequest.brandIds.includes(val.id)}"
+						 v-for="val in item" :key="val.id" @click="brandClick(val.id)">{{val.name}}</view>
+					</block>
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -104,9 +121,10 @@
 	import axios from '@/utils/uniAxios.js'
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import {uniSearchBar} from "@/components/uni-search-bar/uni-search-bar.vue";
+	import {uniPopup} from '@/components/uni-popup/uni-popup.vue'
 	export default {
 		components: {
-			uniLoadMore, uniSearchBar
+			uniLoadMore, uniSearchBar, uniPopup
 		},
 		data() {
 			return {
@@ -119,10 +137,13 @@
 					pageSize: 10,
 					pageNum: 1,
 					orderByType: '',
-					stockType: ''
+					stockType: '',
+					brandIds: []
 				}, //已选三级分类id
 				priceOrder: 0, //1 价格从低到高 2价格从高到低
 				listCategory: [],
+				listBrand: [],
+				listBrandAll: {},
 				goodsList: [],
 				isCross: false,
 				isErr: false
@@ -136,6 +157,7 @@
 			this.productRequest.productCategoryId = +options.tid;
 			// if (options.tid)
 			this.listWithChildren();
+			this.brandListAll();
 			this.loadData('refresh');
 		},
 		onPageScroll(e){
@@ -169,15 +191,33 @@
 					}, [])
 				})
 			},
+			brandListAll() {
+				axios.post('brand/listAll', {}).then(({data}) => {
+					if (data.code === 200) {
+						const list = data.data;
+						this.listBrand = list.slice(0, 7).concat([{'id': '', 'name': '全部品牌 >'}]);
+						this.listBrandAll = list.reduce((res, item) => {
+							if (!res[item.firstLetter]) {
+								res[item.firstLetter] = [];
+							}
+							res[item.firstLetter].push(item);
+							return res;
+						}, {});
+					}
+				});
+			},
 			// 搜索商品列表
-			async search(e) {
+			search(e) {
 				this.isErr = false;
-				this.productRequest.keywords = e ? e.value : '';
+				if (e) {
+					this.goodsList = [];
+				}
+				this.productRequest.productName = e ? e.value : '';
 				let request = Object.assign({}, this.productRequest);
 				for (let key in request) {
 					if (!request[key]) delete request[key];
 				}
-				axios.post('/product/search', request).then(({data}) => {
+				axios.post('product/search', request).then(({data}) => {
 					let goodsList = data.code === 200 ? data.data.list : [];
 					this.goodsList = this.goodsList.concat(goodsList);
 					//判断是否还有下一页，有是more  没有是nomore
@@ -190,7 +230,7 @@
 			},
 			//加载商品 ，带下拉刷新和上滑加载
 			async loadData(type='add') {
-				if (this.loadingType === 'nomore') return;
+				if (this.loadingType === 'nomore' && type !== 'refresh') return;
 				uni.pageScrollTo({
 					duration: 300,
 					scrollTop: 0
@@ -234,8 +274,33 @@
 				this.loadData('refresh');	
 			},
 			stockTypeClick(value) {
+				if (this.productRequest.stockType === value) {
+					this.productRequest.stockType = '';
+				} else {
+					this.productRequest.stockType = value;
+				}
+			},
+			brandClick(value) {
+				if (!value) {
+					this.filterIndex = null;
+					this.$refs.popup.open();
+					return;
+				}
+				const findIndex = this.productRequest.brandIds.findIndex(item => item === value);
+				if (findIndex === -1) {
+					this.productRequest.brandIds.push(value);
+				} else {
+					this.productRequest.brandIds.splice(findIndex, 1)
+				}
+			},
+			confirm() {
+				this.$refs.popup.close();
 				this.filterIndex = null;
-				this.productRequest.stockType = value;
+				this.loadData('refresh');
+			},
+			reset() {
+				this.productRequest.brandIds = [];
+				this.productRequest.stockType = '';
 				this.loadData('refresh');
 			},
 			//详情
@@ -398,6 +463,28 @@
 						&.current {
 							background-color: #F7B62C;
 						}
+						&.allClass {
+							background-color: #F5F5F5;
+							color: #f7b62c;
+						}
+					}
+					.btn-box {
+						width: 100%;
+						.btn {
+							height: 80upx;
+							line-height: 80upx;
+							width: 280upx;
+							border-radius: 40upx;
+							font-size: 30upx;
+							&:first-of-type {
+								background: #DBDBDB;
+								color: #000;
+							}
+							&:last-of-type {
+								margin-left: 85upx;
+								background: #F7B52C;
+							}
+						}
 					}
 				}
 			}
@@ -511,6 +598,60 @@
 						.price-box {
 							margin-top: 100upx;
 						}
+						.price{
+							text {
+								height: 30upx;
+								line-height: 30upx;
+								font-size: 20upx;
+								color: #9E9E9E;
+								margin-left: 30upx;
+							}
+						}
+					}
+				}
+			}
+		}
+		.popup-content {
+			background: #fff; 
+			width: 64vw; 
+			height: 100vh;
+			margin-left: 36vw;
+			.header {
+				display: flex;
+				padding: 0 20upx;
+				height: 5vh;
+				line-height: 5vh;
+				.iconfont {
+					width: 60upx;
+					font-size: 30upx;
+				}
+				.text {
+					font-size: 36upx;
+					font-weight: 700;
+					flex: 1;
+					text-align: center;
+				}
+				.btn {
+					font-size: 30upx;
+					font-weight: 300;
+					width: 80upx;
+					width: 80rpx;
+					text-align: right;
+				}
+			}
+			.body {
+				height: 95vh;
+				overflow-y: auto;
+				.title {
+					padding: 0 20upx;
+					background-color: #EDEDED;
+					height: 80upx;
+					line-height: 80upx;
+				}
+				.item {
+					background-color: #fff;
+					&.current {
+						color: #EBA91D;
 					}
 				}
 			}

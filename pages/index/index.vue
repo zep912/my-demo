@@ -281,7 +281,7 @@
 	// 微信自动登录
 	.weixinLogin {
 		width: 550rpx;
-		height: 530rpx;
+		// height: 530rpx;
 		background: rgba(255, 255, 255, 1);
 		border-radius: 30rpx;
 		position: fixed;
@@ -289,9 +289,7 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		box-sizing: border-box;
-		padding-top: 46rpx;
-		padding-left: 30rpx;
-		padding-right: 30rpx;
+		padding: 40rpx 30rpx;
 		text-align: center;
 
 		image {
