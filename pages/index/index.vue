@@ -111,7 +111,8 @@
 			<view class="weixinLogin">
 				<!-- <text class="weixinX" @click="close">X</text> -->
 				<image src="../../static/delivery/logo.png" mode=""></image>
-				<button type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
+				<button v-if="!code" type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
+				<button v-else type="primary" class="weixin" open-type="getPhoneNumber" @getphonenumber="getPhoneNum">获取手机号</button>
 				<button type="primary" class="mobile" @click="toPhone">手机号快捷登录</button>
 			</view>
 		</uni-popup>
@@ -136,6 +137,7 @@
 		},
 		data() {
 			return {
+				code: null,
 				titleNViewBackground: '',
 				swiperCurrent: 0,
 				swiperLength: 0,
@@ -163,6 +165,7 @@
 			}
 		},
 		onShow() {
+			this.code = uni.getStorageSync('code');
 			this.school = uni.getStorageSync('school') || {};
 			this.getHomeList();
 		},		
@@ -172,43 +175,55 @@
 				uni.getUserInfo({
 					provider: 'weixin',
 					success: (infoRes) => {
-						this.login(infoRes.userInfo)
+						this.login();
+						this.$store.commit('login', infoRes.userInfo);
 					}
 				});
 			},
-
 			//登录
-			login(userInfo) {
-				uni.showLoading({
-					title: '登录中...',
-					mask: true
-				});
-				const {city, gender, avatarUrl, nickName = 'user', phone} = userInfo;
+			login() {
 				// 1.wx获取登录用户code
 				uni.login({
 					provider: 'weixin',
 					success: (loginRes) => {
 						let code = loginRes.code;
+						this.code = code;
 						uni.setStorageSync('code', code);
-						axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
-						//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-							axios.post('/sso/user/miniLogin', {city: city || '武汉', gender, icon: avatarUrl, nickname: nickName,
-								  "wxAppid": "wx35cb9f6acb94bd15",
-								  "wxOpenid": data.data.openId
-								}).then((res) => {
-									const response = res.data;
-									if (response.code == 200) {
-										this.$store.commit('login', userInfo);
-										uni.setStorageSync('hasLogin', true);
-										//openId、或SessionKdy存储//隐藏loading
-										uni.setStorageSync('gt', response.data.token);
-										uni.hideLoading();
-										uni.showTabBar();
-										this.close();
-									}
-								})
-						})
 					}
+				})
+			},
+			getPhoneNum(e) {
+				uni.showLoading({
+					title: '登录中...',
+					mask: true
+				});
+				const {encryptedData, iv} = e.detail
+				axios.post('/sso/user/getOpenId', {code: this.code}).then(({data}) => {
+					const {city, gender, avatarUrl, nickName = 'user'} = this.userInfo;
+					const {openId, session_key} = data.data;
+					//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
+					axios.post('sso/user/getPhoneNum', {encrypdata: encryptedData, ivdata: iv, openId, sessionKey: session_key}).then(resp => {
+						console.log(resp, 'resp');
+						let phone;
+						if (resp.data.code === 200) {
+							phone = resp.data.data && resp.data.data.phone;
+						}
+						axios.post('/sso/user/miniLogin', {city: city || '武汉', gender, icon: avatarUrl, nickname: nickName,
+							  "wxAppid": "wx35cb9f6acb94bd15", phone,
+							  "wxOpenid": openId
+							}).then((res) => {
+								const response = res.data;
+								if (response.code == 200) {
+									uni.setStorageSync('hasLogin', true);
+									//openId、或SessionKdy存储//隐藏loading
+									uni.setStorageSync('gt', response.data.token);
+									uni.hideLoading();
+									uni.showTabBar();
+									this.close();
+								}
+							})
+					})
+					
 				})
 			},
 			// 手机号登录
