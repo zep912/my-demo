@@ -43,6 +43,7 @@
 		  :show="show"
 		  position="bottom"
 		  custom-style='popStyle'
+		  z-index='10000'
 		>
 		<van-picker
 		  show-toolbar

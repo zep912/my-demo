@@ -19,7 +19,7 @@
 			</view>
 			<view class='login-now' @click="accountManage">
 				<text>账号管理</text>
-			</view>
+			</view>	
 		</view>
 		<!-- 查看订单 -->
 		<view class="user-order">
@@ -72,15 +72,15 @@
 		<view class="wallet">
 			<view class="wallet-cell" @click="navTo('/pages/user/wallet')">
 				<text class="iconfont icon-- wallet-img"></text>
-				<text>钱包</text>
+				<view class="wallet_view">钱包</view>
 			</view>
 			<view class="wallet-cell" @click="deliveryClick">
 				<text class="iconfont icon-peisong wallet-img"></text>
-				<text>麦吉配送</text>
+				<view class="wallet_view">麦吉配送</view>
 			</view>
 			<view class="wallet-cell" @click="navTo('/pages/user/feedback')">
 				<text class="iconfont icon-pen- wallet-img"></text>
-				<text>意见反馈</text>
+				<view>意见反馈</view>
 			</view>
 		</view>
 		<!-- ab -->
@@ -145,12 +145,28 @@
 			if (uni.getStorageSync('hasLogin')) {
 				this.authShow = false
 			} 
-			this.hotList()
+			this.hotList();
+			this.getProductCollect();
+			this.getFeedbackData()
 		},
 		computed: {
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
+			getProductCollect(){
+				axios.post('/member/collection/productCollectionList').then(res=>{
+					if(res.data.code===200){
+						this.shoucang = res.data.data.length;
+					}
+				})
+			},
+			getFeedbackData(){
+				axios.post('/member/readHistory/list').then(res=>{
+					if(res.data.code===200&&res.data.data.length>0){
+						this.zuji = res.data.data.length;
+					}
+				})
+			},
 			//详情页
 			navToDetailPage(item) {
 				//测试数据没有写id，用title代替
@@ -747,11 +763,11 @@
 		border-radius: 20rpx;
 		width: 94%;
 		margin: 0 auto;
-		margin-top: 20rpx;
+		margin-top: 10rpx;
 		background: #fff;
 		box-sizing: border-box;
 		padding-left: 30rpx;
-
+		
 		.wallet-cell {
 			height: 100rpx;
 			font-size: 26rpx;
@@ -759,9 +775,16 @@
 			color: rgba(88, 88, 88, 1);
 			display: flex;
 			align-items: center;
-			border-bottom: 1px solid #E4E7ED;
+			
 		}
-
+		.wallet_view{
+			width: 100%;
+			height: 100%;
+			border-bottom: 1px solid #E4E7ED;
+			display: flex;
+			align-items: center;
+			box-sizing: border-box;
+		}
 		.wallet-cell:nth-of-type(3) {
 			border-bottom: 0;
 		}
@@ -813,7 +836,7 @@
 
 			img {
 				width: 100%;
-				height: 40rpx;
+				height: 34rpx;
 			}
 		}
 

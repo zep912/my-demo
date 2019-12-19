@@ -280,11 +280,27 @@ pageAtTop = true;var _default =
       this.authShow = false;
     }
     this.hotList();
+    this.getProductCollect();
+    this.getFeedbackData();
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)(['hasLogin', 'userInfo'])),
 
   methods: {
+    getProductCollect: function getProductCollect() {var _this = this;
+      _uniAxios.default.post('/member/collection/productCollectionList').then(function (res) {
+        if (res.data.code === 200) {
+          _this.shoucang = res.data.data.length;
+        }
+      });
+    },
+    getFeedbackData: function getFeedbackData() {var _this2 = this;
+      _uniAxios.default.post('/member/readHistory/list').then(function (res) {
+        if (res.data.code === 200 && res.data.data.length > 0) {
+          _this2.zuji = res.data.data.length;
+        }
+      });
+    },
     //详情页
     navToDetailPage: function navToDetailPage(item) {
       //测试数据没有写id，用title代替
@@ -294,23 +310,23 @@ pageAtTop = true;var _default =
 
     },
     // 好货推荐
-    hotList: function hotList() {var _this = this;
+    hotList: function hotList() {var _this3 = this;
       _uniAxios.default.post('/home/list').then(function (res) {
-        _this.goodsList = res.data.data.hotProductList;
+        _this3.goodsList = res.data.data.hotProductList;
       });
     },
     //第一授权获取用户信息===》按钮触发
-    wxGetUserInfo: function wxGetUserInfo() {var _this2 = this;
+    wxGetUserInfo: function wxGetUserInfo() {var _this4 = this;
       uni.getUserInfo({
         provider: 'weixin',
         success: function success(infoRes) {
-          _this2.login(infoRes.userInfo);
+          _this4.login(infoRes.userInfo);
         } });
 
     },
 
     //登录
-    login: function login(userInfo) {var _this3 = this;
+    login: function login(userInfo) {var _this5 = this;
       uni.showLoading({
         title: '登录中...' });var
 
@@ -344,8 +360,8 @@ pageAtTop = true;var _default =
               var response = res.data;
               console.log(response, 'response');
               if (response.code == 200) {
-                _this3.authShow = false;
-                _this3.$store.commit('login', userInfo);
+                _this5.authShow = false;
+                _this5.$store.commit('login', userInfo);
                 uni.setStorageSync('hasLogin', true);
                 //openId、或SessionKdy存储//隐藏loading
                 uni.setStorageSync('gt', response.data.token);
@@ -383,7 +399,7 @@ pageAtTop = true;var _default =
       }
     },
     // 从登录页跳转过来，刷新页面,获取用户信息
-    loadData: function loadData() {var _this4 = this;
+    loadData: function loadData() {var _this6 = this;
       // 优先使用微信登录
       var hasLogin = this.$store.state.hasLogin;
       if (hasLogin) {
@@ -406,11 +422,11 @@ pageAtTop = true;var _default =
       } else if (uni.getStorageSync('setPhone')) {//使用手机号登陆
         _uniAxios.default.post('/sso/user/userInfo').then(function (res) {
           if (res.data.code == '200') {
-            _this4.authShow = false;
-            _this4.userInfo.mobile = res.data.data.phone;
-            _this4.userInfo.id = res.data.data.id;
+            _this6.authShow = false;
+            _this6.userInfo.mobile = res.data.data.phone;
+            _this6.userInfo.id = res.data.data.id;
 
-            _this4.$store.commit('login', _this4.userInfo);
+            _this6.$store.commit('login', _this6.userInfo);
           }
         });
       }

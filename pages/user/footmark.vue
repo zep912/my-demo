@@ -4,8 +4,8 @@
 		<view class="empty" v-if='collectGoods.length==0'>
 			<view class="noCollect">
 				<!-- <image src="../static/my/footmark.png" mode=""></image> -->
-				<text class="iconfont icon-zuji" style="color: #909399;font-size: 70px;"></text>
-				<view class="noCollect-word">{{msg}}</view>
+				<text class="iconfont icon-zuji" style="color: #DBDBDB;font-size: 70px;"></text>
+				<view class="noCollect-word" style="margin-top: 98rpx;">{{msg}}</view>
 				<button type="primary" @click="btn">去逛逛</button>
 			</view>	
 		</view>
