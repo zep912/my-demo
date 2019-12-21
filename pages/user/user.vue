@@ -145,6 +145,9 @@
 				this.authShow = false
 			} 
 			this.hotList();
+			
+		},
+		onShow() {
 			this.getProductCollect();
 			this.getFeedbackData()
 		},

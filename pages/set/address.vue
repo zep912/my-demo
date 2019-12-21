@@ -79,13 +79,13 @@
 						url:'../shopcar/postOrder?deleIds='+JSON.stringify(this.deleIds)
 					})
 				},300)
-				
 			},
 			// 获取所有地址列表
 			getAddress(){
 				axios.post('/member/address/list').then(res=>{
 					if(res.data.code==200){
 						this.addressList = res.data.data;
+						uni.setStorageSync('addressList',this.addressList)
 					}
 				})
 			},

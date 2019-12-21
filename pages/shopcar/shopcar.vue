@@ -159,19 +159,13 @@
 				if(this.allNum==0){
 					this.$api.msg('请选择商品')
 				}else{
-					uni.reLaunch({
-						url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
-					})
-					// axios.post('/order/generateOrder',{cartItemIds:this.deleIds}).then(res=>{
-					// 	if(res.data.code==200){
-					// 		uni.reLaunch({
-					// 			url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
-					// 		})
-					// 	}else{
-					// 		this.$api.msg(res.data.message)
-					// 	}
-					// })
-					
+					if(uni.getStorageSync('addressList')){
+						uni.reLaunch({
+							url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
+						})
+					}else{
+						this.$api.msg('请填写地址')
+					}
 				}
 				
 			},
@@ -192,7 +186,7 @@
 			},
 			// 获取购物车列表
 			getShopCar() {
-				axios.post('/cart/list/promotion').then(res => {
+				axios.post('/cart/list/promotion',{}).then(res => {
 					if (res.data.code == 200) {
 						this.list = res.data.data
 					}

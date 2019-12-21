@@ -293,23 +293,19 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
   },
   onReachBottom: function onReachBottom() {
 
-    // 		this.page.current++;
-
-    // 		setTimeout(()=>{
-    // 			this.getmorenews();
-    // 		},800)
   },
 
   methods: {
-    lower: function lower(e) {
+    lower: function lower(e) {var _this2 = this;
       this.page.current++;
-      this.getmorenews();
-
+      setTimeout(function () {
+        _this2.getmorenews();
+      }, 500);
     },
     scroll: function scroll(e) {
 
     },
-    getmorenews: function getmorenews() {var _this = this;
+    getmorenews: function getmorenews() {var _this3 = this;
       console.log(111);
       if (this.loadingText == '已全部加载') {
         return false;
@@ -327,34 +323,34 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         "status": this.optionState //订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
       };
       _uniAxios.default.post('/order/list', obj).then(function (res) {
-        _this.loadingText = '';
+        _this3.loadingText = '';
         if (res.data.data.list.length == 0 || navItem.orderList.length == res.data.data.total) {
-          _this.loadingText = '已全部加载';
+          _this3.loadingText = '已全部加载';
           return false;
         }
 
         var result = [];
         result = result.filter(function (item) {
           //添加不同状态下订单的表现形式
-          item = Object.assign(item, _this.orderStateExp(item.status));
+          item = Object.assign(item, _this3.orderStateExp(item.status));
           if (state === '') {
             //0为全部订单
             return item;
           }
           return item.status === state;
         });
-        _this.orderList = _this.orderList.concat(result);
-        _this.orderList.forEach(function (item) {
+        _this3.orderList = _this3.orderList.concat(result);
+        _this3.orderList.forEach(function (item) {
           navItem.orderList.push(item);
         });
-        _this.loadingText = '上拉加载更多';
+        _this3.loadingText = '上拉加载更多';
         uni.hideNavigationBarLoading();
-        _this.$set(navItem, 'loaded', true);
+        _this3.$set(navItem, 'loaded', true);
       });
 
     },
     //获取订单列表
-    loadData: function loadData(n) {var _this2 = this;
+    loadData: function loadData(n) {var _this4 = this;
       //这里是将订单挂载到tab列表下
       this.page.current = 1;
 
@@ -373,9 +369,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       _uniAxios.default.post('/order/list', obj).then(function (res) {
         if (res.data.code == '200') {
           var result = res.data.data.list;
-          _this2.orderList = result.filter(function (item) {
+          _this4.orderList = result.filter(function (item) {
             //添加不同状态下订单的表现形式
-            item = Object.assign(item, _this2.orderStateExp(item.status));
+            item = Object.assign(item, _this4.orderStateExp(item.status));
             if (state === '') {
               //0为全部订单
               return item;
@@ -383,16 +379,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
             return item.status === state;
           });
 
-          _this2.orderList.forEach(function (item) {
+          _this4.orderList.forEach(function (item) {
             navItem.orderList.push(item);
           });
-          _this2.$set(navItem, 'loaded', true);
+          _this4.$set(navItem, 'loaded', true);
           navItem.loadingType = 'more';
-          if (_this2.orderList.length == res.data.data.total) {
-            _this2.loadingText = '已全部加载';
+          if (_this4.orderList.length == res.data.data.total) {
+            _this4.loadingText = '已全部加载';
             return false;
           } else {
-            _this2.loadingText = '上拉加载更多';
+            _this4.loadingText = '上拉加载更多';
           }
         }
       });
@@ -428,21 +424,21 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 再次购买
     againBuy: function againBuy(item) {
-      var id = item.id;
+      var id = item.productId;
       uni.navigateTo({
         url: "/pages/product/product?id=".concat(id) });
 
     },
     //取消订单
-    cancelOrder: function cancelOrder(item) {var _this3 = this;
+    cancelOrder: function cancelOrder(item) {var _this5 = this;
       uni.showLoading({
         title: '请稍后' });
 
-      setTimeout(function () {var _this3$orderStateExp =
+      setTimeout(function () {var _this5$orderStateExp =
 
 
 
-        _this3.orderStateExp(9),stateTip = _this3$orderStateExp.stateTip,stateTipColor = _this3$orderStateExp.stateTipColor;
+        _this5.orderStateExp(9),stateTip = _this5$orderStateExp.stateTip,stateTipColor = _this5$orderStateExp.stateTipColor;
         item = Object.assign(item, {
           state: 9,
           stateTip: stateTip,
@@ -450,11 +446,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
 
         //取消订单后删除待付款中该项
-        var list = _this3.navList[1].orderList;
+        var list = _this5.navList[1].orderList;
         var index = list.findIndex(function (val) {return val.id === item.id;});
         index !== -1 && list.splice(index, 1);
 
         uni.hideLoading();
+        _uniAxios.default.post('/order/cancelOrder', { orderId: item.id }).then(function (res) {
+          if (res.data.code == 200) {
+            _this5.$api.msg('取消成功');
+          }
+        });
       }, 600);
     },
 
@@ -511,11 +512,41 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     payGoods: function payGoods(item) {
-      var ids = [item.id];
-      console.log(item);
-      uni.navigateTo({
-        url: '../shopcar/postOrder?deleIds=' + JSON.stringify(ids) });
+      var code = uni.getStorageSync('code');
+      var obj = {
+        code: code, //code
+        orderSn: item.orderSn, //订单编号orderSn
+        payType: 3, //支付类型
+        rechargeMoney: item.realAmount * item.productQuantity //支付金额s
+      };
+      var _this = this;
+      _uniAxios.default.post('/pay/payOrder', obj).then(function (res) {
+        _this.payCode = {
+          appId: res.data.data.appId,
+          nonceStr: res.data.data.nonceStr,
+          package: res.data.data.package,
+          paySign: res.data.data.paySign,
+          signType: "MD5",
+          timeStamp: res.data.data.timeStamp };
 
+        uni.requestPayment({
+          provider: 'wxpay',
+          timeStamp: _this.payCode.timeStamp,
+          nonceStr: _this.payCode.nonceStr,
+          package: _this.payCode.package,
+          signType: 'MD5',
+          paySign: _this.payCode.paySign,
+          success: function success(res) {
+            console.log('success:' + JSON.stringify(res));
+            uni.reLaunch({
+              url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id });
+
+          },
+          fail: function fail(err) {
+            console.log('fail:' + JSON.stringify(err));
+          } });
+
+      });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

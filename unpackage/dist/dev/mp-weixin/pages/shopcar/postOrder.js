@@ -92,11 +92,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   var m0 = __webpack_require__(/*! ../../static/shop.png */ 171)
 
+  var f0 = _vm._f("formatDate")(_vm.orderList.sendTime, _vm.orderList.sendTime)
+
+  var g0 = new Date(_vm.orderList.sendTime).getDay()
   _vm.$mp.data = Object.assign(
     {},
     {
       $root: {
-        m0: m0
+        m0: m0,
+        f0: f0,
+        g0: g0
       }
     }
   )
@@ -211,7 +216,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));
+var _date = __webpack_require__(/*! @/utils/date.js */ 495);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
 //
@@ -289,12 +295,14 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5 }] }, order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', checked: true, orderList: { name: '', phoneNumber: '', address: '' }, ids: [], orderItemList: [], totalCount: '', payCode: { appId: "", nonceStr: "", package: "", paySign: "", signType: "MD5", timeStamp: "" } };}, onLoad: function onLoad(option) {console.log(option);this.ids = JSON.parse(option.deleIds);if (uni.getStorageSync('addressMsg')) {//从地址跳转回来
+var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5 }] }, order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', checked: false, orderList: { name: '', phoneNumber: '', address: '' }, ids: [], orderItemList: [], totalCount: '', payCode: { appId: "", nonceStr: "", package: "", paySign: "", signType: "MD5", timeStamp: "" }, weekDay: ["周天", "周一", "周二", "周三", "周四", "周五", "周六"], promotionAmount: '' };}, onLoad: function onLoad(option) {console.log(option);this.ids = JSON.parse(option.deleIds);if (uni.getStorageSync('addressMsg')) {//从地址跳转回来
       var orderAddress = JSON.parse(uni.getStorageSync('addressMsg')); // 地址更新
       this.orderList = { name: orderAddress.name, phoneNumber: orderAddress.phoneNumber, address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };}this.getOrder();}, onShow: function onShow() {uni.login({ provider: 'weixin', success: function success(loginRes) {var code = loginRes.code;uni.setStorageSync('code', code);} }); // this.getOrder();
-  }, methods: { // 数据初始化
-    getOrder: function getOrder() {var _this2 = this;var obj = { cartItemIds: this.ids };_uniAxios.default.post('/order/generateOrder', obj).then(function (res) {_this2.orderList = res.data.data.order;_this2.orderItemList = res.data.data.orderItemList;if (_this2.orderList.preferential) {_this2.totalCount = _this2.orderList.totalAmount - 1 - _this2.orderList.preferential;console.log(11111);} else {_this2.totalCount = _this2.orderList.totalAmount - 1;console.log(5555);}
-
+  }, filters: { formatDate: function formatDate(time) {var date = new Date(time);return (0, _date.formatDate)(date, 'MM月dd日');} }, methods: { // 数据初始化
+    getOrder: function getOrder() {var _this2 = this;var obj = { cartItemIds: this.ids };_uniAxios.default.post('/order/generateOrder', obj).then(function (res) {_this2.orderList = res.data.data.order;
+        _this2.orderItemList = res.data.data.orderItemList;
+        _this2.totalCount = _this2.orderList.totalAmount - _this2.orderList.promotionAmount;
+        _this2.promotionAmount = _this2.orderList.promotionAmount;
       });
 
     },
@@ -308,20 +316,28 @@ var _default = { data: function data() {return { form: { collect: [{ time: '2019
     swithChange: function swithChange(_ref)
 
     {var detail = _ref.detail;
-      // 计算实付金额
-      this.checked = detail;
-      if (this.checked) {//true，表示抵扣
-        if (this.orderList.preferential) {
-          this.totalCount = this.orderList.totalAmount - 1 - this.orderList.preferential;
-        } else {
-          this.totalCount = this.orderList.totalAmount - 1;
-        }
-
+      if (this.orderList.totalAmount <= 1) {
+        this.$api.msg('总价小于1，不能使用积分');
       } else {
-        if (this.orderList.preferential) {
-          this.totalCount = this.orderList.totalAmount - this.orderList.preferential;
+        // 计算实付金额
+        this.checked = detail;
+
+        if (this.checked) {//true，表示抵扣
+          this.totalCount = this.orderList.totalAmount - 1 - this.orderList.promotionAmount;
+          this.promotionAmount = this.orderList.promotionAmount + 1;
+          // if (this.orderList.promotionAmount) {
+          // 	this.totalCount = this.orderList.totalAmount - 1 - this.orderList.promotionAmount
+          // } else {
+          // 	this.totalCount = this.orderList.totalAmount - 1
+          // 	this.promotionAmount = this.orderList.promotionAmount+1
+          // }
+
         } else {
-          this.totalCount = this.orderList.totalAmount;
+          if (this.orderList.promotionAmount) {
+            this.totalCount = this.orderList.totalAmount - this.orderList.promotionAmount;
+          } else {
+            this.totalCount = this.orderList.totalAmount;
+          }
         }
       }
     },
@@ -332,8 +348,7 @@ var _default = { data: function data() {return { form: { collect: [{ time: '2019
         code: code, //code
         orderSn: this.orderList.orderSn, //订单编号orderSn
         payType: 3, //支付类型
-        rechargeMoney: 0.01, //支付金额s
-        userId: 16 //用户id
+        rechargeMoney: this.totalCount //支付金额s
       };
       var _this = this;
       _uniAxios.default.post('/pay/payOrder', obj).then(function (res) {
@@ -364,6 +379,28 @@ var _default = { data: function data() {return { form: { collect: [{ time: '2019
           } });
 
       });
+    },
+    toDate: function toDate(fmt) {
+      var o = {
+        "M+": fmt.getMonth() + 1, //月份
+        "d+": fmt.getDate(), //日
+        "h+": fmt.getHours(), //小时
+        "E": fmt.getDay(), //周几
+        "m+": fmt.getMinutes(), //分
+        "s+": fmt.getSeconds(), //秒
+        "q+": Math.floor((fmt.getMonth() + 3) / 3), //季度
+        "S": fmt.getMilliseconds() //毫秒
+      };
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (fmt.getFullYear() + "").substr(4 - RegExp.$1.length));
+      }
+
+      for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+        }
+      }
+      return fmt;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

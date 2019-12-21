@@ -3,13 +3,14 @@
 		<!-- 订单状态 -->
 		<view class="order-state">
 			<text class="toBeShipped" v-if='order.status!=0&&order.status!=9&&order.status!=4' :style="{color:order.color}">{{order.statusMsg}}</text>
-			<text v-if='order.status==0' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
+			<text v-if='order.status==0' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text
+				 class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
 			<text v-if='order.status==4' class="payClose"><text>交易关闭</text><text>订单取消</text></text>
 			<!-- <img :src="order.img" alt=""> -->
 			<text class="iconfont" :class="order.img" style="font-size: 32px;"></text>
 		</view>
 		<!-- 交易关闭退款 -->
-		<view class="close"  v-if='order.status==9'>
+		<view class="close" v-if='order.status==9'>
 			<ul>
 				<li>
 					<text>退款总金额</text>
@@ -20,10 +21,7 @@
 					<text>￥120.00</text>
 				</li>
 			</ul>
-			<van-steps
-			  :steps="steps"
-			  :active="active"
-			/>
+			<van-steps :steps="steps" :active="active" />
 			<view class="i-top b-b" @click="consult">
 				<text class="time">协商历史</text>
 				<text class="cell-more yticon icon-you"></text>
@@ -44,19 +42,19 @@
 					<img src="../../static/shop.png" alt="" class='shopLogo'>
 					<text class="time">麦田圈官网旗舰店</text>
 					<text class="iconfont icon-you"></text>
-					
+
 				</view>
 
-				<view class="goods-box-single b-b">
-					<image class="goods-img" :src="order.productPic" mode="aspectFill"></image>
+				<view class="goods-box-single b-b" v-for='(item,index) in order.orderItemList'>
+					<image class="goods-img" :src="item.productPic" mode="aspectFill"></image>
 
 					<view class="right">
-						<text class="title ellipsis">{{order.productName}}</text>
-						<text class="attr-box">规格:{{order.sp1+order.sp2}}</text>
-						<text class="price">{{'￥'+order.productPrice}}</text>
+						<text class="title ellipsis">{{item.productName}}</text>
+						<text class="attr-box">规格:{{item.sp1+item.sp2}}</text>
+						<text class="price">{{'￥'+item.productPrice}}</text>
 					</view>
 					<view class="goods-right">
-						<text class="number">X{{order.productQuantity}}</text>
+						<text class="number">X{{item.productQuantity}}</text>
 					</view>
 				</view>
 			</view>
@@ -78,7 +76,7 @@
 				</li>
 				<li>
 					<text>商品优惠</text>
-					<text class="order-list-bold">{{'-￥'+order.promotionAmountTotal }}</text>
+					<text class="order-list-bold">{{'-￥'+order.promotionAmount }}</text>
 				</li>
 				<li>
 					<text>实付合计</text>
@@ -111,8 +109,8 @@
 		</view>
 		<!-- 尾部 -->
 		<view class="foot" v-if='show'>
-			<button class="btn1" @click="logisticsTap">{{order.wuliu}}</button>
-			<button class="btn2" v-if='order.status!=4'>{{order.pay}}</button>
+			<button class="btn1" @click="logisticsTap(order.id)">{{order.wuliu}}</button>
+			<button class="btn2" v-if='order.status!=4' @click="pay(order.id,order.orderItemList[0].productId)">{{order.pay}}</button>
 		</view>
 	</view>
 </template>
@@ -142,15 +140,15 @@
 						preferential: '20.00',
 						total: '880'
 					},
-					orderMsg:{
-						number:'13245679851354664',
-						num:'3212313213213213132',
-						creatTime:'2019-11-05 11:12:12',
-						payTime:'2019-11-05 11:12:12',
-						payWay:'微信支付'
+					orderMsg: {
+						number: '13245679851354664',
+						num: '3212313213213213132',
+						creatTime: '2019-11-05 11:12:12',
+						payTime: '2019-11-05 11:12:12',
+						payWay: '微信支付'
 					}
 				},
-				img:[
+				img: [
 					'icon-daifahuo',
 					'icon-daifukuan1',
 					'icon-daishouhuo1',
@@ -158,39 +156,38 @@
 					'icon-dingdanguanbi',
 					'icon-dingdanwancheng'
 				],
-				order:{
-					status:'',
-					img:'',
-					wuliu:'',
-					pay:'',
-					statusMsg:'',
-					color:''
+				order: {
+					status: '',
+					img: '',
+					wuliu: '',
+					pay: '',
+					statusMsg: '',
+					color: ''
 				},
-				statuss:'',
-				show:false,
-				marginBottom:'',
-				steps: [
-				      {
-				        text: '步骤一',
-				        desc: '描述信息'
-				      },
-				      {
-				        text: '步骤二',
-				        desc: '描述信息'
-				      },
-				      {
-				        text: '步骤三',
-				        desc: '描述信息'
-				      },
-				      {
-				        text: '步骤四',
-				        desc: '描述信息'
-				      }
-				    ],
-				id:''
+				statuss: '',
+				show: false,
+				marginBottom: '',
+				steps: [{
+						text: '步骤一',
+						desc: '描述信息'
+					},
+					{
+						text: '步骤二',
+						desc: '描述信息'
+					},
+					{
+						text: '步骤三',
+						desc: '描述信息'
+					},
+					{
+						text: '步骤四',
+						desc: '描述信息'
+					}
+				],
+				id: ''
 			}
 		},
-		onLoad(option){
+		onLoad(option) {
 			console.log(option)
 			this.statuss = option.status;
 			this.id = option.id;
@@ -198,109 +195,175 @@
 		},
 		methods: {
 			// 获取订单详情
-			getOrder(){
+			getOrder() {
 				let obj = {
-					cartItemIds :[this.id]
+					cartItemIds: [this.id]
 				}
-				axios.post('/order/getDetailByOrderId',{id:this.id}).then(res=>{
-					if(res.data.code=='200'){
+				axios.post('/order/getDetailByOrderId', {
+					id: this.id
+				}).then(res => {
+					if (res.data.code == '200') {
 						this.order = res.data.data;
 						console.log(this.order)
-						if(this.order.status==0){
+						if (this.order.status == 0) {
 							// 待支付
 							this.order.statusMsg = '';
 							this.order.wuliu = '取消订单';
-							this.order.img=this.img[1];
-							this.order.pay='立即支付';
+							this.order.img = this.img[1];
+							this.order.pay = '立即支付';
 							this.order.color = ''
-						}else if(this.order.status==1){
+						} else if (this.order.status == 1) {
 							//待发货	
 							this.show = false;
-							
+
 							this.order.statusMsg = '待发货';
 							this.order.wuliu = '';
-							this.order.img=this.img[0];
-							this.order.pay='';
+							this.order.img = this.img[0];
+							this.order.pay = '';
 							this.order.color = '#F7B62C'
-						}else if(this.order.status==2){
+						} else if (this.order.status == 2) {
 							//待收货
 							this.show = true;
-						
+
 							this.order.statusMsg = '待收货';
 							this.order.wuliu = '查看物流';
-							this.order.img=this.img[2];
-							this.order.pay='确认收货';
+							this.order.img = this.img[2];
+							this.order.pay = '确认收货';
 							this.order.color = '#515151'
-						}else if(this.order.status==6){
+						} else if (this.order.status == 6) {
 							//交易成功
 							this.show = true;
 							this.order.statusMsg = '交易成功';
 							this.order.wuliu = '删除订单';
-							this.order.img=this.img[3];
-							this.order.pay='去评价';
+							this.order.img = this.img[3];
+							// this.order.pay='去评价';//评价不做
 							this.order.color = '#01B300'
-						}else if(this.order.status==4){
+						} else if (this.order.status == 4) {
 							// 交易关闭
 							this.show = true;
 							this.order.wuliu = '删除订单';
-							this.order.img=this.img[4]
-						}else if(this.order.status==3){
+							this.order.img = this.img[4]
+						} else if (this.order.status == 3) {
 							// 已完成
 							this.show = true;
 							this.order.statusMsg = '已完成';
 							this.order.wuliu = '删除订单';
-							this.order.img=this.img[5];
-							this.order.pay='再次购买';
+							this.order.img = this.img[5];
+							this.order.pay = '再次购买';
 							this.order.color = '#515151'
 						}
-						
+
 					}
 				})
 			},
-			consult(){
+			consult() {
 				uni.navigateTo({
-					url:'consult'
+					url: 'consult'
 				})
 			},
 			// 根据不同状态，跳转或请求不同的页面
-			logisticsTap(){
-				if(this.statuss==2){//查看物流
+			logisticsTap(id) {
+				console.log(this.statuss)
+				if (this.order.status == 2) { //待收货
 					uni.navigateTo({
-						url:'logistics'
+						url: 'logistics'
 					})
-				}else if(this.statuss==7||this.statuss==4||this.statuss==6){//已完成，交易关闭，交易成功的订单，就删除订单
-					axios.post('/order/deleteOrder',{id:this.order.id}).then(res=>{
+				} else if (this.statuss == 7 || this.order.status == 4 || this.statuss == 6) { //已完成，交易关闭，交易成功的订单，就删除订单
+					axios.post('/order/deleteOrder', {
+						id: this.order.id
+					}).then(res => {
 						console.log(res)
-						if(res.data.code=='200'){
+						if (res.data.code == '200') {
 							this.$api.msg('删除成功');
 							uni.navigateTo({
-								url:'order'//返回到订单详情
+								url: 'order' //返回到订单详情
 							})
 						}
 					})
-				}else if(this.statuss==1){//待发货，取消订单
-					
+				} else if (this.order.status == 1) { //待付款，取消订单
+					axios.post('/order/cancelOrder', {
+						orderId: id
+					}).then(res => {
+						if (res.data.code == 200) {
+							this.$api.msg('订单取消成功')
+							uni.redirectTo({
+								url: 'order' //返回到订单详情
+							})
+						}
+					})
+				}
+			},
+			pay(id, productId) {
+				if (this.order.status == 2) { // 确认收货
+					axios.post('/order/updateOrderStatus', {
+						orderId: id,
+						status: 1
+					}).then(res => {
+						console.log(res)
+					})
+				} else if (this.order.status == 3) { //再次购买
+					uni.navigateTo({
+						url: '../product/product?id=' + productId
+					})
+				} else if (this.order.status == 0) { //立即支付
+					let code = uni.getStorageSync('code')
+					let obj = {
+						code: code, //code
+						orderSn: this.order.orderSn, //订单编号orderSn
+						payType: 3, //支付类型
+						rechargeMoney: this.order.payAmount //支付金额s
+					}
+					let _this = this;
+					axios.post('/pay/payOrder', obj).then(res => {
+						console.log(res)
+						_this.payCode = {
+							appId: res.data.data.appId,
+							nonceStr: res.data.data.nonceStr,
+							package: res.data.data.package,
+							paySign: res.data.data.paySign,
+							signType: "MD5",
+							timeStamp: res.data.data.timeStamp,
+						}
+						uni.requestPayment({
+							provider: 'wxpay',
+							timeStamp: _this.payCode.timeStamp,
+							nonceStr: _this.payCode.nonceStr,
+							package: _this.payCode.package,
+							signType: 'MD5',
+							paySign: _this.payCode.paySign,
+							success: function(res) {
+								console.log('success:' + JSON.stringify(res));
+								uni.reLaunch({
+									url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id
+								})
+							},
+							fail: function(err) {
+								console.log('fail:' + JSON.stringify(err));
+								this.$api.msg('取消付款')
+							}
+						})
+					})
 				}
 			},
 			// 日期转换
 			// 时间戳转换成时间
-			timestampToTime (time) {
+			timestampToTime(time) {
 				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 				var Y = date.getFullYear()
-				var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
 				var D = date.getDate()
 				var h = date.getHours() + ':'
 				var m = date.getMinutes() + ':'
 				var s = date.getSeconds();
-				
-				return Y+'-'+M+'-'+D+' '+h+m+s
+
+				return Y + '-' + M + '-' + D + ' ' + h + m + s
 			}
 		}
 	}
 </script>
 
 <style lang="scss">
-	.close{
+	.close {
 		width: 94%;
 		margin: 0 auto;
 		border-radius: 20rpx;
@@ -309,9 +372,11 @@
 		background: #fff;
 		margin-top: 20rpx;
 		color: #585858;
-		ul{
+
+		ul {
 			width: 100%;
-			li{
+
+			li {
 				width: 100%;
 				height: 90rpx;
 				box-sizing: border-box;
@@ -322,36 +387,49 @@
 				align-items: center;
 				color: #585858;
 				border-bottom: 1px solid #EDEDED;
-				font-size:26rpx;
-				font-weight:400;
-				color:rgba(88,88,88,1);
-				.order-list-bold{
-					font-weight:bold;
+				font-size: 26rpx;
+				font-weight: 400;
+				color: rgba(88, 88, 88, 1);
+
+				.order-list-bold {
+					font-weight: bold;
 				}
 			}
 		}
-		.closePrice{
+
+		.closePrice {
 			color: #FF3434;
 		}
-		.i-top{
-			    display: flex;
-			    align-items: center;
-			    height: 40px;
-			    padding-right: 15px;
-			    font-size: 14px;
-			    position: relative;
-			    padding-left: 15px;
-				justify-content: space-between;
+
+		.i-top {
+			display: flex;
+			align-items: center;
+			height: 40px;
+			padding-right: 15px;
+			font-size: 14px;
+			position: relative;
+			padding-left: 15px;
+			justify-content: space-between;
 		}
 	}
-	.order-details .marginBottom{
-		margin-bottom: 	140rpx;
+
+	.order-details .marginBottom {
+		margin-bottom: 140rpx;
 	}
+
 	page {
 		background: #F2F2F2;
 	}
-	ul{margin: 0;padding: 0;}
-	li{list-style: none;}
+
+	ul {
+		margin: 0;
+		padding: 0;
+	}
+
+	li {
+		list-style: none;
+	}
+
 	.order-goods {
 		margin-top: 16upx;
 	}
@@ -585,121 +663,134 @@
 		}
 	}
 
-.order-list{
-	width: 95%;
-	margin: 0 auto;
-	margin-top: 20rpx;
-	background:rgba(255,255,255,1);
-	border-radius:20rpx;
-	ul{
-		width: 100%;
-		li{
+	.order-list {
+		width: 95%;
+		margin: 0 auto;
+		margin-top: 20rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 20rpx;
+
+		ul {
 			width: 100%;
-			height: 90rpx;
-			box-sizing: border-box;
-			padding-right: 30rpx;
-			padding-left: 30rpx;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			color: #585858;
-			border-bottom: 1px solid #EDEDED;
-			font-size:26rpx;
-			font-weight:400;
-			color:rgba(88,88,88,1);
-			.order-list-bold{
-				font-weight:bold;
+
+			li {
+				width: 100%;
+				height: 90rpx;
+				box-sizing: border-box;
+				padding-right: 30rpx;
+				padding-left: 30rpx;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				color: #585858;
+				border-bottom: 1px solid #EDEDED;
+				font-size: 26rpx;
+				font-weight: 400;
+				color: rgba(88, 88, 88, 1);
+
+				.order-list-bold {
+					font-weight: bold;
+				}
 			}
 		}
 	}
-}
-.order-pay{
-	width: 95%;
-	margin: 0 auto;
-	margin-top: 20rpx;
-	background:rgba(255,255,255,1);
-	border-radius:20rpx;
-	box-sizing: border-box;
-	padding-top: 30rpx;
-	padding-left: 28rpx;
-	padding-bottom: 22rpx;
-	font-size:26rpx;
-	font-weight:400;
-	color:rgba(88,88,88,1);
-	line-height:28px;
-	margin-bottom: 150rpx;
-}
-.toBeFinish{
-	.toBeFinishBlock{
-		display: block;
-	}
-	.toBeFinishBlockFirst{
-		font-size:32rpx;
-		font-weight:bold;
-		color:rgba(255,62,61,1);
-		margin-bottom: 18rpx;
-	}
-	.toBeFinishBlockSecond{
-		font-size:24rpx;
-		font-weight:500;
-		color:rgba(84,84,84,1);
-	}
-}
-.payClose{
-	text{
-		display: block;
-	}
-	text:nth-of-type(1){
-		font-size:32rpx;
-		font-weight:bold;
-		color:rgba(84,84,84,1);
-		margin-bottom: 18rpx;
-	}
-	text:nth-of-type(2){
-		font-size:24rpx;
-		font-weight:500;
-		color:rgba(84,84,84,1);
-	}
-}
-.foot{
-	width:100%;
-	height:120rpx;
-	background:rgba(255,255,255,1);
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	box-sizing: border-box;
-	padding-right: 15rpx;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	button{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-left: 0;
-		margin-right: 0;
-	}
-	.btn1{
-		width:211rpx;
-		height:74rpx;
-		border:1px solid rgba(141,141,141,1);
-		border-radius:37rpx;
-		font-size:28rpx;
-		font-weight:400;
-		color:rgba(88,88,88,1);
-		background: #fff;
-		margin-right: 20rpx;
-	}
-	.btn2{
-		width:211rpx;
-		height:74rpx;
-		background:rgba(247,87,44,1);
-		border-radius:37rpx;
-		font-size:28rpx;
-		font-weight:bold;
-		color:rgba(255,255,255,1);
-	}
-}
 
+	.order-pay {
+		width: 95%;
+		margin: 0 auto;
+		margin-top: 20rpx;
+		background: rgba(255, 255, 255, 1);
+		border-radius: 20rpx;
+		box-sizing: border-box;
+		padding-top: 30rpx;
+		padding-left: 28rpx;
+		padding-bottom: 22rpx;
+		font-size: 26rpx;
+		font-weight: 400;
+		color: rgba(88, 88, 88, 1);
+		line-height: 28px;
+		margin-bottom: 150rpx;
+	}
+
+	.toBeFinish {
+		.toBeFinishBlock {
+			display: block;
+		}
+
+		.toBeFinishBlockFirst {
+			font-size: 32rpx;
+			font-weight: bold;
+			color: rgba(255, 62, 61, 1);
+			margin-bottom: 18rpx;
+		}
+
+		.toBeFinishBlockSecond {
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(84, 84, 84, 1);
+		}
+	}
+
+	.payClose {
+		text {
+			display: block;
+		}
+
+		text:nth-of-type(1) {
+			font-size: 32rpx;
+			font-weight: bold;
+			color: rgba(84, 84, 84, 1);
+			margin-bottom: 18rpx;
+		}
+
+		text:nth-of-type(2) {
+			font-size: 24rpx;
+			font-weight: 500;
+			color: rgba(84, 84, 84, 1);
+		}
+	}
+
+	.foot {
+		width: 100%;
+		height: 120rpx;
+		background: rgba(255, 255, 255, 1);
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		box-sizing: border-box;
+		padding-right: 15rpx;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+
+		button {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.btn1 {
+			width: 211rpx;
+			height: 74rpx;
+			border: 1px solid rgba(141, 141, 141, 1);
+			border-radius: 37rpx;
+			font-size: 28rpx;
+			font-weight: 400;
+			color: rgba(88, 88, 88, 1);
+			background: #fff;
+			margin-right: 20rpx;
+		}
+
+		.btn2 {
+			width: 211rpx;
+			height: 74rpx;
+			background: rgba(247, 87, 44, 1);
+			border-radius: 37rpx;
+			font-size: 28rpx;
+			font-weight: bold;
+			color: rgba(255, 255, 255, 1);
+		}
+	}
 </style>

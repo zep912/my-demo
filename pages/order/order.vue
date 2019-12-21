@@ -53,7 +53,7 @@
 							</view>
 							<view class="action-box-buttom">
 								<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
-								<button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button>
+								<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
 								<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
 								<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
 								<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item)">立即支付</button>
@@ -152,18 +152,14 @@
 		},
 		onReachBottom() {
 
-	// 		this.page.current++;
-	
-	// 		setTimeout(()=>{
-	// 			this.getmorenews();
-	// 		},800)
 		},
 		
 		methods: {
 			lower(e){
 				this.page.current++;
-				this.getmorenews();
-
+				setTimeout(()=>{
+					this.getmorenews();
+				},500)
 			},
 			scroll(e){
 				
@@ -287,7 +283,7 @@
 			},
 			// 再次购买
 			againBuy(item) {
-				let id = item.id;
+				let id = item.productId;
 				uni.navigateTo({
 					url: `/pages/product/product?id=${id}`
 				})
@@ -314,6 +310,11 @@
 					index !== -1 && list.splice(index, 1);
 
 					uni.hideLoading();
+					axios.post('/order/cancelOrder',{orderId:item.id}).then(res=>{
+						if(res.data.code==200){
+							this.$api.msg('取消成功')
+						}
+					})
 				}, 600)
 			},
 
@@ -370,10 +371,40 @@
 				})
 			},
 			payGoods(item) {
-				let ids = [item.id];
-				console.log(item)
-				uni.navigateTo({
-					url: '../shopcar/postOrder?deleIds=' + JSON.stringify(ids)
+				let code = uni.getStorageSync('code')
+				let obj = {
+					code: code, //code
+					orderSn: item.orderSn, //订单编号orderSn
+					payType: 3, //支付类型
+					rechargeMoney: item.realAmount*item.productQuantity, //支付金额s
+				}
+				let _this = this;
+				axios.post('/pay/payOrder', obj).then(res => {
+					_this.payCode = {
+						appId: res.data.data.appId,
+						nonceStr: res.data.data.nonceStr,
+						package: res.data.data.package,
+						paySign: res.data.data.paySign,
+						signType: "MD5",
+						timeStamp: res.data.data.timeStamp,
+					}
+					uni.requestPayment({
+						provider: 'wxpay',
+						timeStamp: _this.payCode.timeStamp,
+						nonceStr: _this.payCode.nonceStr,
+						package: _this.payCode.package,
+						signType: 'MD5',
+						paySign: _this.payCode.paySign,
+						success: function(res) {
+							console.log('success:' + JSON.stringify(res));
+							uni.reLaunch({
+								url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id
+							})
+						},
+						fail: function(err) {
+							console.log('fail:' + JSON.stringify(err));
+						}
+					})
 				})
 			}
 		},
@@ -385,12 +416,14 @@
 		text-align: center;
 		font-size: 26rpx;
 		margin-top: 10px;
+		color: #999;
 	}
 
 	.noCollect .noCollect-word {
 		color: #1F1F1F;
 		margin-top: 52rpx;
 		font-weight: 600;
+		color:#999;
 	}
 
 	.noCollect button {

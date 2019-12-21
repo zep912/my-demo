@@ -9,7 +9,7 @@
 					<text class="address">{{orderList.receiverProvince+orderList.receiverCity+orderList.receiverRegion+orderList.receiverDetailAddress}}</text>
 				</view>
 			</view>
-			
+
 			<text class="iconfont icon-you"></text>
 		</view>
 		<!-- 商品信息 -->
@@ -40,11 +40,11 @@
 			<ul>
 				<li>
 					<text>订单备注</text>
-					<text>{{orderList.nots}}</text>
+					<text>{{orderList.note}}</text>
 				</li>
 				<li>
 					<text>预计送达时间</text>
-					<text class="order-list-bold">11月12日(周四)</text>
+					<text class="order-list-bold">{{orderList.sendTime | formatDate(orderList.sendTime)}}({{weekDay[new Date(orderList.sendTime).getDay()]}})</text>
 				</li>
 				<li>
 					<text>商品总价</text>
@@ -56,7 +56,7 @@
 				</li>
 				<li>
 					<text>商品优惠</text>
-					<text class="order-list-bold">{{orderList.preferential?'-￥'+orderList.preferential:'￥'+0}}</text>
+					<text class="order-list-bold">{{orderList.promotionAmount?'-￥'+orderList.promotionAmount:'￥'+0}}</text>
 				</li>
 				<li>
 					<text>实付合计</text>
@@ -69,7 +69,7 @@
 			<view class="foot-word">
 				<text class='foot-heji'>合计:</text>
 				<text class='foot-price'>{{'￥'+totalCount}}</text>
-				<text class='foot-youhui'>已优惠: <text>￥998.90</text></text>
+				<text class='foot-youhui'>已优惠: <text>￥{{promotionAmount}}</text></text>
 			</view>
 			<button class="footBtn" @click="payBtn">立即支付</button>
 		</view>
@@ -78,6 +78,7 @@
 
 <script>
 	import axios from '@/utils/uniAxios.js'
+	import {formatDate} from '@/utils/date.js'
 	export default {
 		data() {
 			return {
@@ -99,7 +100,7 @@
 				statuss: '',
 				show: false,
 				marginBottom: '',
-				checked: true,
+				checked: false,
 				orderList: {
 					name: '',
 					phoneNumber: '',
@@ -108,14 +109,16 @@
 				ids: [],
 				orderItemList: [],
 				totalCount: '',
-				payCode:{
+				payCode: {
 					appId: "",
 					nonceStr: "",
 					package: "",
 					paySign: "",
 					signType: "MD5",
 					timeStamp: ""
-				}
+				},
+				weekDay: ["周天", "周一", "周二", "周三", "周四", "周五", "周六"],
+				promotionAmount:''
 			}
 		},
 		onLoad(option) {
@@ -138,11 +141,17 @@
 			uni.login({
 				provider: 'weixin',
 				success: (loginRes) => {
-					let code = loginRes.code;	
+					let code = loginRes.code;
 					uni.setStorageSync('code', code)
 				}
 			})
 			// this.getOrder();
+		},
+		filters: {
+			formatDate(time) {
+				var date = new Date(time);
+				return formatDate(date, 'MM月dd日');
+			}
 		},
 		methods: {
 			// 数据初始化
@@ -153,41 +162,43 @@
 				axios.post('/order/generateOrder', obj).then(res => {
 					this.orderList = res.data.data.order;
 					this.orderItemList = res.data.data.orderItemList;
-					if (this.orderList.preferential) {
-						this.totalCount = this.orderList.totalAmount - 1 - this.orderList.preferential;
-						console.log(11111)
-					} else {
-						this.totalCount = this.orderList.totalAmount - 1
-						console.log(5555)
-					}
-
+					this.totalCount = this.orderList.totalAmount - this.orderList.promotionAmount;
+					this.promotionAmount = this.orderList.promotionAmount
 				});
 
 			},
 			// 修改地址
 			toAddress() {
 				uni.navigateTo({
-					url: '../set/address?postOrder=1&ids='+JSON.stringify(this.ids)
+					url: '../set/address?postOrder=1&ids=' + JSON.stringify(this.ids)
 				})
 			},
 			//使用积分
 			swithChange({
 				detail
 			}) {
-				// 计算实付金额
-				this.checked = detail;
-				if (this.checked) { //true，表示抵扣
-					if (this.orderList.preferential) {
-						this.totalCount = this.orderList.totalAmount - 1 - this.orderList.preferential
+				if(this.orderList.totalAmount<=1){
+					this.$api.msg('总价小于1，不能使用积分')
+				}else{
+					// 计算实付金额
+					this.checked = detail;
+					
+					if (this.checked) { //true，表示抵扣
+					this.totalCount = this.orderList.totalAmount - 1 - this.orderList.promotionAmount;
+					this.promotionAmount = this.orderList.promotionAmount+1
+						// if (this.orderList.promotionAmount) {
+						// 	this.totalCount = this.orderList.totalAmount - 1 - this.orderList.promotionAmount
+						// } else {
+						// 	this.totalCount = this.orderList.totalAmount - 1
+						// 	this.promotionAmount = this.orderList.promotionAmount+1
+						// }
+					
 					} else {
-						this.totalCount = this.orderList.totalAmount - 1
-					}
-
-				} else {
-					if (this.orderList.preferential) {
-						this.totalCount = this.orderList.totalAmount - this.orderList.preferential
-					} else {
-						this.totalCount = this.orderList.totalAmount 
+						if (this.orderList.promotionAmount) {
+							this.totalCount = this.orderList.totalAmount - this.orderList.promotionAmount
+						} else {
+							this.totalCount = this.orderList.totalAmount
+						}
 					}
 				}
 			},
@@ -198,38 +209,59 @@
 					code: code, //code
 					orderSn: this.orderList.orderSn, //订单编号orderSn
 					payType: 3, //支付类型
-					rechargeMoney: 0.01, //支付金额s
-					userId: 16 //用户id
+					rechargeMoney: this.totalCount, //支付金额s
 				}
 				let _this = this;
-				axios.post('/pay/payOrder',obj).then(res=>{
+				axios.post('/pay/payOrder', obj).then(res => {
 					console.log(res)
-					_this.payCode={
+					_this.payCode = {
 						appId: res.data.data.appId,
 						nonceStr: res.data.data.nonceStr,
 						package: res.data.data.package,
 						paySign: res.data.data.paySign,
 						signType: "MD5",
-						timeStamp:res.data.data.timeStamp,
+						timeStamp: res.data.data.timeStamp,
 					}
 					uni.requestPayment({
-					    provider: 'wxpay',
-					    timeStamp: _this.payCode.timeStamp,
-					    nonceStr: _this.payCode.nonceStr,
-					    package: _this.payCode.package,
-					    signType: 'MD5',
-					    paySign: _this.payCode.paySign,
-					    success: function (res) {
-					        console.log('success:' + JSON.stringify(res));
+						provider: 'wxpay',
+						timeStamp: _this.payCode.timeStamp,
+						nonceStr: _this.payCode.nonceStr,
+						package: _this.payCode.package,
+						signType: 'MD5',
+						paySign: _this.payCode.paySign,
+						success: function(res) {
+							console.log('success:' + JSON.stringify(res));
 							uni.reLaunch({
-								url: 'paySuccess?totalCount='+_this.totalCount+'&id='+_this.orderList.id
+								url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id
 							})
-					    },
-					    fail: function (err) {
-					        console.log('fail:' + JSON.stringify(err));
-					    }
+						},
+						fail: function(err) {
+							console.log('fail:' + JSON.stringify(err));
+						}
 					})
 				})
+			},
+			toDate:function(fmt){
+				var o = {
+					"M+": fmt.getMonth() + 1, //月份
+					"d+": fmt.getDate(), //日
+					"h+": fmt.getHours(), //小时
+					"E": fmt.getDay(), //周几
+					"m+": fmt.getMinutes(), //分
+					"s+": fmt.getSeconds(), //秒
+					"q+": Math.floor((fmt.getMonth() + 3) / 3), //季度
+					"S": fmt.getMilliseconds() //毫秒
+				};
+				if (/(y+)/.test(fmt)) {
+					fmt = fmt.replace(RegExp.$1, (fmt.getFullYear() + "").substr(4 - RegExp.$1.length));
+				}
+
+				for (var k in o) {
+					if (new RegExp("(" + k + ")").test(fmt)) {
+						fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+					}
+				}
+				return fmt;
 			}
 		}
 	}
@@ -526,6 +558,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+
 		.cell-more {
 			margin-left: 26%;
 		}

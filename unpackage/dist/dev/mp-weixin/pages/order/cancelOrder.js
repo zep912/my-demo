@@ -208,7 +208,7 @@ var _default = { data: function data() {return { radio: '0', icon: { normal: '/s
           cancelReason: this.list[this.radio],
           orderId: this.id };
 
-        _uniAxios.default.post('/order/cancelOrder', obj).then(function (res) {
+        _uniAxios.default.post('/order/cancelReason', obj).then(function (res) {
           if (res.data.code == '200') {
             _this.$api.msg('取消成功');
             uni.redirectTo({

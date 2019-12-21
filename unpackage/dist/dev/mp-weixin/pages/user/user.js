@@ -279,6 +279,9 @@ pageAtTop = true;var _default =
       this.authShow = false;
     }
     this.hotList();
+
+  },
+  onShow: function onShow() {
     this.getProductCollect();
     this.getFeedbackData();
   },

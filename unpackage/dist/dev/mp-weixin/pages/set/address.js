@@ -213,13 +213,13 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           url: '../shopcar/postOrder?deleIds=' + JSON.stringify(_this.deleIds) });
 
       }, 300);
-
     },
     // 获取所有地址列表
     getAddress: function getAddress() {var _this2 = this;
       _uniAxios.default.post('/member/address/list').then(function (res) {
         if (res.data.code == 200) {
           _this2.addressList = res.data.data;
+          uni.setStorageSync('addressList', _this2.addressList);
         }
       });
     },

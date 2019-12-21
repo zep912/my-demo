@@ -74,7 +74,7 @@
 						cancelReason:this.list[this.radio],
 						orderId:this.id
 					};
-					axios.post('/order/cancelOrder',obj).then(res=>{
+					axios.post('/order/cancelReason',obj).then(res=>{
 						if(res.data.code=='200'){
 							this.$api.msg('取消成功');
 							uni.redirectTo({
