@@ -7,27 +7,27 @@
 			</view>
 		</view>
 
-		<swiper :current="tabCurrentIndex" class="swiper-box" duration="300" @change="changeTab">
+		<swiper :current="tabCurrentIndex" class="swiper-box" duration="300" @change="changeTab" style="height:calc(100% - 20px)">
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
-				<scroll-view class="list-scroll-content" scroll-y>
+				<scroll-view class="list-scroll-content" scroll-y='true' @scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop" lower-threshold=100 scroll-top=50>
 					<!-- 空白页 -->
-					
+
 					<view class="empty" v-if='tabItem.orderList.length==0'>
 						<view class="noCollect">
 							<!-- <text class="iconfont icon-zanwudingdan" style="font-size: 60px;"></text> -->
 							<image src="../../static/nogoods.png" mode="" style="width: 189rpx;height: 170rpx;"></image>
 							<view class="noCollect-word">{{msg}}</view>
 							<button type="primary" @click="btn">去逛逛</button>
-						</view>	
+						</view>
 					</view>
-					
+
 					<!-- <empty v-if="tabItem.orderList.length === 0" :src='src' :msg='msg'></empty> -->
 					<!-- 订单列表 -->
 					<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
 						<view class="i-top b-b">
 							<img src="../../static/shop.png" alt="" class='shopLogo'>
 							<text class="time">麦田圈官方旗舰店</text>
-							<text class="state"  @click="orderDetails(item,item.id)">{{item.status==0?'待付款':item.status==1?'待发货':item.status==2?'待收货':item.status==3?'待评价':item.status==4?'已关闭':'无效订单'}}</text>
+							<text class="state" @click="orderDetails(item,item.id)">{{item.status==0?'待付款':item.status==1?'待发货':item.status==2?'待收货':item.status==3?'待评价':item.status==4?'已关闭':'无效订单'}}</text>
 						</view>
 
 						<view class="goods-box-single b-b">
@@ -61,8 +61,8 @@
 							</view>
 						</view>
 					</view>
-
-					<!-- <uni-load-more :status="tabItem.loadingType"></uni-load-more> -->
+					<view class="loading" v-if='tabItem.orderList.length !== 0'>{{loadingText}}</view>
+					<!-- <uni-load-more :status="tabItem.loadingType" v-if='tabItem.orderList.length !== 0'></uni-load-more> -->
 
 				</scroll-view>
 			</swiper-item>
@@ -81,8 +81,8 @@
 		},
 		data() {
 			return {
-				src:'../static/nogoods.png',
-				msg:'你还没有任何订单，看看其他的吧',
+				src: '../static/nogoods.png',
+				msg: '你还没有任何订单，看看其他的吧',
 				tabCurrentIndex: 0,
 				navList: [{
 						status: '',
@@ -115,19 +115,22 @@
 						orderList: []
 					},
 				],
-				page:{
-					current:1,
-					pageSize:10
+				page: {
+					current: 1,
+					pageSize: 10
 				},
-				orderList:[],
-				payCode:{
+				orderList: [],
+				payCode: {
 					appId: "",
 					nonceStr: "",
 					package: "",
 					paySign: "",
 					signType: "MD5",
 					timeStamp: ""
-				}
+				},
+				loadingText: '加载中...',
+				optionState: '',
+				scrollTop: 0,
 			};
 		},
 
@@ -138,42 +141,96 @@
 			 */
 			console.log(options)
 			this.tabCurrentIndex = +options.state;
-			if(options.state===''){//全部订单
-				this.loadData('tabChange','');
-			}else if(options.state===0){//待付款
-				this.loadData('tabChange',options.state);
-			}else{
-				this.loadData('tabChange',options.state);
+			this.optionState = options.state
+			if (options.state === '') { //全部订单
+				this.loadData('');
+			} else if (options.state === 0) { //待付款
+				this.loadData(options.state);
+			} else {
+				this.loadData(options.state);
 			}
 		},
+		onReachBottom() {
 
+	// 		this.page.current++;
+	
+	// 		setTimeout(()=>{
+	// 			this.getmorenews();
+	// 		},800)
+		},
+		
 		methods: {
-			//获取订单列表
-			loadData(source,n) {
-				//这里是将订单挂载到tab列表下
+			lower(e){
+				this.page.current++;
+				this.getmorenews();
+
+			},
+			scroll(e){
+				
+			},
+			getmorenews() {
+				console.log(111)
+				if (this.loadingText =='已全部加载') {
+					return false;
+				}
+				this.loadingText = '加载中...';
+				uni.showNavigationBarLoading();
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
-				let state = navItem.status;//每个状态的值
-				if (source === 'tabChange' && navItem.loaded === true) {
-					//tab切换只有第一次需要加载数据
-					return;
-				}
-				if (navItem.loadingType === 'loading') {
-					//防止重复加载
-					return;
-				}
-
-				// navItem.loadingType = 'loading';
+				let state = navItem.status; //每个状态的值
 				let obj = {
-				  "orderType": 0,//订单类型
-				  "pageNum": this.page.current,//页码
-				  "pageSize": this.page.pageSize,//页数
-				  "sourceType":1,//订单来源
-				  "status": n//订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
+					"orderType": 0, //订单类型
+					"pageNum": this.page.current, //页码
+					"pageSize": this.page.pageSize, //页数
+					"sourceType": 1, //订单来源
+					"status": this.optionState //订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
 				}
+				axios.post('/order/list', obj).then(res => {
+					this.loadingText = '';
+					if (res.data.data.list.length == 0 || navItem.orderList.length == res.data.data.total) {
+						this.loadingText = '已全部加载';
+						return false
+					}
+					
+					let result = []
+					result = result.filter(item => {
+						//添加不同状态下订单的表现形式
+						item = Object.assign(item, this.orderStateExp(item.status));
+						if (state === '') {
+							//0为全部订单
+							return item;
+						}
+						return item.status === state
+					});
+					this.orderList = this.orderList.concat(result);
+					this.orderList.forEach(item => {
+						navItem.orderList.push(item);
+					})
+					this.loadingText = '上拉加载更多';
+					uni.hideNavigationBarLoading();
+					this.$set(navItem, 'loaded', true);
+				})
 
-				axios.post('/order/list',obj).then(res=>{
-					if(res.data.code=='200'){
+			},
+			//获取订单列表
+			loadData(n) {
+				//这里是将订单挂载到tab列表下
+				this.page.current = 1;
+				
+				let index = this.tabCurrentIndex;
+				let navItem = this.navList[index];
+				let state = navItem.status; //每个状态的值
+				navItem.orderList=[];
+				let obj = {
+					"orderType": 0, //订单类型
+					"pageNum": this.page.current, //页码
+					"pageSize": this.page.pageSize, //页数
+					"sourceType": 1, //订单来源
+					"status": n //订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
+				}
+				
+				axios.post('/order/list', obj).then(res => {
+					if (res.data.code == '200') {
 						let result = res.data.data.list;
 						this.orderList = result.filter(item => {
 							//添加不同状态下订单的表现形式
@@ -184,53 +241,45 @@
 							}
 							return item.status === state
 						});
-						
+		
 						this.orderList.forEach(item => {
 							navItem.orderList.push(item);
 						})
 						this.$set(navItem, 'loaded', true);
+						navItem.loadingType = 'more';
+						if (this.orderList.length == res.data.data.total) {
+							this.loadingText = '已全部加载'
+							return false
+						}else{
+							this.loadingText = '上拉加载更多'
+						}
 					}
 				})
-				// let orderList = Json.orderList.filter(item => {
-				// 	//添加不同状态下订单的表现形式
-				// 	item = Object.assign(item, this.orderStateExp(item.state));
-				// 	//演示数据所以自己进行状态筛选
-				// 	if (state === 0) {
-				// 		//0为全部订单
-				// 		return item;
-				// 	}
-				// 	return item.state === state
-				// });
-				
-				// orderList.forEach(item => {
-				// 	navItem.orderList.push(item);
-				// })
-				//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-				
-
-				//判断是否还有数据， 有改为 more， 没有改为noMore 
-				// navItem.loadingType = 'more';
 			},
 
 			//swiper 切换
 			changeTab(e) {
-				if(e.target){//在本页面点击tab切换
+				if (e.target) { //在本页面点击tab切换
 					this.tabCurrentIndex = e.target.current;
-					if(this.tabCurrentIndex==0){//全部
-						this.loadData('tabChange','');
-					}else{
-						this.loadData('tabChange',this.tabCurrentIndex-1);
+					if (this.tabCurrentIndex == 0) { //全部
+						this.optionState = ''
+						this.loadData('');
+					} else {
+						this.optionState = this.tabCurrentIndex - 1;
+						this.loadData(this.tabCurrentIndex - 1);
 					}
-				}else{//从我的页面进入
-					this.loadData('tabChange',this.tabCurrentIndex-1);
+				} else { //从我的页面进入
+					this.loadData(this.tabCurrentIndex - 1);
 				}
-				
-				
 			},
 			//顶部tab点击
 			tabClick(index) {
 				this.tabCurrentIndex = index;
-				console.log(this.tabCurrentIndex,888)
+				// if (this.tabCurrentIndex == 0) { //全部
+				// 	this.loadData('');
+				// } else {
+				// 	this.loadData(this.tabCurrentIndex - 1);
+				// }
 			},
 			// 评价
 			evaluate(item) {
@@ -305,26 +354,26 @@
 				};
 			},
 			//订单详情
-			orderDetails(item,id) {
+			orderDetails(item, id) {
 				console.log(item)
-				if(item.status!=3){
+				if (item.status != 3) {
 					uni.navigateTo({
-						url: 'orderDetails?status=' + item.status+'&id='+id
+						url: 'orderDetails?status=' + item.status + '&id=' + id
 					})
 				}
-				
+
 			},
 			// 物流信息
-			logisticsTap(){
+			logisticsTap() {
 				uni.navigateTo({
-					url:'logistics'
+					url: 'logistics'
 				})
 			},
-			payGoods(item){
+			payGoods(item) {
 				let ids = [item.id];
 				console.log(item)
 				uni.navigateTo({
-					url:'../shopcar/postOrder?deleIds='+JSON.stringify(ids)
+					url: '../shopcar/postOrder?deleIds=' + JSON.stringify(ids)
 				})
 			}
 		},
@@ -332,21 +381,30 @@
 </script>
 
 <style lang="scss">
-	.noCollect .noCollect-word{
+	.loading {
+		text-align: center;
+		font-size: 26rpx;
+		margin-top: 10px;
+	}
+
+	.noCollect .noCollect-word {
 		color: #1F1F1F;
 		margin-top: 52rpx;
 		font-weight: 600;
 	}
-	.noCollect button{
-		width:670rpx;
-		height:90rpx;
-		background:rgba(247,181,44,1);
-		border-radius:45rpx;
+
+	.noCollect button {
+		width: 670rpx;
+		height: 90rpx;
+		background: rgba(247, 181, 44, 1);
+		border-radius: 45rpx;
 	}
+
 	.order .noCollect img {
 		width: 200rpx;
 		height: 180rpx;
 	}
+
 	page,
 	.content {
 		background: #F2F2F2;
@@ -419,6 +477,7 @@
 			&.current {
 				// color: $base-color;
 				color: #F7B52C;
+
 				&:after {
 					content: '';
 					position: absolute;

@@ -14,68 +14,75 @@
 			</view>
 			<view class="cancelReason-list">
 				<van-radio-group :value="radio" @change="onChange">
-				  <van-radio name="1">
-					 
+					
+				  <van-radio :name="index" v-for='(item,index) in list' checked-color="#F7B62C" data-value='item'>
 					  <image
 					      slot="icon"
-					      :src="radio === '1' ? icon.active : icon.normal"
+					      :src="radio === 'index' ? icon.active : icon.normal"
 					    />
-						我不想要了
-				  </van-radio>
-				  
-				  <van-radio name="2">
-					
-					 <image
-					      slot="icon"
-					      :src="radio === '2' ? icon.active : icon.normal"
-					    />
-						买错或买多了
-				  </van-radio>
-				  
-				  <van-radio name="3">
-				
-					 <image
-						  slot="icon"
-						  :src="radio === '3' ? icon.active : icon.normal"
-						/>
-						没有成功使用优惠券
-				  </van-radio>
-				  
-				  <van-radio name="4">
-				
-					 <image
-						  slot="icon"
-						  :src="radio === '4' ? icon.active : icon.normal"
-						/>
-						其他
+						{{item}}
 				  </van-radio>
 				</van-radio-group>
-				<textarea :value="value" placeholder="请输入其他原因" class="textarea" placeholder-class="textareaPlace"/>
+				<textarea placeholder="请输入其他原因" class="textarea" placeholder-class="textareaPlace" v-model="content"/>
 			</view>
 		</view>
-		<button class="btn">提交</button>
+		<button class="btn" @click="save">提交</button>
 	</view>
 	
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data(){
 			return{
-				radio:'1',
+				radio:'0',
 				icon:{
 					normal:'/static/normal.png',
 					active:'/static/activeRadio.png',
 				},
-				value:''
+				value:'',
+				list:['我不想要了','买错或买多了','没有成功使用优惠券','其他'],
+				id:'',
+				content:'',
+				state:''
 			}
 		},
-		onLoad() {
+		onLoad(option) {
+			this.id = option.orderId;
+			if(option.state){
+				this.state = option.state
+			}else{
+				this.state = ''
+			}
 			
 		},
 		methods:{
-			onChange(){
-				
+			onChange(e){
+				console.log(e)
+				if(e.type==='change'){
+					this.radio = e.detail
+				}
+			},
+			save(){
+				if(this.radio==='3'){
+					if(this.content===''){
+						this.$api.msg('请填写原因')
+					}
+				}else{
+					let obj = {
+						cancelReason:this.list[this.radio],
+						orderId:this.id
+					};
+					axios.post('/order/cancelOrder',obj).then(res=>{
+						if(res.data.code=='200'){
+							this.$api.msg('取消成功');
+							uni.redirectTo({
+								url:'order?state='+this.state
+							})
+						}
+					})
+				}
 			}
 		}
 	}
@@ -151,6 +158,7 @@ page{
 			padding-top: 24rpx;
 			padding-right: 32rpx;
 			padding-left: 32rpx;
+			margin-top: -20rpx;
 		}
 	}
 	.textareaPlace{

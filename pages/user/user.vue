@@ -23,7 +23,7 @@
 		</view>
 		<!-- 查看订单 -->
 		<view class="user-order">
-			<view class="list-cell b-b m-t" @click="navTo('/pages/order/order?state=0')" hover-class="cell-hover"
+			<view class="list-cell b-b m-t" @click="navTo('/pages/order/order?state=')" hover-class="cell-hover"
 			 :hover-stay-time="50" style="display: flex;align-items: center;">
 				<text class="cell-tit">全部订单</text>
 				<text class="cell-tip" @click="lookOrder">查看全部订单</text>

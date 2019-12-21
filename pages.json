@@ -235,7 +235,9 @@
 				"navigationBarTitleText": "我的订单",
 				"app-plus": {
 					"bounce": "none"
-				}
+				},
+				"onReachBottomDistance":50,
+				"enablePullDownRefresh": true
 			}
 		}, 
 		{

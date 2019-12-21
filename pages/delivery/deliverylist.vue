@@ -9,7 +9,7 @@
 
 		<swiper :current="tabCurrentIndex" class="swiper-box" duration="300" @change="changeTab">
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
-				<scroll-view class="list-scroll-content" scroll-y>
+				<scroll-view class="list-scroll-content" scroll-y='true' @scrolltolower="lower">
 					<!-- 空白页 -->
 					<view class="delivery-empty" v-if="deliverylist.length === 0">
 						<img src="../../static/delivery/emptybg.png" alt="">
@@ -72,7 +72,7 @@
 							</view>
 						</view>
 					</view>
-
+					<view class="loading" v-if="deliverylist.length !== 0">{{loadingText}}</view>
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -173,7 +173,9 @@
 				},
 				step:{},
 				stepa:[],
-				stepArrr:[]
+				stepArrr:[],
+				optionState:'',
+				loadingText:'加载中...'
 			};
 		},
 
@@ -183,9 +185,14 @@
 			 * 替换onLoad下代码即可
 			 */
 			this.tabCurrentIndex = 0;
+			this.optionState = 3;
 			this.loadData('tabChange',3);
 		},
 		methods: {
+			lower(){
+				this.page.current=1;
+				this.loadData('tabChange',this.optionState)
+			},
 			newDate(time){
 				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 				return date
@@ -222,58 +229,60 @@
 			},
 			//获取订单列表
 			loadData(source,n) {
-				
+				this.page.current = 1;
 				let obj = {
 					pageNum:this.page.current,
 					pageSize:this.page.pageSize,
 					sendStatus:n
 				}
+				this.deliverylist=[];
 				axios.post('/sendInformation/list',obj).then(res=>{
 					let result = res.data.data;
-					this.deliverylist = res.data.data;
-					
-					result.forEach(el=>{
-						this.stepArrr = [];
-						this.stepArrr.push(el.detailAddress,el.receiverDetailAddress)
-					})
-					this.stepa = []
-	
-					for(let i=0;i<this.stepArrr.length;i++){
-						this.step = {}
-						this.step['text'] = this.stepArrr[i]
-						this.step['desc'] = '';
-						this.stepa.push(this.step);
+					if(res.data.data.length!=0){
+						this.deliverylist = res.data.data;
 						
+						result.forEach(el=>{
+							this.stepArrr = [];
+							this.stepArrr.push(el.detailAddress,el.receiverDetailAddress)
+						})
+						this.stepa = []
+						
+						for(let i=0;i<this.stepArrr.length;i++){
+							this.step = {}
+							this.step['text'] = this.stepArrr[i]
+							this.step['desc'] = '';
+							this.stepa.push(this.step);
+						}
+						this.deliverylist.forEach(el=>{
+							el['steps'] = this.stepa
+						})
+						if(this.deliverylist.length==res.data.total){
+							this.loadingText = '已全部加载'
+							return false;
+						}else{
+							this.loadingText = '上拉加载更多'
+						}
 					}
-					
-					console.log(this.stepa)
-					this.deliverylist.forEach(el=>{
-						el['steps'] = this.stepa
-					})
 				})
-				// orderList.forEach(item => {
-				// 	navItem.orderList.push(item);
-				// })
-				//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-				// this.$set(navItem, 'loaded', true);
-
-				//判断是否还有数据， 有改为 more， 没有改为noMore 
-				// navItem.loadingType = 'more';
-
 			},
 
 			//swiper 切换
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
+				this.page.current=1;
 				if(this.tabCurrentIndex==0){//已转出
+					this.optionState = 3;
 					this.loadData('tabChange',3);
 				}else if(this.tabCurrentIndex==1){
 					this.nowModel = '现在是取单模式'
+					this.optionState = 0;
 					this.loadData('tabChange',0);
 				}else if(this.tabCurrentIndex==2){
 					this.loadData('tabChange',1);
+					this.optionState = 1;
 					this.nowModel = '正在配送'
 				}else if(this.tabCurrentIndex==3){
+					this.optionState = 2;
 					this.loadData('tabChange',2);
 					this.nowModel = '已送达'
 				}
@@ -292,47 +301,16 @@
 				var s = date.getSeconds();
 				return Y+'-'+M+'-'+D+' '+h+m+s
 			},
-			//订单状态文字和颜色
-			orderStateExp(state) {
-				let stateTip = '',
-					stateTipColor = '#fa436a';
-				switch (+state) {
-					case 1:
-						stateTip = '待支付';
-						break;
-					case 4:
-						stateTip = '待发货';
-						break;
-					case 2:
-						stateTip = '待收货';
-						break;
-					case 3:
-						stateTip = '待评价';
-						break;
-					case 5:
-						stateTip = '';
-						break;
-					case 6:
-						stateTip = '交易成功';
-						break;
-					case 7:
-						stateTip = '已完成';
-						break;
-					case 9:
-						stateTip = '订单已关闭';
-						stateTipColor = '#909399';
-						break;
-				}
-				return {
-					stateTip,
-					stateTipColor
-				};
-			},
 		},
 	}
 </script>
 
 <style lang="scss">
+	.loading {
+		text-align: center;
+		font-size: 26rpx;
+		margin-top: 10px;
+	}
 	// 空白页
 	.delivery-empty {
 		text-align: center;

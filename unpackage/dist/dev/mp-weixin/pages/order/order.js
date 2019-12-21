@@ -66,19 +66,19 @@ component.options.__file = "Desktop/my-demo/pages/order/order.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_hbuilderx_packages_webpack_uni_nvue_loader_lib_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_order_vue_vue_type_template_id_59a7f4b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/webpack-uni-nvue-loader/lib/templateLoader.js??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./order.vue?vue&type=template&id=59a7f4b4& */ 196);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_hbuilderx_packages_webpack_uni_nvue_loader_lib_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_order_vue_vue_type_template_id_59a7f4b4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_order_vue_vue_type_template_id_59a7f4b4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./order.vue?vue&type=template&id=59a7f4b4& */ 196);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_order_vue_vue_type_template_id_59a7f4b4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_hbuilderx_packages_webpack_uni_nvue_loader_lib_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_order_vue_vue_type_template_id_59a7f4b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_order_vue_vue_type_template_id_59a7f4b4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
 /***/ 196:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/webpack-uni-nvue-loader/lib/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!C:/Users/Administrator/Desktop/my-demo/pages/order/order.vue?vue&type=template&id=59a7f4b4& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!C:/Users/Administrator/Desktop/my-demo/pages/order/order.vue?vue&type=template&id=59a7f4b4& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -267,8 +267,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         package: "",
         paySign: "",
         signType: "MD5",
-        timeStamp: "" } };
+        timeStamp: "" },
 
+      loadingText: '加载中...',
+      optionState: '',
+      scrollTop: 0 };
 
   },
 
@@ -279,32 +282,86 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                                      */
     console.log(options);
     this.tabCurrentIndex = +options.state;
+    this.optionState = options.state;
     if (options.state === '') {//全部订单
-      this.loadData('tabChange', '');
+      this.loadData('');
     } else if (options.state === 0) {//待付款
-      this.loadData('tabChange', options.state);
+      this.loadData(options.state);
     } else {
-      this.loadData('tabChange', options.state);
+      this.loadData(options.state);
     }
+  },
+  onReachBottom: function onReachBottom() {
+
+    // 		this.page.current++;
+
+    // 		setTimeout(()=>{
+    // 			this.getmorenews();
+    // 		},800)
   },
 
   methods: {
-    //获取订单列表
-    loadData: function loadData(source, n) {var _this = this;
-      //这里是将订单挂载到tab列表下
+    lower: function lower(e) {
+      this.page.current++;
+      this.getmorenews();
+
+    },
+    scroll: function scroll(e) {
+
+    },
+    getmorenews: function getmorenews() {var _this = this;
+      console.log(111);
+      if (this.loadingText == '已全部加载') {
+        return false;
+      }
+      this.loadingText = '加载中...';
+      uni.showNavigationBarLoading();
       var index = this.tabCurrentIndex;
       var navItem = this.navList[index];
       var state = navItem.status; //每个状态的值
-      if (source === 'tabChange' && navItem.loaded === true) {
-        //tab切换只有第一次需要加载数据
-        return;
-      }
-      if (navItem.loadingType === 'loading') {
-        //防止重复加载
-        return;
-      }
+      var obj = {
+        "orderType": 0, //订单类型
+        "pageNum": this.page.current, //页码
+        "pageSize": this.page.pageSize, //页数
+        "sourceType": 1, //订单来源
+        "status": this.optionState //订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
+      };
+      _uniAxios.default.post('/order/list', obj).then(function (res) {
+        _this.loadingText = '';
+        if (res.data.data.list.length == 0 || navItem.orderList.length == res.data.data.total) {
+          _this.loadingText = '已全部加载';
+          return false;
+        }
 
-      // navItem.loadingType = 'loading';
+        var result = [];
+        result = result.filter(function (item) {
+          //添加不同状态下订单的表现形式
+          item = Object.assign(item, _this.orderStateExp(item.status));
+          if (state === '') {
+            //0为全部订单
+            return item;
+          }
+          return item.status === state;
+        });
+        _this.orderList = _this.orderList.concat(result);
+        _this.orderList.forEach(function (item) {
+          navItem.orderList.push(item);
+        });
+        _this.loadingText = '上拉加载更多';
+        uni.hideNavigationBarLoading();
+        _this.$set(navItem, 'loaded', true);
+      });
+
+    },
+    //获取订单列表
+    loadData: function loadData(n) {var _this2 = this;
+      //这里是将订单挂载到tab列表下
+      this.page.current = 1;
+
+      var index = this.tabCurrentIndex;
+      var navItem = this.navList[index];
+      var state = navItem.status; //每个状态的值
+      navItem.orderList = [];
       var obj = {
         "orderType": 0, //订单类型
         "pageNum": this.page.current, //页码
@@ -316,9 +373,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       _uniAxios.default.post('/order/list', obj).then(function (res) {
         if (res.data.code == '200') {
           var result = res.data.data.list;
-          _this.orderList = result.filter(function (item) {
+          _this2.orderList = result.filter(function (item) {
             //添加不同状态下订单的表现形式
-            item = Object.assign(item, _this.orderStateExp(item.status));
+            item = Object.assign(item, _this2.orderStateExp(item.status));
             if (state === '') {
               //0为全部订单
               return item;
@@ -326,31 +383,19 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
             return item.status === state;
           });
 
-          _this.orderList.forEach(function (item) {
+          _this2.orderList.forEach(function (item) {
             navItem.orderList.push(item);
           });
-          _this.$set(navItem, 'loaded', true);
+          _this2.$set(navItem, 'loaded', true);
+          navItem.loadingType = 'more';
+          if (_this2.orderList.length == res.data.data.total) {
+            _this2.loadingText = '已全部加载';
+            return false;
+          } else {
+            _this2.loadingText = '上拉加载更多';
+          }
         }
       });
-      // let orderList = Json.orderList.filter(item => {
-      // 	//添加不同状态下订单的表现形式
-      // 	item = Object.assign(item, this.orderStateExp(item.state));
-      // 	//演示数据所以自己进行状态筛选
-      // 	if (state === 0) {
-      // 		//0为全部订单
-      // 		return item;
-      // 	}
-      // 	return item.state === state
-      // });
-
-      // orderList.forEach(item => {
-      // 	navItem.orderList.push(item);
-      // })
-      //loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-
-
-      //判断是否还有数据， 有改为 more， 没有改为noMore 
-      // navItem.loadingType = 'more';
     },
 
     //swiper 切换
@@ -358,20 +403,24 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       if (e.target) {//在本页面点击tab切换
         this.tabCurrentIndex = e.target.current;
         if (this.tabCurrentIndex == 0) {//全部
-          this.loadData('tabChange', '');
+          this.optionState = '';
+          this.loadData('');
         } else {
-          this.loadData('tabChange', this.tabCurrentIndex - 1);
+          this.optionState = this.tabCurrentIndex - 1;
+          this.loadData(this.tabCurrentIndex - 1);
         }
       } else {//从我的页面进入
-        this.loadData('tabChange', this.tabCurrentIndex - 1);
+        this.loadData(this.tabCurrentIndex - 1);
       }
-
-
     },
     //顶部tab点击
     tabClick: function tabClick(index) {
       this.tabCurrentIndex = index;
-      console.log(this.tabCurrentIndex, 888);
+      // if (this.tabCurrentIndex == 0) { //全部
+      // 	this.loadData('');
+      // } else {
+      // 	this.loadData(this.tabCurrentIndex - 1);
+      // }
     },
     // 评价
     evaluate: function evaluate(item) {
@@ -385,15 +434,15 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     //取消订单
-    cancelOrder: function cancelOrder(item) {var _this2 = this;
+    cancelOrder: function cancelOrder(item) {var _this3 = this;
       uni.showLoading({
         title: '请稍后' });
 
-      setTimeout(function () {var _this2$orderStateExp =
+      setTimeout(function () {var _this3$orderStateExp =
 
 
 
-        _this2.orderStateExp(9),stateTip = _this2$orderStateExp.stateTip,stateTipColor = _this2$orderStateExp.stateTipColor;
+        _this3.orderStateExp(9),stateTip = _this3$orderStateExp.stateTip,stateTipColor = _this3$orderStateExp.stateTipColor;
         item = Object.assign(item, {
           state: 9,
           stateTip: stateTip,
@@ -401,7 +450,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
 
         //取消订单后删除待付款中该项
-        var list = _this2.navList[1].orderList;
+        var list = _this3.navList[1].orderList;
         var index = list.findIndex(function (val) {return val.id === item.id;});
         index !== -1 && list.splice(index, 1);
 

@@ -31,6 +31,7 @@
 					<text class="bill-list-price">+<text>{{item.orderAmount}}</text>元</text>
 				</view>
 			</view>
+			<view class="loading" v-if='form.incomeList.length !== 0'>{{loadingText}}</view>
 		</view>
 	</view>
 </template>
@@ -52,10 +53,15 @@
 				page:{
 					current:1,
 					pageSize:10
-				}
+				},
+				loadingText:'加载中...'
 			}
 		},
 		onLoad(){
+			this.getData();
+		},
+		onReachBottom() {
+			this.page.current++;
 			this.getData();
 		},
 		methods:{
@@ -65,7 +71,10 @@
 					pageSize:this.page.pageSize
 				};
 				axios.post('/income/list',obj).then(res=>{
-					this.form = res.data.data
+					let result = res.data.data;
+					if(result.length!==0){
+						this.form = res.data.data;
+					}
 				})
 			},
 			timestampToTime (time) {

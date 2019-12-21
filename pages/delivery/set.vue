@@ -85,6 +85,7 @@
 				let user = uni.getStorageSync('userInfo');
 				let userPhone = uni.getStorageSync('deliveryPhone');
 				this.form.userName = user.nickName;
+				this.img = user.avatarUrl;
 				this.form.phone = userPhone
 			},
 			// 接单状态的改变

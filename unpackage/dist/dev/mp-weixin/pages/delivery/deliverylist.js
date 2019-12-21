@@ -66,19 +66,19 @@ component.options.__file = "Desktop/my-demo/pages/delivery/deliverylist.vue"
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_hbuilderx_packages_webpack_uni_nvue_loader_lib_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_deliverylist_vue_vue_type_template_id_4005dbe6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/webpack-uni-nvue-loader/lib/templateLoader.js??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./deliverylist.vue?vue&type=template&id=4005dbe6& */ 53);
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_hbuilderx_packages_webpack_uni_nvue_loader_lib_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_deliverylist_vue_vue_type_template_id_4005dbe6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_deliverylist_vue_vue_type_template_id_4005dbe6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/vue-loader/lib??vue-loader-options!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!../../../../Downloads/HBuilderX.1.2.1.20181126/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./deliverylist.vue?vue&type=template&id=4005dbe6& */ 53);
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_deliverylist_vue_vue_type_template_id_4005dbe6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_hbuilderx_packages_webpack_uni_nvue_loader_lib_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_17_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_deliverylist_vue_vue_type_template_id_4005dbe6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_16_0_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_template_js_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_vue_loader_lib_index_js_vue_loader_options_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_custom_block_loader_index_js_ref_0_1_Downloads_HBuilderX_1_2_1_20181126_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_deliverylist_vue_vue_type_template_id_4005dbe6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
 /***/ }),
 
 /***/ 53:
-/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-hbuilderx/packages/webpack-uni-nvue-loader/lib/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--17-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!C:/Users/Administrator/Desktop/my-demo/pages/delivery/deliverylist.vue?vue&type=template&id=4005dbe6& ***!
-  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-custom-block-loader??ref--0-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!C:/Users/Administrator/Desktop/my-demo/pages/delivery/deliverylist.vue?vue&type=template&id=4005dbe6& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -323,7 +323,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
       step: {},
       stepa: [],
-      stepArrr: [] };
+      stepArrr: [],
+      optionState: '',
+      loadingText: '加载中...' };
 
   },
 
@@ -333,9 +335,14 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                                      * 替换onLoad下代码即可
                                      */
     this.tabCurrentIndex = 0;
+    this.optionState = 3;
     this.loadData('tabChange', 3);
   },
   methods: {
+    lower: function lower() {
+      this.page.current = 1;
+      this.loadData('tabChange', this.optionState);
+    },
     newDate: function newDate(time) {
       var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       return date;
@@ -372,58 +379,60 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     //获取订单列表
     loadData: function loadData(source, n) {var _this = this;
-
+      this.page.current = 1;
       var obj = {
         pageNum: this.page.current,
         pageSize: this.page.pageSize,
         sendStatus: n };
 
+      this.deliverylist = [];
       _uniAxios.default.post('/sendInformation/list', obj).then(function (res) {
         var result = res.data.data;
-        _this.deliverylist = res.data.data;
+        if (res.data.data.length != 0) {
+          _this.deliverylist = res.data.data;
 
-        result.forEach(function (el) {
-          _this.stepArrr = [];
-          _this.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
-        });
-        _this.stepa = [];
+          result.forEach(function (el) {
+            _this.stepArrr = [];
+            _this.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
+          });
+          _this.stepa = [];
 
-        for (var i = 0; i < _this.stepArrr.length; i++) {
-          _this.step = {};
-          _this.step['text'] = _this.stepArrr[i];
-          _this.step['desc'] = '';
-          _this.stepa.push(_this.step);
-
+          for (var i = 0; i < _this.stepArrr.length; i++) {
+            _this.step = {};
+            _this.step['text'] = _this.stepArrr[i];
+            _this.step['desc'] = '';
+            _this.stepa.push(_this.step);
+          }
+          _this.deliverylist.forEach(function (el) {
+            el['steps'] = _this.stepa;
+          });
+          if (_this.deliverylist.length == res.data.total) {
+            _this.loadingText = '已全部加载';
+            return false;
+          } else {
+            _this.loadingText = '上拉加载更多';
+          }
         }
-
-        console.log(_this.stepa);
-        _this.deliverylist.forEach(function (el) {
-          el['steps'] = _this.stepa;
-        });
       });
-      // orderList.forEach(item => {
-      // 	navItem.orderList.push(item);
-      // })
-      //loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-      // this.$set(navItem, 'loaded', true);
-
-      //判断是否还有数据， 有改为 more， 没有改为noMore 
-      // navItem.loadingType = 'more';
-
     },
 
     //swiper 切换
     changeTab: function changeTab(e) {
       this.tabCurrentIndex = e.target.current;
+      this.page.current = 1;
       if (this.tabCurrentIndex == 0) {//已转出
+        this.optionState = 3;
         this.loadData('tabChange', 3);
       } else if (this.tabCurrentIndex == 1) {
         this.nowModel = '现在是取单模式';
+        this.optionState = 0;
         this.loadData('tabChange', 0);
       } else if (this.tabCurrentIndex == 2) {
         this.loadData('tabChange', 1);
+        this.optionState = 1;
         this.nowModel = '正在配送';
       } else if (this.tabCurrentIndex == 3) {
+        this.optionState = 2;
         this.loadData('tabChange', 2);
         this.nowModel = '已送达';
       }
@@ -441,42 +450,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       var m = date.getMinutes() + ':';
       var s = date.getSeconds();
       return Y + '-' + M + '-' + D + ' ' + h + m + s;
-    },
-    //订单状态文字和颜色
-    orderStateExp: function orderStateExp(state) {
-      var stateTip = '',
-      stateTipColor = '#fa436a';
-      switch (+state) {
-        case 1:
-          stateTip = '待支付';
-          break;
-        case 4:
-          stateTip = '待发货';
-          break;
-        case 2:
-          stateTip = '待收货';
-          break;
-        case 3:
-          stateTip = '待评价';
-          break;
-        case 5:
-          stateTip = '';
-          break;
-        case 6:
-          stateTip = '交易成功';
-          break;
-        case 7:
-          stateTip = '已完成';
-          break;
-        case 9:
-          stateTip = '订单已关闭';
-          stateTipColor = '#909399';
-          break;}
-
-      return {
-        stateTip: stateTip,
-        stateTipColor: stateTipColor };
-
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
