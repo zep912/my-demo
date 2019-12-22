@@ -300,6 +300,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
   },
 
   methods: {
+    btn: function btn() {
+      uni.switchTab({
+        url: '../index/index' });
+
+    },
     lower: function lower(e) {var _this2 = this;
       this.page.current++;
       setTimeout(function () {
@@ -513,9 +518,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     // 物流信息
-    logisticsTap: function logisticsTap() {
+    logisticsTap: function logisticsTap(item) {
       uni.navigateTo({
-        url: 'logistics' });
+        url: 'logistics?id=' + item.id });
 
     },
     payGoods: function payGoods(item) {

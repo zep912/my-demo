@@ -324,7 +324,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           var _this$data$fileList = this.data.fileList,fileList = _this$data$fileList === void 0 ? [] : _this$data$fileList;
           fileList.push(_objectSpread({}, file, { url: res.data }));
           console.log(fileList);
-          // this.setData({ fileList });
         } });
 
     },
@@ -338,8 +337,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     onConfirm: function onConfirm(event) {
       this.show = false;var _event$detail =
       event.detail,picker = _event$detail.picker,value = _event$detail.value,index = _event$detail.index;
-      this.reason = value;
-      // console.log(`当前值：${value}, 当前索引：${index}`)
+      this.form.reason = value;
     },
     save: function save() {var _this2 = this;
       var obj = {

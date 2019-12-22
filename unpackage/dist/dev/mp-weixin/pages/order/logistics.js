@@ -122,49 +122,64 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      steps: [
-      {
-        text: '步骤一',
-        desc: '描述信息' },
-
-      {
-        text: '步骤二',
-        desc: '描述信息' },
-
-      {
-        text: '步骤三',
-        desc: '描述信息' },
-
-      {
-        text: '步骤四',
-        desc: '描述信息' }] };
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { steps: [{ text: '步骤一', desc: '描述信息' }, { text: '步骤二', desc: '描述信息' }, { text: '步骤三', desc: '描述信息' }, { text: '步骤四',
+        desc: '描述信息' }],
+
+
+      orderId: '' };
 
   },
-  methods: {} };exports.default = _default;
+  onLoad: function onLoad(option) {
+    this.orderId = option.id;
+    // this.orderId=145
+    this.getLogist();
+  },
+  methods: {
+    getLogist: function getLogist() {var _this = this;
+      _uniAxios.default.post('/logistics/info', { orderId: this.orderId }).then(function (res) {
+        console.log(res);
+        if (res.data.code == 200) {
+          _this.form = res.data.data.LogisticsMessageDTO;
+        }
+      });
+    } } };exports.default = _default;
 
 /***/ }),
 

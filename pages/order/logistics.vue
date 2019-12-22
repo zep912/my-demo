@@ -1,9 +1,9 @@
 <template>
 	<view class="logistics">
 		<view class="logis-compeny">
-			<text class="bold">物流状态：<text>正在配送</text></text>
-			<text class="bold">快递公司：<text>顺风快递</text></text>
-			<text class="bold">快递单号：<text>561646548646541</text></text>
+			<text class="bold">物流状态：<text>{{form.localType}}</text></text>
+			<text class="bold">快递公司：<text>{{form.companyName}}</text></text>
+			<text class="bold">快递单号：<text>{{form.sentLogisticsNo}}</text></text>
 		</view>
 		<view style="width: 100%;height: 10rpx;background: #F2F2F2;"></view>
 		<!-- 步骤条 -->
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data(){
 			return{
@@ -37,11 +38,24 @@
 				        text: '步骤四',
 				        desc: '描述信息'
 				      }
-				    ]
+				    ],
+					orderId:''
 			}
 		},
+		onLoad(option) {
+			this.orderId = option.id;
+			// this.orderId=145
+			this.getLogist()
+		},
 		methods:{
-			
+			getLogist(){
+				axios.post('/logistics/info',{orderId:this.orderId}).then(res=>{
+					console.log(res)
+					if(res.data.code==200){
+						this.form = res.data.data.LogisticsMessageDTO 
+					}
+				})
+			}
 		}
 	}
 </script>
