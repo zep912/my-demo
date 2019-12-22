@@ -4,7 +4,8 @@
 		<view class="order-state">
 			<text class="toBeShipped" v-if='order.status!=0&&order.status!=9&&order.status!=4' :style="{color:order.color}">{{order.statusMsg}}</text>
 			<text v-if='order.status==0' class="toBeFinish"><text class="toBeFinishBlock toBeFinishBlockFirst">待付款</text><text
-				 class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>23小时22分</text>自动关闭</text></text>
+				 class="toBeFinishBlock toBeFinishBlockSecond">剩余<text>
+						<van-count-down :time="time" format="HH 时 mm 分" /></text>自动关闭</text></text>
 			<text v-if='order.status==4' class="payClose"><text>交易关闭</text><text>订单取消</text></text>
 			<!-- <img :src="order.img" alt=""> -->
 			<text class="iconfont" :class="order.img" style="font-size: 32px;"></text>
@@ -120,6 +121,7 @@
 	export default {
 		data() {
 			return {
+				time:'',
 				form: {
 					collect: [{
 						time: '2019-04-06 11:37',

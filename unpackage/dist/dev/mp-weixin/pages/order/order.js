@@ -216,9 +216,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 407));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 414));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 408));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 415));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -523,13 +522,15 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         url: 'logistics?id=' + item.id });
 
     },
-    payGoods: function payGoods(item) {
+    // 立即支付
+    payGoods: function payGoods(itemSn, itemAmount) {
+      console.log(itemSn, itemAmount);
       var code = uni.getStorageSync('code');
       var obj = {
         code: code, //code
-        orderSn: item.orderSn, //订单编号orderSn
+        orderSn: itemSn, //订单编号orderSn
         payType: 3, //支付类型
-        rechargeMoney: item.realAmount * item.productQuantity //支付金额s
+        rechargeMoney: itemAmount //支付金额s
       };
       var _this = this;
       _uniAxios.default.post('/pay/payOrder', obj).then(function (res) {

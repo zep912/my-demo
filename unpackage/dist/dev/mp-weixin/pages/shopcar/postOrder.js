@@ -216,6 +216,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));
 var _date = __webpack_require__(/*! @/utils/date.js */ 207);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
@@ -295,21 +302,38 @@ var _date = __webpack_require__(/*! @/utils/date.js */ 207);function _interopReq
 //
 //
 //
-var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5 }] }, order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', checked: false, orderList: { name: '', phoneNumber: '', address: '' }, ids: [], orderItemList: [], totalCount: '', payCode: { appId: "", nonceStr: "", package: "", paySign: "", signType: "MD5", timeStamp: "" }, weekDay: ["周天", "周一", "周二", "周三", "周四", "周五", "周六"], promotionAmount: '' };}, onLoad: function onLoad(option) {console.log(option);this.ids = JSON.parse(option.deleIds);if (uni.getStorageSync('addressMsg')) {//从地址跳转回来
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 5 }] }, order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', checked: false, orderList: { name: '', phoneNumber: '', address: '' }, ids: [], orderItemList: [], totalCount: '', payCode: { appId: "", nonceStr: "", package: "", paySign: "", signType: "MD5", timeStamp: "" }, weekDay: ["周天", "周一", "周二", "周三", "周四", "周五", "周六"], promotionAmount: '', message: '', addressId: '' };}, onLoad: function onLoad(option) {var _this2 = this;console.log(option, 7777);this.ids = JSON.parse(option.deleIds);this.addressId = option.addressId;if (this.addressId) {//从地址跳转回来
       var orderAddress = JSON.parse(uni.getStorageSync('addressMsg')); // 地址更新
-      this.orderList = { name: orderAddress.name, phoneNumber: orderAddress.phoneNumber, address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };}this.getOrder();}, onShow: function onShow() {uni.login({ provider: 'weixin', success: function success(loginRes) {var code = loginRes.code;uni.setStorageSync('code', code);} }); // this.getOrder();
-  }, filters: { formatDate: function formatDate(time) {var date = new Date(time);return (0, _date.formatDate)(date, 'MM月dd日');} }, methods: { // 数据初始化
-    getOrder: function getOrder() {var _this2 = this;var obj = { cartItemIds: this.ids };_uniAxios.default.post('/order/generateOrder', obj).then(function (res) {_this2.orderList = res.data.data.order;
-        _this2.orderItemList = res.data.data.orderItemList;
-        _this2.totalCount = _this2.orderList.totalAmount - _this2.orderList.promotionAmount;
-        _this2.promotionAmount = _this2.orderList.promotionAmount;
-      });
+      this.orderList = { name: orderAddress.name, phoneNumber: orderAddress.phoneNumber, address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress };_uniAxios.default.post('/order/getDetailByOrderId', { id: this.ids[0] }).then(function (res) {console.log(res);_this2.orderList = res.data.data;_this2.orderItemList = res.data.data.orderItemList;_this2.totalCount = _this2.orderList.totalAmount - _this2.orderList.promotionAmount;_this2.promotionAmount = _this2.orderList.promotionInfo;});} else {this.getOrder();}}, onShow: function onShow() {// this.getOrder();
+  }, filters: { formatDate: function formatDate(time) {var date = new Date(time);return (0, _date.formatDate)(date, 'MM月dd日');} }, methods: { noteBlur: function noteBlur(event) {console.log(event, this.orderList.note);this.orderList.note = event.detail.value;if (event.detail.value) {var obj = { note: event.detail.value, orderId: this.orderList.id };_uniAxios.default.post('/order/update/note', obj).then(function (res) {if (res.data.code == 200) {
+            console.log('备注成功');
+          }
+        });
+      }
+    },
+    // 数据初始化
+    getOrder: function getOrder() {var _this3 = this;
+      var obj = {
+        cartItemIds: this.ids };
 
+      _uniAxios.default.post('/order/generateOrder', obj).then(function (res) {
+        _this3.orderList = res.data.data.order;
+        _this3.orderItemList = res.data.data.orderItemList;
+        _this3.totalCount = _this3.orderList.totalAmount - _this3.orderList.promotionAmount;
+        _this3.promotionAmount = _this3.orderList.promotionAmount;
+      });
     },
     // 修改地址
     toAddress: function toAddress() {
       uni.navigateTo({
-        url: '../set/address?postOrder=1&ids=' + JSON.stringify(this.ids) });
+        url: '../set/address?postOrder=1&id=' + this.orderList.id });
 
     },
     //使用积分

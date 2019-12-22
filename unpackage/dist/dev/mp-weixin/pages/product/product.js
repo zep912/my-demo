@@ -135,7 +135,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 89));
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 89));
 
 
 
@@ -248,12 +248,39 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var share = function share() {return __webpack_require__.e(/*! import() | components/share */ "components/share").then(__webpack_require__.bind(null, /*! @/components/share */ 421));};var _default =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 401));};var _default =
+
 
 {
   components: {
-    share: share },
-
+    uniPopup: uniPopup
+    // share
+  },
   data: function data() {
     return {
       specClass: 'none',
@@ -279,7 +306,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
 
       favorite: false,
-      ids: '' };
+      id: '',
+      sku: {} };
 
   },
   onLoad: function () {var _onLoad = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(options) {return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
@@ -291,14 +319,23 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                 // this.$api.msg(`点击了${this.id}`);
               }case 2:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
 
+  onShow: function onShow() {
+    uni.login({
+      provider: 'weixin',
+      success: function success(loginRes) {
+        var code = loginRes.code;
+        uni.setStorageSync('code', code);
+      } });
+
+  },
   methods: {
     //收藏
-    toFavorite: function toFavorite() {var _this = this;
+    toFavorite: function toFavorite() {var _this2 = this;
       this.favorite = !this.favorite;var
       id = this.productInfo.id;
       _uniAxios.default.post('/member/collection/addProductCollection', { productId: id }).then(function (res) {
         if (res.data.code === 200) {
-          _this.$api.msg('收藏成功');
+          _this2.$api.msg('收藏成功');
         }
       });
     },
@@ -306,31 +343,101 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     // share(){
     // 	this.$refs.share.toggleMask();	
     // },
-    buy: function buy() {
-      // uni.navigateTo({
-      // 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([this.id])}`
-      // })
+    openBuy: function openBuy() {
+      this.$refs.popup.open();
     },
-    addCart: function addCart() {var _this2 = this;var _this$productInfo =
-      this.productInfo,id = _this$productInfo.id,productCategoryId = _this$productInfo.productCategoryId;
-      _uniAxios.default.post('/cart/add', { productId: id, productCategoryId: productCategoryId }).then(function (_ref) {var data = _ref.data;
+    buy: function buy() {var _this3 = this;
+      _uniAxios.default.post('/pay/quickOrderPay', { productId: this.id, quantity: this.sku.quantity, sp1: '' }).then(function (_ref) {var data = _ref.data;
         if (data.code === 200) {
-          _this2.$api.msg('已成功加入购物车');
+          _this3.payBtn(data.data);
+          // uni.navigateTo({
+          // 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([data.data.orderId])}`
+          // })
         } else {
-          _this2.$api.msg(data.message);
+          _this3.$api.msg('服务器繁忙，请重试');
+        }
+      });
+
+    },
+    addCart: function addCart() {var _this4 = this;var _this$productInfo =
+      this.productInfo,id = _this$productInfo.id,productCategoryId = _this$productInfo.productCategoryId;
+      _uniAxios.default.post('/cart/add', { productId: id, productCategoryId: productCategoryId }).then(function (_ref2) {var data = _ref2.data;
+        if (data.code === 200) {
+          _this4.$api.msg('已成功加入购物车');
+        } else {
+          _this4.$api.msg(data.message);
         }
       });
     },
-    productInfoById: function productInfoById(id) {var _this3 = this;
-      _uniAxios.default.post('/product/productInfoById', { id: id }).then(function (_ref2) {var data = _ref2.data;
+    productInfoById: function productInfoById(id) {var _this5 = this;
+      _uniAxios.default.post('/product/productInfoById', { id: id }).then(function (_ref3) {var data = _ref3.data;
         console.log(data);
         if (data.code === 200) {
-          _this3.productInfo = data.data;
-          _this3.productInfo.albumPics = _this3.productInfo.albumPics ? _this3.productInfo.albumPics.split(',') : [_this3.productInfo.pic];
+          _this5.productInfo = data.data;
+          _this5.productInfo.albumPics = _this5.productInfo.albumPics ? _this5.productInfo.albumPics.split(',') : [_this5.productInfo.pic];
+          _this5.sku = Object.assign({ quantity: 1 }, data.data, { stock: data.data.stock - 1 });
         }
+      });
+    },
+    // 同时判断总价
+    minus: function minus() {
+      if (this.sku.quantity == 1) {
+        this.sku.quantity = 1;
+      } else {
+        this.sku.quantity--;
+        this.sku.stock++;
+      }
+    },
+    // 增加商品数量
+    add: function add(item) {
+      if (this.sku.stock === 0) {
+        return;
+      } else {
+        this.sku.quantity++;
+        this.sku.stock--;
+      }
+    },
+    // 立即支付
+    payBtn: function payBtn(order) {
+      var code = uni.getStorageSync('code');
+      var obj = {
+        code: code, //code
+        orderSn: order.orderSn, //订单编号orderSn
+        payType: 3, //支付类型
+        rechargeMoney: order.totalAmount //支付金额s
+      };
+      var _this = this;
+      _uniAxios.default.post('/pay/payOrder', obj).then(function (res) {
+        console.log(res);
+        _this.payCode = {
+          appId: res.data.data.appId,
+          nonceStr: res.data.data.nonceStr,
+          package: res.data.data.package,
+          paySign: res.data.data.paySign,
+          signType: "MD5",
+          timeStamp: res.data.data.timeStamp };
+
+        uni.requestPayment({
+          provider: 'wxpay',
+          timeStamp: _this.payCode.timeStamp,
+          nonceStr: _this.payCode.nonceStr,
+          package: _this.payCode.package,
+          signType: 'MD5',
+          paySign: _this.payCode.paySign,
+          success: function success(res) {
+            console.log('success:' + JSON.stringify(res));
+            uni.reLaunch({
+              url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id });
+
+          },
+          fail: function fail(err) {
+            console.log('fail:' + JSON.stringify(err));
+          } });
+
       });
     },
     stopPrevent: function stopPrevent() {} } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

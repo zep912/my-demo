@@ -156,15 +156,16 @@
 			},
 			// 结算
 			payGoods(){
+				console.log(this.deleIds)
 				if(this.allNum==0){
 					this.$api.msg('请选择商品')
 				}else{
 					if(uni.getStorageSync('addressList')){
-						uni.reLaunch({
+						uni.navigateTo({
 							url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
 						})
 					}else{
-						this.$api.msg('请填写地址')
+						this.$api.msg('请先添加地址再结算')
 					}
 				}
 				

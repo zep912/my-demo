@@ -64,19 +64,18 @@
 			this.getAddress();
 			if(option.postOrder){//标明是从提交订单页面进入的
 				this.isToAddress = true;
-				this.deleIds = JSON.parse(option.ids)
+				this.deleIds.push(option.id)
 			}
 		},
 		methods: {
 			// 选择地址
 			select(e){
-				console.log(e)
 				this.radio = e.detail;
 				uni.setStorageSync('addressMsg',JSON.stringify(this.addressList[this.radio]))
 				
 				setTimeout(()=>{
 					uni.reLaunch({
-						url:'../shopcar/postOrder?deleIds='+JSON.stringify(this.deleIds)
+						url:'../shopcar/postOrder?deleIds='+JSON.stringify(this.deleIds)+'&addressId='+this.radio
 					})
 				},300)
 			},

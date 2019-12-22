@@ -1,6 +1,5 @@
 {
   "pages": [
-   
     "pages/index/index",
     "pages/delivery/delivery",
     "pages/delivery/set",
@@ -44,7 +43,8 @@
     "pages/index/search",
     "pages/message/center",
     "pages/message/couponInfo",
-    "pages/message/orderWarn"
+    "pages/message/orderWarn",
+    "pages/message/customer"
   ],
   "subPackages": [],
   "window": {
@@ -86,6 +86,5 @@
     ]
   },
   "permission": {},
-  "usingComponents": {},
-  "sitemapLocation": "sitemap40.json"
+  "usingComponents": {}
 }

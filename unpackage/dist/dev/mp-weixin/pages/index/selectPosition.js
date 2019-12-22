@@ -163,7 +163,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 393));};var _default = { components: { uniSearchBar: uniSearchBar }, data: function data() {return { list: [] };}, onLoad: function onLoad() {this.addressList();}, methods: { addressList: function addressList() {var _this = this;_uniAxios.default.post('/address/list', {}).then(function (_ref) {var data = _ref.data;if (data.code === 200) {_this.list = data.data;}});}, setSchool: function setSchool(item) {
+var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 394));};var _default = { components: { uniSearchBar: uniSearchBar }, data: function data() {return { list: [] };}, onLoad: function onLoad() {this.addressList();}, methods: { addressList: function addressList() {var _this = this;_uniAxios.default.post('/address/list', {}).then(function (_ref) {var data = _ref.data;if (data.code === 200) {_this.list = data.data;}});}, setSchool: function setSchool(item) {
       uni.setStorageSync('school', item);
       uni.switchTab({ url: '/pages/index/index' });
     } } };exports.default = _default;
