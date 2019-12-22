@@ -1,53 +1,53 @@
 <template>
-		<view class="content">
-			<view v-for="(tabItem,tabIndex) in navList" :key="tabIndex"  class="tab-content">
-						<!-- 空白页 -->
-						<view v-if="tabItem.state==5&&tabItem.orderList.length === 0" class="nogoods">
-							<img src="../../static/nogoods.png" alt="">
-							<view>你还没有任何订单，看看其他的吧</view>
-							<button type="primary">去逛逛</button>
-						</view>
+	<view class="content">
+		<view class="tab-content">
+			<!-- 空白页 -->
+			<view v-if="orderList.length === 0" class="nogoods">
+				<img src="../../static/nogoods.png" alt="">
+				<view>你还没有任何订单，看看其他的吧</view>
+				<button type="primary" @click="buy">去逛逛</button>
+			</view>
 
-						<!-- <empty v-if="tabItem.loaded === true && tabItem.orderList.length === 0"></empty> -->
-
-						<!-- 订单列表 -->
-						<view v-for="(item,index) in tabItem.orderList" :key="index" class="order-item">
-							<view class="i-top b-b">
-								<img src="../../static/shop.png" alt="" class='shopLogo'>
-								<text class="time">{{item.shopName}}</text>
-								<text class="state">{{item.stateTip}}</text>
-							</view>
-
-							<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
-								<image class="goods-img" :src="goodsItem.image" mode="aspectFill"></image>
-
-								<view class="right">
-									<text class="title ellipsis">{{goodsItem.title}}</text>
-									<text class="attr-box">{{goodsItem.attr}}</text>
-								</view>
-								<view class="goods-right">
-									<text class="price">{{'￥'+goodsItem.price}}</text>
-									<text class="number">x{{goodsItem.number}}</text>
-								</view>
-							</view>
-							<view class="action-box b-t" v-if="item.state != 9">
-								<view class="price-box">
-									仅退款
-									<text class="price">退款成功</text>
-								</view>
-								<view class="action-box-buttom">
-									<button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button>
-									<button class="action-btn" @click="againBuy(item)" v-show='item.state==5'>查看详情</button>
-								</view>
-							</view>
-						</view>
+			<!-- 订单列表 -->
+			<view class="order-item">
+				<view class="i-top b-b">
+					<img src="../../static/shop.png" alt="" class='shopLogo'>
+					<text class="time">麦田圈官网旗舰店</text>
+					<!-- <text class="state">{{item.stateTip}}</text> -->
 				</view>
+				<view v-for="(item, index) in orderList" :key="index">
+					<view class="goods-box-single b-b">
+						<image class="goods-img" :src="item.productPic" mode="aspectFill"></image>
+
+						<view class="right">
+							<text class="title ellipsis">{{item.productName}}</text>
+							<text class="attr-box">{{item.productAttr}}</text>
+						</view>
+						<view class="goods-right">
+							<text class="price">{{'￥'+item.productPrice}}</text>
+							<text class="number">x{{item.productCount}}</text>
+						</view>
+					</view>
+					<view class="action-box b-t" v-if="item.status!= 9">
+						<view class="price-box">
+							<text>{{returnState(item.status)}}</text>
+							<text class="price">退款成功</text>
+						</view>
+						<view class="action-box-buttom">
+							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->
+							<button class="action-btn" @click="lookDetail(item)">查看详情</button>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
+	</view>
 </template>
 <script>
 	import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
 	import empty from "@/components/empty";
 	import Json from '@/Json';
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		components: {
 			uniLoadMore,
@@ -56,43 +56,8 @@
 		data() {
 			return {
 				tabCurrentIndex: 0,
-				navList: [{
-						state: 0,
-						text: '全部',
-						loadingType: 'more',
-						orderList: []
-					},
-					{
-						state: 1,
-						text: '待付款',
-						loadingType: 'more',
-						orderList: []
-					},
-					{
-						state: 2,
-						text: '待发货',
-						loadingType: 'more',
-						orderList: []
-					},
-					{
-						state: 3,
-						text: '待收货',
-						loadingType: 'more',
-						orderList: []
-					},
-					{
-						state: 4,
-						text: '待评价',
-						loadingType: 'more',
-						orderList: []
-					},
-					{
-						state: 5,
-						text: '退款售后',
-						loadingType: 'more',
-						orderList: []
-					},
-				],
+				orderList: []
+
 			};
 		},
 
@@ -101,109 +66,79 @@
 			 * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
 			 * 替换onLoad下代码即可
 			 */
-
-			this.tabCurrentIndex = +options.state;
-			this.loadData();
-			if (options.state == 0) {
-				this.loadData()
-			}
-			console.log(this.navList)
+			this.loadData()
 		},
 
 		methods: {
-			//获取订单列表
-			loadData(source) {
-				//这里是将订单挂载到tab列表下
-				let index = this.tabCurrentIndex;
-				let navItem = this.navList[index];
-				let state = navItem.state;
-				// if (source === 'tabChange' && navItem.loaded === true) {
-				// 	//tab切换只有第一次需要加载数据
-				// 	return;
-				// }
-				if (navItem.loadingType === 'loading') {
-					//防止重复加载
-					return;
-				}
-				// navItem.loadingType = 'loading';
-				
-				let orderList = Json.orderList.filter(item => {
-					//添加不同状态下订单的表现形式
-					item = Object.assign(item, this.orderStateExp(item.state));
-					//演示数据所以自己进行状态筛选
-					if (state === 0) {
-						//0为全部订单
-						return item;
-					}
-					return item.state === state
-				});
-				console.log(orderList)
-				orderList.forEach(item => {
-					navItem.orderList.push(item);
+			buy() {
+				uni.navigateTo({
+					url: '../index/index'
 				})
-				//loaded新字段用于表示数据加载完毕，如果为空可以显示空白页
-				this.$set(navItem, 'loaded', true);
-
-				//判断是否还有数据， 有改为 more， 没有改为noMore 
-				// navItem.loadingType = 'more';
-
 			},
-
-			// //swiper 切换
-			// changeTab(e) {
-			// 	this.tabCurrentIndex = e.target.current;
-			// 	this.loadData('tabChange');
-			// },
-			// //顶部tab点击
-			// tabClick(index) {
-			// 	this.tabCurrentIndex = index;
-			// },
-			//删除订单
-			// deleteOrder(index) {
-			// 	uni.showLoading({
-			// 		title: '请稍后'
-			// 	})
-			// 	setTimeout(() => {
-			// 		this.navList[this.tabCurrentIndex].orderList.splice(index, 1);
-			// 		uni.hideLoading();
-			// 	}, 600)
-			// },
+			//获取订单列表
+			loadData() {
+				axios.post('/returnApply/list').then(res => {
+					console.log(res)
+					if (res.data.code == 200) {
+						this.orderList = res.data.data;
+						this.orderList.push({
+							companyAddressId: 1,
+							createTime: "2019-12-19T14:34:39.000+0000",
+							description: '',
+							handleMan: '',
+							handleNote: '',
+							handleTime: "2019-12-19T14:34:39.000+0000",
+							id: 145,
+							memberId: 76,
+							memberUsername: '',
+							orderId: 145,
+							orderSn: "201912190102000002",
+							productAttr: '',
+							productBrand: "明知缘",
+							productCount: 1,
+							productId: 45,
+							productName: "正宗农家散养谷饲土鸡蛋20枚",
+							productPic: 'http://maitianquan-zjk.oss-cn-zhangjiakou.aliyuncs.com/cropcircle/image/20191204/好货推荐-1.png',
+							productPrice: 25.99,
+							productRealPrice: 25.99,
+							proofPics: '',
+							reason: '不想要了',
+							receiveMan: "小鲁",
+							receiveNote: '备注',
+							receiveTime: "2019-12-19T14:34:39.000+0000",
+							returnAmount: 25.99,
+							returnName: "小鲁",
+							returnPhone: 13667138671,
+							status: 0
+							// status: 0申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝
+						})
+						console.log(this.orderList)
+					}
+				})
+			},
+			returnState(n) {
+				if (n == 0) {
+					return '待处理'
+				} else if (n == 1) {
+					return '退货中'
+				} else if (n == 2) {
+					return '已完成'
+				} else {
+					return '已拒绝'
+				}
+			},
 			// 评价
 			evaluate(item) {
 				console.log(item)
 			},
 			// 再次购买
-			againBuy(item) {
+			lookDetail(item) {
+				let id = item.id;
 				uni.navigateTo({
-					url:'refund'
+					url: 'refund?id='+id
 				})
 				console.log(item)
 			},
-			//取消订单
-			// cancelOrder(item) {
-			// 	uni.showLoading({
-			// 		title: '请稍后'
-			// 	})
-			// 	setTimeout(() => {
-			// 		let {
-			// 			stateTip,
-			// 			stateTipColor
-			// 		} = this.orderStateExp(9);
-			// 		item = Object.assign(item, {
-			// 			state: 9,
-			// 			stateTip,
-			// 			stateTipColor
-			// 		})
-
-			// 		//取消订单后删除待付款中该项
-			// 		let list = this.navList[1].orderList;
-			// 		let index = list.findIndex(val => val.id === item.id);
-			// 		index !== -1 && list.splice(index, 1);
-
-			// 		uni.hideLoading();
-			// 	}, 600)
-			// },
-
 			//订单状态文字和颜色
 			orderStateExp(state) {
 				let stateTip = '',
@@ -237,28 +172,32 @@
 
 	.list-scroll-content {
 		height: 100%;
-		.nogoods{
+
+		.nogoods {
 			text-align: center;
-			img{
+
+			img {
 				width: 190rpx;
 				height: 170rpx;
 				margin-bottom: 52rpx;
 				margin-top: 160rpx;
 			}
-			view{
-				font-size:30rpx;
-				font-weight:500;
-				color:rgba(31,31,31,1);
+
+			view {
+				font-size: 30rpx;
+				font-weight: 500;
+				color: rgba(31, 31, 31, 1);
 			}
-			button{
+
+			button {
 				width: 90%;
 				height: 90rpx;
 				text-align: center;
 				line-height: 90rpx;
-				font-size:30rpx;
+				font-size: 30rpx;
 				color: #fff;
-				background:rgba(247,181,44,1);
-				border-radius:45px;
+				background: rgba(247, 181, 44, 1);
+				border-radius: 45px;
 				margin-top: 170rpx;
 			}
 		}
@@ -277,6 +216,7 @@
 		top: 0;
 		left: 0;
 		z-index: 1000;
+
 		.nav-item {
 			flex: 1;
 			display: flex;
@@ -299,7 +239,7 @@
 					transform: translateX(-50%);
 					width: 44px;
 					height: 0;
-	
+
 					border-bottom: 2px solid #F7B52C;
 				}
 			}

@@ -9,7 +9,8 @@
 
 		<swiper :current="tabCurrentIndex" class="swiper-box" duration="300" @change="changeTab" style="height:calc(100% - 20px)">
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
-				<scroll-view class="list-scroll-content" scroll-y='true' @scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop" lower-threshold=100 scroll-top=50>
+				<scroll-view class="list-scroll-content" scroll-y='true' @scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop"
+				 lower-threshold=100 scroll-top=50>
 					<!-- 空白页 -->
 
 					<view class="empty" v-if='tabItem.orderList.length==0'>
@@ -29,35 +30,38 @@
 							<text class="time">麦田圈官方旗舰店</text>
 							<text class="state" @click="orderDetails(item,item.id)">{{item.status==0?'待付款':item.status==1?'待发货':item.status==2?'待收货':item.status==3?'待评价':item.status==4?'已关闭':'无效订单'}}</text>
 						</view>
+						<view class="" v-for='(items,index) in item.orderItemList'>
 
-						<view class="goods-box-single b-b">
-							<image class="goods-img" :src="item.productPic" mode="aspectFill"></image>
 
-							<view class="right">
-								<text class="title ellipsis">{{item.productName}}</text>
-								<text class="attr-box">{{goodsItem.attr}}</text>
+							<view class="goods-box-single b-b">
+								<image class="goods-img" :src="items.productPic" mode="aspectFill"></image>
+
+								<view class="right">
+									<text class="title ellipsis">{{items.productName}}</text>
+									<text class="attr-box">{{goodsItem.attr}}</text>
+								</view>
+								<view class="goods-right">
+									<text class="price">{{'￥'+items.realAmount}}</text>
+									<text class="number">x{{items.productQuantity}}</text>
+								</view>
 							</view>
-							<view class="goods-right">
-								<text class="price">{{'￥'+item.realAmount}}</text>
-								<text class="number">x{{item.productQuantity}}</text>
-							</view>
-						</view>
 
 
-						<view class="action-box b-t" v-if="item.state != 9">
-							<view class="price-box">
-								共
-								<text class="num">{{tabItem.orderList.length}}</text>
-								件商品 实付款
-								<text class="price">{{item.payAmount}}</text>
-							</view>
-							<view class="action-box-buttom">
-								<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
-								<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
-								<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
-								<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
-								<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item)">立即支付</button>
-								<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap">查看物流</button>
+							<view class="action-box b-t" v-if="item.state != 9">
+								<view class="price-box">
+									共
+									<text class="num">{{item.orderItemList.length}}</text>
+									件商品 实付款
+									<text class="price">{{items.realAmount}}</text>
+								</view>
+								<view class="action-box-buttom">
+									<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
+									<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
+									<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
+									<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
+									<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item)">立即支付</button>
+									<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap">查看物流</button>
+								</view>
 							</view>
 						</view>
 					</view>
@@ -153,20 +157,20 @@
 		onReachBottom() {
 
 		},
-		
+
 		methods: {
-			lower(e){
+			lower(e) {
 				this.page.current++;
-				setTimeout(()=>{
+				setTimeout(() => {
 					this.getmorenews();
-				},500)
+				}, 500)
 			},
-			scroll(e){
-				
+			scroll(e) {
+
 			},
 			getmorenews() {
 				console.log(111)
-				if (this.loadingText =='已全部加载') {
+				if (this.loadingText == '已全部加载') {
 					return false;
 				}
 				this.loadingText = '加载中...';
@@ -187,7 +191,7 @@
 						this.loadingText = '已全部加载';
 						return false
 					}
-					
+
 					let result = []
 					result = result.filter(item => {
 						//添加不同状态下订单的表现形式
@@ -212,11 +216,11 @@
 			loadData(n) {
 				//这里是将订单挂载到tab列表下
 				this.page.current = 1;
-				
+
 				let index = this.tabCurrentIndex;
 				let navItem = this.navList[index];
 				let state = navItem.status; //每个状态的值
-				navItem.orderList=[];
+				navItem.orderList = [];
 				let obj = {
 					"orderType": 0, //订单类型
 					"pageNum": this.page.current, //页码
@@ -224,7 +228,7 @@
 					"sourceType": 1, //订单来源
 					"status": n //订单状态：0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单
 				}
-				
+
 				axios.post('/order/list', obj).then(res => {
 					if (res.data.code == '200') {
 						let result = res.data.data.list;
@@ -237,16 +241,17 @@
 							}
 							return item.status === state
 						});
-		
+
 						this.orderList.forEach(item => {
 							navItem.orderList.push(item);
 						})
+						console.log(navItem, 777)
 						this.$set(navItem, 'loaded', true);
 						navItem.loadingType = 'more';
 						if (this.orderList.length == res.data.data.total) {
 							this.loadingText = '已全部加载'
 							return false
-						}else{
+						} else {
 							this.loadingText = '上拉加载更多'
 						}
 					}
@@ -310,8 +315,10 @@
 					index !== -1 && list.splice(index, 1);
 
 					uni.hideLoading();
-					axios.post('/order/cancelOrder',{orderId:item.id}).then(res=>{
-						if(res.data.code==200){
+					axios.post('/order/cancelOrder', {
+						orderId: item.id
+					}).then(res => {
+						if (res.data.code == 200) {
 							this.$api.msg('取消成功')
 						}
 					})
@@ -376,7 +383,7 @@
 					code: code, //code
 					orderSn: item.orderSn, //订单编号orderSn
 					payType: 3, //支付类型
-					rechargeMoney: item.realAmount*item.productQuantity, //支付金额s
+					rechargeMoney: item.realAmount * item.productQuantity, //支付金额s
 				}
 				let _this = this;
 				axios.post('/pay/payOrder', obj).then(res => {
@@ -423,7 +430,7 @@
 		color: #1F1F1F;
 		margin-top: 52rpx;
 		font-weight: 600;
-		color:#999;
+		color: #999;
 	}
 
 	.noCollect button {

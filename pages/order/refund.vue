@@ -5,54 +5,54 @@
 			<!-- <img src="../../static/dizhi.png" /> -->
 			<text class="iconfont icon-dizhi1"></text>
 			<view class="order-ad-user" style="margin-left: 10rpx;">
-				<text class="phone">涂志奇15692124707</text>
-				<text class="address">湖北省武汉市江夏市光谷智慧园7栋4楼</text>
+				<text class="phone">{{form.returnName }}{{form.returnPhone }}</text>
+				<text class="address">{{form.companyAddressId}}</text>
 			</view>
 		</view>
 		<!-- 商品信息 -->
 		<view class="order-goods">
-			<view v-for="(item,index) in form.collect" :key="index" class="order-item">
+			<view :key="index" class="order-item">
 				<view class="i-top b-b">
 					<!-- <img src="../../static/shop.png" alt="" class='shopLogo'> -->
 					<text class="iconfont icon-dizhi1 shopLogo"></text>
-					<text class="time">{{item.shopName}}</text>
+					<text class="time">麦田圈官方旗舰店</text>
 					<text class="iconfont icon-you"></text>
 				</view>
 
-				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in item.goodsList" :key="goodsIndex">
-					<image class="goods-img" :src="goodsItem.image" mode="aspectFill"></image>
+				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in form.goodsList" :key="goodsIndex">
+					<image class="goods-img" :src="goodsItem.productPic" mode="aspectFill"></image>
 
 					<view class="right">
-						<text class="title ellipsis">{{goodsItem.title}}</text>
-						<text class="attr-box">{{goodsItem.attr}}</text>
-						<text class="price">{{'￥'+goodsItem.price}}</text>
+						<text class="title ellipsis">{{goodsItem.productName}}</text>
+						<text class="attr-box">{{goodsItem.productAttr}}</text>
+						<text class="price">{{'￥'+goodsItem.productPrice}}</text>
 					</view>
 					<view class="goods-right">
-						<text class="number">X{{goodsItem.number}}</text>
+						<text class="number">X{{goodsItem.productCount}}</text>
 					</view>
 				</view>
 				<view class="order-total">
-					<text>共2件商品</text>
-					<text>合计：<text>{{'￥'+'120.00'}}</text></text>
+					<text>共{{form.goodsList.length}}件商品</text>
+					<text>合计：<text>{{'￥'+form.returnAmount}}</text></text>
 				</view>
 			</view>
 		</view>
 		<!-- 退款原因 -->
 		<view class="refund-reason">
-			<van-cell title="退款原因" is-link :value="reason" @click='cellClick' />
+			<van-cell title="退款原因" is-link :value="form.reason" @click='cellClick' />
 		</view>
 
 		<!-- 退款金额 -->
 		<view class="refund-money">
 			<view class="refund-money-top">
-				<text class="refund-money-title bold block">退款金额:<text class="refund-money-num">￥88.88</text></text>
+				<text class="refund-money-title bold block">退款金额:<text class="refund-money-num">{{'￥'+form.returnAmount}}</text></text>
 				<text class="bold refund-money-explain">退款最多￥<text>8.00</text>元，含优惠折扣费用</text>
 				<text class="bold  refund-money-explain">仅在使用同一品类或商品券所有订单关闭后，方可退回相关优惠券</text>
 			</view>
 			<view class="refund-intro">
 				<text class="block refund-intro-title">退款说明:</text>
 				<view class="refund-msg">
-					<textarea :value="value" placeholder="请说明您实际购买的情况说明(限300字)" placeholder-class='textareaClass' maxlength='300' />
+					<textarea placeholder="请说明您实际购买的情况说明(限300字)" placeholder-class='textareaClass' maxlength='300' v-model='returnText'/>
 					<van-uploader use-slot class='refund-upload-img' :file-list="fileList" @after-read="afterRead">
 					  <img src="../../static/upload.png" alt="" class='upload'>
 					</van-uploader>
@@ -62,11 +62,11 @@
 		<!-- 联系电话 -->
 		<view class="refund-phone base">
 			<text class="refund-p-mobile block">联系电话:</text>
-			<textarea :value="phone" placeholder="请留下您的联系方式,方便客服联系您" class="refund-contact"  placeholder-class='textareaClass' maxlength='11'/>
+			<textarea placeholder="请留下您的联系方式,方便客服联系您" class="refund-contact"  placeholder-class='textareaClass' maxlength='11' v-model="phone"/>
 		</view>
 		<!-- 尾部 -->
 		
-			<button class="btn1">提交</button>
+			<button class="btn1" @click="save">提交</button>
 			
 			<!-- 弹出层 -->
 			<van-popup
@@ -87,6 +87,7 @@
 </template>
 
 <script>
+	import axios from '@/utils/uniAxios.js'
 	export default {
 		data() {
 			return {
@@ -120,13 +121,57 @@
 				show:false,
 				marginBottom:'',
 				fileList: [],
-				columns: ['七天无理由退换', '商品损坏', '商品过期', '物流', '其他']
+				columns: ['七天无理由退换', '商品损坏', '商品过期', '物流', '其他'],
+				orderId:'',
+				returnText:''
 			}
 		},
 		onLoad(option){
-			
+			this.orderId = option.id;
+			this.refundList()
 		},
 		methods: {
+			refundList(){
+				axios.post('/returnApply/info',{id:this.orderId}).then(res=>{
+					console.log(res)
+					if(res.data.code==200){
+						this.form = res.data.data;
+						this.form = {
+							companyAddressId:1,
+							createTime:"2019-12-19T14:34:39.000+0000",
+							description: '' ,
+							handleMan: '' ,
+							handleNote: '' ,
+							handleTime: "2019-12-19T14:34:39.000+0000",
+							id:92,
+							memberId: 46 ,
+							memberUsername: '',
+							goodsList:[{
+								orderId:'145',
+								orderSn:"201912190102000002",
+								productAttr:'',
+								productBrand:"明知缘",
+								productCount: 1 ,
+								productId: 45,
+								productName:"正宗农家散养谷饲土鸡蛋20枚",
+								productPic:'http://maitianquan-zjk.oss-cn-zhangjiakou.aliyuncs.com/cropcircle/image/20191204/好货推荐-1.png',
+								productPrice:  25.99,
+							}
+								
+							],
+							proofPics: '',
+							reason: '商品过期' ,
+							receiveMan: '小鲁' ,
+							receiveNote: '备注',
+							receiveTime: "2019-12-19T14:34:39.000+0000",
+							returnAmount: '1' ,
+							returnName: '小鲁' ,
+							returnPhone: 13667138671 ,
+							status: 0,//申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝
+						}
+					}
+				})
+			},
 			consult(){
 				uni.navigateTo({
 					url:'consult'
@@ -144,7 +189,8 @@
 			          // 上传完成需要更新fileList
 			          const { fileList = [] } = this.data;
 			          fileList.push({ ...file, url: res.data });
-			          this.setData({ fileList });
+					  console.log(fileList)
+			          // this.setData({ fileList });
 			        }
 			      });
 			    },
@@ -160,6 +206,34 @@
 				const { picker, value, index } = event.detail;
 				this.reason = value;
 				// console.log(`当前值：${value}, 当前索引：${index}`)
+			},
+			save(){
+				let obj= {
+					companyAddressId:this.form.companyAddressId,
+					description:this.returnText,
+					orderId: this.form.id,
+					proofPics:'',
+					reason:this.form.reason,
+					returnPhone: this.phone
+				};
+				if(!obj.description){
+					this.$api.msg('请填写退货描述');
+					return;
+				}else if(!obj.reason){
+					this.$api.msg('请选择退货原因');
+					return;
+				}else if(!obj.returnPhone){
+					this.$api.msg('请填写手机号');
+					return;
+				}
+				axios.post('/returnApply/create',obj).then(res=>{
+					if(res.data.code==200){
+						this.$api.msg('申请退款成功');
+						uni.redirectTo({
+							url: 'aftersale'
+						});
+					}
+				})
 			}
 		}
 	}
@@ -254,7 +328,6 @@
 				display: block;
 			}
 		}
-		
 		.refund-intro{
 			padding-right: 20rpx;
 			padding-left: 20rpx;
@@ -267,18 +340,22 @@
 				background:rgba(244,244,244,1);
 				border-radius:20rpx;
 				box-sizing: border-box;
-				margin-top: 38rpx;
+				
 				padding: 26rpx 20rpx 20rpx 20rpx;
+				// position: absolute;
+				// z-index: 10000;
 			}
 			
 			.refund-msg{
 				position:relative;
+				margin-top: 30rpx;
 				.refund-upload-img{
 					position: absolute;
 					left: 3%;
 					bottom: 6%;
 					width: 100rpx;
 					height: 100rpx;
+					z-index: 1000000;
 					img{
 						width: 100rpx;
 						height: 100rpx;

@@ -213,8 +213,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 406));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 413));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 407));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 414));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -382,6 +386,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           _this4.orderList.forEach(function (item) {
             navItem.orderList.push(item);
           });
+          console.log(navItem, 777);
           _this4.$set(navItem, 'loaded', true);
           navItem.loadingType = 'more';
           if (_this4.orderList.length == res.data.data.total) {
@@ -451,7 +456,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         index !== -1 && list.splice(index, 1);
 
         uni.hideLoading();
-        _uniAxios.default.post('/order/cancelOrder', { orderId: item.id }).then(function (res) {
+        _uniAxios.default.post('/order/cancelOrder', {
+          orderId: item.id }).
+        then(function (res) {
           if (res.data.code == 200) {
             _this5.$api.msg('取消成功');
           }
