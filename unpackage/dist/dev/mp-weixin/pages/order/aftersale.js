@@ -277,12 +277,15 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     evaluate: function evaluate(item) {
       console.log(item);
     },
-    // 再次购买
+    // 查看详情
     lookDetail: function lookDetail(item) {
       var id = item.id;
       uni.navigateTo({
-        url: 'refund?id=' + id });
+        url: 'closeOrder?id=' + id });
 
+      // uni.navigateTo({
+      // 	url: 'refund?id='+id
+      // })
       console.log(item);
     },
     //订单状态文字和颜色

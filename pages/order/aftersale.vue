@@ -35,7 +35,7 @@
 						</view>
 						<view class="action-box-buttom">
 							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->
-							<button class="action-btn" @click="lookDetail(item)">查看详情</button>
+							<!-- <button class="action-btn" @click="lookDetail(item)">查看详情</button> -->
 						</view>
 					</view>
 				</view>
@@ -131,12 +131,15 @@
 			evaluate(item) {
 				console.log(item)
 			},
-			// 再次购买
+			// 查看详情
 			lookDetail(item) {
 				let id = item.id;
 				uni.navigateTo({
-					url: 'refund?id='+id
+					url:'closeOrder?id='+id
 				})
+				// uni.navigateTo({
+				// 	url: 'refund?id='+id
+				// })
 				console.log(item)
 			},
 			//订单状态文字和颜色
