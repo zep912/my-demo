@@ -176,7 +176,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 414));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 415));};var _default =
 {
   components: {
     empty: empty },
@@ -198,19 +198,18 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.getAddress();
     if (option.postOrder) {//标明是从提交订单页面进入的
       this.isToAddress = true;
-      this.deleIds = JSON.parse(option.ids);
+      this.deleIds.push(option.id);
     }
   },
   methods: {
     // 选择地址
     select: function select(e) {var _this = this;
-      console.log(e);
       this.radio = e.detail;
       uni.setStorageSync('addressMsg', JSON.stringify(this.addressList[this.radio]));
 
       setTimeout(function () {
         uni.reLaunch({
-          url: '../shopcar/postOrder?deleIds=' + JSON.stringify(_this.deleIds) });
+          url: '../shopcar/postOrder?deleIds=' + JSON.stringify(_this.deleIds) + '&addressId=' + _this.radio });
 
       }, 300);
     },

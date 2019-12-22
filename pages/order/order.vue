@@ -32,7 +32,6 @@
 						</view>
 						<view class="" v-for='(items,index) in item.orderItemList'>
 
-
 							<view class="goods-box-single b-b">
 								<image class="goods-img" :src="items.productPic" mode="aspectFill"></image>
 
@@ -46,23 +45,23 @@
 								</view>
 							</view>
 
-
 							<view class="action-box b-t" v-if="item.state != 9">
 								<view class="price-box">
 									共
-									<text class="num">{{item.orderItemList.length}}</text>
+									<text class="num">{{items.productQuantity}}</text>
 									件商品 实付款
-									<text class="price">{{items.realAmount}}</text>
+									<text class="price">{{item.payAmount}}</text>
 								</view>
-								<view class="action-box-buttom">
-									<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
-									<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
-									<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
-									<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
-									<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item)">立即支付</button>
-									<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap(item)">查看物流</button>
-								</view>
+								
 							</view>
+						</view>
+						<view class="action-box-buttom">
+							<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
+							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
+							<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
+							<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
+							<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item.orderSn,item.payAmount)">立即支付</button>
+							<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap(item)">查看物流</button>
 						</view>
 					</view>
 					<view class="loading" v-if='tabItem.orderList.length !== 0'>{{loadingText}}</view>
@@ -159,7 +158,7 @@
 		},
 
 		methods: {
-			btn(){
+			btn() {
 				uni.switchTab({
 					url: '../index/index'
 				})
@@ -379,16 +378,18 @@
 			// 物流信息
 			logisticsTap(item) {
 				uni.navigateTo({
-					url: 'logistics?id='+item.id
+					url: 'logistics?id=' + item.id
 				})
 			},
-			payGoods(item) {
+			// 立即支付
+			payGoods(itemSn, itemAmount) {
+				console.log(itemSn, itemAmount)
 				let code = uni.getStorageSync('code')
 				let obj = {
 					code: code, //code
-					orderSn: item.orderSn, //订单编号orderSn
+					orderSn: itemSn, //订单编号orderSn
 					payType: 3, //支付类型
-					rechargeMoney: item.realAmount * item.productQuantity, //支付金额s
+					rechargeMoney: itemAmount, //支付金额s
 				}
 				let _this = this;
 				axios.post('/pay/payOrder', obj).then(res => {
@@ -721,16 +722,17 @@
 				}
 			}
 		}
-
-		.action-box {
-			padding-bottom: 30rpx;
-
-			.action-box-buttom {
+.action-box-buttom {
 				display: flex;
 				justify-content: flex-end;
 				align-items: center;
 				padding-right: 30rpx;
+				padding-bottom: 30rpx;
 			}
+		.action-box {
+			
+
+			
 
 			// height: 100upx;
 			// position: relative;

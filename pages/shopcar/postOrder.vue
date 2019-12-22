@@ -37,11 +37,18 @@
 		</view>
 		<!-- 订单信息 -->
 		<view class="order-list">
+			<van-cell-group>
+			  <van-field
+			    :value="orderList.note"
+			    label="订单备注"
+			    type="textarea"
+			    placeholder="请输入备注"
+			    autosize
+				clearable='true'
+				@blur='noteBlur'
+			  />
+			</van-cell-group>
 			<ul>
-				<li>
-					<text>订单备注</text>
-					<text>{{orderList.note}}</text>
-				</li>
 				<li>
 					<text>预计送达时间</text>
 					<text class="order-list-bold">{{orderList.sendTime | formatDate(orderList.sendTime)}}({{weekDay[new Date(orderList.sendTime).getDay()]}})</text>
@@ -118,13 +125,16 @@
 					timeStamp: ""
 				},
 				weekDay: ["周天", "周一", "周二", "周三", "周四", "周五", "周六"],
-				promotionAmount:''
+				promotionAmount:'',
+				message:'',
+				addressId:''
 			}
 		},
 		onLoad(option) {
-			console.log(option)
+			console.log(option,7777)
 			this.ids = JSON.parse(option.deleIds)
-			if (uni.getStorageSync('addressMsg')) { //从地址跳转回来
+			this.addressId = option.addressId
+			if (this.addressId) { //从地址跳转回来
 				let orderAddress = JSON.parse(uni.getStorageSync('addressMsg'));
 				// 地址更新
 				this.orderList = {
@@ -132,19 +142,19 @@
 					phoneNumber: orderAddress.phoneNumber,
 					address: orderAddress.province + orderAddress.city + orderAddress.region + orderAddress.detailAddress,
 				}
+				axios.post('/order/getDetailByOrderId',{id:this.ids[0]}).then(res=>{
+					console.log(res)
+					this.orderList = res.data.data;
+					this.orderItemList = res.data.data.orderItemList;
+					this.totalCount = this.orderList.totalAmount - this.orderList.promotionAmount;
+					this.promotionAmount = this.orderList.promotionInfo
+				})
+			}else{
+				this.getOrder();
 			}
-
-			this.getOrder();
-
 		},
 		onShow() {
-			uni.login({
-				provider: 'weixin',
-				success: (loginRes) => {
-					let code = loginRes.code;
-					uni.setStorageSync('code', code)
-				}
-			})
+			
 			// this.getOrder();
 		},
 		filters: {
@@ -154,6 +164,21 @@
 			}
 		},
 		methods: {
+			noteBlur(event){
+				console.log(event,this.orderList.note)
+				this.orderList.note = event.detail.value;
+				if(event.detail.value){
+					let obj = {
+						note:event.detail.value,
+						orderId:this.orderList.id
+					}
+					axios.post('/order/update/note',obj).then(res=>{
+						if(res.data.code==200){
+							console.log('备注成功')
+						}
+					})
+				}
+			},
 			// 数据初始化
 			getOrder() {
 				let obj = {
@@ -165,12 +190,11 @@
 					this.totalCount = this.orderList.totalAmount - this.orderList.promotionAmount;
 					this.promotionAmount = this.orderList.promotionAmount
 				});
-
 			},
 			// 修改地址
 			toAddress() {
 				uni.navigateTo({
-					url: '../set/address?postOrder=1&ids=' + JSON.stringify(this.ids)
+					url: '../set/address?postOrder=1&id=' + this.orderList.id
 				})
 			},
 			//使用积分
@@ -268,6 +292,12 @@
 </script>
 
 <style lang="scss">
+	.order-list .van-cell-group .van-field__body--textarea.van-field__body--ios{
+		margin-top: 0;
+	}
+	.order-list .van-cell-group .van-cell__title{
+		color: #585858;
+	}
 	.footBtn {
 		width: 210rpx;
 		height: 74rpx;

@@ -265,7 +265,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 414));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 415));};var _default =
 {
   components: {
     empty: empty },
@@ -304,15 +304,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 结算
     payGoods: function payGoods() {
+      console.log(this.deleIds);
       if (this.allNum == 0) {
         this.$api.msg('请选择商品');
       } else {
         if (uni.getStorageSync('addressList')) {
-          uni.reLaunch({
+          uni.navigateTo({
             url: 'postOrder?deleIds=' + JSON.stringify(this.deleIds) });
 
         } else {
-          this.$api.msg('请填写地址');
+          this.$api.msg('请先添加地址再结算');
         }
       }
 

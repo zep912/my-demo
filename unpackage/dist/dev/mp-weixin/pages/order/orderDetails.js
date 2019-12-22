@@ -257,6 +257,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
 //
 //
@@ -374,7 +375,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var _default = { data: function data() {return { form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 0, goodsList: [{ title: '香辣牛肉干', price: 88.88, image: '/static/goods.png', number: 1, attr: '规格 10*200g' }] }], goodsObj: { remarks: '香辣味的', allPay: '120', jifen: '100', preferential: '20.00', total: '880' }, orderMsg: { number: '13245679851354664', num: '3212313213213213132', creatTime: '2019-11-05 11:12:12', payTime: '2019-11-05 11:12:12', payWay: '微信支付' } }, img: ['icon-daifahuo', 'icon-daifukuan1', 'icon-daishouhuo1', 'icon-chenggong', 'icon-dingdanguanbi', 'icon-dingdanwancheng'], order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', steps: [{ text: '步骤一', desc: '描述信息' }, { text: '步骤二', desc: '描述信息' }, { text: '步骤三', desc: '描述信息' }, { text: '步骤四', desc: '描述信息' }], id: '' };}, onLoad: function onLoad(option) {console.log(option);this.statuss = option.status;this.id = option.id;this.getOrder();}, methods: { // 获取订单详情
+//
+var _default = { data: function data() {return { time: '', form: { collect: [{ time: '2019-04-06 11:37', shopName: '麦田圈官网旗舰店', state: 0, goodsList: [{ title: '香辣牛肉干', price: 88.88, image: '/static/goods.png', number: 1, attr: '规格 10*200g' }] }], goodsObj: { remarks: '香辣味的', allPay: '120', jifen: '100', preferential: '20.00', total: '880' }, orderMsg: { number: '13245679851354664', num: '3212313213213213132', creatTime: '2019-11-05 11:12:12', payTime: '2019-11-05 11:12:12', payWay: '微信支付' } }, img: ['icon-daifahuo', 'icon-daifukuan1', 'icon-daishouhuo1', 'icon-chenggong', 'icon-dingdanguanbi', 'icon-dingdanwancheng'], order: { status: '', img: '', wuliu: '', pay: '', statusMsg: '', color: '' }, statuss: '', show: false, marginBottom: '', steps: [{ text: '步骤一', desc: '描述信息' }, { text: '步骤二', desc: '描述信息' }, { text: '步骤三', desc: '描述信息' }, { text: '步骤四', desc: '描述信息' }], id: '' };}, onLoad: function onLoad(option) {console.log(option);this.statuss = option.status;this.id = option.id;this.getOrder();}, methods: { // 获取订单详情
     getOrder: function getOrder() {var _this2 = this;var obj = { cartItemIds: [this.id] };_uniAxios.default.post('/order/getDetailByOrderId', { id: this.id }).then(function (res) {if (res.data.code == '200') {_this2.order = res.data.data;console.log(_this2.order);if (_this2.order.status == 0) {// 待支付
             _this2.order.statusMsg = '';_this2.order.wuliu = '取消订单';_this2.order.img = _this2.img[1];_this2.order.pay = '立即支付';_this2.order.color = '';} else if (_this2.order.status == 1) {//待发货	
             _this2.show = false;_this2.order.statusMsg = '待发货';_this2.order.wuliu = '';_this2.order.img = _this2.img[0];_this2.order.pay = '';_this2.order.color = '#F7B62C';} else if (_this2.order.status == 2) {//待收货

@@ -245,7 +245,9 @@
 			"style": {
 				"navigationBarTitleText": "提交订单",
 				"usingComponents": {
-				  "van-switch": "/wxcomponents/vant/dist/switch/index"
+				  "van-switch": "/wxcomponents/vant/dist/switch/index",
+				  "van-field": "/wxcomponents/vant/dist/field/index",
+				  "van-cell-group": "/wxcomponents/vant/dist/cell-group/index"
 				}
 			}
 		},
