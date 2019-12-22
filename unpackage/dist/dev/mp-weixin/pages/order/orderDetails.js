@@ -440,9 +440,14 @@ var _default = { data: function data() {return { time: '', form: { collect: [{ t
       if (this.order.status == 2) {// 确认收货
         _uniAxios.default.post('/order/updateOrderStatus', {
           orderId: id,
-          status: 1 }).
+          status: 2 }).
         then(function (res) {
           console.log(res);
+          if (res.data.code == 200) {
+            uni.navigateTo({
+              url: 'order?state=3' });
+
+          }
         });
       } else if (this.order.status == 3) {//再次购买
         uni.navigateTo({
