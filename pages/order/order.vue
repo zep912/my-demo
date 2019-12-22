@@ -40,12 +40,12 @@
 									<text class="attr-box">{{goodsItem.attr}}</text>
 								</view>
 								<view class="goods-right">
-									<text class="price">{{'￥'+items.realAmount}}</text>
+									<text class="price">{{'￥'+items.productPrice}}</text>
 									<text class="number">x{{items.productQuantity}}</text>
 								</view>
 							</view>
 
-							<view class="action-box b-t" v-if="item.state != 9">
+							<view class="action-box b-t">
 								<view class="price-box">
 									共
 									<text class="num">{{items.productQuantity}}</text>
@@ -312,12 +312,12 @@
 						stateTip,
 						stateTipColor
 					})
-
-					//取消订单后删除待付款中该项
+					
+					//取消订单后删除待付款中该项	
 					let list = this.navList[1].orderList;
 					let index = list.findIndex(val => val.id === item.id);
 					index !== -1 && list.splice(index, 1);
-
+					
 					uni.hideLoading();
 					axios.post('/order/cancelOrder', {
 						orderId: item.id

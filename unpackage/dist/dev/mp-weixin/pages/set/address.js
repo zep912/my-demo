@@ -176,7 +176,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 415));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 420));};var _default =
 {
   components: {
     empty: empty },
@@ -205,13 +205,22 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     // 选择地址
     select: function select(e) {var _this = this;
       this.radio = e.detail;
+      var addressId = this.addressList[e.detail].id;
       uni.setStorageSync('addressMsg', JSON.stringify(this.addressList[this.radio]));
+      var obj = {
+        addressId: addressId,
+        orderId: this.deleIds[0] };
 
-      setTimeout(function () {
-        uni.reLaunch({
-          url: '../shopcar/postOrder?deleIds=' + JSON.stringify(_this.deleIds) + '&addressId=' + _this.radio });
+      _uniAxios.default.post('/order/updateOrderAddress', obj).then(function (res) {
+        if (res.data.code == 200) {
+          setTimeout(function () {
+            uni.reLaunch({
+              url: '../shopcar/postOrder?deleIds=' + JSON.stringify(_this.deleIds) + '&addressId=' + _this.radio });
 
-      }, 300);
+          }, 300);
+        }
+      });
+
     },
     // 获取所有地址列表
     getAddress: function getAddress() {var _this2 = this;
