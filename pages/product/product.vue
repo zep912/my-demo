@@ -82,7 +82,7 @@
 		
 		<!-- 底部操作菜单 -->
 		<view class="page-bottom">
-			<navigator url="/pages/index/index" open-type="switchTab" class="p-b-btn">
+			<navigator url="/pages/message/customer" open-type="switchTab" class="p-b-btn">
 				<text class="iconfont icon-kefu"></text>
 				<text>客服</text>
 			</navigator>
@@ -95,7 +95,7 @@
 				<text>收藏</text>
 			</view>
 			<view class="action-btn-group">
-				<button type="primary" class="action-btn no-border buy-now-btn" @click="buy">立即购买</button>
+				<button type="primary" class="action-btn no-border buy-now-btn" @click="openBuy">立即购买</button>
 				<button type="primary" class="action-btn no-border add-cart-btn" @click="addCart">加入购物车</button>
 			</view>
 		</view>
@@ -107,15 +107,42 @@
 			:contentHeight="580"
 			:shareList="shareList"
 		></share> -->
+		<uni-popup ref="popup" type="bottom" :maskClick="false">
+			<view class="popup-box">
+				<view class="header">
+					<view class="img-box"><image :src="sku.pic" alt=""></view>
+					<view class="title">
+						<view class="goods-title">{{sku.name}}</view>
+						<view class="goods-subTitle">{{sku.subTitle}}</view>
+					</view>
+				</view>
+				<view class="attr-box">
+					<view class="item-box" v-for="item in sku.productAttributeValueList" :key="item.id">
+						{{item.value}}
+					</view>
+				</view>
+				<view class="shopcar-add">
+					<view>仅剩{{sku.stock}}件</view>
+					<view class="add">
+						<text class="add-radius minus" @click="minus">-</text>
+						<text>{{sku.quantity}}</text>
+						<text class="add-radius plus" @click="add">+</text>
+					</view>
+				</view>
+				<button class="btn" @click="buy">确定</button>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
 <script>
 	import axios from '@/utils/uniAxios.js'
-	import share from '@/components/share';
+	// import share from '@/components/share';
+	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	export default{
 		components: {
-			share
+			uniPopup
+			// share
 		},
 		data() {
 			return {
@@ -142,7 +169,8 @@
 					]
 				},
 				favorite: false,
-				ids: ''
+				id: '',
+				sku: {}
 			};
 		},
 		async onLoad(options){
@@ -153,6 +181,15 @@
 				this.productInfoById(this.id);
 				// this.$api.msg(`点击了${this.id}`);
 			}
+		},
+		onShow() {
+			uni.login({
+				provider: 'weixin',
+				success: (loginRes) => {
+					let code = loginRes.code;
+					uni.setStorageSync('code', code)
+				}
+			})	
 		},
 		methods:{
 			//收藏
@@ -169,10 +206,21 @@
 			// share(){
 			// 	this.$refs.share.toggleMask();	
 			// },
+			openBuy() {
+				this.$refs.popup.open()
+			},
 			buy(){
-				// uni.navigateTo({
-				// 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([this.id])}`
-				// })
+				axios.post('/pay/quickOrderPay', {productId: this.id, quantity: this.sku.quantity, sp1: ''}).then(({data}) => {
+					if (data.code === 200) {
+						this.payBtn(data.data);
+						// uni.navigateTo({
+						// 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([data.data.orderId])}`
+						// })
+					} else {
+						this.$api.msg('服务器繁忙，请重试');
+					}
+				});
+				
 			},
 			addCart() {
 				const {id, productCategoryId} = this.productInfo;
@@ -190,7 +238,65 @@
 					if (data.code === 200) {
 						this.productInfo = data.data;
 						this.productInfo.albumPics = this.productInfo.albumPics ? this.productInfo.albumPics.split(',') : [this.productInfo.pic];
+						this.sku = Object.assign({quantity: 1}, data.data, {stock: data.data.stock - 1});
 					}
+				})
+			},
+			// 同时判断总价
+			minus() {
+				if (this.sku.quantity == 1) {
+					this.sku.quantity = 1;
+				} else {
+					this.sku.quantity--;
+					this.sku.stock++;
+				}
+			},
+			// 增加商品数量
+			add(item) {
+				if (this.sku.stock === 0) {
+					return;
+				} else {
+					this.sku.quantity++;
+					this.sku.stock--;
+				}
+			},
+			// 立即支付
+			payBtn(order) {
+				let code = uni.getStorageSync('code');
+				let obj = {
+					code: code, //code
+					orderSn: order.orderSn, //订单编号orderSn
+					payType: 3, //支付类型
+					rechargeMoney: order.totalAmount, //支付金额s
+				}
+				let _this = this;
+				axios.post('/pay/payOrder', obj).then(res => {
+					console.log(res)
+					_this.payCode = {
+						appId: res.data.data.appId,
+						nonceStr: res.data.data.nonceStr,
+						package: res.data.data.package,
+						paySign: res.data.data.paySign,
+						signType: "MD5",
+						timeStamp: res.data.data.timeStamp,
+					}
+					uni.requestPayment({
+						provider: 'wxpay',
+						timeStamp: _this.payCode.timeStamp,
+						nonceStr: _this.payCode.nonceStr,
+						package: _this.payCode.package,
+						signType: 'MD5',
+						paySign: _this.payCode.paySign,
+						success: function(res) {
+							console.log('success:' + JSON.stringify(res));
+							uni.reLaunch({
+								url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id
+							})
+						},
+						fail: function(err) {
+							console.log('fail:' + JSON.stringify(err));
+						}
+					})
 				})
 			},
 			stopPrevent(){}
@@ -477,4 +583,106 @@
 		}
 	}
 	
+	.popup-box {
+		width: 100vw;
+		padding: 20upx;
+		background: #fff;
+		overflow: hidden;
+		.header {
+			display: flex;
+			.img-box {
+				width: 200upx;
+				height: 200upx;
+				image {
+					width: 100%;
+					height: 100%;
+				}
+			}
+			.title {
+				flex: 1;
+				padding: 20upx;
+				.goods-title {
+					font-size:22rpx;
+					font-weight:500;
+					color:rgba(69,69,69,1);
+					margin-top: 20rpx;
+				}
+				.goods-subTitle {
+					font-size: 18upx;
+					font-weight:500;
+					color:rgba(169,168,168,1);
+					margin-top: 10upx;
+				}
+			}
+		} 
+		.attr-box {
+			display: flex;
+			.item-box {
+				padding: 0 20upx;
+				height: 54upx;
+				line-height: 54upx;
+				background: #FFF5DF;
+				border: 2upx solid #FFB003;
+				border-radius: 27upx;
+			}
+		}
+		.shopcar-add {
+			font-size: 24rpx;
+			color: #9E9E9E;
+			text-align: center;
+			display: flex;
+			padding: 20upx 0;
+			.minusClass,
+			.plusClass {
+				width: 28rpx;
+				height: 28rpx;
+				color: #F7B52C;
+				border-radius: 50%;
+				background: #F7B52C;
+			}
+		
+			.add {
+				font-size: 28rpx;
+				flex: 1;
+				text-align: right;
+
+				.add-radius {
+					display: inline-block;
+					width: 28rpx;
+					height: 28rpx;
+					border-radius: 50%;
+					border: 1px solid #F7B52C;
+					line-height: 22rpx;
+					text-align: center;
+				}
+		
+				.minus {
+					color: #F7B52C;
+				}
+		
+				.plus {
+					background: #F7B52C;
+					color: #fff;
+				}
+		
+				text:nth-of-type(2) {
+					margin-right: 34rpx;
+					margin-left: 34rpx;
+					font-size: 28rpx;
+					font-weight: 600;
+					color: rgba(42, 42, 42, 1)
+				}
+			}
+		}
+		
+		.btn {
+			width: 690upx;
+			height: 80upx;
+			line-height: 80upx;
+			text-align: center;
+			background: #F7B52C;
+			border-radius: 40upx;
+			color: #fff;
+		}
+	}
 </style>

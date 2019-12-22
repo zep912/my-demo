@@ -410,6 +410,11 @@
             "style" : {
             	"navigationBarTitleText": "订单提醒"
             }
+        },{
+            "path" : "pages/message/customer",
+            "style" : {
+				"navigationBarTitleText": "麦田圈商城客服"
+			}
         }
     ],
 	"globalStyle": {
