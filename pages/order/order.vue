@@ -60,7 +60,7 @@
 									<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
 									<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
 									<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item)">立即支付</button>
-									<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap">查看物流</button>
+									<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap(item)">查看物流</button>
 								</view>
 							</view>
 						</view>
@@ -159,6 +159,11 @@
 		},
 
 		methods: {
+			btn(){
+				uni.switchTab({
+					url: '../index/index'
+				})
+			},
 			lower(e) {
 				this.page.current++;
 				setTimeout(() => {
@@ -372,9 +377,9 @@
 
 			},
 			// 物流信息
-			logisticsTap() {
+			logisticsTap(item) {
 				uni.navigateTo({
-					url: 'logistics'
+					url: 'logistics?id='+item.id
 				})
 			},
 			payGoods(item) {

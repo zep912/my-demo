@@ -190,7 +190,6 @@
 			          const { fileList = [] } = this.data;
 			          fileList.push({ ...file, url: res.data });
 					  console.log(fileList)
-			          // this.setData({ fileList });
 			        }
 			      });
 			    },
@@ -204,8 +203,7 @@
 			onConfirm(event){
 				this.show = false;
 				const { picker, value, index } = event.detail;
-				this.reason = value;
-				// console.log(`当前值：${value}, 当前索引：${index}`)
+				this.form.reason = value;
 			},
 			save(){
 				let obj= {
