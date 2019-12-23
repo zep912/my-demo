@@ -167,7 +167,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 var _default = { data: function data() {return { money: '', id: '' };}, onLoad: function onLoad(option) {this.money = option.totalCount;this.id = option.id;console.log(option);}, methods: { // 查看已经完成的订单
     lookOrder: function lookOrder() {uni.navigateTo({ url: '../order/orderDetails?status=1&id=' + this.id });}, // 跳转到首页
-    look: function look() {uni.navigateTo({ url: '../index/index' });
+    look: function look() {// uni.navigateTo({
+      // 	url:'../index/index'
+      // })
+      uni.switchTab({ url: '../index/index' });
 
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
