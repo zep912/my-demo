@@ -274,7 +274,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 var _default = { data: function data() {return { staActice: 1, form: { todayCount: '', AllOrderCount: '', deliveryCount: '' } };}, onLoad: function onLoad() {this.getData(0);}, methods: { // 初始化
     getData: function getData(n) {var _this = this;var obj = { dateType: n };_uniAxios.default.post('/sendInformation/querySendInformationTotal', obj).then(function (res) {_this.form = res.data.data;});}, preClick: function preClick(e) {if (e == 1) {//下一个日期
-        this.getData(2);} else {this.getData(1);}this.staActice = e;} } };exports.default = _default;
+        this.getData(0);} else {this.getData(1);}this.staActice = e;} } };exports.default = _default;
 
 /***/ }),
 

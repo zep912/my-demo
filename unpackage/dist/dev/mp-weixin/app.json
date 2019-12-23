@@ -28,6 +28,7 @@
     "pages/money/money",
     "pages/order/createOrder",
     "pages/order/aftersale",
+    "pages/order/closeOrder",
     "pages/order/cancelOrder",
     "pages/order/logistics",
     "pages/order/refund",
@@ -86,5 +87,6 @@
     ]
   },
   "permission": {},
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap73.json"
 }

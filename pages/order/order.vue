@@ -50,15 +50,18 @@
 									共
 									<text class="num">{{items.productQuantity}}</text>
 									件商品 实付款
-									<text class="price">{{item.payAmount}}</text>
+									<text class="price">{{item.totalAmount}}</text>
 								</view>
-								
+								<view class="action-box-buttom"  v-show='item.status==3'>
+									<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
+									<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
+									<button class="action-btn" @click="againBuy(items)" v-show='item.status==3'>再次购买</button>
+								</view>
 							</view>
 						</view>
-						<view class="action-box-buttom">
+						<view class="action-box-buttom" v-show='item.status!=3'>
 							<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->
 							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
-							<button class="action-btn" @click="againBuy(item)" v-show='item.status==3'>再次购买</button>
 							<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
 							<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item.orderSn,item.payAmount)">立即支付</button>
 							<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap(item)">查看物流</button>
@@ -167,7 +170,7 @@
 				this.page.current++;
 				setTimeout(() => {
 					this.getmorenews();
-				}, 500)
+				}, 1000)
 			},
 			scroll(e) {
 
@@ -292,6 +295,7 @@
 			},
 			// 再次购买
 			againBuy(item) {
+				console.log(item)
 				let id = item.productId;
 				uni.navigateTo({
 					url: `/pages/product/product?id=${id}`
@@ -299,33 +303,27 @@
 			},
 			//取消订单
 			cancelOrder(item) {
+				console.log(item,this.navList[1].orderList)
 				uni.showLoading({
 					title: '请稍后'
 				})
 				setTimeout(() => {
-					let {
-						stateTip,
-						stateTipColor
-					} = this.orderStateExp(9);
-					item = Object.assign(item, {
-						state: 9,
-						stateTip,
-						stateTipColor
-					})
 
 					//取消订单后删除待付款中该项
 					let list = this.navList[1].orderList;
-					let index = list.findIndex(val => val.id === item.id);
-					index !== -1 && list.splice(index, 1);
 
+					let index = list.findIndex(val => val.id === item.id);
+					console.log(index)
+					list.splice(index, 1);
+					console.log(list)
 					uni.hideLoading();
-					axios.post('/order/cancelOrder', {
-						orderId: item.id
-					}).then(res => {
-						if (res.data.code == 200) {
-							this.$api.msg('取消成功')
-						}
-					})
+					// axios.post('/order/cancelOrder', {
+					// 	orderId: item.id
+					// }).then(res => {
+					// 	if (res.data.code == 200) {
+					// 		this.$api.msg('取消成功')
+					// 	}
+					// })
 				}, 600)
 			},
 

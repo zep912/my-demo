@@ -216,8 +216,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 408));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 415));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 421));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 428));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -308,7 +311,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       this.page.current++;
       setTimeout(function () {
         _this2.getmorenews();
-      }, 500);
+      }, 1000);
     },
     scroll: function scroll(e) {
 
@@ -433,6 +436,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 再次购买
     againBuy: function againBuy(item) {
+      console.log(item);
       var id = item.productId;
       uni.navigateTo({
         url: "/pages/product/product?id=".concat(id) });
@@ -440,33 +444,27 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     //取消订单
     cancelOrder: function cancelOrder(item) {var _this5 = this;
+      console.log(item, this.navList[1].orderList);
       uni.showLoading({
         title: '请稍后' });
 
-      setTimeout(function () {var _this5$orderStateExp =
+      setTimeout(function () {
 
-
-
-        _this5.orderStateExp(9),stateTip = _this5$orderStateExp.stateTip,stateTipColor = _this5$orderStateExp.stateTipColor;
-        item = Object.assign(item, {
-          state: 9,
-          stateTip: stateTip,
-          stateTipColor: stateTipColor });
-
-
-        //取消订单后删除待付款中该项
+        //取消订单后删除待付款中该项	
         var list = _this5.navList[1].orderList;
-        var index = list.findIndex(function (val) {return val.id === item.id;});
-        index !== -1 && list.splice(index, 1);
 
+        var index = list.findIndex(function (val) {return val.id === item.id;});
+        console.log(index);
+        list.splice(index, 1);
+        console.log(list);
         uni.hideLoading();
-        _uniAxios.default.post('/order/cancelOrder', {
-          orderId: item.id }).
-        then(function (res) {
-          if (res.data.code == 200) {
-            _this5.$api.msg('取消成功');
-          }
-        });
+        // axios.post('/order/cancelOrder', {
+        // 	orderId: item.id
+        // }).then(res => {
+        // 	if (res.data.code == 200) {
+        // 		this.$api.msg('取消成功')
+        // 	}
+        // })
       }, 600);
     },
 

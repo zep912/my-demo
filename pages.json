@@ -293,6 +293,11 @@
 				"navigationBarTitleText": "退款售后"
 			}
 		},{
+			"path": "pages/order/closeOrder",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},{
 			"path": "pages/order/cancelOrder",
 			"style": {
 				"navigationBarTitleText": "取消订单",

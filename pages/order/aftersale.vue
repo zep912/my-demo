@@ -9,13 +9,13 @@
 			</view>
 
 			<!-- 订单列表 -->
-			<view class="order-item">
+			<view class="order-item" v-for="(item, index) in orderList" :key="index">
 				<view class="i-top b-b">
 					<img src="../../static/shop.png" alt="" class='shopLogo'>
 					<text class="time">麦田圈官网旗舰店</text>
 					<!-- <text class="state">{{item.stateTip}}</text> -->
 				</view>
-				<view v-for="(item, index) in orderList" :key="index">
+				<view>
 					<view class="goods-box-single b-b">
 						<image class="goods-img" :src="item.productPic" mode="aspectFill"></image>
 
@@ -34,8 +34,8 @@
 							<text class="price">退款成功</text>
 						</view>
 						<view class="action-box-buttom">
-							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->
-							<button class="action-btn" @click="lookDetail(item)">查看详情</button>
+							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->						<!-- <button class="action-btn" @click="refund(item)">申请退款</button>
+							<button class="action-btn" @click="lookDetail(item)">查看详情</button> -->
 						</view>
 					</view>
 				</view>
@@ -70,6 +70,13 @@
 		},
 
 		methods: {
+			refund(item){
+				let id = item.id;
+				uni.navigateTo({
+					url:'refund?id='+id
+				})
+			},
+				
 			buy() {
 				uni.navigateTo({
 					url: '../index/index'
@@ -81,37 +88,6 @@
 					console.log(res)
 					if (res.data.code == 200) {
 						this.orderList = res.data.data;
-						this.orderList.push({
-							companyAddressId: 1,
-							createTime: "2019-12-19T14:34:39.000+0000",
-							description: '',
-							handleMan: '',
-							handleNote: '',
-							handleTime: "2019-12-19T14:34:39.000+0000",
-							id: 145,
-							memberId: 76,
-							memberUsername: '',
-							orderId: 145,
-							orderSn: "201912190102000002",
-							productAttr: '',
-							productBrand: "明知缘",
-							productCount: 1,
-							productId: 45,
-							productName: "正宗农家散养谷饲土鸡蛋20枚",
-							productPic: 'http://maitianquan-zjk.oss-cn-zhangjiakou.aliyuncs.com/cropcircle/image/20191204/好货推荐-1.png',
-							productPrice: 25.99,
-							productRealPrice: 25.99,
-							proofPics: '',
-							reason: '不想要了',
-							receiveMan: "小鲁",
-							receiveNote: '备注',
-							receiveTime: "2019-12-19T14:34:39.000+0000",
-							returnAmount: 25.99,
-							returnName: "小鲁",
-							returnPhone: 13667138671,
-							status: 0
-							// status: 0申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝
-						})
 						console.log(this.orderList)
 					}
 				})
@@ -131,12 +107,15 @@
 			evaluate(item) {
 				console.log(item)
 			},
-			// 再次购买
+			// 查看详情
 			lookDetail(item) {
 				let id = item.id;
 				uni.navigateTo({
-					url: 'refund?id='+id
+					url: 'closeOrder?id=' + id
 				})
+				// uni.navigateTo({
+				// 	url: 'refund?id='+id
+				// })
 				console.log(item)
 			},
 			//订单状态文字和颜色
@@ -256,10 +235,8 @@
 		border-radius: 20rpx;
 		display: flex;
 		flex-direction: column;
-
 		background: #fff;
 		margin-top: 16upx;
-
 		.i-top {
 			display: flex;
 			align-items: center;

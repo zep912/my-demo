@@ -94,10 +94,14 @@ var render = function() {
 
   var l1 = _vm.__map(_vm.navList, function(tabItem, tabIndex) {
     var l0 = _vm.__map(_vm.deliverylist, function(item, index) {
-      var m1 = _vm.timestampToTime(item.createTime)
+      var m1 = _vm.timestampToTimesss(item.calcTime)
+      var m2 = _vm.timestampToTimes(item.sendTime)
+      var m3 = _vm.timestampToTime(item.createTime)
       return {
         $orig: _vm.__get_orig(item),
-        m1: m1
+        m1: m1,
+        m2: m2,
+        m3: m3
       }
     })
 
@@ -242,8 +246,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 408));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 415));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 421));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 428));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -300,6 +315,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         text: '步骤二',
         desc: '描述' }]), _defineProperty(_ref, "info",
 
+
       {
         a: 20,
         b: '麦田圈预单',
@@ -337,14 +353,36 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.tabCurrentIndex = 0;
     this.optionState = 3;
     this.loadData('tabChange', 3);
+    console.log(new Date('2019-12-16T04:41:10.000+0000').getTime());
   },
   methods: {
+    SendInformationStatus: function SendInformationStatus(item, id) {var _this = this;
+      var obj = {
+        sendInfoId: id,
+        sendStatus: ''
+
+        //0取件 1配送中 2已送达 3已转出 ,
+        //1 去取件 2去配送 3配送完成
+      };if (item == 1) {//配送中，
+        obj.sendStatus = 3;
+      } else if (item == 0) {
+        obj.sendStatus = 2;
+      } else if (item == 3) {
+        obj.sendStatus = 1;
+      }
+
+      _uniAxios.default.post('/sendInformation/updateSendInformationStatus', obj).then(function (res) {
+        if (res.data.code == 200) {
+          _this.loadData('tabChange', _this.optionState);
+        }
+      });
+    },
     lower: function lower() {
-      this.page.current = 1;
-      this.loadData('tabChange', this.optionState);
+      // this.page.current++;
+      // this.loadData('tabChange',this.optionState)
     },
     newDate: function newDate(time) {
-      var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(time).getTime(); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       return date;
     },
     look: function look() {
@@ -378,7 +416,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
     },
     //获取订单列表
-    loadData: function loadData(source, n) {var _this = this;
+    loadData: function loadData(source, n) {var _this2 = this;
       this.page.current = 1;
       var obj = {
         pageNum: this.page.current,
@@ -389,28 +427,32 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       _uniAxios.default.post('/sendInformation/list', obj).then(function (res) {
         var result = res.data.data;
         if (res.data.data.length != 0) {
-          _this.deliverylist = res.data.data;
+          _this2.deliverylist = res.data.data;
 
           result.forEach(function (el) {
-            _this.stepArrr = [];
-            _this.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
+            _this2.stepArrr = [];
+            if (el.detailAddress && el.receiverDetailAddress) {
+              _this2.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
+            } else if (el.receiverDetailAddress) {
+              _this2.stepArrr.push(el.receiverDetailAddress);
+            }
           });
-          _this.stepa = [];
+          _this2.stepa = [];
 
-          for (var i = 0; i < _this.stepArrr.length; i++) {
-            _this.step = {};
-            _this.step['text'] = _this.stepArrr[i];
-            _this.step['desc'] = '';
-            _this.stepa.push(_this.step);
+          for (var i = 0; i < _this2.stepArrr.length; i++) {
+            _this2.step = {};
+            _this2.step['text'] = _this2.stepArrr[i];
+            _this2.step['desc'] = '';
+            _this2.stepa.push(_this2.step);
           }
-          _this.deliverylist.forEach(function (el) {
-            el['steps'] = _this.stepa;
+          _this2.deliverylist.forEach(function (el) {
+            el['steps'] = _this2.stepa;
           });
-          if (_this.deliverylist.length == res.data.total) {
-            _this.loadingText = '已全部加载';
+          if (_this2.deliverylist.length == res.data.total) {
+            _this2.loadingText = '已全部加载';
             return false;
           } else {
-            _this.loadingText = '上拉加载更多';
+            _this2.loadingText = '上拉加载更多';
           }
         }
       });
@@ -446,10 +488,30 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       var Y = date.getFullYear();
       var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
       var D = date.getDate();
-      var h = date.getHours() + ':';
-      var m = date.getMinutes() + ':';
+      var h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+      var m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+      var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+      return Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s;
+    },
+    timestampToTimes: function timestampToTimes(time) {
+      var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear();
+      var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+      var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+      var h = date.getHours();
+      var m = date.getMinutes();
       var s = date.getSeconds();
-      return Y + '-' + M + '-' + D + ' ' + h + m + s;
+      return Y + '-' + M + '-' + D;
+    },
+    timestampToTimesss: function timestampToTimesss(time) {
+      var date = new Date(time); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var Y = date.getFullYear();
+      var M = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+      var D = date.getDate();
+      var h = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+      var m = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+      var s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+      return h + ':' + m;
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

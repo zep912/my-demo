@@ -93,7 +93,7 @@
 			},
 			preClick(e){
 				if(e==1){//下一个日期
-					this.getData(2)
+					this.getData(0)
 				}else{
 					this.getData(1)
 				}

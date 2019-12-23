@@ -193,7 +193,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 408));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 415));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 421));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 428));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -216,6 +216,13 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
   },
 
   methods: {
+    refund: function refund(item) {
+      var id = item.id;
+      uni.navigateTo({
+        url: 'refund?id=' + id });
+
+    },
+
     buy: function buy() {
       uni.navigateTo({
         url: '../index/index' });
@@ -227,37 +234,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         console.log(res);
         if (res.data.code == 200) {
           _this.orderList = res.data.data;
-          _this.orderList.push({
-            companyAddressId: 1,
-            createTime: "2019-12-19T14:34:39.000+0000",
-            description: '',
-            handleMan: '',
-            handleNote: '',
-            handleTime: "2019-12-19T14:34:39.000+0000",
-            id: 145,
-            memberId: 76,
-            memberUsername: '',
-            orderId: 145,
-            orderSn: "201912190102000002",
-            productAttr: '',
-            productBrand: "明知缘",
-            productCount: 1,
-            productId: 45,
-            productName: "正宗农家散养谷饲土鸡蛋20枚",
-            productPic: 'http://maitianquan-zjk.oss-cn-zhangjiakou.aliyuncs.com/cropcircle/image/20191204/好货推荐-1.png',
-            productPrice: 25.99,
-            productRealPrice: 25.99,
-            proofPics: '',
-            reason: '不想要了',
-            receiveMan: "小鲁",
-            receiveNote: '备注',
-            receiveTime: "2019-12-19T14:34:39.000+0000",
-            returnAmount: 25.99,
-            returnName: "小鲁",
-            returnPhone: 13667138671,
-            status: 0
-            // status: 0申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝
-          });
           console.log(_this.orderList);
         }
       });
@@ -277,12 +253,15 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     evaluate: function evaluate(item) {
       console.log(item);
     },
-    // 再次购买
+    // 查看详情
     lookDetail: function lookDetail(item) {
       var id = item.id;
       uni.navigateTo({
-        url: 'refund?id=' + id });
+        url: 'closeOrder?id=' + id });
 
+      // uni.navigateTo({
+      // 	url: 'refund?id='+id
+      // })
       console.log(item);
     },
     //订单状态文字和颜色
