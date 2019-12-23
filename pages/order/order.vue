@@ -40,12 +40,12 @@
 									<text class="attr-box">{{goodsItem.attr}}</text>
 								</view>
 								<view class="goods-right">
-									<text class="price">{{'￥'+items.realAmount}}</text>
+									<text class="price">{{'￥'+items.productPrice}}</text>
 									<text class="number">x{{items.productQuantity}}</text>
 								</view>
 							</view>
 
-							<view class="action-box b-t" v-if="item.state != 9">
+							<view class="action-box b-t">
 								<view class="price-box">
 									共
 									<text class="num">{{items.productQuantity}}</text>

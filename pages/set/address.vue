@@ -71,13 +71,22 @@
 			// 选择地址
 			select(e){
 				this.radio = e.detail;
+				let addressId = this.addressList[e.detail].id
 				uni.setStorageSync('addressMsg',JSON.stringify(this.addressList[this.radio]))
-				
-				setTimeout(()=>{
-					uni.reLaunch({
-						url:'../shopcar/postOrder?deleIds='+JSON.stringify(this.deleIds)+'&addressId='+this.radio
-					})
-				},300)
+				let obj = {
+					addressId:addressId,
+					orderId:this.deleIds[0]
+				}
+				axios.post('/order/updateOrderAddress',obj).then(res=>{
+					if(res.data.code==200){
+						setTimeout(()=>{
+							uni.reLaunch({
+								url:'../shopcar/postOrder?deleIds='+JSON.stringify(this.deleIds)+'&addressId='+this.radio
+							})
+						},300)
+					}
+				})
+
 			},
 			// 获取所有地址列表
 			getAddress(){
