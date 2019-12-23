@@ -16,17 +16,22 @@
 						<view class="">啥都没有~</view>
 					</view>
 					<!-- 订单列表 -->
-					<view class="tab-tips"  v-if="deliverylist.length !== 0">
+					<view class="tab-tips" v-if="deliverylist.length !== 0">
 						<text>提示:{{nowModel}}</text>
 					</view>
 					<view v-for="(item,index) in deliverylist" :key="index" class="order-item">
 						<view class="delivery-list-tab">
 							<!-- 时间 -->
 							<view class="tab-time">
-								<view>送达: <text>今天 </text><text> {{item.sendRemark}}</text></view>
-								<view class="tab-time-countDown" v-show='item.sendStatus!=2'>
+								<view v-if='item.sendStatus!=2'>送达: <text><text>今天</text></text><text> {{timestampToTimesss(item.calcTime)}}</text></view>
+								<view class=""  v-if='item.sendStatus==2'>送达:{{timestampToTimes(item.sendTime)}}及时送达</view>
+								<view class="tab-time-countDown" v-if='item.sendStatus!=2'>
 									<image src="../../static/delivery/shalou.png" alt="" class="tab-time-img">
-									<van-count-down :time="time" format="DD天HH:mm:ss"></van-count-down>
+									<van-count-down :time="item.plusTime" format="DD天HH:mm:ss"></van-count-down>
+								</view>
+								<view v-if='item.sendStatus==2'>
+									<text>耗时:</text>
+									<text>{{item.hsTime}}</text>
 								</view>
 							</view>
 							<!-- 步骤 -->
@@ -40,39 +45,45 @@
 									<text class="tips">{{'#'+'预'}}</text>
 								</view>
 								<!-- 步骤 -->
-								<van-steps
-								  :steps="item.steps"
-								  :active="active"
-								  direction="vertical"
-								  active-color="#F7B52C"
-								  custom-class='tab-van-step'
-								>
+								<van-steps :steps="item.steps" :active="active" direction="vertical" active-color="#F7B52C" custom-class='tab-van-step'>
 								</van-steps>
 							</view>
 							<!-- 送单详情 -->
 							<!-- <van-transition :show="tabInfoShow" custom-class="block" name="fade-down"> -->
-							  <view class="tab-info" v-if='tabInfoShow'>
-							  	<text class="block">内容: <text>{{item.msg.content}}</text></text>
-							  	<text class="block">单号: <text>{{item.orderSn}}</text></text>
-							  	<text class="block">来源: <text>{{item.detailAddress}}</text></text>
-							  	<text class="block">备注: <text>{{item.msg.beizhu}}</text></text>
-							  	<text class="block">标识: <text>{{item.msg.biaoshi}}</text></text>
-							  	<text class="block">下单: <text>{{timestampToTime(item.createTime)}}</text></text>
-							  </view>
-							<!-- </van-transition> -->
-							
-							<!-- 收起 -->
-							<view class="tab-ret">
-								<view @click="look">
-									<text>{{tabLook}}</text>
-									<van-icon :name="iconName" />
+							<view class="sendStatus"  style="overflow: hidden;">
+								<view v-if='item.sendStatus!=2'>
+									<view class="tab-info" v-if='tabInfoShow'>
+										<text class="block">内容: <text>{{item.msg.content}}</text></text>
+										<text class="block">单号: <text>{{item.orderSn}}</text></text>
+										<text class="block">来源: <text>麦田圈官方旗舰店</text></text>
+										<text class="block">备注: <text>{{item.msg.beizhu}}</text></text>
+										<text class="block">标识: <text>{{item.msg.biaoshi}}</text></text>
+										<text class="block">下单: <text>{{timestampToTime(item.createTime)}}</text></text>
+									</view>
+									<!-- </van-transition> -->
+								</view>
+								<!-- 收起 -->
+								<view  v-if='item.sendStatus==2' style="overflow: hidden;margin-top: 10px;padding-bottom: 10px;border-bottom: 1px solid #F2F2F2;">
+									<view class="sendPrice">
+										<text>配送费:</text>
+										<text>￥{{item.sendAmount}}</text>
+									</view>
 								</view>
 								
-								<button class="tab-btn" :disabled="item.sendStatus==2">{{item.sendStatus==1?'配送中':item.sendStatus==2?'已送达':item.sendStatus==3?'转出':'去取件'}}</button>
+								<view class="tab-ret">
+									<view @click="look"  v-if='item.sendStatus!=2'>
+										<text>{{tabLook}}</text>
+										<van-icon :name="iconName" />
+									</view>
+									<view v-if='item.sendStatus==2'></view>
+									<button class="tab-btn" :disabled="item.sendStatus==2" :class="{'active':item.sendStatus==2}" @click="SendInformationStatus(item.sendStatus,item.id)">{{item.sendStatus==1?'配送完成':item.sendStatus==2?'已送达':item.sendStatus==3?'去取单':'去配送'}}</button>
+								</view>
+								
+								
 							</view>
 						</view>
 					</view>
-					<view class="loading" v-if="deliverylist.length !== 0">{{loadingText}}</view>
+					<!-- <view class="loading" v-if="deliverylist.length !== 0">{{loadingText}}</view> -->
 				</scroll-view>
 			</swiper-item>
 		</swiper>
@@ -101,11 +112,11 @@
 		},
 		data() {
 			return {
-				nowModel:'现在是收单模式',
-				iconName:'arrow-down',
-				tabLook:'查看',
-				tabInfoShow:false,
-				active:0,
+				nowModel: '现在是收单模式',
+				iconName: 'arrow-down',
+				tabLook: '查看',
+				tabInfoShow: false,
+				active: 0,
 				time: 30 * 60 * 60 * 1000,
 				songdan: '../../static/delivery/songdan.png',
 				jiedan: '../../static/delivery/jiedanset1.png',
@@ -143,39 +154,40 @@
 					shopName: '麦田圈官网旗舰店',
 					state: 5,
 					steps: [{
-						text: '步骤一',
-						desc: '描述'
-					},
-					{
-						text: '步骤二',
-						desc: '描述'
-					}],
+							text: '步骤一',
+							desc: '描述'
+						},
+						{
+							text: '步骤二',
+							desc: '描述'
+						}
+					],
 					info: {
 						a: 20,
 						b: '麦田圈预单',
 						c: '预'
 					},
 					msg: {
-						content:'海苔沙拉炒饭',
-						price:'15.00',
-						num:1,
-						oddNum:'6546545646464546',
-						sorce:'校内订单',
-						beizhu:'好的',
-						biaoshi:25,
-						time:'2019-11-14 12:12:00'
+						content: '海苔沙拉炒饭',
+						price: '15.00',
+						num: 1,
+						oddNum: '6546545646464546',
+						sorce: '校内订单',
+						beizhu: '好的',
+						biaoshi: 25,
+						time: '2019-11-14 12:12:00'
 					}
 				}],
-				sendStatus:0,
-				page:{
-					current:1,
-					pageSize:10
+				sendStatus: 0,
+				page: {
+					current: 1,
+					pageSize: 10
 				},
-				step:{},
-				stepa:[],
-				stepArrr:[],
-				optionState:'',
-				loadingText:'加载中...'
+				step: {},
+				stepa: [],
+				stepArrr: [],
+				optionState: '',
+				loadingText: '加载中...'
 			};
 		},
 
@@ -186,39 +198,61 @@
 			 */
 			this.tabCurrentIndex = 0;
 			this.optionState = 3;
-			this.loadData('tabChange',3);
+			this.loadData('tabChange', 3);
+			console.log(new Date('2019-12-16T04:41:10.000+0000').getTime())
 		},
 		methods: {
-			lower(){
-				this.page.current=1;
-				this.loadData('tabChange',this.optionState)
+			SendInformationStatus(item, id) {
+				let obj = {
+					sendInfoId: id,
+					sendStatus: ''
+				}
+				//0取件 1配送中 2已送达 3已转出 ,
+				//1 去取件 2去配送 3配送完成
+				if (item == 1) { //配送中，
+					obj.sendStatus = 3
+				} else if (item == 0) {
+					obj.sendStatus = 2
+				} else if (item == 3) {
+					obj.sendStatus = 1
+				}
+
+				axios.post('/sendInformation/updateSendInformationStatus', obj).then(res => {
+					if (res.data.code == 200) {
+						this.loadData('tabChange', this.optionState)
+					}
+				})
 			},
-			newDate(time){
-				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+			lower() {
+				// this.page.current++;
+				// this.loadData('tabChange',this.optionState)
+			},
+			newDate(time) {
+				var date = new Date(time).getTime() //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 				return date
 			},
-			look(){
-				if(!this.tabInfoShow){
+			look() {
+				if (!this.tabInfoShow) {
 					this.tabInfoShow = true;
 					this.tabLook = '收起';
-					this.iconName='arrow-up';
-				}else{
+					this.iconName = 'arrow-up';
+				} else {
 					this.tabInfoShow = false;
 					this.tabLook = '查看';
-					this.iconName='arrow-down';
+					this.iconName = 'arrow-down';
 				}
-				
+
 			},
 			// 跳转页面
 			sd(e) {
-				if(e==1){
+				if (e == 1) {
 					this.songdan = '../../static/delivery/songdan.png';
 					this.jiedan = '../../static/delivery/jiedanset1.png';
 					this.daliveryData = 1;
 					uni.navigateTo({
-						url:'deliverylist'
+						url: 'deliverylist'
 					})
-				}else if(e==2){
+				} else if (e == 2) {
 					this.songdan = '../../static/delivery/songdan2.png';
 					this.jiedan = '../../static/delivery/jiedanset.png';
 					this.daliveryData = 2
@@ -228,38 +262,42 @@
 				}
 			},
 			//获取订单列表
-			loadData(source,n) {
+			loadData(source, n) {
 				this.page.current = 1;
 				let obj = {
-					pageNum:this.page.current,
-					pageSize:this.page.pageSize,
-					sendStatus:n
+					pageNum: this.page.current,
+					pageSize: this.page.pageSize,
+					sendStatus: n
 				}
-				this.deliverylist=[];
-				axios.post('/sendInformation/list',obj).then(res=>{
+				this.deliverylist = [];
+				axios.post('/sendInformation/list', obj).then(res => {
 					let result = res.data.data;
-					if(res.data.data.length!=0){
+					if (res.data.data.length != 0) {
 						this.deliverylist = res.data.data;
-						
-						result.forEach(el=>{
+
+						result.forEach(el => {
 							this.stepArrr = [];
-							this.stepArrr.push(el.detailAddress,el.receiverDetailAddress)
+							if (el.detailAddress && el.receiverDetailAddress) {
+								this.stepArrr.push(el.detailAddress, el.receiverDetailAddress)
+							} else if (el.receiverDetailAddress) {
+								this.stepArrr.push(el.receiverDetailAddress)
+							}
 						})
 						this.stepa = []
-						
-						for(let i=0;i<this.stepArrr.length;i++){
+
+						for (let i = 0; i < this.stepArrr.length; i++) {
 							this.step = {}
 							this.step['text'] = this.stepArrr[i]
 							this.step['desc'] = '';
 							this.stepa.push(this.step);
 						}
-						this.deliverylist.forEach(el=>{
+						this.deliverylist.forEach(el => {
 							el['steps'] = this.stepa
 						})
-						if(this.deliverylist.length==res.data.total){
+						if (this.deliverylist.length == res.data.total) {
 							this.loadingText = '已全部加载'
 							return false;
-						}else{
+						} else {
 							this.loadingText = '上拉加载更多'
 						}
 					}
@@ -269,21 +307,21 @@
 			//swiper 切换
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
-				this.page.current=1;
-				if(this.tabCurrentIndex==0){//已转出
+				this.page.current = 1;
+				if (this.tabCurrentIndex == 0) { //已转出
 					this.optionState = 3;
-					this.loadData('tabChange',3);
-				}else if(this.tabCurrentIndex==1){
+					this.loadData('tabChange', 3);
+				} else if (this.tabCurrentIndex == 1) {
 					this.nowModel = '现在是取单模式'
 					this.optionState = 0;
-					this.loadData('tabChange',0);
-				}else if(this.tabCurrentIndex==2){
-					this.loadData('tabChange',1);
+					this.loadData('tabChange', 0);
+				} else if (this.tabCurrentIndex == 2) {
+					this.loadData('tabChange', 1);
 					this.optionState = 1;
 					this.nowModel = '正在配送'
-				}else if(this.tabCurrentIndex==3){
+				} else if (this.tabCurrentIndex == 3) {
 					this.optionState = 2;
-					this.loadData('tabChange',2);
+					this.loadData('tabChange', 2);
 					this.nowModel = '已送达'
 				}
 			},
@@ -291,26 +329,54 @@
 			tabClick(index) {
 				this.tabCurrentIndex = index;
 			},
-			timestampToTime (time) {
+			timestampToTime(time) {
 				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 				var Y = date.getFullYear()
-				var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1)
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
 				var D = date.getDate()
-				var h = date.getHours() + ':'
-				var m = date.getMinutes() + ':'
+				var h = date.getHours()<10?'0'+date.getHours():date.getHours() 
+				var m = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes()
+				var s = date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds();
+				return Y + '-' + M + '-' + D + ' ' + h +':'+m + ':'+ s
+			},
+			timestampToTimes(time) {
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear()
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+				var D = date.getDate()<10?'0'+date.getDate():date.getDate()
+				var h = date.getHours() 
+				var m = date.getMinutes()
 				var s = date.getSeconds();
-				return Y+'-'+M+'-'+D+' '+h+m+s
+				return Y + '-' + M + '-' + D 
+			},
+			timestampToTimesss(time) {
+				var date = new Date(time) //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+				var Y = date.getFullYear()
+				var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+				var D = date.getDate()
+				var h = date.getHours()<10?'0'+date.getHours():date.getHours() 
+				var m = date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes()
+				var s = date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds();
+				return h +':'+m 
 			},
 		},
 	}
 </script>
 
 <style lang="scss">
+	.sendStatus{
+	
+		
+	}
+	.sendPrice{
+		float: right;
+	}
 	.loading {
 		text-align: center;
 		font-size: 26rpx;
 		margin-top: 10px;
 	}
+
 	// 空白页
 	.delivery-empty {
 		text-align: center;
@@ -450,91 +516,111 @@
 		padding-top: 34rpx;
 		padding-left: 20rpx;
 		padding-right: 20rpx;
+
 		.delivery-list-tab {
 			font-size: 24rpx;
 			font-weight: 500;
 			color: rgba(81, 81, 81, 1);
+
 			.tab-time {
 				display: flex;
 				justify-content: space-between;
 				padding-bottom: 32rpx;
 				border-bottom: 1px solid #F2F2F2;
 				width: 100%;
+
 				.tab-time-img {
 					width: 20rpx;
 					height: 26rpx;
 					margin-right: 18rpx;
 				}
-				.tab-time-countDown{
+
+				.tab-time-countDown {
 					display: flex;
 					justify-content: center;
 					align-items: center;
 				}
 			}
 		}
-		.tab-step{
+
+		.tab-step {
 			border-bottom: 1px solid #f2f2f2;
 			padding-bottom: 26rpx;
-			.tab-step-top{
+
+			.tab-step-top {
 				margin-top: 20rpx;
 				margin-bottom: 40rpx;
-				.tips{
-					background:rgba(247,181,44,0.2);
-					border-radius:18rpx;
-					font-size:24rpx;
-					font-weight:500;
-					color:rgba(247,181,44,1);
-					line-height:16rpx;
+
+				.tips {
+					background: rgba(247, 181, 44, 0.2);
+					border-radius: 18rpx;
+					font-size: 24rpx;
+					font-weight: 500;
+					color: rgba(247, 181, 44, 1);
+					line-height: 16rpx;
 					padding-left: 10rpx;
 					padding-right: 10rpx;
 				}
-				.tips:nth-of-type(2){
+
+				.tips:nth-of-type(2) {
 					margin-right: 20rpx;
 					margin-left: 20rpx;
 				}
 			}
 		}
-		.tab-info{
-			.block{
+
+		.tab-info {
+			.block {
 				display: block;
 			}
+
 			font-size:24rpx;
 			font-weight:500;
-			color:rgba(146,145,145,1);
+			color:rgba(146, 145, 145, 1);
 			line-height:46rpx;
 			padding-bottom: 26rpx;
 			margin-top: 30rpx;
 			border-bottom: 1px solid #f2f2f2;
 		}
-		.tab-ret{
+
+		.tab-btn {
+			width: 170rpx;
+			height: 60rpx;
+			background: rgba(247, 181, 44, 1);
+			border-radius: 30rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 28rpx;
+			font-family: PingFang SC;
+			font-weight: bold;
+			color: rgba(255, 255, 255, 1);
+			margin-left: 0;
+			margin-right: 0;
+			float: right;
+			
+		}
+
+		.delivery-list-tab .active {
+			background: #CDCDCD;
+		}
+
+		.tab-ret {
 			margin-top: 38rpx;
 			padding-bottom: 38rpx;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-			.tab-btn{
-				width:170rpx;
-				height:60rpx;
-				background:rgba(247,181,44,1);
-				border-radius:30rpx;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-size:28rpx;
-				font-family:PingFang SC;
-				font-weight:bold;
-				color:rgba(255,255,255,1);
-				margin-left: 0;
-				margin-right: 0;
-			}
-			view{
-				font-size:24rpx;
-				font-weight:500;
-				color:rgba(146,145,145,1);
+
+			view {
+				font-size: 24rpx;
+				font-weight: 500;
+				color: rgba(146, 145, 145, 1);
 				display: flex;
 				justify-content: center;
 			}
 		}
+
 		.i-top {
 			display: flex;
 			align-items: center;

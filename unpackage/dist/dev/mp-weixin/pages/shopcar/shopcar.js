@@ -265,7 +265,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 420));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 428));};var _default =
 {
   components: {
     empty: empty },
@@ -293,8 +293,12 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
   },
   onShow: function onShow() {
     this.checkeds = false;
+    this.total = 0;
     this.allNum = 0;
     this.getShopCar();
+    this.list.forEach(function (el) {
+      el.deleteStatus = 0; //全都不选中
+    });
   },
   methods: {
     btn: function btn() {
@@ -303,18 +307,23 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     // 结算
-    payGoods: function payGoods() {
+    payGoods: function payGoods() {var _this = this;
       console.log(this.deleIds);
       if (this.allNum == 0) {
         this.$api.msg('请选择商品');
       } else {
-        if (uni.getStorageSync('addressList')) {
-          uni.navigateTo({
-            url: 'postOrder?deleIds=' + JSON.stringify(this.deleIds) });
+        _uniAxios.default.post('/member/address/list').then(function (res) {
+          if (res.data.code == 200) {
+            // this.addressList = res.data.data;
+            if (res.data.data.length > 0) {
+              uni.navigateTo({
+                url: 'postOrder?deleIds=' + JSON.stringify(_this.deleIds) });
 
-        } else {
-          this.$api.msg('请先添加地址再结算');
-        }
+            } else {
+              _this.$api.msg('请先添加地址再结算');
+            }
+          }
+        });
       }
 
     },
@@ -334,10 +343,10 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     // 获取购物车列表
-    getShopCar: function getShopCar() {var _this = this;
+    getShopCar: function getShopCar() {var _this2 = this;
       _uniAxios.default.post('/cart/list/promotion', {}).then(function (res) {
         if (res.data.code == 200) {
-          _this.list = res.data.data;
+          _this2.list = res.data.data;
         }
       });
     },
@@ -366,7 +375,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
     },
     // 最终的全选
-    allSlect: function allSlect(e) {var _this2 = this;
+    allSlect: function allSlect(e) {var _this3 = this;
       // 全选，加入所有商品的ID
       this.checkeds = e.detail;
       if (this.checkeds) {//全部选择
@@ -375,12 +384,12 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         this.list.forEach(function (el, index) {
           el.deleteStatus = 1;
           totalPrices = Number((el.price * 100).toFixed(2) * el.quantity);
-          _this2.total += totalPrices;
+          _this3.total += totalPrices;
         });
         this.total = (this.total / 100).toFixed(2);
         this.allNum = this.list.length;
         this.list.forEach(function (el, index) {
-          _this2.deleIds.push(el.id);
+          _this3.deleIds.push(el.id);
         });
         this.checkNum = this.list.length;
       } else {//全不选中
@@ -399,7 +408,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 
     },
     // 删除某个商品
-    deleteGoods: function deleteGoods() {var _this3 = this;
+    deleteGoods: function deleteGoods() {var _this4 = this;
       var obj = {
         ids: this.deleIds };
 
@@ -408,22 +417,23 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       } else {
         _uniAxios.default.post('/cart/delete', obj).then(function (res) {
           if (res.data.code == 200) {
-            _this3.$api.msg('删除成功');
-            _this3.getShopCar();
+            _this4.$api.msg('删除成功');
+            _this4.getShopCar();
           }
         });
       }
     },
     // 单个商品的选择
-    singleOnChange: function singleOnChange(status, index, id) {var _this4 = this;
+    singleOnChange: function singleOnChange(status, index, id) {var _this5 = this;
       // 首选判断是否处于删除状态
       if (this.deleShow) {//表示删除状态
+        this.checkNum = 0;
         if (status == 1) {
           // 取消选中
           this.list[index].deleteStatus = 0;
           this.list.forEach(function (el, index) {
             if (el.id == id) {
-              _this4.deleIds.splice(index, 1);
+              _this5.deleIds.splice(index, 1);
             }
           });
           this.checkNum--;
@@ -432,11 +442,13 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           this.list[index].deleteStatus = 1;
           this.deleIds.push(id);
           this.checkNum++;
+          console.log(this.checkNum, 777);
           if (this.checkNum == this.list.length) {
             this.checkeds = true;
           }
         }
       } else {//表示订单状态时
+        this.checkNum = 0;
         if (status == 1) {//表示取消选中
           this.list[index].deleteStatus = 0;
           var price = Number((this.list[index].price * 100).toFixed(2) * this.list[index].quantity);

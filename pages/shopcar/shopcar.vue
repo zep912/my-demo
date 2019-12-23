@@ -145,8 +145,12 @@
 		},
 		onShow() {
 			this.checkeds = false;
+			this.total = 0;
 			this.allNum = 0;
 			this.getShopCar();
+			this.list.forEach(el => {
+				el.deleteStatus = 0; //全都不选中
+			})
 		},
 		methods: {
 			btn(){
@@ -160,13 +164,18 @@
 				if(this.allNum==0){
 					this.$api.msg('请选择商品')
 				}else{
-					if(uni.getStorageSync('addressList')){
-						uni.navigateTo({
-							url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
-						})
-					}else{
-						this.$api.msg('请先添加地址再结算')
-					}
+					axios.post('/member/address/list').then(res=>{
+						if(res.data.code==200){
+							// this.addressList = res.data.data;
+							if(res.data.data.length>0){
+								uni.navigateTo({
+									url:'postOrder?deleIds='+JSON.stringify(this.deleIds)
+								})
+							}else{
+								this.$api.msg('请先添加地址再结算')
+							}
+						}
+					})
 				}
 				
 			},
@@ -270,6 +279,7 @@
 			singleOnChange(status, index, id) {			
 				// 首选判断是否处于删除状态
 				if (this.deleShow) { //表示删除状态
+					this.checkNum=0
 					if (status == 1) {
 						// 取消选中
 						this.list[index].deleteStatus = 0;
@@ -279,16 +289,18 @@
 							}
 						})
 						this.checkNum--;
-						this.checkeds = false
+						this.checkeds = false	
 					} else { //选中
 						this.list[index].deleteStatus = 1;
 						this.deleIds.push(id);
 						this.checkNum++;
+						console.log(this.checkNum,777)
 						if(this.checkNum==this.list.length){
 							this.checkeds = true;
 						}
 					}
 				} else { //表示订单状态时
+					this.checkNum=0
 					if (status == 1) { //表示取消选中
 						this.list[index].deleteStatus = 0;
 						let price = Number(((this.list[index].price*100).toFixed(2)) * this.list[index].quantity);

@@ -50,7 +50,7 @@
 									共
 									<text class="num">{{items.productQuantity}}</text>
 									件商品 实付款
-									<text class="price">{{item.payAmount}}</text>
+									<text class="price">{{item.totalAmount}}</text>
 								</view>
 								<view class="action-box-buttom"  v-show='item.status==3'>
 									<!-- 0->待付款；1->待发货；2->已发货(待收货)；3->已完成(待评价)；4->已关闭；5->无效订单 -->

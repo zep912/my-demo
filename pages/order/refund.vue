@@ -19,21 +19,21 @@
 					<text class="iconfont icon-you"></text>
 				</view>
 
-				<view class="goods-box-single b-b" v-for="(goodsItem, goodsIndex) in form.goodsList" :key="goodsIndex">
-					<image class="goods-img" :src="goodsItem.productPic" mode="aspectFill"></image>
+				<view class="goods-box-single b-b">
+					<image class="goods-img" :src="form.productPic" mode="aspectFill"></image>
 
 					<view class="right">
-						<text class="title ellipsis">{{goodsItem.productName}}</text>
-						<text class="attr-box">{{goodsItem.productAttr}}</text>
-						<text class="price">{{'￥'+goodsItem.productPrice}}</text>
+						<text class="title ellipsis">{{form.productName}}</text>
+						<text class="attr-box">{{form.productAttr}}</text>
+						<text class="price">{{'￥'+form.productPrice}}</text>
 					</view>
 					<view class="goods-right">
-						<text class="number">X{{goodsItem.productCount}}</text>
+						<text class="number">X{{form.productCount}}</text>
 					</view>
 				</view>
 				<view class="order-total">
-					<text>共{{form.goodsList.length}}件商品</text>
-					<text>合计：<text>{{'￥'+form.returnAmount}}</text></text>
+					<text>共{{form.productCount}}件商品</text>
+					<text>合计：<text>{{'￥'+form.productRealPrice}}</text></text>
 				</view>
 			</view>
 		</view>
@@ -133,42 +133,9 @@
 		methods: {
 			refundList(){
 				axios.post('/returnApply/info',{id:this.orderId}).then(res=>{
-					console.log(res)
 					if(res.data.code==200){
 						this.form = res.data.data;
-						this.form = {
-							companyAddressId:1,
-							createTime:"2019-12-19T14:34:39.000+0000",
-							description: '' ,
-							handleMan: '' ,
-							handleNote: '' ,
-							handleTime: "2019-12-19T14:34:39.000+0000",
-							id:92,
-							memberId: 46 ,
-							memberUsername: '',
-							goodsList:[{
-								orderId:'145',
-								orderSn:"201912190102000002",
-								productAttr:'',
-								productBrand:"明知缘",
-								productCount: 1 ,
-								productId: 45,
-								productName:"正宗农家散养谷饲土鸡蛋20枚",
-								productPic:'http://maitianquan-zjk.oss-cn-zhangjiakou.aliyuncs.com/cropcircle/image/20191204/好货推荐-1.png',
-								productPrice:  25.99,
-							}
-								
-							],
-							proofPics: '',
-							reason: '商品过期' ,
-							receiveMan: '小鲁' ,
-							receiveNote: '备注',
-							receiveTime: "2019-12-19T14:34:39.000+0000",
-							returnAmount: '1' ,
-							returnName: '小鲁' ,
-							returnPhone: 13667138671 ,
-							status: 0,//申请状态：0->待处理；1->退货中；2->已完成；3->已拒绝
-						}
+						console.log(this.form)
 					}
 				})
 			},
@@ -353,7 +320,7 @@
 					bottom: 6%;
 					width: 100rpx;
 					height: 100rpx;
-					z-index: 1000000;
+					z-index: 99;
 					img{
 						width: 100rpx;
 						height: 100rpx;
