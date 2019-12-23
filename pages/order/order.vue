@@ -252,7 +252,7 @@
 						this.orderList.forEach(item => {
 							navItem.orderList.push(item);
 						})
-						console.log(navItem, 777)
+						
 						this.$set(navItem, 'loaded', true);
 						navItem.loadingType = 'more';
 						if (this.orderList.length == res.data.data.total) {
@@ -313,17 +313,18 @@
 					let list = this.navList[1].orderList;
 					
 					let index = list.findIndex(val => val.id === item.id);
-					console.log(index)
+	
 					list.splice(index, 1);
-					console.log(list)
+				
 					uni.hideLoading();
-					// axios.post('/order/cancelOrder', {
-					// 	orderId: item.id
-					// }).then(res => {
-					// 	if (res.data.code == 200) {
-					// 		this.$api.msg('取消成功')
-					// 	}
-					// })
+					axios.post('/order/cancelOrder', {
+						orderId: item.id
+					}).then(res => {
+						if (res.data.code == 200) {
+							this.$api.msg('取消成功')
+							this.loadData(this.optionState)
+						}
+					})
 				}, 600)
 			},
 

@@ -393,7 +393,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           _this4.orderList.forEach(function (item) {
             navItem.orderList.push(item);
           });
-          console.log(navItem, 777);
+
           _this4.$set(navItem, 'loaded', true);
           navItem.loadingType = 'more';
           if (_this4.orderList.length == res.data.data.total) {
@@ -454,17 +454,18 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         var list = _this5.navList[1].orderList;
 
         var index = list.findIndex(function (val) {return val.id === item.id;});
-        console.log(index);
+
         list.splice(index, 1);
-        console.log(list);
+
         uni.hideLoading();
-        // axios.post('/order/cancelOrder', {
-        // 	orderId: item.id
-        // }).then(res => {
-        // 	if (res.data.code == 200) {
-        // 		this.$api.msg('取消成功')
-        // 	}
-        // })
+        _uniAxios.default.post('/order/cancelOrder', {
+          orderId: item.id }).
+        then(function (res) {
+          if (res.data.code == 200) {
+            _this5.$api.msg('取消成功');
+            _this5.loadData(_this5.optionState);
+          }
+        });
       }, 600);
     },
 

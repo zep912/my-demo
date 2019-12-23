@@ -42,7 +42,10 @@
 			},
 			// 跳转到首页
 			look(){
-				uni.navigateTo({
+				// uni.navigateTo({
+				// 	url:'../index/index'
+				// })
+				uni.switchTab({
 					url:'../index/index'
 				})
 			}
