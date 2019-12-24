@@ -112,15 +112,17 @@
 				<text>删除</text>
 			</view>
 		</view>
+		<weixin-login></weixin-login>
 	</view>
 </template>
 
 <script>
 	import empty from '@/components/empty.vue';
 	import axios from '@/utils/uniAxios.js'
+	import weixinLogin from '@/components/weixin-login.vue';
 	export default {
 		components: {
-			empty
+			empty, weixinLogin
 		},
 		data() {
 			return {

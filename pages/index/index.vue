@@ -130,6 +130,7 @@
 			};
 		},
 		onShow() {
+			uni.showTabBar();
 			this.code = uni.getStorageSync('code');
 			uni.setStorageSync('school', {"id":14,"address":"华中农业大学","createTime":"2019-12-14T08:42:22.000+0000","isDelete":0,"isOpen":1});
 			this.school = uni.getStorageSync('school') || {};

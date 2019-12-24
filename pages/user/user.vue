@@ -150,9 +150,9 @@
 		onShow() {
 			if (uni.getStorageSync('hasLogin')) {
 				this.authShow = false;
+				this.getProductCollect();
+				this.getFeedbackData();
 			}
-			this.getProductCollect();
-			this.getFeedbackData()
 		},
 		computed: {
 			...mapState(['hasLogin', 'userInfo'])
@@ -160,6 +160,8 @@
 		methods: {
 			openLogin() {
 				this.$refs.login.open();
+				this.getProductCollect();
+				this.getFeedbackData();
 			},
 			closeLogin() {
 				if (uni.getStorageSync('hasLogin')) {

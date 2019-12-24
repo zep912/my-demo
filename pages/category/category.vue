@@ -34,6 +34,7 @@
 			}
 		},
 		onShow() {
+			uni.showTabBar();
 			this.withChildren();
 		},
 		methods: {
