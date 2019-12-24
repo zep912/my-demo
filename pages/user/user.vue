@@ -13,7 +13,7 @@
 					<!-- <view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
 					</view> -->
-					<button class="weixin login-now authorize" @click="openLogin">点击授权登录</button>
+					<button class="weixin login-now authorize" @click="openLogin" v-if='authShow'>点击授权登录</button>
 				</view>
 
 			</view>
@@ -112,7 +112,7 @@
 			</view>
 
 		</view>
-		<weixin-login ref="login" show></weixin-login>
+		<weixin-login ref="login" @closeLogin="closeLogin"></weixin-login>
 	</view>
 </template>
 <script>
@@ -143,13 +143,14 @@
 		},
 		onLoad(option) {
 			this.loadData();
-			if (uni.getStorageSync('hasLogin')) {
-				this.authShow = false
-			} 
+
 			this.hotList();
 			
 		},
 		onShow() {
+			if (uni.getStorageSync('hasLogin')) {
+				this.authShow = false;
+			}
 			this.getProductCollect();
 			this.getFeedbackData()
 		},
@@ -159,6 +160,11 @@
 		methods: {
 			openLogin() {
 				this.$refs.login.open();
+			},
+			closeLogin() {
+				if (uni.getStorageSync('hasLogin')) {
+					this.authShow = false;
+				}
 			},
 			getProductCollect(){
 				axios.post('/member/collection/productCollectionList').then(res=>{

@@ -99,6 +99,7 @@
 									uni.hideLoading();
 									uni.showTabBar();
 									this.$refs.popup.close();
+									this.$emit('closeLogin');
 								}
 							})
 					})
