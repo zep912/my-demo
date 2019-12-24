@@ -82,7 +82,7 @@
 		
 		<!-- 底部操作菜单 -->
 		<view class="page-bottom">
-			<navigator url="/pages/message/customer" open-type="switchTab" class="p-b-btn">
+			<navigator url="/pages/message/customer" class="p-b-btn">
 				<text class="iconfont icon-kefu"></text>
 				<text>客服</text>
 			</navigator>
