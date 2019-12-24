@@ -132,16 +132,19 @@
 				<button class="btn" @click="buy">确定</button>
 			</view>
 		</uni-popup>
+		<weixin-login></weixin-login>
 	</view>
 </template>
 
 <script>
 	import axios from '@/utils/uniAxios.js'
 	// import share from '@/components/share';
+	import {weixinLogin} from '@/components/weixin-login.vue';
 	import uniPopup from '@/components/uni-popup/uni-popup.vue'
 	export default{
 		components: {
-			uniPopup
+			uniPopup,
+			weixinLogin
 			// share
 		},
 		data() {
@@ -149,24 +152,9 @@
 				specClass: 'none',
 				specSelected:[],
 				productInfo: {
-					albumPics: [
-						'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg',
-						'https://gd3.alicdn.com/imgextra/i3/TB1RPFPPFXXXXcNXpXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg',
-						'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'
-					],
-					desc: `
-						<div style="width:100%">
-							<img style="width:100%;display:block;" src="https://gd3.alicdn.com/imgextra/i4/479184430/O1CN01nCpuLc1iaz4bcSN17_!!479184430.jpg_400x400.jpg" />
-							<img style="width:100%;display:block;" src="https://gd2.alicdn.com/imgextra/i2/479184430/O1CN01gwbN931iaz4TzqzmG_!!479184430.jpg_400x400.jpg" />
-							<img style="width:100%;display:block;" src="https://gd3.alicdn.com/imgextra/i3/479184430/O1CN018wVjQh1iaz4aupv1A_!!479184430.jpg_400x400.jpg" />
-							<img style="width:100%;display:block;" src="https://gd4.alicdn.com/imgextra/i4/479184430/O1CN01tWg4Us1iaz4auqelt_!!479184430.jpg_400x400.jpg" />
-							<img style="width:100%;display:block;" src="https://gd1.alicdn.com/imgextra/i1/479184430/O1CN01Tnm1rU1iaz4aVKcwP_!!479184430.jpg_400x400.jpg" />
-						</div>
-					`,
-					productFullReductionList: [
-						{id: 144, productId: 46, fullPrice: 39, reducePrice: 10},
-						{id: 145, productId: 46, fullPrice: 69, reducePrice: 20}
-					]
+					albumPics: [],
+					desc: ``,
+					productFullReductionList: []
 				},
 				favorite: false,
 				id: '',

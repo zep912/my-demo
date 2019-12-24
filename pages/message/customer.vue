@@ -75,7 +75,9 @@
 							url: 'https://mini.cropcircle.com.cn/aliyun/oss/uploadimage',
 							filePath: res.tempFilePaths[0],
 							name: 'file',
-							success: (uploadFileRes) => {
+							success: ({data}) => {
+								const uploadFileRes = JSON.parse(data);
+								console.log(uploadFileRes, data.code, data.data, 'data');
 								if (uploadFileRes.code === 200) {
 									this.msg.url = uploadFileRes.data.url;
 									this.leaveWordAdd();
@@ -120,7 +122,6 @@
 					max-width: 500upx;
 					image {
 						width: 180upx;
-						height: 100%;
 					}
 				}
 				image {

@@ -13,7 +13,7 @@
 					<!-- <view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
 					</view> -->
-					<button class="weixin login-now authorize" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo" v-if='authShow'>点击授权登录</button>
+					<button class="weixin login-now authorize" @click="openLogin">点击授权登录</button>
 				</view>
 
 			</view>
@@ -93,7 +93,7 @@
 				<img src="../../static/title_01.png" alt="">
 			</view>
 			<view class="goodsList">
-				<view v-for='(item,index) in goodsList' class="goodsList-list" @click="navToDetailPage(item)">
+				<view v-for='(item,index) in goodsList' :key="index" class="goodsList-list" @click="navToDetailPage(item)">
 					<img :src="item.pic" alt="">
 					<view class="goods-title">
 						<text>{{item.name}}</text>
@@ -112,11 +112,12 @@
 			</view>
 
 		</view>
-	</view>
+		<weixin-login ref="login" show></weixin-login>
 	</view>
 </template>
 <script>
 	import axios from '@/utils/uniAxios.js'
+	import {weixinLogin} from '@/components/weixin-login.vue';
 	import {
 		mapState
 	} from 'vuex';
@@ -125,6 +126,7 @@
 		pageAtTop = true;
 	export default {
 		components: {
+			weixinLogin
 			// uniCard
 		},
 		data() {
@@ -155,6 +157,9 @@
 			...mapState(['hasLogin', 'userInfo'])
 		},
 		methods: {
+			openLogin() {
+				this.$refs.login.open();
+			},
 			getProductCollect(){
 				axios.post('/member/collection/productCollectionList').then(res=>{
 					if(res.data.code===200){
