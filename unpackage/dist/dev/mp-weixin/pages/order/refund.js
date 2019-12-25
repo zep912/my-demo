@@ -221,10 +221,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var _default =
 {
   data: function data() {var _ref;
     return _ref = {
+      focusFalse: false,
       reason: '请选择',
       show: false,
       value: '',
@@ -265,11 +270,16 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.refundList();
   },
   methods: {
-    refundList: function refundList() {var _this = this;
+    textareaClick: function textareaClick() {
+      console.log(777);
+      this.focusFalse = true;
+      console.log(this.focusFalse);
+      // this.$refs.uploadTexteare.focus()
+    },
+    refundList: function refundList() {var _this2 = this;
       _uniAxios.default.post('/returnApply/info', { id: this.orderId }).then(function (res) {
         if (res.data.code == 200) {
-          _this.form = res.data.data;
-          console.log(_this.form);
+          _this2.form = res.data.data;
         }
       });
     },
@@ -278,23 +288,26 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         url: 'consult' });
 
     },
-    afterRead: function afterRead(event) {var
+    afterRead: function afterRead(event) {
+      this.focusFalse = false;var
       file = event.detail.file;
+      var _this = this;
       // 当设置 mutiple 为 true 是 file 是一个数组，mutiple 默认为 false，file 是一个对象
-      wx.uploadFile({
-        url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+      uni.uploadFile({
+        url: 'https://mini.cropcircle.com.cn/aliyun/oss/uploadimage', //仅为示例，非真实的接口地址
         filePath: file.path,
         name: 'file',
         formData: { 'user': 'test' },
         success: function success(res) {
+          var url = JSON.parse(res.data).data.url;
           // 上传完成需要更新fileList
-          var _this$data$fileList = this.data.fileList,fileList = _this$data$fileList === void 0 ? [] : _this$data$fileList;
-          fileList.push(_objectSpread({}, file, { url: res.data }));
-          console.log(fileList);
+          _this.fileList.push(_objectSpread({}, file, { url: url }));
         } });
 
     },
-
+    deleteImg: function deleteImg(ev) {
+      this.fileList.splice(ev.detail.index, 1);
+    },
     onCancel: function onCancel() {
       this.show = false;
     },
@@ -306,7 +319,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       event.detail,picker = _event$detail.picker,value = _event$detail.value,index = _event$detail.index;
       this.form.reason = value;
     },
-    save: function save() {var _this2 = this;
+    save: function save() {var _this3 = this;
       var obj = {
         companyAddressId: this.form.companyAddressId,
         description: this.returnText,
@@ -327,7 +340,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
       _uniAxios.default.post('/returnApply/create', obj).then(function (res) {
         if (res.data.code == 200) {
-          _this2.$api.msg('申请退款成功');
+          _this3.$api.msg('申请退款成功');
           uni.redirectTo({
             url: 'aftersale' });
 

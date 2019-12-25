@@ -5,6 +5,14 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.clearfix:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: "";
+}
 .container {
   padding: 20rpx;
   background: #F2F2F2;

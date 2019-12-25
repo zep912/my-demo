@@ -273,12 +273,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 414));};var _default =
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var weixinLogin = function weixinLogin() {return Promise.all(/*! import() | components/weixin-login */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/weixin-login")]).then(__webpack_require__.bind(null, /*! @/components/weixin-login.vue */ 423));};var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 430));};var _default =
+
 
 
 {
   components: {
-    uniPopup: uniPopup
+    uniPopup: uniPopup,
+    weixinLogin: weixinLogin
     // share
   },
   data: function data() {
@@ -286,24 +289,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       specClass: 'none',
       specSelected: [],
       productInfo: {
-        albumPics: [
-        'https://gd3.alicdn.com/imgextra/i3/0/O1CN01IiyFQI1UGShoFKt1O_!!0-item_pic.jpg_400x400.jpg',
-        'https://gd3.alicdn.com/imgextra/i3/TB1RPFPPFXXXXcNXpXXXXXXXXXX_!!0-item_pic.jpg_400x400.jpg',
-        'https://gd2.alicdn.com/imgextra/i2/38832490/O1CN01IYq7gu1UGShvbEFnd_!!38832490.jpg_400x400.jpg'],
-
-        desc: "\n\t\t\t\t\t<div style=\"width:100%\">\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd3.alicdn.com/imgextra/i4/479184430/O1CN01nCpuLc1iaz4bcSN17_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd2.alicdn.com/imgextra/i2/479184430/O1CN01gwbN931iaz4TzqzmG_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd3.alicdn.com/imgextra/i3/479184430/O1CN018wVjQh1iaz4aupv1A_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd4.alicdn.com/imgextra/i4/479184430/O1CN01tWg4Us1iaz4auqelt_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t\t<img style=\"width:100%;display:block;\" src=\"https://gd1.alicdn.com/imgextra/i1/479184430/O1CN01Tnm1rU1iaz4aVKcwP_!!479184430.jpg_400x400.jpg\" />\n\t\t\t\t\t</div>\n\t\t\t\t",
-
-
-
-
-
-
-
-
-        productFullReductionList: [
-        { id: 144, productId: 46, fullPrice: 39, reducePrice: 10 },
-        { id: 145, productId: 46, fullPrice: 69, reducePrice: 20 }] },
-
+        albumPics: [],
+        desc: "",
+        productFullReductionList: [] },
 
       favorite: false,
       id: '',
@@ -320,13 +308,17 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
               }case 2:case "end":return _context.stop();}}}, _callee, this);}));function onLoad(_x) {return _onLoad.apply(this, arguments);}return onLoad;}(),
 
   onShow: function onShow() {
-    uni.login({
-      provider: 'weixin',
-      success: function success(loginRes) {
-        var code = loginRes.code;
-        uni.setStorageSync('code', code);
-      } });
+    if (uni.getStorageSync('hasLogin')) {
+      uni.login({
+        provider: 'weixin',
+        success: function success(loginRes) {
+          var code = loginRes.code;
+          uni.setStorageSync('code', code);
+        } });
 
+    } else {
+      this.$refs.login.open();
+    }
   },
   methods: {
     //收藏
@@ -344,7 +336,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     // 	this.$refs.share.toggleMask();	
     // },
     openBuy: function openBuy() {
-      this.$refs.popup.open();
+      if (uni.getStorageSync('hasLogin')) {
+        this.$refs.popup.open();
+      } else {
+        this.$refs.login.open();
+      }
     },
     buy: function buy() {var _this3 = this;
       _uniAxios.default.post('/pay/quickOrderPay', { productId: this.id, quantity: this.sku.quantity, sp1: '' }).then(function (_ref) {var data = _ref.data;
@@ -359,7 +355,11 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       });
 
     },
-    addCart: function addCart() {var _this4 = this;var _this$productInfo =
+    addCart: function addCart() {var _this4 = this;
+      if (!uni.getStorageSync('hasLogin')) {
+        this.$refs.login.open();
+        return;
+      }var _this$productInfo =
       this.productInfo,id = _this$productInfo.id,productCategoryId = _this$productInfo.productCategoryId;
       _uniAxios.default.post('/cart/add', { productId: id, productCategoryId: productCategoryId }).then(function (_ref2) {var data = _ref2.data;
         if (data.code === 200) {

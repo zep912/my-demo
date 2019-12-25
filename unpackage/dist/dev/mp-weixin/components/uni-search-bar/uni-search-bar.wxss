@@ -5,6 +5,14 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.clearfix.data-v-519516e2:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: "";
+}
 .uni-searchbar.data-v-519516e2 {
   display: -webkit-box;
   display: -webkit-flex;

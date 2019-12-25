@@ -52,10 +52,14 @@
 			<view class="refund-intro">
 				<text class="block refund-intro-title">退款说明:</text>
 				<view class="refund-msg">
-					<textarea placeholder="请说明您实际购买的情况说明(限300字)" placeholder-class='textareaClass' maxlength='300' v-model='returnText'/>
-					<van-uploader use-slot class='refund-upload-img' :file-list="fileList" @after-read="afterRead">
-					  <img src="../../static/upload.png" alt="" class='upload'>
-					</van-uploader>
+					<view class="refund-textarea" @click="textareaClick">
+						<textarea placeholder="请说明您实际购买的情况说明(限300字)" placeholder-class='textareaClass' maxlength='300' v-model='returnText' auto-height ref='uploadTexteare' :focus='focusFalse'/>
+						<view class="uploadImg">
+							<van-uploader use-slot class='refund-upload-img' :file-list="fileList" @after-read="afterRead" @delete='deleteImg' max-count="5">
+							  <img src="../../static/upload.png" alt="" class='upload' >
+							</van-uploader>
+						</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -91,6 +95,7 @@
 	export default {
 		data() {
 			return {
+				focusFalse:false,
 				reason:'请选择',
 				show:false,
 				value:'',
@@ -131,11 +136,16 @@
 			this.refundList()
 		},
 		methods: {
+			textareaClick(){
+				console.log(777)
+				this.focusFalse = true;
+				console.log(this.focusFalse)
+				// this.$refs.uploadTexteare.focus()
+			},
 			refundList(){
 				axios.post('/returnApply/info',{id:this.orderId}).then(res=>{
 					if(res.data.code==200){
 						this.form = res.data.data;
-						console.log(this.form)
 					}
 				})
 			},
@@ -145,22 +155,25 @@
 				})
 			},
 			afterRead(event) {
+				this.focusFalse=  false
 			      const { file } = event.detail;
+				  let _this = this;
 			      // 当设置 mutiple 为 true 是 file 是一个数组，mutiple 默认为 false，file 是一个对象
-			      wx.uploadFile({
-			        url: 'https://example.weixin.qq.com/upload', //仅为示例，非真实的接口地址
+			      uni.uploadFile({
+			        url: 'https://mini.cropcircle.com.cn/aliyun/oss/uploadimage', //仅为示例，非真实的接口地址
 			        filePath: file.path,
 			        name: 'file',
 			        formData: { 'user': 'test' },
 			        success (res){
+						let url = JSON.parse(res.data).data.url;
 			          // 上传完成需要更新fileList
-			          const { fileList = [] } = this.data;
-			          fileList.push({ ...file, url: res.data });
-					  console.log(fileList)
+			          _this.fileList.push({ ...file, url:url});
 			        }
 			      });
 			    },
-				
+			deleteImg(ev){
+				this.fileList.splice(ev.detail.index,1)
+			},
 			onCancel(){
 				this.show = false
 			},
@@ -205,6 +218,18 @@
 </script>
 
 <style lang="scss">
+	.uploadImg{
+		width: 100%;
+		height: 50px;
+		position: absolute;
+		left: 3%;
+		bottom: 6%;
+		z-index: 99;
+	}
+	.uploadImg .van-uploader__preview image{
+		width: 100rpx;
+		height: 100rpx;
+	}
 	.van-picker-column__item{
 		color: #A9A9A9;
 	}
@@ -293,6 +318,12 @@
 				display: block;
 			}
 		}
+		.refund-textarea{
+			width: 100%;
+			min-height: 300rpx;
+			background:rgba(244,244,244,1);
+			padding: 26rpx 20rpx 20rpx 20rpx;
+		}
 		.refund-intro{
 			padding-right: 20rpx;
 			padding-left: 20rpx;
@@ -306,7 +337,7 @@
 				border-radius:20rpx;
 				box-sizing: border-box;
 				
-				padding: 26rpx 20rpx 20rpx 20rpx;
+				// padding: 26rpx 20rpx 20rpx 20rpx;
 				// position: absolute;
 				// z-index: 10000;
 			}
@@ -315,12 +346,10 @@
 				position:relative;
 				margin-top: 30rpx;
 				.refund-upload-img{
-					position: absolute;
-					left: 3%;
-					bottom: 6%;
+					
 					width: 100rpx;
 					height: 100rpx;
-					z-index: 99;
+					
 					img{
 						width: 100rpx;
 						height: 100rpx;

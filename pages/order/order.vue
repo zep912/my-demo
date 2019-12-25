@@ -9,7 +9,7 @@
 
 		<swiper :current="tabCurrentIndex" class="swiper-box" duration="300" @change="changeTab" style="height:calc(100% - 20px)">
 			<swiper-item class="tab-content" v-for="(tabItem,tabIndex) in navList" :key="tabIndex">
-				<scroll-view class="list-scroll-content" scroll-y='true' @scrolltolower="lower" @scroll="scroll" :scroll-top="scrollTop"
+				<scroll-view class="list-scroll-content" scroll-y='true' @scrolltolower="lower" 
 				 lower-threshold=100 scroll-top=50>
 					<!-- 空白页 -->
 
@@ -32,7 +32,7 @@
 						</view>
 						<view class="" v-for='(items,index) in item.orderItemList'>
 
-							<view class="goods-box-single b-b">
+							<view class="goods-box-single b-b"  @click="orderDetails(item,item.id)">
 								<image class="goods-img" :src="items.productPic" mode="aspectFill"></image>
 
 								<view class="right">
@@ -64,7 +64,8 @@
 							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.status==3'>评价</button> -->
 							<button class="action-btn" @click="cancelOrder(item)" v-show='item.status==0'>取消订单</button>
 							<button class="action-btn recom" v-show='item.status==0' @click="payGoods(item.orderSn,item.payAmount)">立即支付</button>
-							<button class="action-btn recom" v-show='item.status==2' @click="logisticsTap(item)">查看物流</button>
+							<!-- <button class="action-btn recom" v-show='item.status==2' @click="logisticsTap(item)">查看物流</button> -->
+							<button class="action-btn recom" v-show='item.status==2' @click="confirmProduct(item)">确认收货</button>
 						</view>
 					</view>
 					<view class="loading" v-if='tabItem.orderList.length !== 0'>{{loadingText}}</view>
@@ -156,11 +157,19 @@
 				this.loadData(options.state);
 			}
 		},
-		onReachBottom() {
-
-		},
-
 		methods: {
+			confirmProduct(item){
+				let id = item.id;
+				axios.post('/order/updateOrderStatus', {
+					orderId: id,
+					status: 2
+				}).then(res => {
+					console.log(res)
+					if(res.data.code==200){
+						this.loadData(this.optionState);
+					}
+				})
+			},
 			btn() {
 				uni.switchTab({
 					url: '../index/index'
@@ -172,11 +181,8 @@
 					this.getmorenews();
 				}, 1000)
 			},
-			scroll(e) {
-
-			},
 			getmorenews() {
-				console.log(111)
+				console.log('上拉加载')
 				if (this.loadingText == '已全部加载') {
 					return false;
 				}
@@ -221,6 +227,7 @@
 			},
 			//获取订单列表
 			loadData(n) {
+				console.log('初始化')
 				//这里是将订单挂载到tab列表下
 				this.page.current = 1;
 
@@ -272,6 +279,7 @@
 					if (this.tabCurrentIndex == 0) { //全部
 						this.optionState = ''
 						this.loadData('');
+						console.log(8888)
 					} else {
 						this.optionState = this.tabCurrentIndex - 1;
 						this.loadData(this.tabCurrentIndex - 1);
@@ -322,7 +330,7 @@
 					}).then(res => {
 						if (res.data.code == 200) {
 							this.$api.msg('取消成功')
-							this.loadData(this.optionState)
+							// this.loadData(this.optionState)
 						}
 					})
 				}, 600)

@@ -193,7 +193,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 421));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 428));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 409));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 416));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -231,10 +231,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     //获取订单列表
     loadData: function loadData() {var _this = this;
       _uniAxios.default.post('/returnApply/list').then(function (res) {
-        console.log(res);
         if (res.data.code == 200) {
           _this.orderList = res.data.data;
-          console.log(_this.orderList);
         }
       });
     },
@@ -251,7 +249,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     },
     // 评价
     evaluate: function evaluate(item) {
-      console.log(item);
+
     },
     // 查看详情
     lookDetail: function lookDetail(item) {
@@ -262,7 +260,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       // uni.navigateTo({
       // 	url: 'refund?id='+id
       // })
-      console.log(item);
+
     },
     //订单状态文字和颜色
     orderStateExp: function orderStateExp(state) {

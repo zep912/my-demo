@@ -167,8 +167,9 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var _default = { data: function data() {return { sizeCalcState: false, tabScrollTop: 0, currentId: 1, flist: [], slist: [], tlist: [] };}, onShow: function onShow() {this.withChildren();}, methods: { //一级分类点击
-    tabtap: function tabtap(item) {if (!this.sizeCalcState) {this.calcSize();}this.currentId = item.id;var index = this.slist.findIndex(function (sitem) {return sitem.id === item.id;});
+var _default = { data: function data() {return { sizeCalcState: false, tabScrollTop: 0, currentId: 1, flist: [], slist: [], tlist: [] };}, onShow: function onShow() {uni.showTabBar();this.withChildren();}, methods: { //一级分类点击
+    tabtap: function tabtap(item) {if (!this.sizeCalcState) {this.calcSize();}this.currentId = item.id;
+      var index = this.slist.findIndex(function (sitem) {return sitem.id === item.id;});
       if (index > -1) this.tabScrollTop = this.slist[index].top;
     },
     //右侧栏滚动

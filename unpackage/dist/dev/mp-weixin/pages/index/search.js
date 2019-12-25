@@ -167,7 +167,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
 //
 //
 //
-var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 407));};var _default = { components: { uniSearchBar: uniSearchBar }, data: function data() {return { historyGoods: ['窝窝头', '大闸蟹', '红烧肉', '西班牙大龙虾', '热干面', '牛肉面', '炸酱面'] };}, onLoad: function onLoad() {this.productList();}, methods: { productList: function productList() {_uniAxios.default.post('/product/search', { "pageNum": 0, "pageSize": 10 }).then(function (_ref) {var data = _ref.data;console.log(data);});} } };exports.default = _default;
+var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 437));};var _default = { components: { uniSearchBar: uniSearchBar }, data: function data() {return { historyGoods: ['窝窝头', '大闸蟹', '红烧肉', '西班牙大龙虾', '热干面', '牛肉面', '炸酱面'] };}, onLoad: function onLoad() {this.productList();}, methods: { productList: function productList() {_uniAxios.default.post('/product/search', { "pageNum": 0, "pageSize": 10 }).then(function (_ref) {var data = _ref.data;console.log(data);});} } };exports.default = _default;
 
 /***/ }),
 

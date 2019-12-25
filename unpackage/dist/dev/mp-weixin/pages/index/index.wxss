@@ -5,50 +5,13 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
-.weixinLogin {
-  width: 550rpx;
-  background: white;
-  border-radius: 30rpx;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
-  box-sizing: border-box;
-  padding: 40rpx 30rpx;
-  text-align: center;
-}
-.weixinLogin image {
-    width: 118rpx;
-    height: 140rpx;
-    margin-bottom: 67rpx;
-}
-.weixinLogin button {
-    width: 490rpx;
-    height: 80rpx;
-    background: #4bc266;
-    border-radius: 40rpx;
-    font-size: 28rpx;
-    color: white;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -webkit-justify-content: center;
-            justify-content: center;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-            align-items: center;
-}
-.weixinLogin .weixin {
-    margin-bottom: 40rpx;
-}
-.weixinLogin .weixinX {
-    position: absolute;
-    right: 5%;
-    top: 2%;
-    font-size: 14px;
-    color: #333;
+.clearfix:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: "";
 }
 .uni-list-cell-db {
   background: #fff;

@@ -23,13 +23,13 @@
 						<view class="delivery-list-tab">
 							<!-- 时间 -->
 							<view class="tab-time">
-								<view v-if='item.sendStatus!=2'>送达: <text><text>今天</text></text><text> {{timestampToTimesss(item.calcTime)}}</text></view>
-								<view class=""  v-if='item.sendStatus==2'>送达:{{timestampToTimes(item.sendTime)}}及时送达</view>
-								<view class="tab-time-countDown" v-if='item.sendStatus!=2'>
+								<view v-if='item.sendStatus!=3'>送达: <text><text>今天</text></text><text> {{timestampToTimesss(item.calcTime)}}</text></view>
+								<view class=""  v-if='item.sendStatus==3'>送达:{{timestampToTimes(item.sendTime)}}及时送达</view>
+								<view class="tab-time-countDown" v-if='item.sendStatus!=3'>
 									<image src="../../static/delivery/shalou.png" alt="" class="tab-time-img">
 									<van-count-down :time="item.plusTime" format="DD天HH:mm:ss"></van-count-down>
 								</view>
-								<view v-if='item.sendStatus==2'>
+								<view v-if='item.sendStatus==3'>
 									<text>耗时:</text>
 									<text>{{item.hsTime}}</text>
 								</view>
@@ -51,7 +51,7 @@
 							<!-- 送单详情 -->
 							<!-- <van-transition :show="tabInfoShow" custom-class="block" name="fade-down"> -->
 							<view class="sendStatus"  style="overflow: hidden;">
-								<view v-if='item.sendStatus!=2'>
+								<view v-if='item.sendStatus!=3'>
 									<view class="tab-info" v-if='tabInfoShow'>
 										<text class="block">内容: <text>{{item.msg.content}}</text></text>
 										<text class="block">单号: <text>{{item.orderSn}}</text></text>
@@ -63,7 +63,7 @@
 									<!-- </van-transition> -->
 								</view>
 								<!-- 收起 -->
-								<view  v-if='item.sendStatus==2' style="overflow: hidden;margin-top: 10px;padding-bottom: 10px;border-bottom: 1px solid #F2F2F2;">
+								<view  v-if='item.sendStatus==3' style="overflow: hidden;margin-top: 10px;padding-bottom: 10px;border-bottom: 1px solid #F2F2F2;">
 									<view class="sendPrice">
 										<text>配送费:</text>
 										<text>￥{{item.sendAmount}}</text>
@@ -71,12 +71,12 @@
 								</view>
 								
 								<view class="tab-ret">
-									<view @click="look"  v-if='item.sendStatus!=2'>
+									<view @click="look"  v-if='item.sendStatus!=3'>
 										<text>{{tabLook}}</text>
 										<van-icon :name="iconName" />
 									</view>
-									<view v-if='item.sendStatus==2'></view>
-									<button class="tab-btn" :disabled="item.sendStatus==2" :class="{'active':item.sendStatus==2}" @click="SendInformationStatus(item.sendStatus,item.id)">{{item.sendStatus==1?'配送完成':item.sendStatus==2?'已送达':item.sendStatus==3?'去取单':'去配送'}}</button>
+									<view v-if='item.sendStatus==3'></view>
+									<button class="tab-btn" :disabled="item.sendStatus==3" :class="{'active':item.sendStatus==3}" @click="SendInformationStatus(item.sendStatus,item.id)">{{item.sendStatus==0?'去取单':item.sendStatus==1?'去配送':item.sendStatus==2?'配送完成':'已送达'}}</button>
 								</view>
 								
 								
@@ -197,8 +197,8 @@
 			 * 替换onLoad下代码即可
 			 */
 			this.tabCurrentIndex = 0;
-			this.optionState = 3;
-			this.loadData('tabChange', 3);
+			this.optionState = 0;
+			this.loadData('tabChange', 0);
 			console.log(new Date('2019-12-16T04:41:10.000+0000').getTime())
 		},
 		methods: {
@@ -207,14 +207,14 @@
 					sendInfoId: id,
 					sendStatus: ''
 				}
-				//0取件 1配送中 2已送达 3已转出 ,
+				//0执行订单 1取件中 2配送中 3已送达
 				//1 去取件 2去配送 3配送完成
-				if (item == 1) { //配送中，
-					obj.sendStatus = 3
-				} else if (item == 0) {
-					obj.sendStatus = 2
-				} else if (item == 3) {
+				if (item == 0) { //0执行订单 
 					obj.sendStatus = 1
+				} else if (item == 1) {
+					obj.sendStatus = 2
+				} else if (item == 2) {
+					obj.sendStatus = 3
 				}
 
 				axios.post('/sendInformation/updateSendInformationStatus', obj).then(res => {
@@ -308,20 +308,20 @@
 			changeTab(e) {
 				this.tabCurrentIndex = e.target.current;
 				this.page.current = 1;
-				if (this.tabCurrentIndex == 0) { //已转出
-					this.optionState = 3;
-					this.loadData('tabChange', 3);
-				} else if (this.tabCurrentIndex == 1) {
-					this.nowModel = '现在是取单模式'
+				if (this.tabCurrentIndex == 0) { //执行订单
 					this.optionState = 0;
 					this.loadData('tabChange', 0);
-				} else if (this.tabCurrentIndex == 2) {
-					this.loadData('tabChange', 1);
+				} else if (this.tabCurrentIndex == 1) {
+					this.nowModel = '现在是取单模式'
 					this.optionState = 1;
+					this.loadData('tabChange', 1);
+				} else if (this.tabCurrentIndex == 2) {
+					this.loadData('tabChange', 2);
+					this.optionState = 2;
 					this.nowModel = '正在配送'
 				} else if (this.tabCurrentIndex == 3) {
-					this.optionState = 2;
-					this.loadData('tabChange', 2);
+					this.optionState = 3;
+					this.loadData('tabChange', 3);
 					this.nowModel = '已送达'
 				}
 			},
@@ -611,7 +611,6 @@
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
-
 			view {
 				font-size: 24rpx;
 				font-weight: 500;

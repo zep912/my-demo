@@ -258,7 +258,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 421));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 428));};var _default =
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 409));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 416));};var _default =
 {
   components: {
     uniLoadMore: uniLoadMore,
@@ -351,8 +351,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
                                      * 替换onLoad下代码即可
                                      */
     this.tabCurrentIndex = 0;
-    this.optionState = 3;
-    this.loadData('tabChange', 3);
+    this.optionState = 0;
+    this.loadData('tabChange', 0);
     console.log(new Date('2019-12-16T04:41:10.000+0000').getTime());
   },
   methods: {
@@ -361,14 +361,14 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
         sendInfoId: id,
         sendStatus: ''
 
-        //0取件 1配送中 2已送达 3已转出 ,
+        //0执行订单 1取件中 2配送中 3已送达
         //1 去取件 2去配送 3配送完成
-      };if (item == 1) {//配送中，
-        obj.sendStatus = 3;
-      } else if (item == 0) {
-        obj.sendStatus = 2;
-      } else if (item == 3) {
+      };if (item == 0) {//0执行订单 
         obj.sendStatus = 1;
+      } else if (item == 1) {
+        obj.sendStatus = 2;
+      } else if (item == 2) {
+        obj.sendStatus = 3;
       }
 
       _uniAxios.default.post('/sendInformation/updateSendInformationStatus', obj).then(function (res) {
@@ -462,20 +462,20 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     changeTab: function changeTab(e) {
       this.tabCurrentIndex = e.target.current;
       this.page.current = 1;
-      if (this.tabCurrentIndex == 0) {//已转出
-        this.optionState = 3;
-        this.loadData('tabChange', 3);
-      } else if (this.tabCurrentIndex == 1) {
-        this.nowModel = '现在是取单模式';
+      if (this.tabCurrentIndex == 0) {//执行订单
         this.optionState = 0;
         this.loadData('tabChange', 0);
-      } else if (this.tabCurrentIndex == 2) {
-        this.loadData('tabChange', 1);
+      } else if (this.tabCurrentIndex == 1) {
+        this.nowModel = '现在是取单模式';
         this.optionState = 1;
+        this.loadData('tabChange', 1);
+      } else if (this.tabCurrentIndex == 2) {
+        this.loadData('tabChange', 2);
+        this.optionState = 2;
         this.nowModel = '正在配送';
       } else if (this.tabCurrentIndex == 3) {
-        this.optionState = 2;
-        this.loadData('tabChange', 2);
+        this.optionState = 3;
+        this.loadData('tabChange', 3);
         this.nowModel = '已送达';
       }
     },

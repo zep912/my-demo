@@ -251,7 +251,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));
-var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}
+
+var _vuex = __webpack_require__(/*! vuex */ 10);function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var weixinLogin = function weixinLogin() {return Promise.all(/*! import() | components/weixin-login */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/weixin-login")]).then(__webpack_require__.bind(null, /*! @/components/weixin-login.vue */ 423));};
 
 
 var startY = 0,
@@ -259,6 +260,7 @@ moveY = 0,
 pageAtTop = true;var _default =
 {
   components: {
+    weixinLogin: weixinLogin
     // uniCard
   },
   data: function data() {
@@ -275,20 +277,33 @@ pageAtTop = true;var _default =
   },
   onLoad: function onLoad(option) {
     this.loadData();
-    if (uni.getStorageSync('hasLogin')) {
-      this.authShow = false;
-    }
+
     this.hotList();
 
   },
   onShow: function onShow() {
-    this.getProductCollect();
-    this.getFeedbackData();
+    uni.showTabBar();
+    if (uni.getStorageSync('hasLogin')) {
+      this.authShow = false;
+      this.getProductCollect();
+      this.getFeedbackData();
+    }
   },
   computed: _objectSpread({},
   (0, _vuex.mapState)(['hasLogin', 'userInfo'])),
 
   methods: {
+    openLogin: function openLogin() {
+      this.$refs.login.open();
+      this.getProductCollect();
+      this.getFeedbackData();
+    },
+    closeLogin: function closeLogin() {
+      uni.showTabBar();
+      if (uni.getStorageSync('hasLogin')) {
+        this.authShow = false;
+      }
+    },
     getProductCollect: function getProductCollect() {var _this = this;
       _uniAxios.default.post('/member/collection/productCollectionList').then(function (res) {
         if (res.data.code === 200) {

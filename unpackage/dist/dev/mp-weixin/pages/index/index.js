@@ -253,190 +253,127 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-var _vuex = __webpack_require__(/*! vuex */ 10);
-
-
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _objectSpread(target) {for (var i = 1; i < arguments.length; i++) {var source = arguments[i] != null ? arguments[i] : {};var ownKeys = Object.keys(source);if (typeof Object.getOwnPropertySymbols === 'function') {ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {return Object.getOwnPropertyDescriptor(source, sym).enumerable;}));}ownKeys.forEach(function (key) {_defineProperty(target, key, source[key]);});}return target;}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniSearchBar = function uniSearchBar() {return __webpack_require__.e(/*! import() | components/uni-search-bar/uni-search-bar */ "components/uni-search-bar/uni-search-bar").then(__webpack_require__.bind(null, /*! @/components/uni-search-bar/uni-search-bar.vue */ 407));};var uniPopup = function uniPopup() {return __webpack_require__.e(/*! import() | components/uni-popup/uni-popup */ "components/uni-popup/uni-popup").then(__webpack_require__.bind(null, /*! @/components/uni-popup/uni-popup.vue */ 414));};var _default =
-
-
-
-
-
-
-{
-  components: {
-    uniSearchBar: uniSearchBar,
-    uniPopup: uniPopup },
-
-  data: function data() {
-    return {
-      code: null,
-      titleNViewBackground: '',
-      swiperCurrent: 0,
-      swiperLength: 0,
-      carouselList: [],
-      goodsList: [],
-      isCanUse: false, //默认为true
-      skuList: [],
-      productList: [],
-      homeFlashTime: '00',
-      newProductList: [],
-      productCategoryList: [],
-      school: {} };
-
-  },
-  computed: _objectSpread({},
-  (0, _vuex.mapState)(['hasLogin', 'userInfo'])),
-
-  onLoad: function onLoad() {
-    if (!uni.getStorageSync('hasLogin')) {
-      uni.hideTabBar();
-      this.$refs.popup.open();
-    } else {
-      uni.showTabBar();
-      this.wxGetUserInfo();
-    }
-  },
-  onShow: function onShow() {
-    this.code = uni.getStorageSync('code');
-    this.school = uni.getStorageSync('school') || {};
-    this.getHomeList();
-  },
-  methods: {
-    //第一授权获取用户信息===》按钮触发
-    wxGetUserInfo: function wxGetUserInfo() {var _this = this;
-      uni.getUserInfo({
-        provider: 'weixin',
-        success: function success(infoRes) {
-          _this.login();
-          if (uni.getStorageSync('userPhone')) {
-            infoRes.userInfo.phone = uni.getStorageSync('userPhone');
-          }
-          _this.$store.commit('login', infoRes.userInfo);
-        } });
-
-    },
-    //登录
-    login: function login() {var _this2 = this;
-      // 1.wx获取登录用户code
-      uni.login({
-        provider: 'weixin',
-        success: function success(loginRes) {
-          var code = loginRes.code;
-          _this2.code = code;
-          uni.setStorageSync('code', code);
-        } });
-
-    },
-    getPhoneNum: function getPhoneNum(e) {var _this3 = this;
-      uni.showLoading({
-        title: '登录中...',
-        mask: true });var _e$detail =
-
-      e.detail,encryptedData = _e$detail.encryptedData,iv = _e$detail.iv;
-      _uniAxios.default.post('/sso/user/getOpenId', { code: this.code }).then(function (_ref) {var data = _ref.data;var _this3$userInfo =
-        _this3.userInfo,city = _this3$userInfo.city,gender = _this3$userInfo.gender,avatarUrl = _this3$userInfo.avatarUrl,_this3$userInfo$nickN = _this3$userInfo.nickName,nickName = _this3$userInfo$nickN === void 0 ? 'user' : _this3$userInfo$nickN;var _data$data =
-        data.data,openId = _data$data.openId,session_key = _data$data.session_key;
-        //2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-        _uniAxios.default.post('sso/user/getPhoneNum', { encrypdata: encryptedData, ivdata: iv, openId: openId, sessionKey: session_key }).then(function (resp) {
-          console.log(resp, 'resp');
-          var phone;
-          if (resp.data.code === 200) {
-            phone = resp.data.data && resp.data.data.phone;
-            _this3.userInfo.phone = phone;
-            _this3.$store.commit('login', _this3.userInfo);
-            uni.setStorageSync('userPhone', phone);
-          }
-          _uniAxios.default.post('/sso/user/miniLogin', { city: city || '武汉', gender: gender, icon: avatarUrl, nickname: nickName,
-            "wxAppid": "wx35cb9f6acb94bd15", phone: phone,
-            "wxOpenid": openId }).
-          then(function (res) {
-            var response = res.data;
-            if (response.code == 200) {
-              uni.setStorageSync('hasLogin', true);
-              //openId、或SessionKdy存储//隐藏loading
-              uni.setStorageSync('gt', response.data.token);
-              uni.hideLoading();
-              uni.showTabBar();
-              _this3.close();
-            }
-          });
-        });
-
-      });
-    },
-    // 手机号登录
-    toPhone: function toPhone() {
-      uni.redirectTo({
-        url: '/pages/public/login' });
-
-    },
-    close: function close() {
-      this.$refs.popup.close();
-    },
-    //轮播图切换修改背景色
-    swiperChange: function swiperChange(e) {
-      var index = e.detail.current;
-      this.swiperCurrent = index;
-      this.titleNViewBackground = this.carouselList[index].background;
-    },
-    //详情页
-    navToDetailPage: function navToDetailPage(item) {
-      //测试数据没有写id，用title代替
-      var id = item.id;
-      uni.navigateTo({
-        url: "/pages/product/product?id=".concat(id) });
-
-    },
-    navToPosition: function navToPosition() {
-      uni.navigateTo({
-        url: "/pages/index/selectPosition" });
-
-    },
-    navToMessage: function navToMessage() {
-      uni.navigateTo({
-        url: '/pages/message/center' });
-
-    },
-    navToSearch: function navToSearch() {
-      uni.navigateTo({
-        url: "/pages/product/list" });
-
-      // uni.navigateTo({
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { code: null, titleNViewBackground: '', swiperCurrent: 0, swiperLength: 0, carouselList: [], goodsList: [], isCanUse: false, //默认为true
+      skuList: [], productList: [], homeFlashTime: '00', newProductList: [], productCategoryList: [], school: {} };}, onShow: function onShow() {uni.showTabBar();this.code = uni.getStorageSync('code');uni.setStorageSync('school', { "id": 14, "address": "华中农业大学", "createTime": "2019-12-14T08:42:22.000+0000", "isDelete": 0, "isOpen": 1 });this.school = uni.getStorageSync('school') || {};this.getHomeList();}, methods: { //轮播图切换修改背景色
+    swiperChange: function swiperChange(e) {var index = e.detail.current;this.swiperCurrent = index;this.titleNViewBackground = this.carouselList[index].background;}, //详情页
+    navToDetailPage: function navToDetailPage(item) {//测试数据没有写id，用title代替
+      var id = item.id;uni.navigateTo({ url: "/pages/product/product?id=".concat(id) });}, navToPosition: function navToPosition() {uni.navigateTo({ url: "/pages/index/selectPosition" });}, navToMessage: function navToMessage() {uni.navigateTo({ url: '/pages/message/center' });}, navToSearch: function navToSearch() {uni.navigateTo({ url: "/pages/product/list" }); // uni.navigateTo({
       // 	url: `/pages/index/search`
       // })
-    },
-    navToCate: function navToCate() {var categoryId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      uni.setStorageSync('categoryId', categoryId);
-      uni.switchTab({
-        url: "/pages/category/category" });
-
-    },
-    getHomeList: function getHomeList() {var _this4 = this;
-      _uniAxios.default.post('/home/list', {}).then(function (_ref2)
-
-      {var data = _ref2.data;
-        if (data.code === 200) {
-          _this4.carouselList = data.data.advertiseList || [];
-          _this4.productCategoryList = data.data.productCategoryList || [];
-          _this4.skuList = data.data.hotProductList || [];
-          _this4.newProductList = data.data.newProductList || [];
-          _this4.productList = data.data.homeFlashPromotion.productList || [];
-          // if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime)
+    }, navToCate: function navToCate() {var categoryId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';uni.setStorageSync('categoryId', categoryId);uni.switchTab({ url: "/pages/category/category" });}, getHomeList: function getHomeList() {var _this = this;_uniAxios.default.post('/home/list', {}).then(function (_ref) {var data = _ref.data;if (data.code === 200) {_this.carouselList = data.data.advertiseList || [];_this.productCategoryList = data.data.productCategoryList || [];_this.skuList = data.data.hotProductList || [];_this.newProductList = data.data.newProductList || [];_this.productList = data.data.homeFlashPromotion.productList || []; // if (data.data.homeFlashPromotion.startTime) this.homeFlashTime = new Date(data.data.homeFlashPromotion.startTime)
           // 	.getHours() - 8;
-        }
-      });
-    } } };exports.default = _default;
+        }});} } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

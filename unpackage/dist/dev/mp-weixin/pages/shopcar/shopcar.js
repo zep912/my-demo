@@ -265,13 +265,15 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 428));};var _default =
+
+var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty.vue */ 416));};var weixinLogin = function weixinLogin() {return Promise.all(/*! import() | components/weixin-login */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/weixin-login")]).then(__webpack_require__.bind(null, /*! @/components/weixin-login.vue */ 423));};var _default =
+
 {
   components: {
-    empty: empty },
+    empty: empty, weixinLogin: weixinLogin },
 
-  data: function data() {var _ref;
-    return _ref = {
+  data: function data() {
+    return {
       src: '../static/shopcarempty.png',
       msg: '购物车没有商品，你还可以',
       list: [],
@@ -279,13 +281,12 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       checked: true,
       stepValue: 1,
       num: 1,
-      deleShow: false }, _defineProperty(_ref, "list",
-    []), _defineProperty(_ref, "checkeds",
-    false), _defineProperty(_ref, "total",
-    0), _defineProperty(_ref, "allNum",
-    0), _defineProperty(_ref, "deleIds",
-    []), _defineProperty(_ref, "checkNum",
-    0), _ref;
+      deleShow: false,
+      checkeds: false,
+      total: 0,
+      allNum: 0, //总的数量
+      deleIds: [],
+      checkNum: 0 };
 
   },
   onLoad: function onLoad(option) {

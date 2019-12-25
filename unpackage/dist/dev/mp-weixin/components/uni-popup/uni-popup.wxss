@@ -5,6 +5,14 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+.clearfix.data-v-648a3f22:after {
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: "";
+}
 .uni-popup.data-v-648a3f22 {
   position: fixed;
   top: 0;

@@ -34,8 +34,8 @@
 							<text class="price">退款成功</text>
 						</view>
 						<view class="action-box-buttom">
-							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->						<!-- <button class="action-btn" @click="refund(item)">申请退款</button>
-							<button class="action-btn" @click="lookDetail(item)">查看详情</button> -->
+							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->						<button class="action-btn" @click="refund(item)">申请退款</button>
+							<button class="action-btn" @click="lookDetail(item)">查看详情</button>
 						</view>
 					</view>
 				</view>
@@ -85,10 +85,8 @@
 			//获取订单列表
 			loadData() {
 				axios.post('/returnApply/list').then(res => {
-					console.log(res)
 					if (res.data.code == 200) {
 						this.orderList = res.data.data;
-						console.log(this.orderList)
 					}
 				})
 			},
@@ -105,7 +103,7 @@
 			},
 			// 评价
 			evaluate(item) {
-				console.log(item)
+				
 			},
 			// 查看详情
 			lookDetail(item) {
@@ -116,7 +114,7 @@
 				// uni.navigateTo({
 				// 	url: 'refund?id='+id
 				// })
-				console.log(item)
+				
 			},
 			//订单状态文字和颜色
 			orderStateExp(state) {

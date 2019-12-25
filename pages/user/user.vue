@@ -13,7 +13,7 @@
 					<!-- <view class='login-now authorize' @click="navTo('/pages/public/login')" v-if='authShow'>
 						<text>点击授权登录</text>
 					</view> -->
-					<button class="weixin login-now authorize" @click="openLogin" v-if='authShow'>点击授权登录</button>
+					<button class="authorize" @click="openLogin" v-if='authShow'>点击授权登录</button>
 				</view>
 
 			</view>
@@ -921,9 +921,18 @@
 		right: 50%;
 		top: 38%;
 		text-align: center;
-		padding-left: 0;
 		display: flex;
 		justify-content: center;
+		width: 208rpx;
+		height: 40rpx;
+		background: #F7B52C;
+		color: #fff;
+		font-size: 28rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding-left: 0;
+		padding-right: 0;
 	}
 	.authorize:after{
 		border: 0;
