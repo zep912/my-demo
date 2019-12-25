@@ -34,8 +34,8 @@
 							<text class="price">退款成功</text>
 						</view>
 						<view class="action-box-buttom">
-							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->						<button class="action-btn" @click="refund(item)">申请退款</button>
-							<button class="action-btn" @click="lookDetail(item)">查看详情</button>
+							<!-- <button class="action-btn" @click="evaluate(item)" v-show='item.state==5' style='width: 196rpx;'>售后服务评价</button> -->						<!-- <button class="action-btn" @click="refund(item)">申请退款</button>
+							<button class="action-btn" @click="lookDetail(item)">查看详情</button> -->
 						</view>
 					</view>
 				</view>
