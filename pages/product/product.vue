@@ -206,16 +206,31 @@
 				}
 			},
 			buy(){
-				axios.post('/pay/quickOrderPay', {productId: this.id, quantity: this.sku.quantity, sp1: ''}).then(({data}) => {
-					if (data.code === 200) {
-						this.payBtn(data.data);
-						// uni.navigateTo({
-						// 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([data.data.orderId])}`
-						// })
-					} else {
-						this.$api.msg('服务器繁忙，请重试');
+				// axios.post('/pay/quickOrderPay', {productId: this.id, quantity: this.sku.quantity, sp1: ''}).then(({data}) => {
+				// 	if (data.code === 200) {
+				// 		this.payBtn(data.data);
+				// 		// uni.navigateTo({
+				// 		// 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([data.data.orderId])}`
+				// 		// })
+				// 	} else {
+				// 		this.$api.msg('服务器繁忙，请重试');
+				// 	}
+				// });
+				axios.post('/member/address/list').then(res=>{
+					if(res.data.code==200){
+						if(res.data.data.length>0){
+							axios.post('/pay/quickOrderPay', {productId: this.id, quantity: this.sku.quantity, sp1: ''}).then(({data}) => {
+								if (data.code === 200) {
+									this.payBtn(data.data);
+								} else {
+									this.$api.msg('服务器繁忙，请重试');
+								}
+							});
+						}else{
+							this.$api.msg('请先添加地址再结算')
+						}
 					}
-				});
+				})
 				
 			},
 			addCart() {

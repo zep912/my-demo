@@ -343,14 +343,29 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
     },
     buy: function buy() {var _this3 = this;
-      _uniAxios.default.post('/pay/quickOrderPay', { productId: this.id, quantity: this.sku.quantity, sp1: '' }).then(function (_ref) {var data = _ref.data;
-        if (data.code === 200) {
-          _this3.payBtn(data.data);
-          // uni.navigateTo({
-          // 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([data.data.orderId])}`
-          // })
-        } else {
-          _this3.$api.msg('服务器繁忙，请重试');
+      // axios.post('/pay/quickOrderPay', {productId: this.id, quantity: this.sku.quantity, sp1: ''}).then(({data}) => {
+      // 	if (data.code === 200) {
+      // 		this.payBtn(data.data);
+      // 		// uni.navigateTo({
+      // 		// 	url: `/pages/shopcar/postOrder?deleIds=${JSON.stringify([data.data.orderId])}`
+      // 		// })
+      // 	} else {
+      // 		this.$api.msg('服务器繁忙，请重试');
+      // 	}
+      // });
+      _uniAxios.default.post('/member/address/list').then(function (res) {
+        if (res.data.code == 200) {
+          if (res.data.data.length > 0) {
+            _uniAxios.default.post('/pay/quickOrderPay', { productId: _this3.id, quantity: _this3.sku.quantity, sp1: '' }).then(function (_ref) {var data = _ref.data;
+              if (data.code === 200) {
+                _this3.payBtn(data.data);
+              } else {
+                _this3.$api.msg('服务器繁忙，请重试');
+              }
+            });
+          } else {
+            _this3.$api.msg('请先添加地址再结算');
+          }
         }
       });
 
