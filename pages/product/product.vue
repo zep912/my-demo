@@ -288,9 +288,8 @@
 						signType: 'MD5',
 						paySign: _this.payCode.paySign,
 						success: function(res) {
-							console.log('success:' + JSON.stringify(res));
-							uni.reLaunch({
-								url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id
+							uni.redirectTo({
+								url:'../shopcar/paySuccess?totalCount=' + order.totalAmount + '&id=' + order.orderId
 							})
 						},
 						fail: function(err) {

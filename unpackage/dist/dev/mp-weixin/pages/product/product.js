@@ -425,9 +425,8 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
           signType: 'MD5',
           paySign: _this.payCode.paySign,
           success: function success(res) {
-            console.log('success:' + JSON.stringify(res));
-            uni.reLaunch({
-              url: 'paySuccess?totalCount=' + _this.totalCount + '&id=' + _this.orderList.id });
+            uni.redirectTo({
+              url: '../shopcar/paySuccess?totalCount=' + order.totalAmount + '&id=' + order.orderId });
 
           },
           fail: function fail(err) {
