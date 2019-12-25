@@ -148,6 +148,7 @@
 			
 		},
 		onShow() {
+			uni.showTabBar();
 			if (uni.getStorageSync('hasLogin')) {
 				this.authShow = false;
 				this.getProductCollect();
@@ -164,6 +165,7 @@
 				this.getFeedbackData();
 			},
 			closeLogin() {
+				uni.showTabBar();
 				if (uni.getStorageSync('hasLogin')) {
 					this.authShow = false;
 				}

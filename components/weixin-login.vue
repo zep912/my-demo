@@ -1,6 +1,7 @@
 <template>
 	<uni-popup ref="popup" type="center" :maskClick="false">
 		<view class="weixinLogin">
+			<text class="weixinX" @click="close">X</text>
 			<image src="../static/delivery/logo.png" mode=""></image>
 			<button v-if="!code" type="primary" class="weixin" open-type="getUserInfo" withCredentials="true" lang="zh_CN" @getuserinfo="wxGetUserInfo">微信一键登录</button>
 			<button v-else type="primary" class="weixin" open-type="getPhoneNumber" @getphonenumber="getPhoneNum">获取手机号</button>
@@ -42,6 +43,11 @@
 		methods: {
 			open() {
 				this.$refs.popup.open();
+			},
+			close() {
+				uni.showTabBar();
+				this.$emit('closeLogin');
+				this.$refs.popup.close();
 			},
 			wxGetUserInfo() {
 				uni.getUserInfo({
@@ -98,8 +104,7 @@
 									uni.setStorageSync('gt', response.data.token);
 									uni.hideLoading();
 									uni.showTabBar();
-									this.$refs.popup.close();
-									this.$emit('closeLogin');
+									this.close();
 								}
 							})
 					})
@@ -153,5 +158,12 @@
 		margin-bottom: 40rpx;
 	}
 
+	.weixinX{
+		position: absolute;
+		right: 5%;
+		top: 2%;
+		font-size: 14px;
+		color: #333;
+	}
 }
 </style>

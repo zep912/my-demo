@@ -107,7 +107,7 @@
 			:contentHeight="580"
 			:shareList="shareList"
 		></share> -->
-		<uni-popup ref="popup" type="bottom" :maskClick="false">
+		<uni-popup ref="popup" type="bottom">
 			<view class="popup-box">
 				<view class="header">
 					<view class="img-box"><image :src="sku.pic" alt=""></view>
@@ -132,7 +132,7 @@
 				<button class="btn" @click="buy">确定</button>
 			</view>
 		</uni-popup>
-		<weixin-login></weixin-login>
+		<weixin-login ref="login"></weixin-login>
 	</view>
 </template>
 
@@ -171,13 +171,17 @@
 			}
 		},
 		onShow() {
-			uni.login({
-				provider: 'weixin',
-				success: (loginRes) => {
-					let code = loginRes.code;
-					uni.setStorageSync('code', code)
-				}
-			})	
+			if (uni.getStorageSync('hasLogin')) {
+				uni.login({
+					provider: 'weixin',
+					success: (loginRes) => {
+						let code = loginRes.code;
+						uni.setStorageSync('code', code)
+					}
+				})
+			} else {
+				this.$refs.login.open();
+			}	
 		},
 		methods:{
 			//收藏
@@ -195,7 +199,11 @@
 			// 	this.$refs.share.toggleMask();	
 			// },
 			openBuy() {
-				this.$refs.popup.open()
+				if (uni.getStorageSync('hasLogin')) {
+					this.$refs.popup.open()
+				} else {
+					this.$refs.login.open();
+				}
 			},
 			buy(){
 				axios.post('/pay/quickOrderPay', {productId: this.id, quantity: this.sku.quantity, sp1: ''}).then(({data}) => {
@@ -211,6 +219,10 @@
 				
 			},
 			addCart() {
+				if (!uni.getStorageSync('hasLogin')) {
+					this.$refs.login.open();
+					return;
+				}
 				const {id, productCategoryId} = this.productInfo;
 				axios.post('/cart/add', {productId: id, productCategoryId}).then(({data}) => {
 					if (data.code === 200) {

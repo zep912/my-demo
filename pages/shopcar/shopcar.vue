@@ -134,7 +134,6 @@
 				stepValue: 1,
 				num: 1,
 				deleShow: false,
-				list: [],
 				checkeds: false,
 				total: 0,
 				allNum: 0, //总的数量
