@@ -69,9 +69,9 @@
 								</view>
 								
 								<view class="tab-ret">
-									<view @click="look"  v-if='item.sendStatus!=3'  :data-id='item.id'>
-										<text>{{tabLook}}</text>
-										<van-icon :name="iconName" />
+									<view @click="look(index)"  v-if='item.sendStatus!=3'  :data-id='item.id'>
+										<text>{{item.isShow ? '查看' : '收起'}}</text>
+										<van-icon :name="item.isShow ? 'arrow-up' : 'arrow-down'" />
 									</view>
 									<view v-if='item.sendStatus==3'></view>
 									<button class="tab-btn" :disabled="item.sendStatus==3" :class="{'active':item.sendStatus==3}" @click="SendInformationStatus(item.sendStatus,item.id)">{{item.sendStatus==0?'去取单':item.sendStatus==1?'去配送':item.sendStatus==2?'配送完成':'已送达'}}</button>
@@ -226,18 +226,27 @@
 				var date = new Date(time).getTime() //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 				return date
 			},
-			look(e) {
-				let id = e.currentTarget.dataset.id;
-				let index=0;
-				this.deliverylist.forEach(el=>{
-					if(el.id==id){
-						if(!el.isShow){
-							this.$set(el,'isShow',true)
-						}else{
-							this.$set(el,'isShow',false)
-						}
-					}
-				})
+			look(index) {
+				// let id = e.currentTarget.dataset.id;
+				// let index=0;
+				const item = this.deliverylist[index];
+				this.deliverylist.splice(index, 1, Object.assign({}, item, {isShow: !item.isShow}));
+				// if (!item.isShow) {
+				// 	this.tabLook = '收起';
+				// 	this.iconName = 'arrow-up';
+				// } else {
+				// 	this.tabLook = '查看';
+				// 	this.iconName = 'arrow-down';
+				// }
+				// this.deliverylist.forEach(el=>{
+				// 	if(el.id==id){
+				// 		if(!el.isShow){
+				// 			this.$set(el,'isShow',true)
+				// 		}else{
+				// 			this.$set(el,'isShow',false)
+				// 		}
+				// 	}
+				// })
 				console.log(this.deliverylist)
 				// if (!this.tabInfoShow) {
 				// 	this.tabInfoShow = true;
