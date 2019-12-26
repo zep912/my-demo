@@ -253,10 +253,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
 var _Json = _interopRequireDefault(__webpack_require__(/*! @/Json */ 19));
 var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.js */ 27));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function _defineProperty(obj, key, value) {if (key in obj) {Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true });} else {obj[key] = value;}return obj;}var uniLoadMore = function uniLoadMore() {return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 409));};var empty = function empty() {return __webpack_require__.e(/*! import() | components/empty */ "components/empty").then(__webpack_require__.bind(null, /*! @/components/empty */ 416));};var _default =
 {
@@ -353,7 +349,6 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
     this.tabCurrentIndex = 0;
     this.optionState = 0;
     this.loadData('tabChange', 0);
-    console.log(new Date('2019-12-16T04:41:10.000+0000').getTime());
   },
   methods: {
     SendInformationStatus: function SendInformationStatus(item, id) {var _this = this;
@@ -385,16 +380,28 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       var date = new Date(time).getTime(); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
       return date;
     },
-    look: function look() {
-      if (!this.tabInfoShow) {
-        this.tabInfoShow = true;
-        this.tabLook = '收起';
-        this.iconName = 'arrow-up';
-      } else {
-        this.tabInfoShow = false;
-        this.tabLook = '查看';
-        this.iconName = 'arrow-down';
-      }
+    look: function look(e) {var _this2 = this;
+      var id = e.currentTarget.dataset.id;
+      var index = 0;
+      this.deliverylist.forEach(function (el) {
+        if (el.id == id) {
+          if (!el.isShow) {
+            _this2.$set(el, 'isShow', true);
+          } else {
+            _this2.$set(el, 'isShow', false);
+          }
+        }
+      });
+      console.log(this.deliverylist);
+      // if (!this.tabInfoShow) {
+      // 	this.tabInfoShow = true;
+      // 	this.tabLook = '收起';
+      // 	this.iconName = 'arrow-up';
+      // } else {
+      // 	this.tabInfoShow = false;
+      // 	this.tabLook = '查看';
+      // 	this.iconName = 'arrow-down';
+      // }
 
     },
     // 跳转页面
@@ -416,7 +423,7 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       }
     },
     //获取订单列表
-    loadData: function loadData(source, n) {var _this2 = this;
+    loadData: function loadData(source, n) {var _this3 = this;
       this.page.current = 1;
       var obj = {
         pageNum: this.page.current,
@@ -427,32 +434,33 @@ var _uniAxios = _interopRequireDefault(__webpack_require__(/*! @/utils/uniAxios.
       _uniAxios.default.post('/sendInformation/list', obj).then(function (res) {
         var result = res.data.data;
         if (res.data.data.length != 0) {
-          _this2.deliverylist = res.data.data;
+          _this3.deliverylist = res.data.data;
 
           result.forEach(function (el) {
-            _this2.stepArrr = [];
+            _this3.stepArrr = [];
             if (el.detailAddress && el.receiverDetailAddress) {
-              _this2.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
+              _this3.stepArrr.push(el.detailAddress, el.receiverDetailAddress);
             } else if (el.receiverDetailAddress) {
-              _this2.stepArrr.push(el.receiverDetailAddress);
+              _this3.stepArrr.push(el.receiverDetailAddress);
             }
           });
-          _this2.stepa = [];
+          _this3.stepa = [];
 
-          for (var i = 0; i < _this2.stepArrr.length; i++) {
-            _this2.step = {};
-            _this2.step['text'] = _this2.stepArrr[i];
-            _this2.step['desc'] = '';
-            _this2.stepa.push(_this2.step);
+          for (var i = 0; i < _this3.stepArrr.length; i++) {
+            _this3.step = {};
+            _this3.step['text'] = _this3.stepArrr[i];
+            _this3.step['desc'] = '';
+            _this3.stepa.push(_this3.step);
           }
-          _this2.deliverylist.forEach(function (el) {
-            el['steps'] = _this2.stepa;
+          _this3.deliverylist.forEach(function (el) {
+            el['steps'] = _this3.stepa;
+            el['isShow'] = false;
           });
-          if (_this2.deliverylist.length == res.data.total) {
-            _this2.loadingText = '已全部加载';
+          if (_this3.deliverylist.length == res.data.total) {
+            _this3.loadingText = '已全部加载';
             return false;
           } else {
-            _this2.loadingText = '上拉加载更多';
+            _this3.loadingText = '上拉加载更多';
           }
         }
       });

@@ -49,18 +49,16 @@
 								</van-steps>
 							</view>
 							<!-- 送单详情 -->
-							<!-- <van-transition :show="tabInfoShow" custom-class="block" name="fade-down"> -->
 							<view class="sendStatus"  style="overflow: hidden;">
 								<view v-if='item.sendStatus!=3'>
-									<view class="tab-info" v-if='tabInfoShow'>
-										<text class="block">内容: <text>{{item.msg.content}}</text></text>
+									<view class="tab-info" :class="item.isShow?'show':'hide'">
+										<text class="block">内容: <text>{{item.productName}}</text></text>
 										<text class="block">单号: <text>{{item.orderSn}}</text></text>
 										<text class="block">来源: <text>麦田圈官方旗舰店</text></text>
-										<text class="block">备注: <text>{{item.msg.beizhu}}</text></text>
+										<text class="block">备注: <text>{{item.note?item.note:''}}</text></text>
 										<text class="block">标识: <text>{{item.msg.biaoshi}}</text></text>
 										<text class="block">下单: <text>{{timestampToTime(item.createTime)}}</text></text>
 									</view>
-									<!-- </van-transition> -->
 								</view>
 								<!-- 收起 -->
 								<view  v-if='item.sendStatus==3' style="overflow: hidden;margin-top: 10px;padding-bottom: 10px;border-bottom: 1px solid #F2F2F2;">
@@ -71,15 +69,13 @@
 								</view>
 								
 								<view class="tab-ret">
-									<view @click="look"  v-if='item.sendStatus!=3'>
+									<view @click="look"  v-if='item.sendStatus!=3'  :data-id='item.id'>
 										<text>{{tabLook}}</text>
 										<van-icon :name="iconName" />
 									</view>
 									<view v-if='item.sendStatus==3'></view>
 									<button class="tab-btn" :disabled="item.sendStatus==3" :class="{'active':item.sendStatus==3}" @click="SendInformationStatus(item.sendStatus,item.id)">{{item.sendStatus==0?'去取单':item.sendStatus==1?'去配送':item.sendStatus==2?'配送完成':'已送达'}}</button>
 								</view>
-								
-								
 							</view>
 						</view>
 					</view>
@@ -199,7 +195,6 @@
 			this.tabCurrentIndex = 0;
 			this.optionState = 0;
 			this.loadData('tabChange', 0);
-			console.log(new Date('2019-12-16T04:41:10.000+0000').getTime())
 		},
 		methods: {
 			SendInformationStatus(item, id) {
@@ -231,16 +226,28 @@
 				var date = new Date(time).getTime() //时间戳为10位需*1000，时间戳为13位的话不需乘1000
 				return date
 			},
-			look() {
-				if (!this.tabInfoShow) {
-					this.tabInfoShow = true;
-					this.tabLook = '收起';
-					this.iconName = 'arrow-up';
-				} else {
-					this.tabInfoShow = false;
-					this.tabLook = '查看';
-					this.iconName = 'arrow-down';
-				}
+			look(e) {
+				let id = e.currentTarget.dataset.id;
+				let index=0;
+				this.deliverylist.forEach(el=>{
+					if(el.id==id){
+						if(!el.isShow){
+							this.$set(el,'isShow',true)
+						}else{
+							this.$set(el,'isShow',false)
+						}
+					}
+				})
+				console.log(this.deliverylist)
+				// if (!this.tabInfoShow) {
+				// 	this.tabInfoShow = true;
+				// 	this.tabLook = '收起';
+				// 	this.iconName = 'arrow-up';
+				// } else {
+				// 	this.tabInfoShow = false;
+				// 	this.tabLook = '查看';
+				// 	this.iconName = 'arrow-down';
+				// }
 
 			},
 			// 跳转页面
@@ -293,6 +300,7 @@
 						}
 						this.deliverylist.forEach(el => {
 							el['steps'] = this.stepa
+							el['isShow'] = false
 						})
 						if (this.deliverylist.length == res.data.total) {
 							this.loadingText = '已全部加载'
@@ -364,9 +372,11 @@
 </script>
 
 <style lang="scss">
-	.sendStatus{
-	
-		
+	.sendStatus .show{
+		display: block;
+	}
+	.sendStatus .hide{
+		display: none;
 	}
 	.sendPrice{
 		float: right;
