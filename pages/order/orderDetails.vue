@@ -110,7 +110,7 @@
 		</view>
 		<!-- 尾部 -->
 		<view class="foot" v-if='show'>
-			<button class="btn1" @click="logisticsTap(order.id)">{{order.wuliu}}</button>
+			<button class="btn1" @click="logisticsTap(order.id)" v-show='wuliuShow'>{{order.wuliu}}</button>
 			<button class="btn2" v-if='order.status!=4' @click="pay(order.id,order.orderItemList[0].productId)">{{order.pay}}</button>
 		</view>
 	</view>
@@ -186,7 +186,8 @@
 						desc: '描述信息'
 					}
 				],
-				id: ''
+				id: '',
+				wuliuShow:true
 			}
 		},
 		onLoad(option) {
@@ -209,6 +210,8 @@
 						console.log(this.order)
 						if (this.order.status == 0) {
 							// 待支付
+							this.show = true;
+							this.wuliuShow = true;
 							this.order.statusMsg = '';
 							this.order.wuliu = '取消订单';
 							this.order.img = this.img[1];
@@ -228,7 +231,9 @@
 							this.show = true;
 
 							this.order.statusMsg = '待收货';
-							this.order.wuliu = '查看物流';
+							// this.order.wuliu = '查看物流';
+							this.order.wuliu = '';
+							this.wuliuShow = false;
 							this.order.img = this.img[2];
 							this.order.pay = '确认收货';
 							this.order.color = '#515151'
