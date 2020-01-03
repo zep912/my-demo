@@ -53,7 +53,7 @@
 				}else if(!_this.authCode){
 					_this.$api.msg('请输入验证码')
 				}else {
-					axios.post('/sso/user/login',obj).then(res=>{
+					axios.post('/sso/login',obj).then(res=>{
 						if(res.data.code=='200'){
 							var token = res.data.data.token;
 							uni.setStorageSync('gt',token);
@@ -90,7 +90,7 @@
 					let obj = {
 						telephone: _this.phone
 					}
-					axios.post('/sso/user/sendCode',obj).then(res=>{
+					axios.post('/sso/sendCode',obj).then(res=>{
 						console.log(res)
 						if(res.data.code=='200'){
 							_this.$api.msg('发送成功')

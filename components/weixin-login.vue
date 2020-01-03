@@ -80,11 +80,11 @@
 					mask: true
 				});
 				const {encryptedData, iv} = e.detail
-				axios.post('/sso/user/getOpenId', {code}).then(({data}) => {
+				axios.post('/sso/getOpenId', {code}).then(({data}) => {
 					const {city, gender, avatarUrl, nickName = 'user'} = this.userInfo;
 					const {openId, session_key} = data.data;
 					//2.将用户登录code传递到后台置换用户SessionKey、OpenId等信息
-					axios.post('sso/user/getPhoneNum', {encrypdata: encryptedData, ivdata: iv, openId, sessionKey: session_key}).then(resp => {
+					axios.post('/sso/getPhoneNum', {encrypdata: encryptedData, ivdata: iv, openId, sessionKey: session_key}).then(resp => {
 						console.log(resp, 'resp');
 						let phone;
 						if (resp.data.code === 200) {
@@ -93,7 +93,7 @@
 							this.$store.commit('login', this.userInfo);
 							uni.setStorageSync('userPhone',phone)
 						}
-						axios.post('/sso/user/miniLogin', {city: city || '武汉', gender, icon: avatarUrl, nickname: nickName,
+						axios.post('/sso/miniLogin', {city: city || '武汉', gender, icon: avatarUrl, nickname: nickName,
 							  "wxAppid": "wx35cb9f6acb94bd15", phone,
 							  "wxOpenid": openId
 							}).then((res) => {
@@ -101,7 +101,7 @@
 								if (response.code == 200) {
 									uni.setStorageSync('hasLogin', true);
 									//openId、或SessionKdy存储//隐藏loading
-									uni.setStorageSync('gt', response.data.token);
+									uni.setStorageSync('gt', response.data.tokenHead + response.data.token);
 									uni.hideLoading();
 									uni.showTabBar();
 									this.close();

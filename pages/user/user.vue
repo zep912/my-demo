@@ -178,7 +178,7 @@
 				})
 			},
 			getFeedbackData(){
-				axios.post('/member/readHistory/list').then(res=>{
+				axios.get('/member/coupon/list').then(res=>{
 					if(res.data.code===200&&res.data.data.length>0){
 						this.zuji = res.data.data.length;
 					}

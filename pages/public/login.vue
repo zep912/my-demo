@@ -48,7 +48,7 @@
 							phone: _this.phone,
 							authCode: _this.authCode
 						};
-						axios.post('/sso/user/login',obj).then(res=>{
+						axios.post('/sso/login',obj).then(res=>{
 							if(res.data.code=='200'){
 								var token = res.data.data.token;
 								uni.setStorageSync('hasLogin', true);
@@ -88,7 +88,7 @@
 				let obj = {
 					telephone: _this.phone
 				}
-				axios.post('/sso/user/sendCode',obj).then(res=>{
+				axios.post('/sso/sendCode',obj).then(res=>{
 					console.log(res)
 					if(res.data.code=='200'){
 						_this.$api.msg('发送成功')
