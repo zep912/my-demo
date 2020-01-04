@@ -101,7 +101,7 @@
 								if (response.code == 200) {
 									uni.setStorageSync('hasLogin', true);
 									//openId、或SessionKdy存储//隐藏loading
-									uni.setStorageSync('gt', response.data.tokenHead + response.data.token);
+									uni.setStorageSync('gt', response.data.token);
 									uni.hideLoading();
 									uni.showTabBar();
 									this.close();

@@ -144,7 +144,7 @@
 				
 			// 获取，用户的优惠券列表
 			getCoupon(n){
-				axios.get('/member/coupon/list/cart/'+n,{type:n}).then(res=>{
+				axios.post('/member/coupon/list/cart/'+n,{type:n}).then(res=>{
 					if(res.data.code==200){
 						this.conponList = res.data.data;
 					}
