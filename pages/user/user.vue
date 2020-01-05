@@ -287,7 +287,7 @@
 				if (hasLogin) {
 					this.authShow = false;
 					let id = ''
-					axios.post('/sso/user/userInfo').then(res => {
+					axios.post('/user/userInfo').then(res => {
 						if (res.data.code == '200') {
 							console.log(res)
 							id = res.data.data.id;
@@ -301,7 +301,7 @@
 					// let setUserInfo = this.$store.state.userInfo;
 					return;
 				} else if (uni.getStorageSync('setPhone')) { //使用手机号登陆
-					axios.post('/sso/user/userInfo').then(res => {
+					axios.post('/user/userInfo').then(res => {
 						if (res.data.code == '200') {
 							this.authShow = false;
 							this.userInfo.mobile = res.data.data.phone;
